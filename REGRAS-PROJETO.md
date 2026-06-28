@@ -35,18 +35,31 @@ Google Ads)** e **analytics web (GA4)**, com login e recorte por cliente
 - **Métricas derivadas** (CTR, CPC, CPL, ROAS) são calculadas no painel
   (`src/lib/metrics/aggregate.ts`), nunca gravadas.
 
-## Estado atual (MVP)
+## Estado atual
 
-Funcionando em modo demonstração: Login, Visão geral, Tráfego pago (tabela por
-campanha), Analytics web (origens). Build e smoke test OK (4 telas, HTTP 200).
+**Supabase no ar com dados reais.** Projeto ref `oqsjdhrwpmpdrihgbgtx`. Migrations
+0001+0002 aplicadas (clients=3, ad_metrics=2160, web_metrics=1620). Auth + RLS
+validados: usuário admin `guedesint@gmail.com` (role admin), login OK, RLS
+liberando os 3 clientes e as métricas. `.env.local` configurado (gitignored).
+Telas: Login, Visão geral, Tráfego pago, Analytics web. Build OK.
 
 ## Pendências / próximos passos
 
-- [ ] Criar projeto Supabase real, aplicar migrations e configurar `.env.local`.
-- [ ] Criar usuário admin e validar RLS (acesso por cliente).
-- [ ] Fase 5: construir os 3 workflows n8n (Meta, Google, GA4) → Supabase.
-- [ ] Deploy na Vercel (configurar env vars).
+- [ ] **Rotacionar segredos** expostos no chat (anon ok; rotacionar service_role,
+      sb_secret e senha do banco em Settings → API/Database).
+- [ ] Trocar a senha temporária do admin.
+- [ ] Fase 5: construir os 3 workflows n8n (Meta, Google, GA4) → Supabase
+      (usar `SUPABASE_SERVICE_ROLE_KEY`; contrato em `docs/ingestao-n8n.md`).
+- [ ] Deploy na Vercel (configurar as 3 env vars; lembrar que `NEXT_PUBLIC_*`
+      são embutidas no build).
 - [ ] (Opcional) seletor de período custom (datas), export de relatório/PDF.
+
+## Acesso (dev)
+
+- Supabase URL: `https://oqsjdhrwpmpdrihgbgtx.supabase.co`
+- Chaves no `.env.local` (não versionado). `.env.example` documenta os campos.
+- Rodar migration nova: não há psql/CLI local — usar SQL Editor do Supabase,
+  ou `node` + `pg` com a connection string (Settings → Database).
 
 ## Histórico de iterações
 
@@ -57,3 +70,7 @@ campanha), Analytics web (origens). Build e smoke test OK (4 telas, HTTP 200).
   Supabase (SSR client, `proxy.ts` de auth, RLS). Migrations `0001_init.sql`
   (schema+RLS) e `0002_seed.sql`. Doc de ingestão n8n. Build verde, smoke test
   e screenshots OK.
+- **2026-06-28** — Supabase conectado. Projeto real criado pelo usuário;
+  migrations aplicadas via `node`+`pg` (sem psql local); seed populado
+  (2160 ad + 1620 web). `.env.local` configurado. Usuário admin criado e
+  promovido; auth + RLS validados de ponta a ponta. App passou a exigir login.
