@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Painel de Métricas de Tráfego — GTech Solution
 
-## Getting Started
+Painel **multi-cliente** (agência) que consolida **tráfego pago (Meta Ads +
+Google Ads)** e **analytics web (GA4)**, com login e separação por cliente.
 
-First, run the development server:
+- **Stack:** Next.js 16 (App Router) · React 19 · TypeScript · Tailwind v4
+- **Dados/Auth:** Supabase (Postgres + Auth + RLS)
+- **Gráficos:** Recharts
+- **Ingestão:** n8n grava no Supabase; o painel apenas lê (ver [docs/ingestao-n8n.md](docs/ingestao-n8n.md))
+- **Deploy:** Vercel
+
+## Rodando localmente
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev          # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Sem `.env.local`, o painel sobe em **modo demonstração** (dados de exemplo,
+sem login). Para usar dados reais, configure o Supabase:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+cp .env.example .env.local
+# preencha NEXT_PUBLIC_SUPABASE_URL e NEXT_PUBLIC_SUPABASE_ANON_KEY
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Banco (Supabase)
 
-## Learn More
+Aplique as migrations em `supabase/migrations/` no SQL Editor do projeto:
 
-To learn more about Next.js, take a look at the following resources:
+1. `0001_init.sql` — tabelas + RLS + policies + trigger de profile.
+2. `0002_seed.sql` — clientes e 90 dias de métricas de exemplo (opcional, dev).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Depois de criar seu usuário em **Authentication → Users**, promova-o a admin:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```sql
+update public.profiles set role = 'admin' where id = '<seu-user-id>';
+```
 
-## Deploy on Vercel
+## Estrutura
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+src/
+  app/
+    (auth)/login        # login (Supabase Auth)
+    (dash)/             # shell + páginas protegidas
+      page.tsx          # Visão geral
+      trafego-pago/     # Meta + Google (tabela por campanha)
+      analytics/        # GA4 (origens, sessões)
+  components/           # brand, ui, layout, charts
+  lib/
+    supabase/           # clients server/browser + refresh de sessão
+    metrics/            # queries (Supabase|mock) + agregações
+    mock/               # dados de demonstração determinísticos
+  proxy.ts              # auth gating (Next 16: era "middleware")
+supabase/migrations/    # schema + RLS + seed
+docs/ingestao-n8n.md    # contrato de escrita para o n8n
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Scripts
+
+| comando | o quê |
+|---|---|
+| `npm run dev` | desenvolvimento |
+| `npm run build` | build de produção |
+| `npm run start` | sobe o build |
+| `npm run lint` | ESLint |
