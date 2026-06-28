@@ -40,8 +40,9 @@ yarn-error.log*
 # agentes / contexto
 .agent/
 
-# graphify (mantém relatório, ignora cache)
+# graphify (mantém relatório/grafo, ignora cache e estado local)
 graphify-out/cache/
+graphify-out/.graphify_*
 
 # typescript
 *.tsbuildinfo

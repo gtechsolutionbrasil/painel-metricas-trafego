@@ -1,0 +1,262 @@
+{
+  "/Users/Gabriel GTech/Antigravity/projetos/painel-metricas-trafego/eslint.config.mjs": {
+    "mtime": 1782686238.8143866,
+    "ast_hash": "dfa1f5f6a7037bf39dc510f30b180002",
+    "semantic_hash": "dfa1f5f6a7037bf39dc510f30b180002"
+  },
+  "/Users/Gabriel GTech/Antigravity/projetos/painel-metricas-trafego/next.config.ts": {
+    "mtime": 1782686238.814243,
+    "ast_hash": "9b77af189a21a7a64e4bd7a426f64176",
+    "semantic_hash": "9b77af189a21a7a64e4bd7a426f64176"
+  },
+  "/Users/Gabriel GTech/Antigravity/projetos/painel-metricas-trafego/package.json": {
+    "mtime": 1782686504.702972,
+    "ast_hash": "a4b6548d958f2658b7bb21185c3e4494",
+    "semantic_hash": "a4b6548d958f2658b7bb21185c3e4494"
+  },
+  "/Users/Gabriel GTech/Antigravity/projetos/painel-metricas-trafego/postcss.config.mjs": {
+    "mtime": 1782686238.8142471,
+    "ast_hash": "239f3ebf717465dc636818a1a619398d",
+    "semantic_hash": "239f3ebf717465dc636818a1a619398d"
+  },
+  "/Users/Gabriel GTech/Antigravity/projetos/painel-metricas-trafego/src/app/(auth)/login/page.tsx": {
+    "mtime": 1782687113.8700256,
+    "ast_hash": "c45a0a2e75ab922f6c1e7e043bd0fda6",
+    "semantic_hash": "c45a0a2e75ab922f6c1e7e043bd0fda6"
+  },
+  "/Users/Gabriel GTech/Antigravity/projetos/painel-metricas-trafego/src/app/(dash)/analytics/page.tsx": {
+    "mtime": 1782687317.4421532,
+    "ast_hash": "08f962e286a52d24b86dc32b52d717d6",
+    "semantic_hash": "08f962e286a52d24b86dc32b52d717d6"
+  },
+  "/Users/Gabriel GTech/Antigravity/projetos/painel-metricas-trafego/src/app/(dash)/layout.tsx": {
+    "mtime": 1782686953.8107276,
+    "ast_hash": "3946d667b4216edb8430ecc2c2e9eace",
+    "semantic_hash": "3946d667b4216edb8430ecc2c2e9eace"
+  },
+  "/Users/Gabriel GTech/Antigravity/projetos/painel-metricas-trafego/src/app/(dash)/page.tsx": {
+    "mtime": 1782687292.9351616,
+    "ast_hash": "f0f90f27f9d8db42e388fc4f84d9338f",
+    "semantic_hash": "f0f90f27f9d8db42e388fc4f84d9338f"
+  },
+  "/Users/Gabriel GTech/Antigravity/projetos/painel-metricas-trafego/src/app/(dash)/trafego-pago/page.tsx": {
+    "mtime": 1782687306.0108373,
+    "ast_hash": "0a116a271f1c4a701127c0842bfa13bc",
+    "semantic_hash": "0a116a271f1c4a701127c0842bfa13bc"
+  },
+  "/Users/Gabriel GTech/Antigravity/projetos/painel-metricas-trafego/src/app/layout.tsx": {
+    "mtime": 1782686587.1660964,
+    "ast_hash": "89ba1bb43af79503e3d20a5acd2a23ce",
+    "semantic_hash": "89ba1bb43af79503e3d20a5acd2a23ce"
+  },
+  "/Users/Gabriel GTech/Antigravity/projetos/painel-metricas-trafego/src/components/brand/Logo.tsx": {
+    "mtime": 1782686767.5511565,
+    "ast_hash": "50982a4db70759b24f1942ebee63a3d4",
+    "semantic_hash": "50982a4db70759b24f1942ebee63a3d4"
+  },
+  "/Users/Gabriel GTech/Antigravity/projetos/painel-metricas-trafego/src/components/charts/BarsChart.tsx": {
+    "mtime": 1782687234.8629642,
+    "ast_hash": "6e31112d1756d5105e73dcd2864f870a",
+    "semantic_hash": "6e31112d1756d5105e73dcd2864f870a"
+  },
+  "/Users/Gabriel GTech/Antigravity/projetos/painel-metricas-trafego/src/components/charts/ChartTooltip.tsx": {
+    "mtime": 1782686885.3310015,
+    "ast_hash": "65a56521cac58a9d40adb6e9817005f6",
+    "semantic_hash": "65a56521cac58a9d40adb6e9817005f6"
+  },
+  "/Users/Gabriel GTech/Antigravity/projetos/painel-metricas-trafego/src/components/charts/DonutChart.tsx": {
+    "mtime": 1782687261.0290515,
+    "ast_hash": "1b1c0102d86c3ca4d596f6d4648cdcec",
+    "semantic_hash": "1b1c0102d86c3ca4d596f6d4648cdcec"
+  },
+  "/Users/Gabriel GTech/Antigravity/projetos/painel-metricas-trafego/src/components/charts/TrendAreaChart.tsx": {
+    "mtime": 1782687222.9204931,
+    "ast_hash": "5d22df82a8b39edf5575bf584fafe585",
+    "semantic_hash": "5d22df82a8b39edf5575bf584fafe585"
+  },
+  "/Users/Gabriel GTech/Antigravity/projetos/painel-metricas-trafego/src/components/charts/theme.ts": {
+    "mtime": 1782686875.9588518,
+    "ast_hash": "31a15f7a3f84c9a7cac2a48458505b3a",
+    "semantic_hash": "31a15f7a3f84c9a7cac2a48458505b3a"
+  },
+  "/Users/Gabriel GTech/Antigravity/projetos/painel-metricas-trafego/src/components/layout/Sidebar.tsx": {
+    "mtime": 1782686824.501842,
+    "ast_hash": "1e46486fcea81554606f3202ea160c7f",
+    "semantic_hash": "1e46486fcea81554606f3202ea160c7f"
+  },
+  "/Users/Gabriel GTech/Antigravity/projetos/painel-metricas-trafego/src/components/layout/Topbar.tsx": {
+    "mtime": 1782686941.159229,
+    "ast_hash": "d12927c0189f20904d30b814f5b68925",
+    "semantic_hash": "d12927c0189f20904d30b814f5b68925"
+  },
+  "/Users/Gabriel GTech/Antigravity/projetos/painel-metricas-trafego/src/components/ui/Badge.tsx": {
+    "mtime": 1782686797.2617779,
+    "ast_hash": "52f5bfc2452eb0dacd4e9657663e68a4",
+    "semantic_hash": "52f5bfc2452eb0dacd4e9657663e68a4"
+  },
+  "/Users/Gabriel GTech/Antigravity/projetos/painel-metricas-trafego/src/components/ui/Card.tsx": {
+    "mtime": 1782686779.4968848,
+    "ast_hash": "bfe7baffe5b1dcfa3966813a3dd09a7c",
+    "semantic_hash": "bfe7baffe5b1dcfa3966813a3dd09a7c"
+  },
+  "/Users/Gabriel GTech/Antigravity/projetos/painel-metricas-trafego/src/components/ui/KpiCard.tsx": {
+    "mtime": 1782686790.6528623,
+    "ast_hash": "ec9a682a003c4a2482b5635aa474986f",
+    "semantic_hash": "ec9a682a003c4a2482b5635aa474986f"
+  },
+  "/Users/Gabriel GTech/Antigravity/projetos/painel-metricas-trafego/src/components/ui/PageHeader.tsx": {
+    "mtime": 1782686803.9588752,
+    "ast_hash": "304c238b0a2c59c8560deb25e373f93f",
+    "semantic_hash": "304c238b0a2c59c8560deb25e373f93f"
+  },
+  "/Users/Gabriel GTech/Antigravity/projetos/painel-metricas-trafego/src/lib/format.ts": {
+    "mtime": 1782687207.556156,
+    "ast_hash": "0ddecd5c41ff1345bc502f253ae3e39e",
+    "semantic_hash": "0ddecd5c41ff1345bc502f253ae3e39e"
+  },
+  "/Users/Gabriel GTech/Antigravity/projetos/painel-metricas-trafego/src/lib/metrics/aggregate.ts": {
+    "mtime": 1782686721.4392214,
+    "ast_hash": "967450f3f22e9795253cb26ab8b3d791",
+    "semantic_hash": "967450f3f22e9795253cb26ab8b3d791"
+  },
+  "/Users/Gabriel GTech/Antigravity/projetos/painel-metricas-trafego/src/lib/metrics/queries.ts": {
+    "mtime": 1782686752.483345,
+    "ast_hash": "c2604993895d6e65175ee91b1cfff816",
+    "semantic_hash": "c2604993895d6e65175ee91b1cfff816"
+  },
+  "/Users/Gabriel GTech/Antigravity/projetos/painel-metricas-trafego/src/lib/mock/data.ts": {
+    "mtime": 1782687457.136245,
+    "ast_hash": "32d85c386f1978fbe722d2f4db4d5b01",
+    "semantic_hash": "32d85c386f1978fbe722d2f4db4d5b01"
+  },
+  "/Users/Gabriel GTech/Antigravity/projetos/painel-metricas-trafego/src/lib/range.ts": {
+    "mtime": 1782686983.7917912,
+    "ast_hash": "897eb0a66e2e91891c4f20598ef3d44d",
+    "semantic_hash": "897eb0a66e2e91891c4f20598ef3d44d"
+  },
+  "/Users/Gabriel GTech/Antigravity/projetos/painel-metricas-trafego/src/lib/supabase/client.ts": {
+    "mtime": 1782686638.7704515,
+    "ast_hash": "ca9afb355b469df363a387186d7df9ab",
+    "semantic_hash": "ca9afb355b469df363a387186d7df9ab"
+  },
+  "/Users/Gabriel GTech/Antigravity/projetos/painel-metricas-trafego/src/lib/supabase/config.ts": {
+    "mtime": 1782686623.2763398,
+    "ast_hash": "7c0fc77a43d8ddd7a74bbd0a2e00a2e8",
+    "semantic_hash": "7c0fc77a43d8ddd7a74bbd0a2e00a2e8"
+  },
+  "/Users/Gabriel GTech/Antigravity/projetos/painel-metricas-trafego/src/lib/supabase/server.ts": {
+    "mtime": 1782686632.8400378,
+    "ast_hash": "758d58f796885d4d295b6d2bae79cf14",
+    "semantic_hash": "758d58f796885d4d295b6d2bae79cf14"
+  },
+  "/Users/Gabriel GTech/Antigravity/projetos/painel-metricas-trafego/src/lib/supabase/updateSession.ts": {
+    "mtime": 1782686649.587946,
+    "ast_hash": "e120c87497fabf3af25d474aa240d5a1",
+    "semantic_hash": "e120c87497fabf3af25d474aa240d5a1"
+  },
+  "/Users/Gabriel GTech/Antigravity/projetos/painel-metricas-trafego/src/lib/types.ts": {
+    "mtime": 1782686598.418648,
+    "ast_hash": "2b3666ff416ef216202042c03d27315e",
+    "semantic_hash": "2b3666ff416ef216202042c03d27315e"
+  },
+  "/Users/Gabriel GTech/Antigravity/projetos/painel-metricas-trafego/src/proxy.ts": {
+    "mtime": 1782686657.22511,
+    "ast_hash": "9d8c3fbe5dbaf40fced8765b929b892f",
+    "semantic_hash": "9d8c3fbe5dbaf40fced8765b929b892f"
+  },
+  "/Users/Gabriel GTech/Antigravity/projetos/painel-metricas-trafego/supabase/migrations/0001_init.sql": {
+    "mtime": 1782687524.3234453,
+    "ast_hash": "9ea8a4fda8423a94b394784caffec5e9",
+    "semantic_hash": "9ea8a4fda8423a94b394784caffec5e9"
+  },
+  "/Users/Gabriel GTech/Antigravity/projetos/painel-metricas-trafego/supabase/migrations/0002_seed.sql": {
+    "mtime": 1782687579.0004647,
+    "ast_hash": "fabd68d1257fe980424ad4a1624c604a",
+    "semantic_hash": "fabd68d1257fe980424ad4a1624c604a"
+  },
+  "/Users/Gabriel GTech/Antigravity/projetos/painel-metricas-trafego/tsconfig.json": {
+    "mtime": 1782686238.8151572,
+    "ast_hash": "ee17fd1c97c735e9f3564e3f5251f125",
+    "semantic_hash": "ee17fd1c97c735e9f3564e3f5251f125"
+  },
+  "/Users/Gabriel GTech/Antigravity/projetos/painel-metricas-trafego/AGENTS.md": {
+    "mtime": 1782686282.790553,
+    "ast_hash": "9e09241799026ac05be315a2f0b50055",
+    "semantic_hash": "9e09241799026ac05be315a2f0b50055"
+  },
+  "/Users/Gabriel GTech/Antigravity/projetos/painel-metricas-trafego/CLAUDE.md": {
+    "mtime": 1782686282.7906349,
+    "ast_hash": "5c27369b226fcf2be8a6cfe52224e767",
+    "semantic_hash": "5c27369b226fcf2be8a6cfe52224e767"
+  },
+  "/Users/Gabriel GTech/Antigravity/projetos/painel-metricas-trafego/README.md": {
+    "mtime": 1782687666.941279,
+    "ast_hash": "ec4c30d8ef5c3897a9f7c38fe1f6724e",
+    "semantic_hash": "ec4c30d8ef5c3897a9f7c38fe1f6724e"
+  },
+  "/Users/Gabriel GTech/Antigravity/projetos/painel-metricas-trafego/REGRAS-PROJETO.md": {
+    "mtime": 1782687692.785291,
+    "ast_hash": "fd23fdc161281f3dce815e46b0111da1",
+    "semantic_hash": "fd23fdc161281f3dce815e46b0111da1"
+  },
+  "/Users/Gabriel GTech/Antigravity/projetos/painel-metricas-trafego/docs/ingestao-n8n.md": {
+    "mtime": 1782687637.8479667,
+    "ast_hash": "7640c186d3c61cf8696b0237986d0fb0",
+    "semantic_hash": "7640c186d3c61cf8696b0237986d0fb0"
+  },
+  "/Users/Gabriel GTech/Antigravity/projetos/painel-metricas-trafego/public/brand/favicon.png": {
+    "mtime": 1782686435.7071648,
+    "ast_hash": "3833ca2de2cab7283e760af0466d8233",
+    "semantic_hash": "3833ca2de2cab7283e760af0466d8233"
+  },
+  "/Users/Gabriel GTech/Antigravity/projetos/painel-metricas-trafego/public/brand/logo_gtech_horizontal_.png": {
+    "mtime": 1782686435.6909993,
+    "ast_hash": "7064888a9be4a5ebf2785cff5cf2bfb0",
+    "semantic_hash": "7064888a9be4a5ebf2785cff5cf2bfb0"
+  },
+  "/Users/Gabriel GTech/Antigravity/projetos/painel-metricas-trafego/public/brand/logo_gtech_horizontal_preto.png": {
+    "mtime": 1782686435.6949997,
+    "ast_hash": "5e0abb96196eb73e53da03a9005e3b65",
+    "semantic_hash": "5e0abb96196eb73e53da03a9005e3b65"
+  },
+  "/Users/Gabriel GTech/Antigravity/projetos/painel-metricas-trafego/public/brand/logo_gtech_horizontal_verde_escuro.png": {
+    "mtime": 1782686435.6985154,
+    "ast_hash": "3da13c5a64db57c7b9ea370a330bc264",
+    "semantic_hash": "3da13c5a64db57c7b9ea370a330bc264"
+  },
+  "/Users/Gabriel GTech/Antigravity/projetos/painel-metricas-trafego/public/brand/logo_gtech_ico_.png": {
+    "mtime": 1782686435.7016056,
+    "ast_hash": "b83120fdffe7d426d01d7380828f74fa",
+    "semantic_hash": "b83120fdffe7d426d01d7380828f74fa"
+  },
+  "/Users/Gabriel GTech/Antigravity/projetos/painel-metricas-trafego/public/brand/logo_gtech_ico_verde_escuro.png": {
+    "mtime": 1782686435.704565,
+    "ast_hash": "899a462016e56691584442fd4fa6e43e",
+    "semantic_hash": "899a462016e56691584442fd4fa6e43e"
+  },
+  "/Users/Gabriel GTech/Antigravity/projetos/painel-metricas-trafego/public/file.svg": {
+    "mtime": 1782686238.8145726,
+    "ast_hash": "d09f95206c3fa0bb9bd9fefabfd0ea71",
+    "semantic_hash": "d09f95206c3fa0bb9bd9fefabfd0ea71"
+  },
+  "/Users/Gabriel GTech/Antigravity/projetos/painel-metricas-trafego/public/globe.svg": {
+    "mtime": 1782686238.8146544,
+    "ast_hash": "2aaafa6a49b6563925fe440891e32717",
+    "semantic_hash": "2aaafa6a49b6563925fe440891e32717"
+  },
+  "/Users/Gabriel GTech/Antigravity/projetos/painel-metricas-trafego/public/next.svg": {
+    "mtime": 1782686238.814318,
+    "ast_hash": "8e061864f388b47f33a1c3780831193e",
+    "semantic_hash": "8e061864f388b47f33a1c3780831193e"
+  },
+  "/Users/Gabriel GTech/Antigravity/projetos/painel-metricas-trafego/public/vercel.svg": {
+    "mtime": 1782686238.814549,
+    "ast_hash": "c0af2f507b369b085b35ef4bbe3bcf1e",
+    "semantic_hash": "c0af2f507b369b085b35ef4bbe3bcf1e"
+  },
+  "/Users/Gabriel GTech/Antigravity/projetos/painel-metricas-trafego/public/window.svg": {
+    "mtime": 1782686238.8145726,
+    "ast_hash": "a2760511c65806022ad20adf74370ff3",
+    "semantic_hash": "a2760511c65806022ad20adf74370ff3"
+  }
+}
