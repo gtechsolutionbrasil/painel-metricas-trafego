@@ -25,6 +25,7 @@ n8n/credencial segura. O painel não precisa conhecer essa senha.
 Dados principais para salvar por cliente:
 
 - `google_ads_customer_id`
+- `account_external_id` nas linhas de `ad_metrics` usando esse mesmo customer ID
 - campanhas, custo, impressões, cliques e conversões via Google Ads API
 - conversões vindas do site, quando configuradas no GTM/Google Ads
 
@@ -41,6 +42,7 @@ front-end.
 Dados principais para salvar por cliente:
 
 - `meta_ad_account_id`
+- `account_external_id` nas linhas de `ad_metrics` usando esse mesmo `act_...`
 - campanhas, gasto, impressões, cliques, leads/conversões e valor via Insights
 - eventos de Pixel/Conversions API quando estiverem disponíveis
 
@@ -59,6 +61,7 @@ Pelo print, o container já segue um padrão bom:
 Para o painel, cada cliente/site precisa mapear:
 
 - `ga4_property_id`
+- `account_external_id` nas linhas de `web_metrics` usando esse property ID
 - `gtm_container_id` (para auditoria, não para métrica diária)
 - domínio do site
 - eventos considerados conversão: lead, whatsapp, phone, route, purchase etc.
@@ -106,3 +109,15 @@ Depois, criar uma página **Conversões do site** mostrando eventos por canal:
 
 Assim o painel deixa de mostrar só "mídia" e passa a mostrar a jornada completa:
 investimento -> clique -> sessão -> evento -> lead/conversão.
+
+## Estado implementado no painel
+
+O painel já possui uma primeira versão operacional:
+
+- barra superior com filtros de cliente, conta conectada, origem paga
+  (Google/Meta) e período;
+- página **Clientes e contas** para cadastrar cliente e IDs de Google Ads,
+  Meta Ads, GA4 e GTM;
+- tabela `integration_accounts`;
+- campo `account_external_id` em `ad_metrics` e `web_metrics` para o n8n
+  permitir filtro por conta.

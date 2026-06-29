@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import {
   BarChart3,
+  Building2,
   Globe,
   LayoutDashboard,
   Megaphone,
@@ -17,6 +18,7 @@ const NAV: NavItem[] = [
   { href: "/", label: "Visão geral", icon: LayoutDashboard },
   { href: "/trafego-pago", label: "Tráfego pago", icon: Megaphone },
   { href: "/analytics", label: "Analytics web", icon: Globe },
+  { href: "/clientes", label: "Clientes/Contas", icon: Building2 },
 ];
 
 export function Sidebar() {

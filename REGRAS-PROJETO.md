@@ -50,10 +50,13 @@ Telas: Login, Visão geral, Tráfego pago, Analytics web. Build OK.
 - [ ] Trocar a senha temporária do admin.
 - [ ] Aplicar no Supabase a migration `0003_harden_profile_updates.sql`
       (hardening contra update de `role` pelo próprio usuário).
+- [ ] Aplicar no Supabase a migration `0004_client_integration_accounts.sql`
+      (contas conectadas + `account_external_id` nas métricas).
 - [ ] Fase 5: construir os 3 workflows n8n (Meta, Google, GA4) → Supabase
-      (usar `SUPABASE_SERVICE_ROLE_KEY`; contrato em `docs/ingestao-n8n.md`).
-- [ ] Fase 6 sugerida: página **Integrações** por cliente + página
-      **Conversões do site** (ver `docs/integracoes-ads-analytics.md`).
+      preenchendo `account_external_id` (usar `SUPABASE_SERVICE_ROLE_KEY`;
+      contrato em `docs/ingestao-n8n.md`).
+- [ ] Fase 6 sugerida: página **Conversões do site** por evento/canal
+      (ver `docs/integracoes-ads-analytics.md`).
 - [ ] Deploy na Vercel (configurar as 3 env vars; lembrar que `NEXT_PUBLIC_*`
       são embutidas no build).
 - [ ] (Opcional) seletor de período custom (datas), export de relatório/PDF.
@@ -85,3 +88,9 @@ Telas: Login, Visão geral, Tráfego pago, Analytics web. Build OK.
   para impedir update de `role` pelo próprio usuário. Adicionado guia
   `docs/integracoes-ads-analytics.md` explicando Google Ads/MCC, Meta Business,
   GA4/GTM e recomendando páginas de Integrações + Conversões do site.
+- **2026-06-28** — Layout de filtros e cadastro de contas. Topbar virou barra
+  operacional com seleção de cliente, conta conectada, origem paga
+  (Google/Meta) e período. Criada página `/clientes` para cadastrar cliente e
+  IDs de Google Ads, Meta Ads, GA4 e GTM. Adicionada migration
+  `0004_client_integration_accounts` com tabela `integration_accounts`,
+  policies admin e `account_external_id` em `ad_metrics`/`web_metrics`.

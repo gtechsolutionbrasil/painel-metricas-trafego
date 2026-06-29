@@ -1,4 +1,11 @@
-import type { AdMetric, Client, DateRange, Platform, WebMetric } from "../types";
+import type {
+  AdMetric,
+  Client,
+  DateRange,
+  IntegrationAccount,
+  Platform,
+  WebMetric,
+} from "../types";
 
 // ---------------------------------------------------------------------------
 // Dados de demonstração determinísticos (mesma data => mesmos números).
@@ -11,6 +18,35 @@ export const MOCK_CLIENTS: Client[] = [
   { id: "cli-nova", name: "Nova Motors", slug: "nova", status: "active" },
   { id: "cli-vitta", name: "Vitta Saúde", slug: "vitta", status: "paused" },
 ];
+
+export const MOCK_INTEGRATION_ACCOUNTS: IntegrationAccount[] =
+  MOCK_CLIENTS.flatMap((client) => [
+    {
+      id: `${client.id}-google`,
+      clientId: client.id,
+      provider: "google_ads",
+      accountName: `${client.name} - Google Ads`,
+      externalId: `${client.slug}-google-ads`,
+      status: "connected",
+    },
+    {
+      id: `${client.id}-meta`,
+      clientId: client.id,
+      provider: "meta_ads",
+      accountName: `${client.name} - Meta Ads`,
+      externalId: `${client.slug}-meta-ads`,
+      status: "connected",
+    },
+    {
+      id: `${client.id}-ga4`,
+      clientId: client.id,
+      provider: "ga4",
+      accountName: `${client.name} - GA4`,
+      externalId: `${client.slug}-ga4`,
+      status: "connected",
+      websiteUrl: `https://${client.slug}.com.br`,
+    },
+  ]);
 
 const CAMPAigns: Record<Platform, string[]> = {
   meta: [
@@ -105,6 +141,7 @@ export function generateAdMetrics(range: DateRange, clientId?: string): AdMetric
           const revenue = Math.round(conversions * ticket);
           rows.push({
             clientId: cid,
+            accountExternalId: `${cid.replace("cli-", "")}-${platform === "google" ? "google-ads" : "meta-ads"}`,
             date,
             platform,
             campaign,
@@ -139,6 +176,7 @@ export function generateWebMetrics(range: DateRange, clientId?: string): WebMetr
         const avgDuration = Math.round(40 + r() * 220);
         rows.push({
           clientId: cid,
+          accountExternalId: `${cid.replace("cli-", "")}-ga4`,
           date,
           source,
           medium,

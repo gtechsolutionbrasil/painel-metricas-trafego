@@ -25,24 +25,24 @@
     "semantic_hash": "57b0cc4c99d448173da992f07c3c95c1"
   },
   "src/app/(dash)/analytics/page.tsx": {
-    "mtime": 1782687317.4421532,
-    "ast_hash": "08f962e286a52d24b86dc32b52d717d6",
-    "semantic_hash": "08f962e286a52d24b86dc32b52d717d6"
+    "mtime": 1782692999.8685122,
+    "ast_hash": "74a1b0b547cb1bfb0ee6fcba2a6c8fdc",
+    "semantic_hash": "74a1b0b547cb1bfb0ee6fcba2a6c8fdc"
   },
   "src/app/(dash)/layout.tsx": {
-    "mtime": 1782686953.8107276,
-    "ast_hash": "3946d667b4216edb8430ecc2c2e9eace",
-    "semantic_hash": "3946d667b4216edb8430ecc2c2e9eace"
+    "mtime": 1782692943.3086658,
+    "ast_hash": "f017bf5b6a24be4fb3d8b990c205528b",
+    "semantic_hash": "f017bf5b6a24be4fb3d8b990c205528b"
   },
   "src/app/(dash)/page.tsx": {
-    "mtime": 1782687292.9351616,
-    "ast_hash": "f0f90f27f9d8db42e388fc4f84d9338f",
-    "semantic_hash": "f0f90f27f9d8db42e388fc4f84d9338f"
+    "mtime": 1782692980.679227,
+    "ast_hash": "7b26849d19fbbf779214fca76ba93d70",
+    "semantic_hash": "7b26849d19fbbf779214fca76ba93d70"
   },
   "src/app/(dash)/trafego-pago/page.tsx": {
-    "mtime": 1782687306.0108373,
-    "ast_hash": "0a116a271f1c4a701127c0842bfa13bc",
-    "semantic_hash": "0a116a271f1c4a701127c0842bfa13bc"
+    "mtime": 1782692992.459475,
+    "ast_hash": "44aa83584e2cd2d825aaf9d3ffde65c5",
+    "semantic_hash": "44aa83584e2cd2d825aaf9d3ffde65c5"
   },
   "src/app/layout.tsx": {
     "mtime": 1782686587.1660964,
@@ -80,14 +80,14 @@
     "semantic_hash": "31a15f7a3f84c9a7cac2a48458505b3a"
   },
   "src/components/layout/Sidebar.tsx": {
-    "mtime": 1782686824.501842,
-    "ast_hash": "1e46486fcea81554606f3202ea160c7f",
-    "semantic_hash": "1e46486fcea81554606f3202ea160c7f"
+    "mtime": 1782692962.1826315,
+    "ast_hash": "78309e9311116952bde26f0a9df2364c",
+    "semantic_hash": "78309e9311116952bde26f0a9df2364c"
   },
   "src/components/layout/Topbar.tsx": {
-    "mtime": 1782691850.6875567,
-    "ast_hash": "145cb7acd42f1f3e53a04002d9d15a5a",
-    "semantic_hash": "145cb7acd42f1f3e53a04002d9d15a5a"
+    "mtime": 1782693180.3660452,
+    "ast_hash": "7b423299eb8535444cb96384a95659de",
+    "semantic_hash": "7b423299eb8535444cb96384a95659de"
   },
   "src/components/ui/Badge.tsx": {
     "mtime": 1782686797.2617779,
@@ -120,14 +120,14 @@
     "semantic_hash": "967450f3f22e9795253cb26ab8b3d791"
   },
   "src/lib/metrics/queries.ts": {
-    "mtime": 1782691871.3832805,
-    "ast_hash": "3d877d33d8f734c3610057fe66a2f3bf",
-    "semantic_hash": "3d877d33d8f734c3610057fe66a2f3bf"
+    "mtime": 1782693283.7886825,
+    "ast_hash": "0ba8bc02b70319a6bffaded4dd6efe38",
+    "semantic_hash": "0ba8bc02b70319a6bffaded4dd6efe38"
   },
   "src/lib/mock/data.ts": {
-    "mtime": 1782687457.136245,
-    "ast_hash": "32d85c386f1978fbe722d2f4db4d5b01",
-    "semantic_hash": "32d85c386f1978fbe722d2f4db4d5b01"
+    "mtime": 1782692836.7092912,
+    "ast_hash": "00a39782fbf372b1b3d713ebf631cb1e",
+    "semantic_hash": "00a39782fbf372b1b3d713ebf631cb1e"
   },
   "src/lib/range.ts": {
     "mtime": 1782691823.9793637,
@@ -155,9 +155,9 @@
     "semantic_hash": "e120c87497fabf3af25d474aa240d5a1"
   },
   "src/lib/types.ts": {
-    "mtime": 1782686598.418648,
-    "ast_hash": "2b3666ff416ef216202042c03d27315e",
-    "semantic_hash": "2b3666ff416ef216202042c03d27315e"
+    "mtime": 1782692822.5767012,
+    "ast_hash": "fcdb40c402b49375da95233b0cef6b19",
+    "semantic_hash": "fcdb40c402b49375da95233b0cef6b19"
   },
   "src/proxy.ts": {
     "mtime": 1782686657.22511,
@@ -190,18 +190,18 @@
     "semantic_hash": "5c27369b226fcf2be8a6cfe52224e767"
   },
   "README.md": {
-    "mtime": 1782687666.941279,
-    "ast_hash": "ec4c30d8ef5c3897a9f7c38fe1f6724e",
-    "semantic_hash": "ec4c30d8ef5c3897a9f7c38fe1f6724e"
+    "mtime": 1782693322.292853,
+    "ast_hash": "276969e97a68fd49fddc44c6c263ce53",
+    "semantic_hash": ""
   },
   "REGRAS-PROJETO.md": {
-    "mtime": 1782691953.3985922,
-    "ast_hash": "cd230417f53a8a4392ffc8b4b9fda5c5",
+    "mtime": 1782693338.5713267,
+    "ast_hash": "f8089ce718f2a2929b64033f0d96abce",
     "semantic_hash": ""
   },
   "docs/ingestao-n8n.md": {
-    "mtime": 1782691908.3434055,
-    "ast_hash": "b19ade438e6bc4c2b998941da89b1f34",
+    "mtime": 1782693205.8359253,
+    "ast_hash": "40bd71fbd36edbc55b7b4e2a77ea88cd",
     "semantic_hash": ""
   },
   "public/brand/favicon.png": {
@@ -265,8 +265,23 @@
     "semantic_hash": "302ec9fa7ab23e86de84c1dc2579c068"
   },
   "docs/integracoes-ads-analytics.md": {
-    "mtime": 1782691900.4604225,
-    "ast_hash": "e13c635635e11c0a71250f8499c89d2d",
+    "mtime": 1782693220.3483133,
+    "ast_hash": "60cc9fe93039b31b76515f806872b1b5",
     "semantic_hash": ""
+  },
+  "src/app/(dash)/clientes/actions.ts": {
+    "mtime": 1782693115.4573076,
+    "ast_hash": "659487306c77d81209b60119954e187a",
+    "semantic_hash": "659487306c77d81209b60119954e187a"
+  },
+  "src/app/(dash)/clientes/page.tsx": {
+    "mtime": 1782693165.731362,
+    "ast_hash": "71318961a3495bb9183d4c1f961dc30a",
+    "semantic_hash": "71318961a3495bb9183d4c1f961dc30a"
+  },
+  "supabase/migrations/0004_client_integration_accounts.sql": {
+    "mtime": 1782693074.7660863,
+    "ast_hash": "e87194f062676fbd653308e3ca56d6dc",
+    "semantic_hash": "e87194f062676fbd653308e3ca56d6dc"
   }
 }

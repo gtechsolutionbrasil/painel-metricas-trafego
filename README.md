@@ -47,6 +47,7 @@ src/
       page.tsx          # Visão geral
       trafego-pago/     # Meta + Google (tabela por campanha)
       analytics/        # GA4 (origens, sessões)
+      clientes/         # cadastro de clientes e contas conectadas
   components/           # brand, ui, layout, charts
   lib/
     supabase/           # clients server/browser + refresh de sessão

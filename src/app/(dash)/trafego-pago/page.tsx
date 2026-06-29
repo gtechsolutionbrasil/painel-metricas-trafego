@@ -15,6 +15,7 @@ import { CHART_COLORS } from "@/components/charts/theme";
 import {
   getAdMetrics,
   getClients,
+  platformsFromSearch,
   resolveClient,
 } from "@/lib/metrics/queries";
 import {
@@ -44,8 +45,15 @@ export default async function TrafegoPagoPage({
   const { range } = rangeFromSearch(sp);
   const clients = await getClients();
   const client = resolveClient(clients, sp.client);
+  const platformsFilter = platformsFromSearch(sp.platform);
+  const accountExternalId = Array.isArray(sp.account) ? sp.account[0] : sp.account;
 
-  const ads = await getAdMetrics(range, client?.id);
+  const ads = await getAdMetrics(
+    range,
+    client?.id,
+    platformsFilter,
+    accountExternalId,
+  );
   const k = adKpis(ads);
   const byDay = adByDay(ads);
   const campaigns = adByCampaign(ads);
@@ -58,7 +66,7 @@ export default async function TrafegoPagoPage({
     <div className="space-y-6">
       <PageHeader
         title="Tráfego pago"
-        subtitle={`Meta Ads + Google Ads · ${client ? client.name : "Todos os clientes"}`}
+        subtitle={`${platformLabel(platformsFilter)} · ${client ? client.name : "Todos os clientes"}`}
       />
 
       {/* KPIs */}
@@ -183,4 +191,9 @@ export default async function TrafegoPagoPage({
       </Card>
     </div>
   );
+}
+
+function platformLabel(platforms?: ReturnType<typeof platformsFromSearch>) {
+  if (!platforms?.length) return "Meta Ads + Google Ads";
+  return platforms[0] === "google" ? "Google Ads" : "Meta Ads";
 }

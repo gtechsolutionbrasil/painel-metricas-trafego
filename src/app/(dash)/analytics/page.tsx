@@ -21,8 +21,9 @@ export default async function AnalyticsPage({
   const { range } = rangeFromSearch(sp);
   const clients = await getClients();
   const client = resolveClient(clients, sp.client);
+  const accountExternalId = Array.isArray(sp.account) ? sp.account[0] : sp.account;
 
-  const web = await getWebMetrics(range, client?.id);
+  const web = await getWebMetrics(range, client?.id, accountExternalId);
   const w = webKpis(web);
   const byDay = webByDay(web);
   const sources = webBySource(web);

@@ -28,6 +28,7 @@ Chave de conflito: `(client_id, date, platform, campaign)`
 | coluna | tipo | origem |
 |---|---|---|
 | `client_id` | uuid | mapeie a conta de anúncio → cliente |
+| `account_external_id` | text | ID da conta de anúncio (`customer_id` Google ou `act_...` Meta) |
 | `date` | date (YYYY-MM-DD) | dia da métrica |
 | `platform` | `'meta'` \| `'google'` | fixo por workflow |
 | `campaign` | text | nome da campanha |
@@ -43,6 +44,7 @@ Chave de conflito: `(client_id, date, source, medium)`
 | coluna | tipo | origem (GA4) |
 |---|---|---|
 | `client_id` | uuid | property GA4 → cliente |
+| `account_external_id` | text | ID da propriedade GA4 |
 | `date` | date | `date` |
 | `source` | text | `sessionSource` |
 | `medium` | text | `sessionMedium` |
@@ -78,9 +80,10 @@ Body: array de objetos com as colunas acima (envie em lote).
 
 1. **Meta Ads → Supabase** — agendado (ex.: a cada hora ou 1×/dia). Para cada
    cliente: Insights API por dia/campanha → mapeia → upsert em `ad_metrics`
-   (`platform='meta'`).
-2. **Google Ads → Supabase** — idem, `platform='google'`.
+   (`platform='meta'`, `account_external_id='act_...'`).
+2. **Google Ads → Supabase** — idem, `platform='google'`,
+   `account_external_id='<customer_id>'`.
 3. **GA4 → Supabase** — Data API (runReport) por dia/source/medium → upsert em
-   `web_metrics`.
+   `web_metrics` com `account_external_id` igual ao property ID.
 
 Construir com as skills `n8n-*` quando esta fase for executada.

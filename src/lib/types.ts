@@ -2,6 +2,10 @@
 
 export type Platform = "meta" | "google";
 
+export type IntegrationProvider = "google_ads" | "meta_ads" | "ga4" | "gtm";
+
+export type IntegrationStatus = "pending" | "connected" | "error" | "paused";
+
 export type Client = {
   id: string;
   name: string;
@@ -10,8 +14,20 @@ export type Client = {
   logoUrl?: string | null;
 };
 
+export type IntegrationAccount = {
+  id: string;
+  clientId: string;
+  provider: IntegrationProvider;
+  accountName: string;
+  externalId: string;
+  status: IntegrationStatus;
+  websiteUrl?: string | null;
+  lastSyncAt?: string | null;
+};
+
 export type AdMetric = {
   clientId: string;
+  accountExternalId?: string;
   date: string; // YYYY-MM-DD
   platform: Platform;
   campaign: string;
@@ -24,6 +40,7 @@ export type AdMetric = {
 
 export type WebMetric = {
   clientId: string;
+  accountExternalId?: string;
   date: string; // YYYY-MM-DD
   source: string;
   medium: string;

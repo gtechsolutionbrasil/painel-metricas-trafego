@@ -13,7 +13,13 @@ import { TrendAreaChart } from "@/components/charts/TrendAreaChart";
 import { BarsChart } from "@/components/charts/BarsChart";
 import { DonutChart } from "@/components/charts/DonutChart";
 import { CHART_COLORS } from "@/components/charts/theme";
-import { getAdMetrics, getWebMetrics, getClients, resolveClient } from "@/lib/metrics/queries";
+import {
+  getAdMetrics,
+  getWebMetrics,
+  getClients,
+  platformsFromSearch,
+  resolveClient,
+} from "@/lib/metrics/queries";
 import {
   adByDay,
   adByPlatform,
@@ -43,12 +49,14 @@ export default async function OverviewPage({
   const clients = await getClients();
   const client = resolveClient(clients, sp.client);
   const cid = client?.id;
+  const platformsFilter = platformsFromSearch(sp.platform);
+  const accountExternalId = Array.isArray(sp.account) ? sp.account[0] : sp.account;
 
   const [ads, adsPrev, web, webPrev] = await Promise.all([
-    getAdMetrics(range, cid),
-    getAdMetrics(prev, cid),
-    getWebMetrics(range, cid),
-    getWebMetrics(prev, cid),
+    getAdMetrics(range, cid, platformsFilter, accountExternalId),
+    getAdMetrics(prev, cid, platformsFilter, accountExternalId),
+    getWebMetrics(range, cid, accountExternalId),
+    getWebMetrics(prev, cid, accountExternalId),
   ]);
 
   const k = adKpis(ads);
@@ -66,7 +74,7 @@ export default async function OverviewPage({
     <div className="space-y-6">
       <PageHeader
         title="Visão geral"
-        subtitle={`${client ? client.name : "Todos os clientes"} · últimos ${range.from === range.to ? "1 dia" : `${(byDay.length || 0)} dias`}`}
+        subtitle={`${client ? client.name : "Todos os clientes"} · ${platformLabel(platformsFilter)} · últimos ${range.from === range.to ? "1 dia" : `${(byDay.length || 0)} dias`}`}
       />
 
       {/* KPIs principais */}
@@ -192,4 +200,9 @@ export default async function OverviewPage({
       </div>
     </div>
   );
+}
+
+function platformLabel(platforms?: ReturnType<typeof platformsFromSearch>) {
+  if (!platforms?.length) return "Google + Meta";
+  return platforms[0] === "google" ? "Google Ads" : "Meta Ads";
 }
