@@ -22,6 +22,18 @@ Melhor cenário: usar a conta de administrador da agência (MCC/Manager Account)
 O cliente concede acesso à conta de anúncios dele para o MCC. Depois, um único
 OAuth da agência pode consultar os `customer_id` vinculados.
 
+Para criar/organizar a MCC:
+
+1. Entre no Google Ads com a conta da agência.
+2. Crie uma **conta de administrador** (Manager Account/MCC) ou use a conta
+   **GTech Solution Brasil** se ela já for uma conta de administrador.
+3. Em cada conta de cliente, solicite/adiciona acesso da MCC pelo ID de
+   administrador.
+4. Guarde no cadastro do painel o `customer_id` da conta final do cliente, não
+   apenas o ID da MCC.
+5. No n8n, configure uma credencial OAuth da sua conta/agência e o Developer
+   Token do Google Ads API.
+
 Quando você acessa com a conta Google do próprio cliente, o ideal ainda é pedir
 para ele conceder acesso ao MCC da agência. Se não for possível, faça uma
 autorização OAuth uma vez com o usuário do cliente e guarde o refresh token no
@@ -38,6 +50,16 @@ Dados principais para salvar por cliente:
 
 Melhor cenário: usar o Business Manager da agência como parceiro do Business do
 cliente. Com permissão na conta de anúncios, a coleta usa a Meta Marketing API.
+
+Para o seu caso, como sua conta já aparece com acesso a vários portfólios/BMs:
+
+1. Use o Business/portfólio da agência como central operacional.
+2. Confirme que sua conta ou o Business da agência tem acesso às contas de
+   anúncio dos clientes.
+3. Crie uma credencial no n8n com token de longa duração ou System User ligado
+   ao Business.
+4. Cadastre no painel o `act_...` de cada conta de anúncios final.
+5. O n8n usa a credencial central e consulta cada `act_...` mapeado no painel.
 
 Quando você só entra com a conta Meta do cliente, peça para o cliente adicionar
 o Business da agência como parceiro. Se não der, faça uma autorização OAuth uma
@@ -56,6 +78,18 @@ Dados principais para salvar por cliente:
 O GTM não é a fonte final de relatório. Ele dispara tags e eventos. As métricas
 do site vêm principalmente do GA4 Data API.
 
+Use GA4 quando o cliente tem site e você quer medir o pós-clique:
+
+- sessões e usuários;
+- origem/mídia (`google / cpc`, `facebook / paid`, orgânico etc.);
+- páginas vistas;
+- eventos do site;
+- leads de formulário, WhatsApp, ligação, rota e compra quando configurados.
+
+O GA4 não substitui Google Ads nem Meta Ads para mídia paga, porque ele não é a
+fonte principal de custo, impressões, campanhas e entrega das plataformas. Ele
+complementa os Ads mostrando o comportamento no site.
+
 Pelo print, o container já segue um padrão bom:
 
 - eventos GA4: `generate_lead`, `phone_click`, `route_click`, `whatsapp_click`
@@ -70,6 +104,10 @@ Para o painel, cada cliente/site precisa mapear:
 - `gtm_container_id` (para auditoria, não para métrica diária)
 - domínio do site
 - eventos considerados conversão: lead, whatsapp, phone, route, purchase etc.
+
+O GTM entra na página de **Integrações** como status/auditoria de tracking:
+container instalado, eventos publicados e tags disparando. A aba **GA4 / Sites**
+mostra as métricas que o GA4 recebeu depois desses disparos.
 
 ## Fluxo recomendado no n8n
 
@@ -101,7 +139,7 @@ O GTM entra como fonte de auditoria de tracking. Ele não entrega as métricas
 diárias do painel; ele dispara eventos que depois aparecem em GA4, Google Ads e
 Meta quando as tags estão corretas.
 
-O painel atual já separa tráfego pago por plataforma e analytics web por origem.
+O painel atual já separa tráfego pago por plataforma e GA4/sites por origem.
 A próxima evolução recomendada é adicionar uma camada de integrações e qualidade
 de tracking.
 
@@ -132,6 +170,8 @@ O painel já possui uma primeira versão operacional:
 
 - barra superior com filtros de cliente, fonte de dados, origem paga
   (Google Ads/Meta Ads) e período;
+- página **GA4 / Sites** para sessões, usuários, origem/mídia e métricas web
+  vindas do GA4;
 - página **Clientes e integrações** para cadastrar cliente e IDs de Google Ads,
   Meta Ads, GA4 e GTM, deixando claro que credenciais ficam no n8n;
 - tabela `integration_accounts`;

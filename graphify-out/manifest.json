@@ -25,9 +25,9 @@
     "semantic_hash": "57b0cc4c99d448173da992f07c3c95c1"
   },
   "src/app/(dash)/analytics/page.tsx": {
-    "mtime": 1782692999.8685122,
-    "ast_hash": "74a1b0b547cb1bfb0ee6fcba2a6c8fdc",
-    "semantic_hash": "74a1b0b547cb1bfb0ee6fcba2a6c8fdc"
+    "mtime": 1782695341.8684106,
+    "ast_hash": "310ef6508be19b653f989ed8b91b38d9",
+    "semantic_hash": "310ef6508be19b653f989ed8b91b38d9"
   },
   "src/app/(dash)/layout.tsx": {
     "mtime": 1782692943.3086658,
@@ -45,9 +45,9 @@
     "semantic_hash": "44aa83584e2cd2d825aaf9d3ffde65c5"
   },
   "src/app/layout.tsx": {
-    "mtime": 1782686587.1660964,
-    "ast_hash": "89ba1bb43af79503e3d20a5acd2a23ce",
-    "semantic_hash": "89ba1bb43af79503e3d20a5acd2a23ce"
+    "mtime": 1782695379.3153129,
+    "ast_hash": "67365a5c19d81f9514107e1fa19edbfe",
+    "semantic_hash": "67365a5c19d81f9514107e1fa19edbfe"
   },
   "src/components/brand/Logo.tsx": {
     "mtime": 1782686767.5511565,
@@ -80,9 +80,9 @@
     "semantic_hash": "31a15f7a3f84c9a7cac2a48458505b3a"
   },
   "src/components/layout/Sidebar.tsx": {
-    "mtime": 1782694087.511837,
-    "ast_hash": "ce575bac31e3f6c8189e32674831149f",
-    "semantic_hash": "ce575bac31e3f6c8189e32674831149f"
+    "mtime": 1782695315.3763618,
+    "ast_hash": "d7e413a85285f22b8fd8db311914b78d",
+    "semantic_hash": "d7e413a85285f22b8fd8db311914b78d"
   },
   "src/components/layout/Topbar.tsx": {
     "mtime": 1782694290.0764751,
@@ -190,19 +190,19 @@
     "semantic_hash": "5c27369b226fcf2be8a6cfe52224e767"
   },
   "README.md": {
-    "mtime": 1782694135.2437289,
-    "ast_hash": "d02779fc41a7502d5b3ca5ae9733b92c",
+    "mtime": 1782695390.1914148,
+    "ast_hash": "2d34cd0c48229d316722f24e2cdf4fdd",
     "semantic_hash": ""
   },
   "REGRAS-PROJETO.md": {
-    "mtime": 1782694154.5771527,
-    "ast_hash": "cebe0a8119890179014b6dc62a1c90e6",
+    "mtime": 1782695406.5245292,
+    "ast_hash": "7cb7a24fadf015d24fa489f51887181e",
     "semantic_hash": ""
   },
   "docs/ingestao-n8n.md": {
     "mtime": 1782694108.5232832,
     "ast_hash": "6e64bfabe6c6ee0e912cee154f2c9051",
-    "semantic_hash": ""
+    "semantic_hash": "6e64bfabe6c6ee0e912cee154f2c9051"
   },
   "public/brand/favicon.png": {
     "mtime": 1782686435.7071648,
@@ -265,8 +265,8 @@
     "semantic_hash": "302ec9fa7ab23e86de84c1dc2579c068"
   },
   "docs/integracoes-ads-analytics.md": {
-    "mtime": 1782694129.5164902,
-    "ast_hash": "98722231a258e57a54303622246611f2",
+    "mtime": 1782695368.8943872,
+    "ast_hash": "23f10d6316776bd6db6d53320662c87b",
     "semantic_hash": ""
   },
   "src/app/(dash)/clientes/actions.ts": {

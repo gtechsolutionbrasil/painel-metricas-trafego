@@ -11,7 +11,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Painel GTech Solution — Métricas de Tráfego",
   description:
-    "Painel multi-cliente da GTech Solution para métricas de tráfego pago (Meta Ads, Google Ads) e analytics web (GA4).",
+    "Painel multi-cliente da GTech Solution para métricas de tráfego pago (Meta Ads, Google Ads) e GA4/sites.",
   icons: { icon: "/brand/favicon.png" },
 };
 

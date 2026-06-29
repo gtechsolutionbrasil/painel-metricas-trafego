@@ -1,7 +1,7 @@
 # Painel de Métricas de Tráfego — GTech Solution
 
 Painel **multi-cliente** (agência) que consolida **tráfego pago (Meta Ads +
-Google Ads)** e **analytics web (GA4)**, com login e separação por cliente.
+Google Ads)** e **GA4/sites**, com login e separação por cliente.
 
 - **Stack:** Next.js 16 (App Router) · React 19 · TypeScript · Tailwind v4
 - **Dados/Auth:** Supabase (Postgres + Auth + RLS)
@@ -46,7 +46,7 @@ src/
     (dash)/             # shell + páginas protegidas
       page.tsx          # Visão geral
       trafego-pago/     # Meta + Google (tabela por campanha)
-      analytics/        # GA4 (origens, sessões)
+      analytics/        # GA4 / Sites (origens, sessões)
       clientes/         # cadastro de clientes e integrações/fontes
   components/           # brand, ui, layout, charts
   lib/

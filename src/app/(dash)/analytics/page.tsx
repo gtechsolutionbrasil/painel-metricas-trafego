@@ -34,8 +34,8 @@ export default async function AnalyticsPage({
   return (
     <div className="space-y-6">
       <PageHeader
-        title="Analytics web"
-        subtitle={`Google Analytics 4 · ${client ? client.name : "Todos os clientes"}`}
+        title="GA4 / Sites"
+        subtitle={`Sessões, usuários e origens do Google Analytics 4 · ${client ? client.name : "Todos os clientes"}`}
       />
 
       {/* KPIs */}
@@ -63,7 +63,10 @@ export default async function AnalyticsPage({
       {/* Tendência + origem */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         <Card className="lg:col-span-2">
-          <CardHeader title="Sessões × Usuários" subtitle="Evolução diária no período" />
+          <CardHeader
+            title="Sessões × Usuários"
+            subtitle="Evolução diária no GA4"
+          />
           <CardBody>
             <TrendAreaChart
               data={byDay}
@@ -87,7 +90,7 @@ export default async function AnalyticsPage({
         </Card>
 
         <Card>
-          <CardHeader title="Origem das sessões" subtitle="Canais de aquisição" />
+          <CardHeader title="Origem das sessões" subtitle="Canais de aquisição no GA4" />
           <CardBody>
             <DonutChart data={donut} />
           </CardBody>
@@ -97,7 +100,7 @@ export default async function AnalyticsPage({
       {/* Tabela de origens */}
       <Card>
         <CardHeader
-          title="Detalhe por origem / mídia"
+          title="Origem / mídia no site"
           subtitle={`${sources.length} canais no período`}
         />
         <div className="overflow-x-auto">

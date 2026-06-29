@@ -17,7 +17,7 @@ type NavItem = { href: string; label: string; icon: LucideIcon };
 const NAV: NavItem[] = [
   { href: "/", label: "Visão geral", icon: LayoutDashboard },
   { href: "/trafego-pago", label: "Tráfego pago", icon: Megaphone },
-  { href: "/analytics", label: "Analytics web", icon: Globe },
+  { href: "/analytics", label: "GA4 / Sites", icon: Globe },
   { href: "/clientes", label: "Integrações", icon: Building2 },
 ];
 

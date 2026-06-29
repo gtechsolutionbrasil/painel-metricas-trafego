@@ -8,7 +8,7 @@
 ## O que é
 
 Painel **multi-cliente de agência** que consolida **tráfego pago (Meta Ads +
-Google Ads)** e **analytics web (GA4)**, com login e recorte por cliente
+Google Ads)** e **GA4/sites**, com login e recorte por cliente
 (cada usuário vê só os clientes a que tem acesso).
 
 ## Stack e decisões
@@ -41,7 +41,7 @@ Google Ads)** e **analytics web (GA4)**, com login e recorte por cliente
 0001+0002 aplicadas (clients=3, ad_metrics=2160, web_metrics=1620). Auth + RLS
 validados: usuário admin `guedesint@gmail.com` (role admin), login OK, RLS
 liberando os 3 clientes e as métricas. `.env.local` configurado (gitignored).
-Telas: Login, Visão geral, Tráfego pago, Analytics web. Build OK.
+Telas: Login, Visão geral, Tráfego pago, GA4 / Sites. Build OK.
 
 ## Pendências / próximos passos
 
@@ -100,3 +100,8 @@ Telas: Login, Visão geral, Tráfego pago, Analytics web. Build OK.
   por "fontes de dados" e simplificou o filtro Google/Meta sem ícones de moeda.
   Docs reforçam que o cadastro não coleta métricas sozinho: n8n lê
   `integration_accounts`, usa OAuth/tokens próprios e grava no Supabase.
+- **2026-06-29** — GA4 e GTM no fluxo operacional. Aba `/analytics` renomeada
+  visualmente para **GA4 / Sites**. Documentado que GA4 mede pós-clique
+  (sessões, origem/mídia, eventos) e não substitui Google/Meta Ads para custo,
+  impressões e campanhas. GTM fica como fonte de auditoria/tracking: dispara
+  eventos que aparecem em GA4, Google Ads e Meta quando as tags estão corretas.
