@@ -48,8 +48,12 @@ Telas: Login, Visão geral, Tráfego pago, Analytics web. Build OK.
 - [ ] **Rotacionar segredos** expostos no chat (anon ok; rotacionar service_role,
       sb_secret e senha do banco em Settings → API/Database).
 - [ ] Trocar a senha temporária do admin.
+- [ ] Aplicar no Supabase a migration `0003_harden_profile_updates.sql`
+      (hardening contra update de `role` pelo próprio usuário).
 - [ ] Fase 5: construir os 3 workflows n8n (Meta, Google, GA4) → Supabase
       (usar `SUPABASE_SERVICE_ROLE_KEY`; contrato em `docs/ingestao-n8n.md`).
+- [ ] Fase 6 sugerida: página **Integrações** por cliente + página
+      **Conversões do site** (ver `docs/integracoes-ads-analytics.md`).
 - [ ] Deploy na Vercel (configurar as 3 env vars; lembrar que `NEXT_PUBLIC_*`
       são embutidas no build).
 - [ ] (Opcional) seletor de período custom (datas), export de relatório/PDF.
@@ -74,3 +78,10 @@ Telas: Login, Visão geral, Tráfego pago, Analytics web. Build OK.
   migrations aplicadas via `node`+`pg` (sem psql local); seed populado
   (2160 ad + 1620 web). `.env.local` configurado. Usuário admin criado e
   promovido; auth + RLS validados de ponta a ponta. App passou a exigir login.
+- **2026-06-28** — Hardening e planejamento de integrações. Corrigido `next`
+  do login para aceitar apenas caminhos internos, datas passaram a usar fuso
+  local e aceitar `from/to`, Topbar ganhou seletor de período no mobile, queries
+  Supabase passaram a logar erros. Criada migration `0003_harden_profile_updates`
+  para impedir update de `role` pelo próprio usuário. Adicionado guia
+  `docs/integracoes-ads-analytics.md` explicando Google Ads/MCC, Meta Business,
+  GA4/GTM e recomendando páginas de Integrações + Conversões do site.

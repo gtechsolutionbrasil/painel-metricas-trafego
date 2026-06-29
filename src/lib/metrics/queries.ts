@@ -12,6 +12,11 @@ import type { AdMetric, Client, DateRange, WebMetric } from "../types";
 // recorte por cliente). Sem Supabase, usa dados de demonstração (mock).
 // ---------------------------------------------------------------------------
 
+function logQueryError(operation: string, error: unknown) {
+  if (!error) return;
+  console.error(`[metrics] ${operation} failed`, error);
+}
+
 export async function getClients(): Promise<Client[]> {
   if (!isSupabaseConfigured) return MOCK_CLIENTS;
 
@@ -21,7 +26,10 @@ export async function getClients(): Promise<Client[]> {
     .select("id, name, slug, status, logo_url")
     .order("name");
 
-  if (error || !data) return [];
+  if (error || !data) {
+    logQueryError("getClients", error);
+    return [];
+  }
   return data.map((c) => ({
     id: c.id,
     name: c.name,
@@ -48,7 +56,10 @@ export async function getAdMetrics(
   if (clientId) q = q.eq("client_id", clientId);
 
   const { data, error } = await q;
-  if (error || !data) return [];
+  if (error || !data) {
+    logQueryError("getAdMetrics", error);
+    return [];
+  }
   return data.map((r) => ({
     clientId: r.client_id,
     date: r.date,
@@ -79,7 +90,10 @@ export async function getWebMetrics(
   if (clientId) q = q.eq("client_id", clientId);
 
   const { data, error } = await q;
-  if (error || !data) return [];
+  if (error || !data) {
+    logQueryError("getWebMetrics", error);
+    return [];
+  }
   return data.map((r) => ({
     clientId: r.client_id,
     date: r.date,

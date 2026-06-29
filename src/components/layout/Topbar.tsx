@@ -13,15 +13,28 @@ export function Topbar({ clients }: { clients: Client[] }) {
   const [open, setOpen] = useState(false);
 
   const days = Number(search.get("days")) || 30;
+  const activeDays = RANGE_PRESETS.some((p) => p.days === days) ? days : 30;
   const activeSlug = search.get("client") ?? "all";
   const active = clients.find((c) => c.slug === activeSlug) ?? null;
+
+  function pushParams(params: URLSearchParams) {
+    const qs = params.toString();
+    router.push(`${pathname}${qs ? `?${qs}` : ""}`);
+  }
 
   function setParam(key: string, value: string | null) {
     const params = new URLSearchParams(search.toString());
     if (value === null) params.delete(key);
     else params.set(key, value);
-    const qs = params.toString();
-    router.push(`${pathname}${qs ? `?${qs}` : ""}`);
+    pushParams(params);
+  }
+
+  function selectDays(value: string) {
+    const params = new URLSearchParams(search.toString());
+    params.set("days", value);
+    params.delete("from");
+    params.delete("to");
+    pushParams(params);
   }
 
   function selectClient(slug: string | null) {
@@ -89,7 +102,7 @@ export function Topbar({ clients }: { clients: Client[] }) {
               <button
                 key={p.days}
                 type="button"
-                onClick={() => setParam("days", String(p.days))}
+                onClick={() => selectDays(String(p.days))}
                 className={`rounded-md px-3 py-1.5 text-[13px] font-semibold transition-colors ${
                   isActive
                     ? "bg-surface text-brand-ink shadow-sm"
@@ -101,6 +114,22 @@ export function Topbar({ clients }: { clients: Client[] }) {
             );
           })}
         </div>
+
+        <label className="sr-only" htmlFor="period-mobile">
+          Período
+        </label>
+        <select
+          id="period-mobile"
+          value={activeDays}
+          onChange={(e) => selectDays(e.target.value)}
+          className="h-10 rounded-[10px] border border-line bg-surface px-2.5 text-[13px] font-semibold text-ink sm:hidden"
+        >
+          {RANGE_PRESETS.map((p) => (
+            <option key={p.days} value={p.days}>
+              {p.label}
+            </option>
+          ))}
+        </select>
 
         <div className="flex items-center gap-2.5 rounded-[10px] border border-line bg-surface px-2.5 py-1.5">
           <span className="grid h-8 w-8 place-items-center rounded-full bg-brand text-sm font-bold text-white">

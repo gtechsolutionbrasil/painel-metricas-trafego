@@ -7,10 +7,22 @@ import { Logo } from "@/components/brand/Logo";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
 
+function safeNextPath(value: string | null) {
+  if (!value || !value.startsWith("/") || value.startsWith("//")) return "/";
+
+  try {
+    const url = new URL(value, "https://app.local");
+    if (url.origin !== "https://app.local") return "/";
+    return `${url.pathname}${url.search}${url.hash}`;
+  } catch {
+    return "/";
+  }
+}
+
 function LoginForm() {
   const router = useRouter();
   const search = useSearchParams();
-  const next = search.get("next") || "/";
+  const next = safeNextPath(search.get("next"));
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -35,7 +47,7 @@ function LoginForm() {
       setLoading(false);
       return;
     }
-    router.push(next);
+    router.replace(next);
     router.refresh();
   }
 

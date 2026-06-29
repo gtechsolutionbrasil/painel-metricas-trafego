@@ -4,6 +4,9 @@ O painel **apenas lê** do Supabase. Quem coleta de Meta Ads, Google Ads e GA4 e
 grava no banco é o **n8n**, em workflows agendados. Este documento é o contrato
 de escrita que os workflows devem respeitar.
 
+Para a estratégia de autorização, tokens, MCC/Business Manager e GTM, veja
+[integracoes-ads-analytics.md](integracoes-ads-analytics.md).
+
 ## Princípios
 
 - **Autenticação:** o n8n grava usando a **SERVICE ROLE KEY** do Supabase
