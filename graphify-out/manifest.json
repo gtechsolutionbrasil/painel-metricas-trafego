@@ -80,14 +80,14 @@
     "semantic_hash": "31a15f7a3f84c9a7cac2a48458505b3a"
   },
   "src/components/layout/Sidebar.tsx": {
-    "mtime": 1782692962.1826315,
-    "ast_hash": "78309e9311116952bde26f0a9df2364c",
-    "semantic_hash": "78309e9311116952bde26f0a9df2364c"
+    "mtime": 1782694087.511837,
+    "ast_hash": "ce575bac31e3f6c8189e32674831149f",
+    "semantic_hash": "ce575bac31e3f6c8189e32674831149f"
   },
   "src/components/layout/Topbar.tsx": {
-    "mtime": 1782693180.3660452,
-    "ast_hash": "7b423299eb8535444cb96384a95659de",
-    "semantic_hash": "7b423299eb8535444cb96384a95659de"
+    "mtime": 1782694290.0764751,
+    "ast_hash": "54648993e373ef6f8df09b8da8d8a223",
+    "semantic_hash": "54648993e373ef6f8df09b8da8d8a223"
   },
   "src/components/ui/Badge.tsx": {
     "mtime": 1782686797.2617779,
@@ -190,18 +190,18 @@
     "semantic_hash": "5c27369b226fcf2be8a6cfe52224e767"
   },
   "README.md": {
-    "mtime": 1782693322.292853,
-    "ast_hash": "276969e97a68fd49fddc44c6c263ce53",
+    "mtime": 1782694135.2437289,
+    "ast_hash": "d02779fc41a7502d5b3ca5ae9733b92c",
     "semantic_hash": ""
   },
   "REGRAS-PROJETO.md": {
-    "mtime": 1782693338.5713267,
-    "ast_hash": "f8089ce718f2a2929b64033f0d96abce",
+    "mtime": 1782694154.5771527,
+    "ast_hash": "cebe0a8119890179014b6dc62a1c90e6",
     "semantic_hash": ""
   },
   "docs/ingestao-n8n.md": {
-    "mtime": 1782693205.8359253,
-    "ast_hash": "40bd71fbd36edbc55b7b4e2a77ea88cd",
+    "mtime": 1782694108.5232832,
+    "ast_hash": "6e64bfabe6c6ee0e912cee154f2c9051",
     "semantic_hash": ""
   },
   "public/brand/favicon.png": {
@@ -265,8 +265,8 @@
     "semantic_hash": "302ec9fa7ab23e86de84c1dc2579c068"
   },
   "docs/integracoes-ads-analytics.md": {
-    "mtime": 1782693220.3483133,
-    "ast_hash": "60cc9fe93039b31b76515f806872b1b5",
+    "mtime": 1782694129.5164902,
+    "ast_hash": "98722231a258e57a54303622246611f2",
     "semantic_hash": ""
   },
   "src/app/(dash)/clientes/actions.ts": {
@@ -275,9 +275,9 @@
     "semantic_hash": "659487306c77d81209b60119954e187a"
   },
   "src/app/(dash)/clientes/page.tsx": {
-    "mtime": 1782693165.731362,
-    "ast_hash": "71318961a3495bb9183d4c1f961dc30a",
-    "semantic_hash": "71318961a3495bb9183d4c1f961dc30a"
+    "mtime": 1782694067.9738624,
+    "ast_hash": "e0c85b68895322df585dfff774cbf8c8",
+    "semantic_hash": "e0c85b68895322df585dfff774cbf8c8"
   },
   "supabase/migrations/0004_client_integration_accounts.sql": {
     "mtime": 1782693074.7660863,

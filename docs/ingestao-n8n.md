@@ -7,6 +7,28 @@ de escrita que os workflows devem respeitar.
 Para a estratégia de autorização, tokens, MCC/Business Manager e GTM, veja
 [integracoes-ads-analytics.md](integracoes-ads-analytics.md).
 
+## Cadastro no painel x credenciais no n8n
+
+A página **Clientes e integrações** não conecta as APIs sozinha. Ela salva o
+mapa operacional:
+
+- qual é o cliente;
+- quais IDs externos pertencem a ele (`customer_id`, `act_...`, property GA4,
+  container GTM);
+- qual `client_id` o n8n deve usar ao gravar métricas no Supabase.
+
+As credenciais reais ficam no n8n:
+
+- Google Ads: OAuth/refresh token e Developer Token, preferencialmente usando o
+  MCC da agência com acesso às contas dos clientes.
+- Meta Ads: token de longa duração/System User ou OAuth com acesso ao Business
+  Manager/conta de anúncios.
+- GA4: OAuth ou service account com permissão na property.
+- Supabase: `SUPABASE_SERVICE_ROLE_KEY` para gravar via upsert.
+
+Fluxo: painel salva o mapeamento -> n8n lê clientes/integrações -> n8n chama as
+APIs com as credenciais dele -> n8n grava métricas normalizadas -> painel exibe.
+
 ## Princípios
 
 - **Autenticação:** o n8n grava usando a **SERVICE ROLE KEY** do Supabase

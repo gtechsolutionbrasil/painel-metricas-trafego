@@ -3,9 +3,15 @@
 import Link from "next/link";
 import { useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { Check, ChevronDown, CircleDollarSign, Plus, Users } from "lucide-react";
+import { Check, ChevronDown, Plus, Users } from "lucide-react";
 import type { Client, IntegrationAccount } from "@/lib/types";
 import { RANGE_PRESETS } from "@/lib/range";
+
+const PLATFORM_OPTIONS = [
+  { value: "all", label: "Google + Meta" },
+  { value: "google", label: "Google Ads" },
+  { value: "meta", label: "Meta Ads" },
+];
 
 export function Topbar({
   clients,
@@ -70,20 +76,25 @@ export function Topbar({
 
   return (
     <header className="sticky top-0 z-30 border-b border-line bg-surface/95 px-4 py-3 backdrop-blur sm:px-6">
-      <div className="flex flex-col gap-3 xl:flex-row xl:items-center xl:justify-between">
-        <div className="flex flex-col gap-3 md:flex-row md:items-center">
+      <div className="flex flex-col gap-3 2xl:flex-row 2xl:items-center 2xl:justify-between">
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-[280px_minmax(220px,280px)]">
           <div className="relative">
             <button
               type="button"
               onClick={() => setClientOpen((v) => !v)}
-              className="flex h-11 w-full items-center justify-between gap-3 rounded-[10px] border border-line bg-surface px-3 text-sm font-semibold text-ink transition-colors hover:bg-surface-2 md:w-[280px]"
+              className="flex h-14 w-full items-center justify-between gap-3 rounded-[10px] border border-line bg-surface px-3 text-left transition-colors hover:bg-surface-2"
             >
               <span className="flex min-w-0 items-center gap-2.5">
                 <span className="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-brand-soft text-brand">
                   <Users size={15} />
                 </span>
-                <span className="truncate">
-                  {active ? active.name : "Todos os clientes"}
+                <span className="min-w-0">
+                  <span className="block text-[10px] font-bold uppercase tracking-[0.08em] text-faint">
+                    Cliente
+                  </span>
+                  <span className="block truncate text-sm font-semibold text-ink">
+                    {active ? active.name : "Todos os clientes"}
+                  </span>
                 </span>
               </span>
               <ChevronDown size={16} className="shrink-0 text-faint" />
@@ -100,7 +111,7 @@ export function Topbar({
                 <div className="absolute left-0 top-[calc(100%+8px)] z-50 w-80 overflow-hidden rounded-xl border border-line bg-surface shadow-[var(--shadow-pop)]">
                   <div className="flex items-center justify-between border-b border-line px-3 py-2">
                     <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-faint">
-                      Conta / cliente
+                      Cliente
                     </p>
                     <Link
                       href="/clientes"
@@ -131,68 +142,80 @@ export function Topbar({
             )}
           </div>
 
-          <label className="sr-only" htmlFor="account-filter">
-            Conta conectada
-          </label>
-          <select
-            id="account-filter"
-            value={activeAccount?.externalId ?? "all"}
-            onChange={(e) => selectAccount(e.target.value)}
-            className="h-11 w-full rounded-[10px] border border-line bg-surface px-3 text-sm font-semibold text-ink md:w-[260px]"
-          >
-            <option value="all">Todas as contas</option>
-            {visibleAccounts.map((account) => (
-              <option key={account.id} value={account.externalId}>
-                {account.accountName}
-              </option>
-            ))}
-          </select>
+          <div className="flex h-14 flex-col justify-center rounded-[10px] border border-line bg-surface px-3">
+            <label
+              className="text-[10px] font-bold uppercase tracking-[0.08em] text-faint"
+              htmlFor="account-filter"
+            >
+              Fonte de dados
+            </label>
+            <select
+              id="account-filter"
+              value={activeAccount?.externalId ?? "all"}
+              onChange={(e) => selectAccount(e.target.value)}
+              className="-ml-1 mt-0.5 w-[calc(100%+8px)] rounded-md bg-transparent px-1 text-sm font-semibold text-ink outline-none"
+            >
+              <option value="all">Todas as fontes</option>
+              {visibleAccounts.map((account) => (
+                <option key={account.id} value={account.externalId}>
+                  {account.accountName}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
 
         <div className="flex flex-col gap-3 md:flex-row md:items-center">
-          <div className="flex items-center rounded-[10px] border border-line bg-surface-2 p-1">
-            {[
-              { value: "all", label: "Todas" },
-              { value: "google", label: "Google" },
-              { value: "meta", label: "Meta" },
-            ].map((item) => {
-              const isActive = activePlatform === item.value;
-              return (
-                <button
-                  key={item.value}
-                  type="button"
-                  onClick={() => selectPlatform(item.value)}
-                  className={`flex h-8 flex-1 items-center justify-center gap-1.5 rounded-md px-3 text-[13px] font-semibold transition-colors md:flex-none ${
-                    isActive
-                      ? "bg-surface text-brand-ink shadow-sm"
-                      : "text-muted hover:text-ink"
-                  }`}
-                >
-                  <CircleDollarSign size={14} />
-                  {item.label}
-                </button>
-              );
-            })}
+          <div className="rounded-[10px] border border-line bg-surface px-3 py-2">
+            <p className="text-[10px] font-bold uppercase tracking-[0.08em] text-faint">
+              Origem de mídia paga
+            </p>
+            <div className="mt-1 flex rounded-lg bg-surface-2 p-1">
+              {PLATFORM_OPTIONS.map((item) => {
+                const isActive = activePlatform === item.value;
+                return (
+                  <button
+                    key={item.value}
+                    type="button"
+                    aria-pressed={isActive}
+                    onClick={() => selectPlatform(item.value)}
+                    className={`flex h-8 flex-1 items-center justify-center rounded-md px-3 text-[13px] font-semibold transition-colors md:flex-none ${
+                      isActive
+                        ? "bg-surface text-brand-ink shadow-sm"
+                        : "text-muted hover:text-ink"
+                    }`}
+                  >
+                    {item.label}
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
-          <div className="hidden items-center rounded-[10px] border border-line bg-surface-2 p-1 sm:flex">
-            {RANGE_PRESETS.map((p) => {
-              const isActive = days === p.days;
-              return (
-                <button
-                  key={p.days}
-                  type="button"
-                  onClick={() => selectDays(String(p.days))}
-                  className={`rounded-md px-3 py-1.5 text-[13px] font-semibold transition-colors ${
-                    isActive
-                      ? "bg-surface text-brand-ink shadow-sm"
-                      : "text-muted hover:text-ink"
-                  }`}
-                >
-                  {p.label}
-                </button>
-              );
-            })}
+          <div className="hidden rounded-[10px] border border-line bg-surface px-3 py-2 sm:block">
+            <p className="text-[10px] font-bold uppercase tracking-[0.08em] text-faint">
+              Período
+            </p>
+            <div className="mt-1 flex rounded-lg bg-surface-2 p-1">
+              {RANGE_PRESETS.map((p) => {
+                const isActive = days === p.days;
+                return (
+                  <button
+                    key={p.days}
+                    type="button"
+                    aria-pressed={isActive}
+                    onClick={() => selectDays(String(p.days))}
+                    className={`rounded-md px-3 py-1.5 text-[13px] font-semibold transition-colors ${
+                      isActive
+                        ? "bg-surface text-brand-ink shadow-sm"
+                        : "text-muted hover:text-ink"
+                    }`}
+                  >
+                    {p.label}
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
           <label className="sr-only" htmlFor="period-mobile">

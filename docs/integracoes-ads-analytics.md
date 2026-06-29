@@ -9,6 +9,11 @@ acesso. O modelo correto é:
 4. o n8n grava métricas normalizadas no Supabase;
 5. o painel só lê o Supabase com RLS.
 
+Importante: cadastrar um cliente no painel **não** faz o n8n puxar métricas
+sozinho. O cadastro serve para mapear IDs externos ao `client_id` interno. A
+coleta só acontece depois que as credenciais de Google, Meta, GA4 e Supabase
+estiverem configuradas nos workflows do n8n.
+
 ## Como conectar cada fonte
 
 ### Google Ads
@@ -68,22 +73,33 @@ Para o painel, cada cliente/site precisa mapear:
 
 ## Fluxo recomendado no n8n
 
-Crie 3 workflows agendados:
+Crie 3 workflows agendados. Cada workflow deve começar lendo a tabela
+`integration_accounts` para descobrir quais fontes estão pendentes/conectadas
+para cada cliente.
 
 1. **Google Ads -> Supabase**
-   - entrada: lista de clientes com `google_ads_customer_id`
+   - credencial: OAuth/Developer Token configurado no n8n
+   - entrada: integrações `provider = 'google_ads'`
    - consulta: Google Ads API por dia/campanha
-   - saída: upsert em `ad_metrics` com `platform = 'google'`
+   - saída: upsert em `ad_metrics` com `platform = 'google'` e
+     `account_external_id`
 
 2. **Meta Ads -> Supabase**
-   - entrada: lista de clientes com `meta_ad_account_id`
+   - credencial: token de longa duração/System User ou OAuth no n8n
+   - entrada: integrações `provider = 'meta_ads'`
    - consulta: Marketing API Insights por dia/campanha
-   - saída: upsert em `ad_metrics` com `platform = 'meta'`
+   - saída: upsert em `ad_metrics` com `platform = 'meta'` e
+     `account_external_id`
 
 3. **GA4 -> Supabase**
-   - entrada: lista de clientes com `ga4_property_id`
+   - credencial: OAuth/service account no n8n
+   - entrada: integrações `provider = 'ga4'`
    - consulta: GA4 Data API por dia/origem/mídia e eventos
-   - saída: upsert em `web_metrics`
+   - saída: upsert em `web_metrics` com `account_external_id`
+
+O GTM entra como fonte de auditoria de tracking. Ele não entrega as métricas
+diárias do painel; ele dispara eventos que depois aparecem em GA4, Google Ads e
+Meta quando as tags estão corretas.
 
 O painel atual já separa tráfego pago por plataforma e analytics web por origem.
 A próxima evolução recomendada é adicionar uma camada de integrações e qualidade
@@ -114,10 +130,10 @@ investimento -> clique -> sessão -> evento -> lead/conversão.
 
 O painel já possui uma primeira versão operacional:
 
-- barra superior com filtros de cliente, conta conectada, origem paga
-  (Google/Meta) e período;
-- página **Clientes e contas** para cadastrar cliente e IDs de Google Ads,
-  Meta Ads, GA4 e GTM;
+- barra superior com filtros de cliente, fonte de dados, origem paga
+  (Google Ads/Meta Ads) e período;
+- página **Clientes e integrações** para cadastrar cliente e IDs de Google Ads,
+  Meta Ads, GA4 e GTM, deixando claro que credenciais ficam no n8n;
 - tabela `integration_accounts`;
 - campo `account_external_id` em `ad_metrics` e `web_metrics` para o n8n
-  permitir filtro por conta.
+  permitir filtro por fonte.

@@ -8,27 +8,41 @@
         "label": "Data Ingestion Pipeline",
         "nodes": [
           "n8n_workflow",
-          "supabase_table_ad_metrics",
-          "supabase_table_web_metrics",
+          "supabase_db",
+          "src_app_clientes",
           "docs_ingestao_n8n"
         ],
         "relation": "participate_in",
         "confidence": "EXTRACTED",
-        "confidence_score": 1.0,
+        "confidence_score": 0.95,
         "source_file": "docs/ingestao-n8n.md"
       },
       {
-        "id": "dashboard_pages",
-        "label": "Dashboard Protected Routes",
+        "id": "auth_architecture",
+        "label": "Authentication & Authorization",
         "nodes": [
-          "src_app_page",
-          "src_app_trafego_pago",
-          "src_app_analytics",
-          "src_app_clientes"
+          "src_proxy",
+          "src_app_login",
+          "src_lib_supabase",
+          "supabase_migrations_0001_init"
         ],
         "relation": "form",
         "confidence": "EXTRACTED",
-        "confidence_score": 1.0,
+        "confidence_score": 0.9,
+        "source_file": "REGRAS-PROJETO.md"
+      },
+      {
+        "id": "metrics_visualization",
+        "label": "Metrics Visualization Layer",
+        "nodes": [
+          "src_app_dash_page",
+          "src_app_trafego_pago",
+          "src_app_analytics",
+          "src_lib_metrics_aggregate"
+        ],
+        "relation": "participate_in",
+        "confidence": "INFERRED",
+        "confidence_score": 0.85,
         "source_file": "README.md"
       }
     ]
@@ -40,10 +54,10 @@
       "source_file": "eslint.config.mjs",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 5,
+      "community": 2,
       "norm_label": "eslint.config.mjs",
       "id": "eslint_config",
-      "community_name": "P\u00e1ginas dashboard & UI cards"
+      "community_name": "Topbar & Camada de dados"
     },
     {
       "label": "eslintConfig",
@@ -51,10 +65,10 @@
       "source_file": "eslint.config.mjs",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 5,
+      "community": 2,
       "norm_label": "eslintconfig",
       "id": "eslint_config_eslintconfig",
-      "community_name": "P\u00e1ginas dashboard & UI cards"
+      "community_name": "Topbar & Camada de dados"
     },
     {
       "label": "next.config.ts",
@@ -62,10 +76,10 @@
       "source_file": "next.config.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 16,
+      "community": 15,
       "norm_label": "next.config.ts",
       "id": "next_config",
-      "community_name": "Community 16"
+      "community_name": "Community 15"
     },
     {
       "label": "nextConfig",
@@ -73,10 +87,10 @@
       "source_file": "next.config.ts",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 16,
+      "community": 15,
       "norm_label": "nextconfig",
       "id": "next_config_nextconfig",
-      "community_name": "Community 16"
+      "community_name": "Community 15"
     },
     {
       "label": "package.json",
@@ -84,10 +98,10 @@
       "source_file": "package.json",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 4,
+      "community": 1,
       "norm_label": "package.json",
       "id": "package",
-      "community_name": "TypeScript config"
+      "community_name": "Login, Layout & ESLint"
     },
     {
       "label": "name",
@@ -95,10 +109,10 @@
       "source_file": "package.json",
       "source_location": "L2",
       "_origin": "ast",
-      "community": 4,
+      "community": 1,
       "norm_label": "name",
       "id": "package_name",
-      "community_name": "TypeScript config"
+      "community_name": "Login, Layout & ESLint"
     },
     {
       "label": "version",
@@ -106,10 +120,10 @@
       "source_file": "package.json",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 4,
+      "community": 1,
       "norm_label": "version",
       "id": "package_version",
-      "community_name": "TypeScript config"
+      "community_name": "Login, Layout & ESLint"
     },
     {
       "label": "private",
@@ -117,10 +131,10 @@
       "source_file": "package.json",
       "source_location": "L4",
       "_origin": "ast",
-      "community": 4,
+      "community": 1,
       "norm_label": "private",
       "id": "package_private",
-      "community_name": "TypeScript config"
+      "community_name": "Login, Layout & ESLint"
     },
     {
       "label": "scripts",
@@ -128,10 +142,10 @@
       "source_file": "package.json",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 4,
+      "community": 1,
       "norm_label": "scripts",
       "id": "package_scripts",
-      "community_name": "TypeScript config"
+      "community_name": "Login, Layout & ESLint"
     },
     {
       "label": "dev",
@@ -139,10 +153,10 @@
       "source_file": "package.json",
       "source_location": "L6",
       "_origin": "ast",
-      "community": 4,
+      "community": 1,
       "norm_label": "dev",
       "id": "package_scripts_dev",
-      "community_name": "TypeScript config"
+      "community_name": "Login, Layout & ESLint"
     },
     {
       "label": "build",
@@ -150,10 +164,10 @@
       "source_file": "package.json",
       "source_location": "L7",
       "_origin": "ast",
-      "community": 4,
+      "community": 1,
       "norm_label": "build",
       "id": "package_scripts_build",
-      "community_name": "TypeScript config"
+      "community_name": "Login, Layout & ESLint"
     },
     {
       "label": "start",
@@ -161,10 +175,10 @@
       "source_file": "package.json",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 4,
+      "community": 1,
       "norm_label": "start",
       "id": "package_scripts_start",
-      "community_name": "TypeScript config"
+      "community_name": "Login, Layout & ESLint"
     },
     {
       "label": "lint",
@@ -172,10 +186,10 @@
       "source_file": "package.json",
       "source_location": "L9",
       "_origin": "ast",
-      "community": 4,
+      "community": 1,
       "norm_label": "lint",
       "id": "package_scripts_lint",
-      "community_name": "TypeScript config"
+      "community_name": "Login, Layout & ESLint"
     },
     {
       "label": "dependencies",
@@ -183,10 +197,10 @@
       "source_file": "package.json",
       "source_location": "L11",
       "_origin": "ast",
-      "community": 7,
+      "community": 1,
       "norm_label": "dependencies",
       "id": "package_dependencies",
-      "community_name": "Agrega\u00e7\u00e3o de m\u00e9tricas"
+      "community_name": "Login, Layout & ESLint"
     },
     {
       "label": "@supabase/ssr",
@@ -194,10 +208,10 @@
       "source_file": "package.json",
       "source_location": "L12",
       "_origin": "ast",
-      "community": 7,
+      "community": 1,
       "norm_label": "@supabase/ssr",
       "id": "package_dependencies_supabase_ssr",
-      "community_name": "Agrega\u00e7\u00e3o de m\u00e9tricas"
+      "community_name": "Login, Layout & ESLint"
     },
     {
       "label": "@supabase/supabase-js",
@@ -205,10 +219,10 @@
       "source_file": "package.json",
       "source_location": "L13",
       "_origin": "ast",
-      "community": 7,
+      "community": 1,
       "norm_label": "@supabase/supabase-js",
       "id": "package_dependencies_supabase_supabase_js",
-      "community_name": "Agrega\u00e7\u00e3o de m\u00e9tricas"
+      "community_name": "Login, Layout & ESLint"
     },
     {
       "label": "date-fns",
@@ -216,10 +230,10 @@
       "source_file": "package.json",
       "source_location": "L14",
       "_origin": "ast",
-      "community": 7,
+      "community": 1,
       "norm_label": "date-fns",
       "id": "package_dependencies_date_fns",
-      "community_name": "Agrega\u00e7\u00e3o de m\u00e9tricas"
+      "community_name": "Login, Layout & ESLint"
     },
     {
       "label": "lucide-react",
@@ -227,10 +241,10 @@
       "source_file": "package.json",
       "source_location": "L15",
       "_origin": "ast",
-      "community": 7,
+      "community": 1,
       "norm_label": "lucide-react",
       "id": "package_dependencies_lucide_react",
-      "community_name": "Agrega\u00e7\u00e3o de m\u00e9tricas"
+      "community_name": "Login, Layout & ESLint"
     },
     {
       "label": "next",
@@ -238,10 +252,10 @@
       "source_file": "package.json",
       "source_location": "L16",
       "_origin": "ast",
-      "community": 7,
+      "community": 1,
       "norm_label": "next",
       "id": "package_dependencies_next",
-      "community_name": "Agrega\u00e7\u00e3o de m\u00e9tricas"
+      "community_name": "Login, Layout & ESLint"
     },
     {
       "label": "react",
@@ -249,10 +263,10 @@
       "source_file": "package.json",
       "source_location": "L17",
       "_origin": "ast",
-      "community": 7,
+      "community": 1,
       "norm_label": "react",
       "id": "package_dependencies_react",
-      "community_name": "Agrega\u00e7\u00e3o de m\u00e9tricas"
+      "community_name": "Login, Layout & ESLint"
     },
     {
       "label": "react-dom",
@@ -260,10 +274,10 @@
       "source_file": "package.json",
       "source_location": "L18",
       "_origin": "ast",
-      "community": 7,
+      "community": 1,
       "norm_label": "react-dom",
       "id": "package_dependencies_react_dom",
-      "community_name": "Agrega\u00e7\u00e3o de m\u00e9tricas"
+      "community_name": "Login, Layout & ESLint"
     },
     {
       "label": "recharts",
@@ -271,10 +285,10 @@
       "source_file": "package.json",
       "source_location": "L19",
       "_origin": "ast",
-      "community": 7,
+      "community": 1,
       "norm_label": "recharts",
       "id": "package_dependencies_recharts",
-      "community_name": "Agrega\u00e7\u00e3o de m\u00e9tricas"
+      "community_name": "Login, Layout & ESLint"
     },
     {
       "label": "zod",
@@ -282,10 +296,10 @@
       "source_file": "package.json",
       "source_location": "L20",
       "_origin": "ast",
-      "community": 7,
+      "community": 1,
       "norm_label": "zod",
       "id": "package_dependencies_zod",
-      "community_name": "Agrega\u00e7\u00e3o de m\u00e9tricas"
+      "community_name": "Login, Layout & ESLint"
     },
     {
       "label": "devDependencies",
@@ -293,10 +307,10 @@
       "source_file": "package.json",
       "source_location": "L22",
       "_origin": "ast",
-      "community": 4,
+      "community": 1,
       "norm_label": "devdependencies",
       "id": "package_devdependencies",
-      "community_name": "TypeScript config"
+      "community_name": "Login, Layout & ESLint"
     },
     {
       "label": "@tailwindcss/postcss",
@@ -304,10 +318,10 @@
       "source_file": "package.json",
       "source_location": "L23",
       "_origin": "ast",
-      "community": 4,
+      "community": 1,
       "norm_label": "@tailwindcss/postcss",
       "id": "package_devdependencies_tailwindcss_postcss",
-      "community_name": "TypeScript config"
+      "community_name": "Login, Layout & ESLint"
     },
     {
       "label": "@types/node",
@@ -315,10 +329,10 @@
       "source_file": "package.json",
       "source_location": "L24",
       "_origin": "ast",
-      "community": 4,
+      "community": 1,
       "norm_label": "@types/node",
       "id": "package_devdependencies_types_node",
-      "community_name": "TypeScript config"
+      "community_name": "Login, Layout & ESLint"
     },
     {
       "label": "@types/react",
@@ -326,10 +340,10 @@
       "source_file": "package.json",
       "source_location": "L25",
       "_origin": "ast",
-      "community": 4,
+      "community": 1,
       "norm_label": "@types/react",
       "id": "package_devdependencies_types_react",
-      "community_name": "TypeScript config"
+      "community_name": "Login, Layout & ESLint"
     },
     {
       "label": "@types/react-dom",
@@ -337,10 +351,10 @@
       "source_file": "package.json",
       "source_location": "L26",
       "_origin": "ast",
-      "community": 4,
+      "community": 1,
       "norm_label": "@types/react-dom",
       "id": "package_devdependencies_types_react_dom",
-      "community_name": "TypeScript config"
+      "community_name": "Login, Layout & ESLint"
     },
     {
       "label": "eslint",
@@ -348,10 +362,10 @@
       "source_file": "package.json",
       "source_location": "L27",
       "_origin": "ast",
-      "community": 4,
+      "community": 1,
       "norm_label": "eslint",
       "id": "package_devdependencies_eslint",
-      "community_name": "TypeScript config"
+      "community_name": "Login, Layout & ESLint"
     },
     {
       "label": "eslint-config-next",
@@ -359,10 +373,10 @@
       "source_file": "package.json",
       "source_location": "L28",
       "_origin": "ast",
-      "community": 4,
+      "community": 1,
       "norm_label": "eslint-config-next",
       "id": "package_devdependencies_eslint_config_next",
-      "community_name": "TypeScript config"
+      "community_name": "Login, Layout & ESLint"
     },
     {
       "label": "tailwindcss",
@@ -370,10 +384,10 @@
       "source_file": "package.json",
       "source_location": "L29",
       "_origin": "ast",
-      "community": 4,
+      "community": 1,
       "norm_label": "tailwindcss",
       "id": "package_devdependencies_tailwindcss",
-      "community_name": "TypeScript config"
+      "community_name": "Login, Layout & ESLint"
     },
     {
       "label": "typescript",
@@ -381,10 +395,10 @@
       "source_file": "package.json",
       "source_location": "L30",
       "_origin": "ast",
-      "community": 4,
+      "community": 1,
       "norm_label": "typescript",
       "id": "package_devdependencies_typescript",
-      "community_name": "TypeScript config"
+      "community_name": "Login, Layout & ESLint"
     },
     {
       "label": "postcss.config.mjs",
@@ -392,10 +406,10 @@
       "source_file": "postcss.config.mjs",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 17,
+      "community": 16,
       "norm_label": "postcss.config.mjs",
       "id": "postcss_config",
-      "community_name": "Community 17"
+      "community_name": "Community 16"
     },
     {
       "label": "config",
@@ -403,10 +417,10 @@
       "source_file": "postcss.config.mjs",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 17,
+      "community": 16,
       "norm_label": "config",
       "id": "postcss_config_config",
-      "community_name": "Community 17"
+      "community_name": "Community 16"
     },
     {
       "label": "page.tsx",
@@ -414,10 +428,10 @@
       "source_file": "src/app/(auth)/login/page.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 5,
+      "community": 2,
       "norm_label": "page.tsx",
       "id": "src_app_auth_login_page",
-      "community_name": "P\u00e1ginas dashboard & UI cards"
+      "community_name": "Topbar & Camada de dados"
     },
     {
       "label": "safeNextPath()",
@@ -425,10 +439,10 @@
       "source_file": "src/app/(auth)/login/page.tsx",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 5,
+      "community": 2,
       "norm_label": "safenextpath()",
       "id": "src_app_auth_login_page_safenextpath",
-      "community_name": "P\u00e1ginas dashboard & UI cards"
+      "community_name": "Topbar & Camada de dados"
     },
     {
       "label": "LoginForm()",
@@ -436,10 +450,10 @@
       "source_file": "src/app/(auth)/login/page.tsx",
       "source_location": "L22",
       "_origin": "ast",
-      "community": 5,
+      "community": 2,
       "norm_label": "loginform()",
       "id": "src_app_auth_login_page_loginform",
-      "community_name": "P\u00e1ginas dashboard & UI cards"
+      "community_name": "Topbar & Camada de dados"
     },
     {
       "label": "LoginPage()",
@@ -447,10 +461,186 @@
       "source_file": "src/app/(auth)/login/page.tsx",
       "source_location": "L138",
       "_origin": "ast",
-      "community": 5,
+      "community": 2,
       "norm_label": "loginpage()",
       "id": "src_app_auth_login_page_loginpage",
-      "community_name": "P\u00e1ginas dashboard & UI cards"
+      "community_name": "Topbar & Camada de dados"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "src/app/(dash)/analytics/page.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "page.tsx",
+      "id": "src_app_dash_analytics_page",
+      "community_name": "Depend\u00eancias (package.json)"
+    },
+    {
+      "label": "SP",
+      "file_type": "code",
+      "source_file": "src/app/(dash)/analytics/page.tsx",
+      "source_location": "L13",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "sp",
+      "id": "src_app_dash_analytics_page_sp",
+      "community_name": "Depend\u00eancias (package.json)"
+    },
+    {
+      "label": "AnalyticsPage()",
+      "file_type": "code",
+      "source_file": "src/app/(dash)/analytics/page.tsx",
+      "source_location": "L15",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "analyticspage()",
+      "id": "src_app_dash_analytics_page_analyticspage",
+      "community_name": "Depend\u00eancias (package.json)"
+    },
+    {
+      "label": "actions.ts",
+      "file_type": "code",
+      "source_file": "src/app/(dash)/clientes/actions.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 2,
+      "norm_label": "actions.ts",
+      "id": "src_app_dash_clientes_actions",
+      "community_name": "Topbar & Camada de dados"
+    },
+    {
+      "label": "clientSchema",
+      "file_type": "code",
+      "source_file": "src/app/(dash)/clientes/actions.ts",
+      "source_location": "L10",
+      "_origin": "ast",
+      "community": 2,
+      "norm_label": "clientschema",
+      "id": "src_app_dash_clientes_actions_clientschema",
+      "community_name": "Topbar & Camada de dados"
+    },
+    {
+      "label": "AccountInput",
+      "file_type": "code",
+      "source_file": "src/app/(dash)/clientes/actions.ts",
+      "source_location": "L21",
+      "_origin": "ast",
+      "community": 2,
+      "norm_label": "accountinput",
+      "id": "src_app_dash_clientes_actions_accountinput",
+      "community_name": "Topbar & Camada de dados"
+    },
+    {
+      "label": "createClientWithAccounts()",
+      "file_type": "code",
+      "source_file": "src/app/(dash)/clientes/actions.ts",
+      "source_location": "L28",
+      "_origin": "ast",
+      "community": 2,
+      "norm_label": "createclientwithaccounts()",
+      "id": "src_app_dash_clientes_actions_createclientwithaccounts",
+      "community_name": "Topbar & Camada de dados"
+    },
+    {
+      "label": "normalizeSlug()",
+      "file_type": "code",
+      "source_file": "src/app/(dash)/clientes/actions.ts",
+      "source_location": "L110",
+      "_origin": "ast",
+      "community": 2,
+      "norm_label": "normalizeslug()",
+      "id": "src_app_dash_clientes_actions_normalizeslug",
+      "community_name": "Topbar & Camada de dados"
+    },
+    {
+      "label": "buildAccounts()",
+      "file_type": "code",
+      "source_file": "src/app/(dash)/clientes/actions.ts",
+      "source_location": "L122",
+      "_origin": "ast",
+      "community": 2,
+      "norm_label": "buildaccounts()",
+      "id": "src_app_dash_clientes_actions_buildaccounts",
+      "community_name": "Topbar & Camada de dados"
+    },
+    {
+      "label": "layout.tsx",
+      "file_type": "code",
+      "source_file": "src/app/(dash)/layout.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 6,
+      "norm_label": "layout.tsx",
+      "id": "src_app_dash_layout",
+      "community_name": "Vis\u00e3o geral/Tr\u00e1fego & Formata\u00e7\u00e3o"
+    },
+    {
+      "label": "DashLayout()",
+      "file_type": "code",
+      "source_file": "src/app/(dash)/layout.tsx",
+      "source_location": "L9",
+      "_origin": "ast",
+      "community": 6,
+      "norm_label": "dashlayout()",
+      "id": "src_app_dash_layout_dashlayout",
+      "community_name": "Vis\u00e3o geral/Tr\u00e1fego & Formata\u00e7\u00e3o"
+    },
+    {
+      "label": "DemoBanner()",
+      "file_type": "code",
+      "source_file": "src/app/(dash)/layout.tsx",
+      "source_location": "L40",
+      "_origin": "ast",
+      "community": 6,
+      "norm_label": "demobanner()",
+      "id": "src_app_dash_layout_demobanner",
+      "community_name": "Vis\u00e3o geral/Tr\u00e1fego & Formata\u00e7\u00e3o"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "page.tsx",
+      "id": "src_app_dash_trafego_pago_page",
+      "community_name": "Depend\u00eancias (package.json)"
+    },
+    {
+      "label": "SP",
+      "file_type": "code",
+      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
+      "source_location": "L37",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "sp",
+      "id": "src_app_dash_trafego_pago_page_sp",
+      "community_name": "Depend\u00eancias (package.json)"
+    },
+    {
+      "label": "TrafegoPagoPage()",
+      "file_type": "code",
+      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
+      "source_location": "L39",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "trafegopagopage()",
+      "id": "src_app_dash_trafego_pago_page_trafegopagopage",
+      "community_name": "Depend\u00eancias (package.json)"
+    },
+    {
+      "label": "platformLabel()",
+      "file_type": "code",
+      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
+      "source_location": "L196",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "platformlabel()",
+      "id": "src_app_dash_trafego_pago_page_platformlabel",
+      "community_name": "Depend\u00eancias (package.json)"
     },
     {
       "label": "layout.tsx",
@@ -502,10 +692,10 @@
       "source_file": "src/components/brand/Logo.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 5,
+      "community": 2,
       "norm_label": "logo.tsx",
       "id": "src_components_brand_logo",
-      "community_name": "P\u00e1ginas dashboard & UI cards"
+      "community_name": "Topbar & Camada de dados"
     },
     {
       "label": "Logo()",
@@ -513,10 +703,10 @@
       "source_file": "src/components/brand/Logo.tsx",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 5,
+      "community": 2,
       "norm_label": "logo()",
       "id": "src_components_brand_logo_logo",
-      "community_name": "P\u00e1ginas dashboard & UI cards"
+      "community_name": "Topbar & Camada de dados"
     },
     {
       "label": "BarsChart.tsx",
@@ -524,10 +714,10 @@
       "source_file": "src/components/charts/BarsChart.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 1,
+      "community": 4,
       "norm_label": "barschart.tsx",
       "id": "src_components_charts_barschart",
-      "community_name": "Login, Layout & ESLint"
+      "community_name": "TypeScript config"
     },
     {
       "label": "BarsChart()",
@@ -535,10 +725,10 @@
       "source_file": "src/components/charts/BarsChart.tsx",
       "source_location": "L16",
       "_origin": "ast",
-      "community": 1,
+      "community": 4,
       "norm_label": "barschart()",
       "id": "src_components_charts_barschart_barschart",
-      "community_name": "Login, Layout & ESLint"
+      "community_name": "TypeScript config"
     },
     {
       "label": "ChartTooltip.tsx",
@@ -546,10 +736,10 @@
       "source_file": "src/components/charts/ChartTooltip.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 1,
+      "community": 4,
       "norm_label": "charttooltip.tsx",
       "id": "src_components_charts_charttooltip",
-      "community_name": "Login, Layout & ESLint"
+      "community_name": "TypeScript config"
     },
     {
       "label": "Item",
@@ -557,10 +747,10 @@
       "source_file": "src/components/charts/ChartTooltip.tsx",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 1,
+      "community": 4,
       "norm_label": "item",
       "id": "src_components_charts_charttooltip_item",
-      "community_name": "Login, Layout & ESLint"
+      "community_name": "TypeScript config"
     },
     {
       "label": "ChartTooltip()",
@@ -568,10 +758,10 @@
       "source_file": "src/components/charts/ChartTooltip.tsx",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 1,
+      "community": 4,
       "norm_label": "charttooltip()",
       "id": "src_components_charts_charttooltip_charttooltip",
-      "community_name": "Login, Layout & ESLint"
+      "community_name": "TypeScript config"
     },
     {
       "label": "DonutChart.tsx",
@@ -579,10 +769,10 @@
       "source_file": "src/components/charts/DonutChart.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 1,
+      "community": 4,
       "norm_label": "donutchart.tsx",
       "id": "src_components_charts_donutchart",
-      "community_name": "Login, Layout & ESLint"
+      "community_name": "TypeScript config"
     },
     {
       "label": "DonutSlice",
@@ -590,10 +780,10 @@
       "source_file": "src/components/charts/DonutChart.tsx",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 1,
+      "community": 4,
       "norm_label": "donutslice",
       "id": "src_components_charts_donutchart_donutslice",
-      "community_name": "Login, Layout & ESLint"
+      "community_name": "TypeScript config"
     },
     {
       "label": "DonutChart()",
@@ -601,10 +791,10 @@
       "source_file": "src/components/charts/DonutChart.tsx",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 1,
+      "community": 4,
       "norm_label": "donutchart()",
       "id": "src_components_charts_donutchart_donutchart",
-      "community_name": "Login, Layout & ESLint"
+      "community_name": "TypeScript config"
     },
     {
       "label": "TrendAreaChart.tsx",
@@ -612,10 +802,10 @@
       "source_file": "src/components/charts/TrendAreaChart.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 1,
+      "community": 4,
       "norm_label": "trendareachart.tsx",
       "id": "src_components_charts_trendareachart",
-      "community_name": "Login, Layout & ESLint"
+      "community_name": "TypeScript config"
     },
     {
       "label": "Series",
@@ -623,10 +813,10 @@
       "source_file": "src/components/charts/TrendAreaChart.tsx",
       "source_location": "L16",
       "_origin": "ast",
-      "community": 1,
+      "community": 4,
       "norm_label": "series",
       "id": "src_components_charts_trendareachart_series",
-      "community_name": "Login, Layout & ESLint"
+      "community_name": "TypeScript config"
     },
     {
       "label": "TrendAreaChart()",
@@ -634,10 +824,10 @@
       "source_file": "src/components/charts/TrendAreaChart.tsx",
       "source_location": "L23",
       "_origin": "ast",
-      "community": 1,
+      "community": 4,
       "norm_label": "trendareachart()",
       "id": "src_components_charts_trendareachart_trendareachart",
-      "community_name": "Login, Layout & ESLint"
+      "community_name": "TypeScript config"
     },
     {
       "label": "theme.ts",
@@ -645,10 +835,10 @@
       "source_file": "src/components/charts/theme.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 1,
+      "community": 4,
       "norm_label": "theme.ts",
       "id": "src_components_charts_theme",
-      "community_name": "Login, Layout & ESLint"
+      "community_name": "TypeScript config"
     },
     {
       "label": "CHART_COLORS",
@@ -656,10 +846,10 @@
       "source_file": "src/components/charts/theme.ts",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 1,
+      "community": 4,
       "norm_label": "chart_colors",
       "id": "src_components_charts_theme_chart_colors",
-      "community_name": "Login, Layout & ESLint"
+      "community_name": "TypeScript config"
     },
     {
       "label": "SERIES_PALETTE",
@@ -667,10 +857,10 @@
       "source_file": "src/components/charts/theme.ts",
       "source_location": "L12",
       "_origin": "ast",
-      "community": 1,
+      "community": 4,
       "norm_label": "series_palette",
       "id": "src_components_charts_theme_series_palette",
-      "community_name": "Login, Layout & ESLint"
+      "community_name": "TypeScript config"
     },
     {
       "label": "AXIS",
@@ -678,10 +868,10 @@
       "source_file": "src/components/charts/theme.ts",
       "source_location": "L21",
       "_origin": "ast",
-      "community": 1,
+      "community": 4,
       "norm_label": "axis",
       "id": "src_components_charts_theme_axis",
-      "community_name": "Login, Layout & ESLint"
+      "community_name": "TypeScript config"
     },
     {
       "label": "Badge.tsx",
@@ -733,10 +923,10 @@
       "source_file": "src/components/ui/Card.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 13,
+      "community": 0,
       "norm_label": "card.tsx",
       "id": "src_components_ui_card",
-      "community_name": "Next config"
+      "community_name": "Depend\u00eancias (package.json)"
     },
     {
       "label": "Card()",
@@ -744,10 +934,10 @@
       "source_file": "src/components/ui/Card.tsx",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 13,
+      "community": 0,
       "norm_label": "card()",
       "id": "src_components_ui_card_card",
-      "community_name": "Next config"
+      "community_name": "Depend\u00eancias (package.json)"
     },
     {
       "label": "CardHeader()",
@@ -755,10 +945,10 @@
       "source_file": "src/components/ui/Card.tsx",
       "source_location": "L13",
       "_origin": "ast",
-      "community": 13,
+      "community": 0,
       "norm_label": "cardheader()",
       "id": "src_components_ui_card_cardheader",
-      "community_name": "Next config"
+      "community_name": "Depend\u00eancias (package.json)"
     },
     {
       "label": "CardBody()",
@@ -766,10 +956,10 @@
       "source_file": "src/components/ui/Card.tsx",
       "source_location": "L33",
       "_origin": "ast",
-      "community": 13,
+      "community": 0,
       "norm_label": "cardbody()",
       "id": "src_components_ui_card_cardbody",
-      "community_name": "Next config"
+      "community_name": "Depend\u00eancias (package.json)"
     },
     {
       "label": "KpiCard.tsx",
@@ -777,10 +967,10 @@
       "source_file": "src/components/ui/KpiCard.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 14,
+      "community": 0,
       "norm_label": "kpicard.tsx",
       "id": "src_components_ui_kpicard",
-      "community_name": "PostCSS/Tailwind config"
+      "community_name": "Depend\u00eancias (package.json)"
     },
     {
       "label": "Trend",
@@ -788,10 +978,10 @@
       "source_file": "src/components/ui/KpiCard.tsx",
       "source_location": "L4",
       "_origin": "ast",
-      "community": 14,
+      "community": 0,
       "norm_label": "trend",
       "id": "src_components_ui_kpicard_trend",
-      "community_name": "PostCSS/Tailwind config"
+      "community_name": "Depend\u00eancias (package.json)"
     },
     {
       "label": "KpiCard()",
@@ -799,10 +989,10 @@
       "source_file": "src/components/ui/KpiCard.tsx",
       "source_location": "L6",
       "_origin": "ast",
-      "community": 14,
+      "community": 0,
       "norm_label": "kpicard()",
       "id": "src_components_ui_kpicard_kpicard",
-      "community_name": "PostCSS/Tailwind config"
+      "community_name": "Depend\u00eancias (package.json)"
     },
     {
       "label": "TrendPill()",
@@ -810,10 +1000,10 @@
       "source_file": "src/components/ui/KpiCard.tsx",
       "source_location": "L36",
       "_origin": "ast",
-      "community": 14,
+      "community": 0,
       "norm_label": "trendpill()",
       "id": "src_components_ui_kpicard_trendpill",
-      "community_name": "PostCSS/Tailwind config"
+      "community_name": "Depend\u00eancias (package.json)"
     },
     {
       "label": "PageHeader.tsx",
@@ -821,10 +1011,10 @@
       "source_file": "src/components/ui/PageHeader.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 20,
+      "community": 0,
       "norm_label": "pageheader.tsx",
       "id": "src_components_ui_pageheader",
-      "community_name": "Community 20"
+      "community_name": "Depend\u00eancias (package.json)"
     },
     {
       "label": "PageHeader()",
@@ -832,10 +1022,10 @@
       "source_file": "src/components/ui/PageHeader.tsx",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 20,
+      "community": 0,
       "norm_label": "pageheader()",
       "id": "src_components_ui_pageheader_pageheader",
-      "community_name": "Community 20"
+      "community_name": "Depend\u00eancias (package.json)"
     },
     {
       "label": "format.ts",
@@ -843,10 +1033,10 @@
       "source_file": "src/lib/format.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 1,
+      "community": 0,
       "norm_label": "format.ts",
       "id": "src_lib_format",
-      "community_name": "Login, Layout & ESLint"
+      "community_name": "Depend\u00eancias (package.json)"
     },
     {
       "label": "brl",
@@ -854,10 +1044,10 @@
       "source_file": "src/lib/format.ts",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 1,
+      "community": 0,
       "norm_label": "brl",
       "id": "src_lib_format_brl",
-      "community_name": "Login, Layout & ESLint"
+      "community_name": "Depend\u00eancias (package.json)"
     },
     {
       "label": "brlCents",
@@ -865,10 +1055,10 @@
       "source_file": "src/lib/format.ts",
       "source_location": "L9",
       "_origin": "ast",
-      "community": 1,
+      "community": 0,
       "norm_label": "brlcents",
       "id": "src_lib_format_brlcents",
-      "community_name": "Login, Layout & ESLint"
+      "community_name": "Depend\u00eancias (package.json)"
     },
     {
       "label": "int",
@@ -876,10 +1066,10 @@
       "source_file": "src/lib/format.ts",
       "source_location": "L16",
       "_origin": "ast",
-      "community": 1,
+      "community": 0,
       "norm_label": "int",
       "id": "src_lib_format_int",
-      "community_name": "Login, Layout & ESLint"
+      "community_name": "Depend\u00eancias (package.json)"
     },
     {
       "label": "dec",
@@ -887,10 +1077,10 @@
       "source_file": "src/lib/format.ts",
       "source_location": "L17",
       "_origin": "ast",
-      "community": 1,
+      "community": 0,
       "norm_label": "dec",
       "id": "src_lib_format_dec",
-      "community_name": "Login, Layout & ESLint"
+      "community_name": "Depend\u00eancias (package.json)"
     },
     {
       "label": "fmtCurrency()",
@@ -898,10 +1088,10 @@
       "source_file": "src/lib/format.ts",
       "source_location": "L22",
       "_origin": "ast",
-      "community": 1,
+      "community": 0,
       "norm_label": "fmtcurrency()",
       "id": "src_lib_format_fmtcurrency",
-      "community_name": "Login, Layout & ESLint"
+      "community_name": "Depend\u00eancias (package.json)"
     },
     {
       "label": "fmtCurrencyCents()",
@@ -909,10 +1099,10 @@
       "source_file": "src/lib/format.ts",
       "source_location": "L23",
       "_origin": "ast",
-      "community": 1,
+      "community": 0,
       "norm_label": "fmtcurrencycents()",
       "id": "src_lib_format_fmtcurrencycents",
-      "community_name": "Login, Layout & ESLint"
+      "community_name": "Depend\u00eancias (package.json)"
     },
     {
       "label": "fmtInt()",
@@ -920,10 +1110,10 @@
       "source_file": "src/lib/format.ts",
       "source_location": "L24",
       "_origin": "ast",
-      "community": 1,
+      "community": 0,
       "norm_label": "fmtint()",
       "id": "src_lib_format_fmtint",
-      "community_name": "Login, Layout & ESLint"
+      "community_name": "Depend\u00eancias (package.json)"
     },
     {
       "label": "fmtDecimal()",
@@ -931,10 +1121,10 @@
       "source_file": "src/lib/format.ts",
       "source_location": "L25",
       "_origin": "ast",
-      "community": 1,
+      "community": 0,
       "norm_label": "fmtdecimal()",
       "id": "src_lib_format_fmtdecimal",
-      "community_name": "Login, Layout & ESLint"
+      "community_name": "Depend\u00eancias (package.json)"
     },
     {
       "label": "fmtPercent()",
@@ -942,10 +1132,10 @@
       "source_file": "src/lib/format.ts",
       "source_location": "L26",
       "_origin": "ast",
-      "community": 1,
+      "community": 0,
       "norm_label": "fmtpercent()",
       "id": "src_lib_format_fmtpercent",
-      "community_name": "Login, Layout & ESLint"
+      "community_name": "Depend\u00eancias (package.json)"
     },
     {
       "label": "fmtMultiplier()",
@@ -953,10 +1143,10 @@
       "source_file": "src/lib/format.ts",
       "source_location": "L30",
       "_origin": "ast",
-      "community": 1,
+      "community": 0,
       "norm_label": "fmtmultiplier()",
       "id": "src_lib_format_fmtmultiplier",
-      "community_name": "Login, Layout & ESLint"
+      "community_name": "Depend\u00eancias (package.json)"
     },
     {
       "label": "fmtCompact()",
@@ -964,10 +1154,10 @@
       "source_file": "src/lib/format.ts",
       "source_location": "L34",
       "_origin": "ast",
-      "community": 1,
+      "community": 0,
       "norm_label": "fmtcompact()",
       "id": "src_lib_format_fmtcompact",
-      "community_name": "Login, Layout & ESLint"
+      "community_name": "Depend\u00eancias (package.json)"
     },
     {
       "label": "fmtDayShort()",
@@ -975,10 +1165,10 @@
       "source_file": "src/lib/format.ts",
       "source_location": "L43",
       "_origin": "ast",
-      "community": 1,
+      "community": 4,
       "norm_label": "fmtdayshort()",
       "id": "src_lib_format_fmtdayshort",
-      "community_name": "Login, Layout & ESLint"
+      "community_name": "TypeScript config"
     },
     {
       "label": "fmtDateLong()",
@@ -986,10 +1176,10 @@
       "source_file": "src/lib/format.ts",
       "source_location": "L50",
       "_origin": "ast",
-      "community": 1,
+      "community": 0,
       "norm_label": "fmtdatelong()",
       "id": "src_lib_format_fmtdatelong",
-      "community_name": "Login, Layout & ESLint"
+      "community_name": "Depend\u00eancias (package.json)"
     },
     {
       "label": "fmtDuration()",
@@ -997,10 +1187,10 @@
       "source_file": "src/lib/format.ts",
       "source_location": "L59",
       "_origin": "ast",
-      "community": 1,
+      "community": 0,
       "norm_label": "fmtduration()",
       "id": "src_lib_format_fmtduration",
-      "community_name": "Login, Layout & ESLint"
+      "community_name": "Depend\u00eancias (package.json)"
     },
     {
       "label": "FmtKey",
@@ -1008,10 +1198,10 @@
       "source_file": "src/lib/format.ts",
       "source_location": "L67",
       "_origin": "ast",
-      "community": 1,
+      "community": 4,
       "norm_label": "fmtkey",
       "id": "src_lib_format_fmtkey",
-      "community_name": "Login, Layout & ESLint"
+      "community_name": "TypeScript config"
     },
     {
       "label": "formatValue()",
@@ -1019,10 +1209,164 @@
       "source_file": "src/lib/format.ts",
       "source_location": "L77",
       "_origin": "ast",
-      "community": 1,
+      "community": 0,
       "norm_label": "formatvalue()",
       "id": "src_lib_format_formatvalue",
-      "community_name": "Login, Layout & ESLint"
+      "community_name": "Depend\u00eancias (package.json)"
+    },
+    {
+      "label": "queries.ts",
+      "file_type": "code",
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 5,
+      "norm_label": "queries.ts",
+      "id": "src_lib_metrics_queries",
+      "community_name": "P\u00e1ginas dashboard & UI cards"
+    },
+    {
+      "label": "AdMetricRow",
+      "file_type": "code",
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L18",
+      "_origin": "ast",
+      "community": 5,
+      "norm_label": "admetricrow",
+      "id": "src_lib_metrics_queries_admetricrow",
+      "community_name": "P\u00e1ginas dashboard & UI cards"
+    },
+    {
+      "label": "WebMetricRow",
+      "file_type": "code",
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L31",
+      "_origin": "ast",
+      "community": 5,
+      "norm_label": "webmetricrow",
+      "id": "src_lib_metrics_queries_webmetricrow",
+      "community_name": "P\u00e1ginas dashboard & UI cards"
+    },
+    {
+      "label": "logQueryError()",
+      "file_type": "code",
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L49",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "logqueryerror()",
+      "id": "src_lib_metrics_queries_logqueryerror",
+      "community_name": "Depend\u00eancias (package.json)"
+    },
+    {
+      "label": "isMissingIntegrationShape()",
+      "file_type": "code",
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L54",
+      "_origin": "ast",
+      "community": 5,
+      "norm_label": "ismissingintegrationshape()",
+      "id": "src_lib_metrics_queries_ismissingintegrationshape",
+      "community_name": "P\u00e1ginas dashboard & UI cards"
+    },
+    {
+      "label": "getClients()",
+      "file_type": "code",
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L64",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "getclients()",
+      "id": "src_lib_metrics_queries_getclients",
+      "community_name": "Depend\u00eancias (package.json)"
+    },
+    {
+      "label": "getIntegrationAccounts()",
+      "file_type": "code",
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L86",
+      "_origin": "ast",
+      "community": 6,
+      "norm_label": "getintegrationaccounts()",
+      "id": "src_lib_metrics_queries_getintegrationaccounts",
+      "community_name": "Vis\u00e3o geral/Tr\u00e1fego & Formata\u00e7\u00e3o"
+    },
+    {
+      "label": "getAdMetrics()",
+      "file_type": "code",
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L123",
+      "_origin": "ast",
+      "community": 5,
+      "norm_label": "getadmetrics()",
+      "id": "src_lib_metrics_queries_getadmetrics",
+      "community_name": "P\u00e1ginas dashboard & UI cards"
+    },
+    {
+      "label": "getWebMetrics()",
+      "file_type": "code",
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L185",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "getwebmetrics()",
+      "id": "src_lib_metrics_queries_getwebmetrics",
+      "community_name": "Depend\u00eancias (package.json)"
+    },
+    {
+      "label": "resolveClient()",
+      "file_type": "code",
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L241",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "resolveclient()",
+      "id": "src_lib_metrics_queries_resolveclient",
+      "community_name": "Depend\u00eancias (package.json)"
+    },
+    {
+      "label": "resolveIntegrationAccount()",
+      "file_type": "code",
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L250",
+      "_origin": "ast",
+      "community": 5,
+      "norm_label": "resolveintegrationaccount()",
+      "id": "src_lib_metrics_queries_resolveintegrationaccount",
+      "community_name": "P\u00e1ginas dashboard & UI cards"
+    },
+    {
+      "label": "platformsFromSearch()",
+      "file_type": "code",
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L259",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "platformsfromsearch()",
+      "id": "src_lib_metrics_queries_platformsfromsearch",
+      "community_name": "Depend\u00eancias (package.json)"
+    },
+    {
+      "label": "filterAdMetrics()",
+      "file_type": "code",
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L268",
+      "_origin": "ast",
+      "community": 5,
+      "norm_label": "filteradmetrics()",
+      "id": "src_lib_metrics_queries_filteradmetrics",
+      "community_name": "P\u00e1ginas dashboard & UI cards"
+    },
+    {
+      "label": "filterWebMetrics()",
+      "file_type": "code",
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L283",
+      "_origin": "ast",
+      "community": 5,
+      "norm_label": "filterwebmetrics()",
+      "id": "src_lib_metrics_queries_filterwebmetrics",
+      "community_name": "P\u00e1ginas dashboard & UI cards"
     },
     {
       "label": "range.ts",
@@ -1140,10 +1484,10 @@
       "source_file": "src/lib/supabase/client.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 5,
+      "community": 2,
       "norm_label": "client.ts",
       "id": "src_lib_supabase_client",
-      "community_name": "P\u00e1ginas dashboard & UI cards"
+      "community_name": "Topbar & Camada de dados"
     },
     {
       "label": "createSupabaseBrowserClient()",
@@ -1151,10 +1495,10 @@
       "source_file": "src/lib/supabase/client.ts",
       "source_location": "L7",
       "_origin": "ast",
-      "community": 5,
+      "community": 2,
       "norm_label": "createsupabasebrowserclient()",
       "id": "src_lib_supabase_client_createsupabasebrowserclient",
-      "community_name": "P\u00e1ginas dashboard & UI cards"
+      "community_name": "Topbar & Camada de dados"
     },
     {
       "label": "config.ts",
@@ -1162,10 +1506,10 @@
       "source_file": "src/lib/supabase/config.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 5,
+      "community": 2,
       "norm_label": "config.ts",
       "id": "src_lib_supabase_config",
-      "community_name": "P\u00e1ginas dashboard & UI cards"
+      "community_name": "Topbar & Camada de dados"
     },
     {
       "label": "isSupabaseConfigured",
@@ -1173,10 +1517,10 @@
       "source_file": "src/lib/supabase/config.ts",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 5,
+      "community": 2,
       "norm_label": "issupabaseconfigured",
       "id": "src_lib_supabase_config_issupabaseconfigured",
-      "community_name": "P\u00e1ginas dashboard & UI cards"
+      "community_name": "Topbar & Camada de dados"
     },
     {
       "label": "server.ts",
@@ -1184,10 +1528,10 @@
       "source_file": "src/lib/supabase/server.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 5,
+      "community": 2,
       "norm_label": "server.ts",
       "id": "src_lib_supabase_server",
-      "community_name": "P\u00e1ginas dashboard & UI cards"
+      "community_name": "Topbar & Camada de dados"
     },
     {
       "label": "createSupabaseServerClient()",
@@ -1195,10 +1539,10 @@
       "source_file": "src/lib/supabase/server.ts",
       "source_location": "L7",
       "_origin": "ast",
-      "community": 5,
+      "community": 2,
       "norm_label": "createsupabaseserverclient()",
       "id": "src_lib_supabase_server_createsupabaseserverclient",
-      "community_name": "P\u00e1ginas dashboard & UI cards"
+      "community_name": "Topbar & Camada de dados"
     },
     {
       "label": "updateSession.ts",
@@ -1206,10 +1550,10 @@
       "source_file": "src/lib/supabase/updateSession.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 5,
+      "community": 2,
       "norm_label": "updatesession.ts",
       "id": "src_lib_supabase_updatesession",
-      "community_name": "P\u00e1ginas dashboard & UI cards"
+      "community_name": "Topbar & Camada de dados"
     },
     {
       "label": "updateSession()",
@@ -1217,9 +1561,108 @@
       "source_file": "src/lib/supabase/updateSession.ts",
       "source_location": "L7",
       "_origin": "ast",
-      "community": 5,
+      "community": 2,
       "norm_label": "updatesession()",
       "id": "src_lib_supabase_updatesession_updatesession",
+      "community_name": "Topbar & Camada de dados"
+    },
+    {
+      "label": "types.ts",
+      "file_type": "code",
+      "source_file": "src/lib/types.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 5,
+      "norm_label": "types.ts",
+      "id": "src_lib_types",
+      "community_name": "P\u00e1ginas dashboard & UI cards"
+    },
+    {
+      "label": "Platform",
+      "file_type": "code",
+      "source_file": "src/lib/types.ts",
+      "source_location": "L3",
+      "_origin": "ast",
+      "community": 5,
+      "norm_label": "platform",
+      "id": "src_lib_types_platform",
+      "community_name": "P\u00e1ginas dashboard & UI cards"
+    },
+    {
+      "label": "IntegrationProvider",
+      "file_type": "code",
+      "source_file": "src/lib/types.ts",
+      "source_location": "L5",
+      "_origin": "ast",
+      "community": 2,
+      "norm_label": "integrationprovider",
+      "id": "src_lib_types_integrationprovider",
+      "community_name": "Topbar & Camada de dados"
+    },
+    {
+      "label": "IntegrationStatus",
+      "file_type": "code",
+      "source_file": "src/lib/types.ts",
+      "source_location": "L7",
+      "_origin": "ast",
+      "community": 5,
+      "norm_label": "integrationstatus",
+      "id": "src_lib_types_integrationstatus",
+      "community_name": "P\u00e1ginas dashboard & UI cards"
+    },
+    {
+      "label": "Client",
+      "file_type": "code",
+      "source_file": "src/lib/types.ts",
+      "source_location": "L9",
+      "_origin": "ast",
+      "community": 5,
+      "norm_label": "client",
+      "id": "src_lib_types_client",
+      "community_name": "P\u00e1ginas dashboard & UI cards"
+    },
+    {
+      "label": "IntegrationAccount",
+      "file_type": "code",
+      "source_file": "src/lib/types.ts",
+      "source_location": "L17",
+      "_origin": "ast",
+      "community": 5,
+      "norm_label": "integrationaccount",
+      "id": "src_lib_types_integrationaccount",
+      "community_name": "P\u00e1ginas dashboard & UI cards"
+    },
+    {
+      "label": "AdMetric",
+      "file_type": "code",
+      "source_file": "src/lib/types.ts",
+      "source_location": "L28",
+      "_origin": "ast",
+      "community": 5,
+      "norm_label": "admetric",
+      "id": "src_lib_types_admetric",
+      "community_name": "P\u00e1ginas dashboard & UI cards"
+    },
+    {
+      "label": "WebMetric",
+      "file_type": "code",
+      "source_file": "src/lib/types.ts",
+      "source_location": "L41",
+      "_origin": "ast",
+      "community": 5,
+      "norm_label": "webmetric",
+      "id": "src_lib_types_webmetric",
+      "community_name": "P\u00e1ginas dashboard & UI cards"
+    },
+    {
+      "label": "DateRange",
+      "file_type": "code",
+      "source_file": "src/lib/types.ts",
+      "source_location": "L55",
+      "_origin": "ast",
+      "community": 5,
+      "norm_label": "daterange",
+      "id": "src_lib_types_daterange",
       "community_name": "P\u00e1ginas dashboard & UI cards"
     },
     {
@@ -1448,10 +1891,10 @@
       "source_file": "AGENTS.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 15,
+      "community": 13,
       "norm_label": "agents.md",
       "id": "agents",
-      "community_name": "Community 15"
+      "community_name": "Next config"
     },
     {
       "label": "This is NOT the Next.js you know",
@@ -1459,10 +1902,10 @@
       "source_file": "AGENTS.md",
       "source_location": "L2",
       "_origin": "ast",
-      "community": 15,
+      "community": 13,
       "norm_label": "this is not the next.js you know",
       "id": "agents_this_is_not_the_next_js_you_know",
-      "community_name": "Community 15"
+      "community_name": "Next config"
     },
     {
       "label": "CLAUDE.md",
@@ -1470,109 +1913,28 @@
       "source_file": "CLAUDE.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 22,
+      "community": 18,
       "norm_label": "claude.md",
       "id": "claude",
-      "community_name": "Community 22"
+      "community_name": "Community 18"
     },
     {
-      "label": "page.tsx",
+      "label": "Tr\u00e1fego Pago",
+      "file_type": "code",
+      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
+      "community": 21,
+      "norm_label": "trafego pago",
+      "community_name": "Community 21",
+      "id": "src_app_trafego_pago"
+    },
+    {
+      "label": "Analytics",
       "file_type": "code",
       "source_file": "src/app/(dash)/analytics/page.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "page.tsx",
-      "id": "src_app_dash_analytics_page",
-      "community_name": "Depend\u00eancias (package.json)"
-    },
-    {
-      "label": "SP",
-      "file_type": "code",
-      "source_file": "src/app/(dash)/analytics/page.tsx",
-      "source_location": "L13",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "sp",
-      "id": "src_app_dash_analytics_page_sp",
-      "community_name": "Depend\u00eancias (package.json)"
-    },
-    {
-      "label": "AnalyticsPage()",
-      "file_type": "code",
-      "source_file": "src/app/(dash)/analytics/page.tsx",
-      "source_location": "L15",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "analyticspage()",
-      "id": "src_app_dash_analytics_page_analyticspage",
-      "community_name": "Depend\u00eancias (package.json)"
-    },
-    {
-      "label": "actions.ts",
-      "file_type": "code",
-      "source_file": "src/app/(dash)/clientes/actions.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 6,
-      "norm_label": "actions.ts",
-      "id": "src_app_dash_clientes_actions",
-      "community_name": "Vis\u00e3o geral/Tr\u00e1fego & Formata\u00e7\u00e3o"
-    },
-    {
-      "label": "clientSchema",
-      "file_type": "code",
-      "source_file": "src/app/(dash)/clientes/actions.ts",
-      "source_location": "L10",
-      "_origin": "ast",
-      "community": 6,
-      "norm_label": "clientschema",
-      "id": "src_app_dash_clientes_actions_clientschema",
-      "community_name": "Vis\u00e3o geral/Tr\u00e1fego & Formata\u00e7\u00e3o"
-    },
-    {
-      "label": "AccountInput",
-      "file_type": "code",
-      "source_file": "src/app/(dash)/clientes/actions.ts",
-      "source_location": "L21",
-      "_origin": "ast",
-      "community": 6,
-      "norm_label": "accountinput",
-      "id": "src_app_dash_clientes_actions_accountinput",
-      "community_name": "Vis\u00e3o geral/Tr\u00e1fego & Formata\u00e7\u00e3o"
-    },
-    {
-      "label": "createClientWithAccounts()",
-      "file_type": "code",
-      "source_file": "src/app/(dash)/clientes/actions.ts",
-      "source_location": "L28",
-      "_origin": "ast",
-      "community": 6,
-      "norm_label": "createclientwithaccounts()",
-      "id": "src_app_dash_clientes_actions_createclientwithaccounts",
-      "community_name": "Vis\u00e3o geral/Tr\u00e1fego & Formata\u00e7\u00e3o"
-    },
-    {
-      "label": "normalizeSlug()",
-      "file_type": "code",
-      "source_file": "src/app/(dash)/clientes/actions.ts",
-      "source_location": "L110",
-      "_origin": "ast",
-      "community": 6,
-      "norm_label": "normalizeslug()",
-      "id": "src_app_dash_clientes_actions_normalizeslug",
-      "community_name": "Vis\u00e3o geral/Tr\u00e1fego & Formata\u00e7\u00e3o"
-    },
-    {
-      "label": "buildAccounts()",
-      "file_type": "code",
-      "source_file": "src/app/(dash)/clientes/actions.ts",
-      "source_location": "L122",
-      "_origin": "ast",
-      "community": 6,
-      "norm_label": "buildaccounts()",
-      "id": "src_app_dash_clientes_actions_buildaccounts",
-      "community_name": "Vis\u00e3o geral/Tr\u00e1fego & Formata\u00e7\u00e3o"
+      "community": 19,
+      "norm_label": "analytics",
+      "community_name": "Community 19",
+      "id": "src_app_analytics"
     },
     {
       "label": "page.tsx",
@@ -1580,43 +1942,43 @@
       "source_file": "src/app/(dash)/clientes/page.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 6,
+      "community": 7,
       "norm_label": "page.tsx",
       "id": "src_app_dash_clientes_page",
-      "community_name": "Vis\u00e3o geral/Tr\u00e1fego & Formata\u00e7\u00e3o"
+      "community_name": "Agrega\u00e7\u00e3o de m\u00e9tricas"
     },
     {
       "label": "SP",
       "file_type": "code",
       "source_file": "src/app/(dash)/clientes/page.tsx",
-      "source_location": "L13",
+      "source_location": "L10",
       "_origin": "ast",
-      "community": 6,
+      "community": 7,
       "norm_label": "sp",
       "id": "src_app_dash_clientes_page_sp",
-      "community_name": "Vis\u00e3o geral/Tr\u00e1fego & Formata\u00e7\u00e3o"
+      "community_name": "Agrega\u00e7\u00e3o de m\u00e9tricas"
     },
     {
       "label": "PROVIDER_LABEL",
       "file_type": "code",
       "source_file": "src/app/(dash)/clientes/page.tsx",
-      "source_location": "L15",
+      "source_location": "L12",
       "_origin": "ast",
-      "community": 6,
+      "community": 7,
       "norm_label": "provider_label",
       "id": "src_app_dash_clientes_page_provider_label",
-      "community_name": "Vis\u00e3o geral/Tr\u00e1fego & Formata\u00e7\u00e3o"
+      "community_name": "Agrega\u00e7\u00e3o de m\u00e9tricas"
     },
     {
       "label": "ClientesPage()",
       "file_type": "code",
       "source_file": "src/app/(dash)/clientes/page.tsx",
-      "source_location": "L22",
+      "source_location": "L19",
       "_origin": "ast",
-      "community": 0,
+      "community": 7,
       "norm_label": "clientespage()",
       "id": "src_app_dash_clientes_page_clientespage",
-      "community_name": "Depend\u00eancias (package.json)"
+      "community_name": "Agrega\u00e7\u00e3o de m\u00e9tricas"
     },
     {
       "label": "ClientForm()",
@@ -1624,175 +1986,76 @@
       "source_file": "src/app/(dash)/clientes/page.tsx",
       "source_location": "L64",
       "_origin": "ast",
-      "community": 6,
+      "community": 7,
       "norm_label": "clientform()",
       "id": "src_app_dash_clientes_page_clientform",
-      "community_name": "Vis\u00e3o geral/Tr\u00e1fego & Formata\u00e7\u00e3o"
+      "community_name": "Agrega\u00e7\u00e3o de m\u00e9tricas"
+    },
+    {
+      "label": "FormSection()",
+      "file_type": "code",
+      "source_file": "src/app/(dash)/clientes/page.tsx",
+      "source_location": "L176",
+      "_origin": "ast",
+      "community": 7,
+      "norm_label": "formsection()",
+      "id": "src_app_dash_clientes_page_formsection",
+      "community_name": "Agrega\u00e7\u00e3o de m\u00e9tricas"
     },
     {
       "label": "AccountField()",
       "file_type": "code",
       "source_file": "src/app/(dash)/clientes/page.tsx",
-      "source_location": "L159",
+      "source_location": "L191",
       "_origin": "ast",
-      "community": 6,
+      "community": 7,
       "norm_label": "accountfield()",
       "id": "src_app_dash_clientes_page_accountfield",
-      "community_name": "Vis\u00e3o geral/Tr\u00e1fego & Formata\u00e7\u00e3o"
+      "community_name": "Agrega\u00e7\u00e3o de m\u00e9tricas"
+    },
+    {
+      "label": "CollectionFlow()",
+      "file_type": "code",
+      "source_file": "src/app/(dash)/clientes/page.tsx",
+      "source_location": "L210",
+      "_origin": "ast",
+      "community": 7,
+      "norm_label": "collectionflow()",
+      "id": "src_app_dash_clientes_page_collectionflow",
+      "community_name": "Agrega\u00e7\u00e3o de m\u00e9tricas"
     },
     {
       "label": "ClientList()",
       "file_type": "code",
       "source_file": "src/app/(dash)/clientes/page.tsx",
-      "source_location": "L178",
+      "source_location": "L236",
       "_origin": "ast",
-      "community": 6,
+      "community": 7,
       "norm_label": "clientlist()",
       "id": "src_app_dash_clientes_page_clientlist",
-      "community_name": "Vis\u00e3o geral/Tr\u00e1fego & Formata\u00e7\u00e3o"
+      "community_name": "Agrega\u00e7\u00e3o de m\u00e9tricas"
     },
     {
       "label": "statusVariant()",
       "file_type": "code",
       "source_file": "src/app/(dash)/clientes/page.tsx",
-      "source_location": "L266",
+      "source_location": "L324",
       "_origin": "ast",
-      "community": 6,
+      "community": 7,
       "norm_label": "statusvariant()",
       "id": "src_app_dash_clientes_page_statusvariant",
-      "community_name": "Vis\u00e3o geral/Tr\u00e1fego & Formata\u00e7\u00e3o"
+      "community_name": "Agrega\u00e7\u00e3o de m\u00e9tricas"
     },
     {
       "label": "statusLabel()",
       "file_type": "code",
       "source_file": "src/app/(dash)/clientes/page.tsx",
-      "source_location": "L273",
+      "source_location": "L331",
       "_origin": "ast",
-      "community": 6,
+      "community": 7,
       "norm_label": "statuslabel()",
       "id": "src_app_dash_clientes_page_statuslabel",
-      "community_name": "Vis\u00e3o geral/Tr\u00e1fego & Formata\u00e7\u00e3o"
-    },
-    {
-      "label": "layout.tsx",
-      "file_type": "code",
-      "source_file": "src/app/(dash)/layout.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "layout.tsx",
-      "id": "src_app_dash_layout",
-      "community_name": "Depend\u00eancias (package.json)"
-    },
-    {
-      "label": "DashLayout()",
-      "file_type": "code",
-      "source_file": "src/app/(dash)/layout.tsx",
-      "source_location": "L9",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "dashlayout()",
-      "id": "src_app_dash_layout_dashlayout",
-      "community_name": "Depend\u00eancias (package.json)"
-    },
-    {
-      "label": "DemoBanner()",
-      "file_type": "code",
-      "source_file": "src/app/(dash)/layout.tsx",
-      "source_location": "L40",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "demobanner()",
-      "id": "src_app_dash_layout_demobanner",
-      "community_name": "Depend\u00eancias (package.json)"
-    },
-    {
-      "label": "page.tsx",
-      "file_type": "code",
-      "source_file": "src/app/(dash)/page.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "page.tsx",
-      "id": "src_app_dash_page",
-      "community_name": "Depend\u00eancias (package.json)"
-    },
-    {
-      "label": "SP",
-      "file_type": "code",
-      "source_file": "src/app/(dash)/page.tsx",
-      "source_location": "L38",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "sp",
-      "id": "src_app_dash_page_sp",
-      "community_name": "Depend\u00eancias (package.json)"
-    },
-    {
-      "label": "OverviewPage()",
-      "file_type": "code",
-      "source_file": "src/app/(dash)/page.tsx",
-      "source_location": "L40",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "overviewpage()",
-      "id": "src_app_dash_page_overviewpage",
-      "community_name": "Depend\u00eancias (package.json)"
-    },
-    {
-      "label": "platformLabel()",
-      "file_type": "code",
-      "source_file": "src/app/(dash)/page.tsx",
-      "source_location": "L205",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "platformlabel()",
-      "id": "src_app_dash_page_platformlabel",
-      "community_name": "Depend\u00eancias (package.json)"
-    },
-    {
-      "label": "page.tsx",
-      "file_type": "code",
-      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "page.tsx",
-      "id": "src_app_dash_trafego_pago_page",
-      "community_name": "Depend\u00eancias (package.json)"
-    },
-    {
-      "label": "SP",
-      "file_type": "code",
-      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
-      "source_location": "L37",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "sp",
-      "id": "src_app_dash_trafego_pago_page_sp",
-      "community_name": "Depend\u00eancias (package.json)"
-    },
-    {
-      "label": "TrafegoPagoPage()",
-      "file_type": "code",
-      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
-      "source_location": "L39",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "trafegopagopage()",
-      "id": "src_app_dash_trafego_pago_page_trafegopagopage",
-      "community_name": "Depend\u00eancias (package.json)"
-    },
-    {
-      "label": "platformLabel()",
-      "file_type": "code",
-      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
-      "source_location": "L196",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "platformlabel()",
-      "id": "src_app_dash_trafego_pago_page_platformlabel",
-      "community_name": "Depend\u00eancias (package.json)"
+      "community_name": "Agrega\u00e7\u00e3o de m\u00e9tricas"
     },
     {
       "label": "Sidebar.tsx",
@@ -1800,10 +2063,10 @@
       "source_file": "src/components/layout/Sidebar.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 0,
+      "community": 6,
       "norm_label": "sidebar.tsx",
       "id": "src_components_layout_sidebar",
-      "community_name": "Depend\u00eancias (package.json)"
+      "community_name": "Vis\u00e3o geral/Tr\u00e1fego & Formata\u00e7\u00e3o"
     },
     {
       "label": "NavItem",
@@ -1811,10 +2074,10 @@
       "source_file": "src/components/layout/Sidebar.tsx",
       "source_location": "L15",
       "_origin": "ast",
-      "community": 0,
+      "community": 6,
       "norm_label": "navitem",
       "id": "src_components_layout_sidebar_navitem",
-      "community_name": "Depend\u00eancias (package.json)"
+      "community_name": "Vis\u00e3o geral/Tr\u00e1fego & Formata\u00e7\u00e3o"
     },
     {
       "label": "NAV",
@@ -1822,10 +2085,10 @@
       "source_file": "src/components/layout/Sidebar.tsx",
       "source_location": "L17",
       "_origin": "ast",
-      "community": 0,
+      "community": 6,
       "norm_label": "nav",
       "id": "src_components_layout_sidebar_nav",
-      "community_name": "Depend\u00eancias (package.json)"
+      "community_name": "Vis\u00e3o geral/Tr\u00e1fego & Formata\u00e7\u00e3o"
     },
     {
       "label": "Sidebar()",
@@ -1833,10 +2096,10 @@
       "source_file": "src/components/layout/Sidebar.tsx",
       "source_location": "L24",
       "_origin": "ast",
-      "community": 0,
+      "community": 6,
       "norm_label": "sidebar()",
       "id": "src_components_layout_sidebar_sidebar",
-      "community_name": "Depend\u00eancias (package.json)"
+      "community_name": "Vis\u00e3o geral/Tr\u00e1fego & Formata\u00e7\u00e3o"
     },
     {
       "label": "Topbar.tsx",
@@ -1844,417 +2107,43 @@
       "source_file": "src/components/layout/Topbar.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 6,
       "norm_label": "topbar.tsx",
       "id": "src_components_layout_topbar",
-      "community_name": "Topbar & Camada de dados"
+      "community_name": "Vis\u00e3o geral/Tr\u00e1fego & Formata\u00e7\u00e3o"
+    },
+    {
+      "label": "PLATFORM_OPTIONS",
+      "file_type": "code",
+      "source_file": "src/components/layout/Topbar.tsx",
+      "source_location": "L10",
+      "_origin": "ast",
+      "community": 6,
+      "norm_label": "platform_options",
+      "id": "src_components_layout_topbar_platform_options",
+      "community_name": "Vis\u00e3o geral/Tr\u00e1fego & Formata\u00e7\u00e3o"
     },
     {
       "label": "Topbar()",
       "file_type": "code",
       "source_file": "src/components/layout/Topbar.tsx",
-      "source_location": "L10",
+      "source_location": "L16",
       "_origin": "ast",
-      "community": 2,
+      "community": 6,
       "norm_label": "topbar()",
       "id": "src_components_layout_topbar_topbar",
-      "community_name": "Topbar & Camada de dados"
+      "community_name": "Vis\u00e3o geral/Tr\u00e1fego & Formata\u00e7\u00e3o"
     },
     {
       "label": "ClientOption()",
       "file_type": "code",
       "source_file": "src/components/layout/Topbar.tsx",
-      "source_location": "L219",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "clientoption()",
-      "id": "src_components_layout_topbar_clientoption",
-      "community_name": "Topbar & Camada de dados"
-    },
-    {
-      "label": "queries.ts",
-      "file_type": "code",
-      "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "queries.ts",
-      "id": "src_lib_metrics_queries",
-      "community_name": "Depend\u00eancias (package.json)"
-    },
-    {
-      "label": "AdMetricRow",
-      "file_type": "code",
-      "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L18",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "admetricrow",
-      "id": "src_lib_metrics_queries_admetricrow",
-      "community_name": "Depend\u00eancias (package.json)"
-    },
-    {
-      "label": "WebMetricRow",
-      "file_type": "code",
-      "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L31",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "webmetricrow",
-      "id": "src_lib_metrics_queries_webmetricrow",
-      "community_name": "Depend\u00eancias (package.json)"
-    },
-    {
-      "label": "logQueryError()",
-      "file_type": "code",
-      "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L49",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "logqueryerror()",
-      "id": "src_lib_metrics_queries_logqueryerror",
-      "community_name": "Depend\u00eancias (package.json)"
-    },
-    {
-      "label": "isMissingIntegrationShape()",
-      "file_type": "code",
-      "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L54",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "ismissingintegrationshape()",
-      "id": "src_lib_metrics_queries_ismissingintegrationshape",
-      "community_name": "Depend\u00eancias (package.json)"
-    },
-    {
-      "label": "getClients()",
-      "file_type": "code",
-      "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L64",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "getclients()",
-      "id": "src_lib_metrics_queries_getclients",
-      "community_name": "Depend\u00eancias (package.json)"
-    },
-    {
-      "label": "getIntegrationAccounts()",
-      "file_type": "code",
-      "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L86",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "getintegrationaccounts()",
-      "id": "src_lib_metrics_queries_getintegrationaccounts",
-      "community_name": "Depend\u00eancias (package.json)"
-    },
-    {
-      "label": "getAdMetrics()",
-      "file_type": "code",
-      "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L123",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "getadmetrics()",
-      "id": "src_lib_metrics_queries_getadmetrics",
-      "community_name": "Depend\u00eancias (package.json)"
-    },
-    {
-      "label": "getWebMetrics()",
-      "file_type": "code",
-      "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L185",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "getwebmetrics()",
-      "id": "src_lib_metrics_queries_getwebmetrics",
-      "community_name": "Depend\u00eancias (package.json)"
-    },
-    {
-      "label": "resolveClient()",
-      "file_type": "code",
-      "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L241",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "resolveclient()",
-      "id": "src_lib_metrics_queries_resolveclient",
-      "community_name": "Depend\u00eancias (package.json)"
-    },
-    {
-      "label": "resolveIntegrationAccount()",
-      "file_type": "code",
-      "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L250",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "resolveintegrationaccount()",
-      "id": "src_lib_metrics_queries_resolveintegrationaccount",
-      "community_name": "Depend\u00eancias (package.json)"
-    },
-    {
-      "label": "platformsFromSearch()",
-      "file_type": "code",
-      "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L259",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "platformsfromsearch()",
-      "id": "src_lib_metrics_queries_platformsfromsearch",
-      "community_name": "Depend\u00eancias (package.json)"
-    },
-    {
-      "label": "filterAdMetrics()",
-      "file_type": "code",
-      "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L268",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "filteradmetrics()",
-      "id": "src_lib_metrics_queries_filteradmetrics",
-      "community_name": "Depend\u00eancias (package.json)"
-    },
-    {
-      "label": "filterWebMetrics()",
-      "file_type": "code",
-      "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L283",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "filterwebmetrics()",
-      "id": "src_lib_metrics_queries_filterwebmetrics",
-      "community_name": "Depend\u00eancias (package.json)"
-    },
-    {
-      "label": "data.ts",
-      "file_type": "code",
-      "source_file": "src/lib/mock/data.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "data.ts",
-      "id": "src_lib_mock_data",
-      "community_name": "Topbar & Camada de dados"
-    },
-    {
-      "label": "MOCK_CLIENTS",
-      "file_type": "code",
-      "source_file": "src/lib/mock/data.ts",
-      "source_location": "L16",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "mock_clients",
-      "id": "src_lib_mock_data_mock_clients",
-      "community_name": "Topbar & Camada de dados"
-    },
-    {
-      "label": "MOCK_INTEGRATION_ACCOUNTS",
-      "file_type": "code",
-      "source_file": "src/lib/mock/data.ts",
-      "source_location": "L22",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "mock_integration_accounts",
-      "id": "src_lib_mock_data_mock_integration_accounts",
-      "community_name": "Topbar & Camada de dados"
-    },
-    {
-      "label": "CAMPAigns",
-      "file_type": "code",
-      "source_file": "src/lib/mock/data.ts",
-      "source_location": "L51",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "campaigns",
-      "id": "src_lib_mock_data_campaigns",
-      "community_name": "Topbar & Camada de dados"
-    },
-    {
-      "label": "WEB_SOURCES",
-      "file_type": "code",
-      "source_file": "src/lib/mock/data.ts",
-      "source_location": "L66",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "web_sources",
-      "id": "src_lib_mock_data_web_sources",
-      "community_name": "Topbar & Camada de dados"
-    },
-    {
-      "label": "hashSeed()",
-      "file_type": "code",
-      "source_file": "src/lib/mock/data.ts",
-      "source_location": "L76",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "hashseed()",
-      "id": "src_lib_mock_data_hashseed",
-      "community_name": "Topbar & Camada de dados"
-    },
-    {
-      "label": "rng()",
-      "file_type": "code",
-      "source_file": "src/lib/mock/data.ts",
-      "source_location": "L85",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "rng()",
-      "id": "src_lib_mock_data_rng",
-      "community_name": "Topbar & Camada de dados"
-    },
-    {
-      "label": "eachDate()",
-      "file_type": "code",
-      "source_file": "src/lib/mock/data.ts",
-      "source_location": "L95",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "eachdate()",
-      "id": "src_lib_mock_data_eachdate",
-      "community_name": "Topbar & Camada de dados"
-    },
-    {
-      "label": "CLIENT_SCALE",
-      "file_type": "code",
-      "source_file": "src/lib/mock/data.ts",
-      "source_location": "L107",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "client_scale",
-      "id": "src_lib_mock_data_client_scale",
-      "community_name": "Topbar & Camada de dados"
-    },
-    {
-      "label": "dayFactor()",
-      "file_type": "code",
-      "source_file": "src/lib/mock/data.ts",
-      "source_location": "L114",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "dayfactor()",
-      "id": "src_lib_mock_data_dayfactor",
-      "community_name": "Topbar & Camada de dados"
-    },
-    {
-      "label": "generateAdMetrics()",
-      "file_type": "code",
-      "source_file": "src/lib/mock/data.ts",
-      "source_location": "L121",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "generateadmetrics()",
-      "id": "src_lib_mock_data_generateadmetrics",
-      "community_name": "Topbar & Camada de dados"
-    },
-    {
-      "label": "generateWebMetrics()",
-      "file_type": "code",
-      "source_file": "src/lib/mock/data.ts",
-      "source_location": "L161",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "generatewebmetrics()",
-      "id": "src_lib_mock_data_generatewebmetrics",
-      "community_name": "Topbar & Camada de dados"
-    },
-    {
-      "label": "types.ts",
-      "file_type": "code",
-      "source_file": "src/lib/types.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "types.ts",
-      "id": "src_lib_types",
-      "community_name": "Topbar & Camada de dados"
-    },
-    {
-      "label": "Platform",
-      "file_type": "code",
-      "source_file": "src/lib/types.ts",
-      "source_location": "L3",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "platform",
-      "id": "src_lib_types_platform",
-      "community_name": "Topbar & Camada de dados"
-    },
-    {
-      "label": "IntegrationProvider",
-      "file_type": "code",
-      "source_file": "src/lib/types.ts",
-      "source_location": "L5",
+      "source_location": "L242",
       "_origin": "ast",
       "community": 6,
-      "norm_label": "integrationprovider",
-      "id": "src_lib_types_integrationprovider",
+      "norm_label": "clientoption()",
+      "id": "src_components_layout_topbar_clientoption",
       "community_name": "Vis\u00e3o geral/Tr\u00e1fego & Formata\u00e7\u00e3o"
-    },
-    {
-      "label": "IntegrationStatus",
-      "file_type": "code",
-      "source_file": "src/lib/types.ts",
-      "source_location": "L7",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "integrationstatus",
-      "id": "src_lib_types_integrationstatus",
-      "community_name": "Topbar & Camada de dados"
-    },
-    {
-      "label": "Client",
-      "file_type": "code",
-      "source_file": "src/lib/types.ts",
-      "source_location": "L9",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "client",
-      "id": "src_lib_types_client",
-      "community_name": "Topbar & Camada de dados"
-    },
-    {
-      "label": "IntegrationAccount",
-      "file_type": "code",
-      "source_file": "src/lib/types.ts",
-      "source_location": "L17",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "integrationaccount",
-      "id": "src_lib_types_integrationaccount",
-      "community_name": "Topbar & Camada de dados"
-    },
-    {
-      "label": "AdMetric",
-      "file_type": "code",
-      "source_file": "src/lib/types.ts",
-      "source_location": "L28",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "admetric",
-      "id": "src_lib_types_admetric",
-      "community_name": "Topbar & Camada de dados"
-    },
-    {
-      "label": "WebMetric",
-      "file_type": "code",
-      "source_file": "src/lib/types.ts",
-      "source_location": "L41",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "webmetric",
-      "id": "src_lib_types_webmetric",
-      "community_name": "Topbar & Camada de dados"
-    },
-    {
-      "label": "DateRange",
-      "file_type": "code",
-      "source_file": "src/lib/types.ts",
-      "source_location": "L55",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "daterange",
-      "id": "src_lib_types_daterange",
-      "community_name": "Topbar & Camada de dados"
     },
     {
       "label": "README.md",
@@ -2293,103 +2182,103 @@
       "community_name": "Componente Badge"
     },
     {
+      "label": "Login Page",
+      "file_type": "code",
+      "source_file": "src/app/(auth)/login",
+      "community": 20,
+      "norm_label": "login page",
+      "id": "src_app_login",
+      "community_name": "Community 20"
+    },
+    {
       "label": "Vis\u00e3o Geral",
       "file_type": "code",
-      "source_file": "src/app/page.tsx",
-      "community": 19,
+      "source_file": "src/app/(dash)/page.tsx",
+      "community": 9,
       "norm_label": "visao geral",
-      "id": "src_app_page",
-      "community_name": "Community 19"
-    },
-    {
-      "label": "Tr\u00e1fego Pago",
-      "file_type": "code",
-      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
-      "community": 9,
-      "norm_label": "trafego pago",
-      "id": "src_app_trafego_pago",
+      "id": "src_app_dash_page",
       "community_name": "Root layout (fontes)"
     },
     {
-      "label": "Analytics",
+      "label": "Clientes e Integra\u00e7\u00f5es",
       "file_type": "code",
-      "source_file": "src/app/(dash)/analytics/page.tsx",
-      "community": 9,
-      "norm_label": "analytics",
-      "id": "src_app_analytics",
-      "community_name": "Root layout (fontes)"
-    },
-    {
-      "label": "Clientes e Contas",
-      "file_type": "code",
-      "source_file": "src/app/(dash)/clientes/page.tsx",
-      "community": 18,
-      "norm_label": "clientes e contas",
+      "source_file": "src/app/(dash)/clientes",
+      "community": 17,
+      "norm_label": "clientes e integracoes",
       "id": "src_app_clientes",
-      "community_name": "Community 18"
+      "community_name": "Community 17"
     },
     {
       "label": "Supabase Client",
       "file_type": "code",
-      "source_file": "src/lib/supabase/index.ts",
-      "community": 21,
+      "source_file": "src/lib/supabase",
+      "community": 9,
       "norm_label": "supabase client",
       "id": "src_lib_supabase",
-      "community_name": "Community 21"
+      "community_name": "Root layout (fontes)"
     },
     {
       "label": "Metrics Aggregation",
       "file_type": "code",
       "source_file": "src/lib/metrics/aggregate.ts",
-      "community": 19,
+      "community": 9,
       "norm_label": "metrics aggregation",
       "id": "src_lib_metrics_aggregate",
-      "community_name": "Community 19"
+      "community_name": "Root layout (fontes)"
+    },
+    {
+      "label": "Mock Data",
+      "file_type": "code",
+      "source_file": "src/lib/mock/data.ts",
+      "community": 9,
+      "norm_label": "mock data",
+      "id": "src_lib_mock_data",
+      "community_name": "Root layout (fontes)"
     },
     {
       "label": "Auth Proxy (Middleware)",
       "file_type": "code",
       "source_file": "src/proxy.ts",
-      "community": 21,
+      "community": 9,
       "norm_label": "auth proxy (middleware)",
       "id": "src_proxy",
-      "community_name": "Community 21"
-    },
-    {
-      "label": "ad_metrics",
-      "file_type": "code",
-      "source_file": "supabase/migrations/0001_init.sql",
-      "community": 9,
-      "norm_label": "ad_metrics",
-      "id": "supabase_table_ad_metrics",
       "community_name": "Root layout (fontes)"
     },
     {
-      "label": "web_metrics",
+      "label": "Migration: Init Schema",
       "file_type": "code",
       "source_file": "supabase/migrations/0001_init.sql",
-      "community": 9,
-      "norm_label": "web_metrics",
-      "id": "supabase_table_web_metrics",
-      "community_name": "Root layout (fontes)"
+      "community": 22,
+      "norm_label": "migration: init schema",
+      "id": "supabase_migrations_0001_init",
+      "community_name": "Community 22"
     },
     {
-      "label": "integration_accounts",
+      "label": "Migration: Integration Accounts",
       "file_type": "code",
       "source_file": "supabase/migrations/0004_client_integration_accounts.sql",
-      "community": 18,
-      "norm_label": "integration_accounts",
-      "id": "supabase_table_integration_accounts",
-      "community_name": "Community 18"
+      "community": 17,
+      "norm_label": "migration: integration accounts",
+      "id": "supabase_migrations_0004_integration",
+      "community_name": "Community 17"
     },
     {
       "label": "n8n Workflows",
       "file_type": "concept",
       "source_file": "docs/ingestao-n8n.md",
-      "community": 9,
+      "community": 14,
       "norm_label": "n8n workflows",
       "id": "n8n_workflow",
-      "community_name": "Root layout (fontes)"
+      "community_name": "PostCSS/Tailwind config"
+    },
+    {
+      "label": "Supabase Postgres",
+      "file_type": "concept",
+      "source_file": "README.md",
+      "community": 14,
+      "norm_label": "supabase postgres",
+      "id": "supabase_db",
+      "community_name": "PostCSS/Tailwind config"
     }
   ],
   "links": [
@@ -2810,6 +2699,1193 @@
       "confidence_score": 1.0,
       "source": "src_app_auth_login_page_loginform",
       "target": "src_app_auth_login_page_safenextpath"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/analytics/page.tsx",
+      "source_location": "L15",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_analytics_page",
+      "target": "src_app_dash_analytics_page_analyticspage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/analytics/page.tsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_analytics_page",
+      "target": "src_app_dash_analytics_page_sp"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/analytics/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_analytics_page",
+      "target": "src_components_charts_donutchart"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/analytics/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_analytics_page",
+      "target": "src_components_charts_donutchart_donutchart"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/analytics/page.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_analytics_page",
+      "target": "src_components_charts_theme"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/analytics/page.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_analytics_page",
+      "target": "src_components_charts_theme_chart_colors"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/analytics/page.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_analytics_page",
+      "target": "src_components_charts_trendareachart"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/analytics/page.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_analytics_page",
+      "target": "src_components_charts_trendareachart_trendareachart"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/analytics/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_analytics_page",
+      "target": "src_components_ui_card"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/analytics/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_analytics_page",
+      "target": "src_components_ui_card_card"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/analytics/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_analytics_page",
+      "target": "src_components_ui_card_cardbody"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/analytics/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_analytics_page",
+      "target": "src_components_ui_card_cardheader"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/analytics/page.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_analytics_page",
+      "target": "src_components_ui_kpicard"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/analytics/page.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_analytics_page",
+      "target": "src_components_ui_kpicard_kpicard"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/analytics/page.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_analytics_page",
+      "target": "src_components_ui_pageheader"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/analytics/page.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_analytics_page",
+      "target": "src_components_ui_pageheader_pageheader"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/analytics/page.tsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_analytics_page",
+      "target": "src_lib_format"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/analytics/page.tsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_analytics_page",
+      "target": "src_lib_format_fmtcompact"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/analytics/page.tsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_analytics_page",
+      "target": "src_lib_format_fmtdecimal"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/analytics/page.tsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_analytics_page",
+      "target": "src_lib_format_fmtduration"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/analytics/page.tsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_analytics_page",
+      "target": "src_lib_format_fmtint"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/analytics/page.tsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_analytics_page",
+      "target": "src_lib_format_fmtpercent"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/analytics/page.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_analytics_page",
+      "target": "src_lib_metrics_aggregate"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/analytics/page.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_analytics_page",
+      "target": "src_lib_metrics_queries"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/analytics/page.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_analytics_page",
+      "target": "src_lib_metrics_queries_getclients"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/analytics/page.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_analytics_page",
+      "target": "src_lib_metrics_queries_getwebmetrics"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/analytics/page.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_analytics_page",
+      "target": "src_lib_metrics_queries_resolveclient"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/analytics/page.tsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_analytics_page",
+      "target": "src_lib_range"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/analytics/page.tsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_analytics_page",
+      "target": "src_lib_range_rangefromsearch"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/(dash)/analytics/page.tsx",
+      "source_location": "L45",
+      "weight": 1.0,
+      "source": "src_app_dash_analytics_page_analyticspage",
+      "target": "src_lib_format_fmtcompact"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/(dash)/analytics/page.tsx",
+      "source_location": "L48",
+      "weight": 1.0,
+      "source": "src_app_dash_analytics_page_analyticspage",
+      "target": "src_lib_format_fmtdecimal"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/(dash)/analytics/page.tsx",
+      "source_location": "L58",
+      "weight": 1.0,
+      "source": "src_app_dash_analytics_page_analyticspage",
+      "target": "src_lib_format_fmtduration"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/(dash)/analytics/page.tsx",
+      "source_location": "L43",
+      "weight": 1.0,
+      "source": "src_app_dash_analytics_page_analyticspage",
+      "target": "src_lib_format_fmtint"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/(dash)/analytics/page.tsx",
+      "source_location": "L53",
+      "weight": 1.0,
+      "source": "src_app_dash_analytics_page_analyticspage",
+      "target": "src_lib_format_fmtpercent"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/(dash)/analytics/page.tsx",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "src_app_dash_analytics_page_analyticspage",
+      "target": "src_lib_metrics_queries_getclients"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/(dash)/analytics/page.tsx",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "src_app_dash_analytics_page_analyticspage",
+      "target": "src_lib_metrics_queries_getwebmetrics"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/(dash)/analytics/page.tsx",
+      "source_location": "L23",
+      "weight": 1.0,
+      "source": "src_app_dash_analytics_page_analyticspage",
+      "target": "src_lib_metrics_queries_resolveclient"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/(dash)/analytics/page.tsx",
+      "source_location": "L21",
+      "weight": 1.0,
+      "source": "src_app_dash_analytics_page_analyticspage",
+      "target": "src_lib_range_rangefromsearch"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/clientes/actions.ts",
+      "source_location": "L21",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_clientes_actions",
+      "target": "src_app_dash_clientes_actions_accountinput"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/clientes/actions.ts",
+      "source_location": "L122",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_clientes_actions",
+      "target": "src_app_dash_clientes_actions_buildaccounts"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/clientes/actions.ts",
+      "source_location": "L10",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_clientes_actions",
+      "target": "src_app_dash_clientes_actions_clientschema"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/clientes/actions.ts",
+      "source_location": "L28",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_clientes_actions",
+      "target": "src_app_dash_clientes_actions_createclientwithaccounts"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/clientes/actions.ts",
+      "source_location": "L110",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_clientes_actions",
+      "target": "src_app_dash_clientes_actions_normalizeslug"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/clientes/actions.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_clientes_actions",
+      "target": "src_lib_supabase_config"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/clientes/actions.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_clientes_actions",
+      "target": "src_lib_supabase_config_issupabaseconfigured"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/clientes/actions.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_clientes_actions",
+      "target": "src_lib_supabase_server"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/clientes/actions.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_clientes_actions",
+      "target": "src_lib_supabase_server_createsupabaseserverclient"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/clientes/actions.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_clientes_actions",
+      "target": "src_lib_types"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/clientes/actions.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_clientes_actions",
+      "target": "src_lib_types_integrationprovider"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/clientes/actions.ts",
+      "source_location": "L79",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_clientes_actions_createclientwithaccounts",
+      "target": "src_app_dash_clientes_actions_buildaccounts"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/clientes/actions.ts",
+      "source_location": "L59",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_clientes_actions_createclientwithaccounts",
+      "target": "src_app_dash_clientes_actions_normalizeslug"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/(dash)/clientes/actions.ts",
+      "source_location": "L44",
+      "weight": 1.0,
+      "source": "src_app_dash_clientes_actions_createclientwithaccounts",
+      "target": "src_lib_supabase_server_createsupabaseserverclient"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/layout.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_layout",
+      "target": "src_app_dash_layout_dashlayout"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/layout.tsx",
+      "source_location": "L40",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_layout",
+      "target": "src_app_dash_layout_demobanner"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/layout.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_layout",
+      "target": "src_components_layout_sidebar"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/layout.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_layout",
+      "target": "src_components_layout_sidebar_sidebar"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/layout.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_layout",
+      "target": "src_components_layout_topbar"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/layout.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_layout",
+      "target": "src_components_layout_topbar_topbar"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/layout.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_layout",
+      "target": "src_lib_metrics_queries"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/layout.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_layout",
+      "target": "src_lib_metrics_queries_getclients"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/layout.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_layout",
+      "target": "src_lib_metrics_queries_getintegrationaccounts"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/layout.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_layout",
+      "target": "src_lib_supabase_config"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/layout.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_layout",
+      "target": "src_lib_supabase_config_issupabaseconfigured"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/(dash)/layout.tsx",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "src_app_dash_layout_dashlayout",
+      "target": "src_lib_metrics_queries_getclients"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/(dash)/layout.tsx",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "src_app_dash_layout_dashlayout",
+      "target": "src_lib_metrics_queries_getintegrationaccounts"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
+      "source_location": "L196",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_trafego_pago_page",
+      "target": "src_app_dash_trafego_pago_page_platformlabel"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
+      "source_location": "L37",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_trafego_pago_page",
+      "target": "src_app_dash_trafego_pago_page_sp"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
+      "source_location": "L39",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_trafego_pago_page",
+      "target": "src_app_dash_trafego_pago_page_trafegopagopage"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_trafego_pago_page",
+      "target": "src_components_charts_donutchart"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_trafego_pago_page",
+      "target": "src_components_charts_donutchart_donutchart"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
+      "source_location": "L14",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_trafego_pago_page",
+      "target": "src_components_charts_theme"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
+      "source_location": "L14",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_trafego_pago_page",
+      "target": "src_components_charts_theme_chart_colors"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_trafego_pago_page",
+      "target": "src_components_charts_trendareachart"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_trafego_pago_page",
+      "target": "src_components_charts_trendareachart_trendareachart"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_trafego_pago_page",
+      "target": "src_components_ui_card"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_trafego_pago_page",
+      "target": "src_components_ui_card_card"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_trafego_pago_page",
+      "target": "src_components_ui_card_cardbody"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_trafego_pago_page",
+      "target": "src_components_ui_card_cardheader"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_trafego_pago_page",
+      "target": "src_components_ui_kpicard"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_trafego_pago_page",
+      "target": "src_components_ui_kpicard_kpicard"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_trafego_pago_page",
+      "target": "src_components_ui_pageheader"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_trafego_pago_page",
+      "target": "src_components_ui_pageheader_pageheader"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
+      "source_location": "L28",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_trafego_pago_page",
+      "target": "src_lib_format"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
+      "source_location": "L28",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_trafego_pago_page",
+      "target": "src_lib_format_fmtcompact"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
+      "source_location": "L28",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_trafego_pago_page",
+      "target": "src_lib_format_fmtcurrency"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
+      "source_location": "L28",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_trafego_pago_page",
+      "target": "src_lib_format_fmtcurrencycents"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
+      "source_location": "L28",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_trafego_pago_page",
+      "target": "src_lib_format_fmtint"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
+      "source_location": "L28",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_trafego_pago_page",
+      "target": "src_lib_format_fmtmultiplier"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
+      "source_location": "L28",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_trafego_pago_page",
+      "target": "src_lib_format_fmtpercent"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
+      "source_location": "L21",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_trafego_pago_page",
+      "target": "src_lib_metrics_aggregate"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
+      "source_location": "L15",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_trafego_pago_page",
+      "target": "src_lib_metrics_queries"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
+      "source_location": "L15",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_trafego_pago_page",
+      "target": "src_lib_metrics_queries_getadmetrics"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
+      "source_location": "L15",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_trafego_pago_page",
+      "target": "src_lib_metrics_queries_getclients"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
+      "source_location": "L15",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_trafego_pago_page",
+      "target": "src_lib_metrics_queries_platformsfromsearch"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
+      "source_location": "L15",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_trafego_pago_page",
+      "target": "src_lib_metrics_queries_resolveclient"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
+      "source_location": "L27",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_trafego_pago_page",
+      "target": "src_lib_range"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
+      "source_location": "L27",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_trafego_pago_page",
+      "target": "src_lib_range_rangefromsearch"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
+      "source_location": "L69",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_trafego_pago_page_trafegopagopage",
+      "target": "src_app_dash_trafego_pago_page_platformlabel"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
+      "source_location": "L75",
+      "weight": 1.0,
+      "source": "src_app_dash_trafego_pago_page_trafegopagopage",
+      "target": "src_lib_format_fmtcompact"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
+      "source_location": "L74",
+      "weight": 1.0,
+      "source": "src_app_dash_trafego_pago_page_trafegopagopage",
+      "target": "src_lib_format_fmtcurrency"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
+      "source_location": "L79",
+      "weight": 1.0,
+      "source": "src_app_dash_trafego_pago_page_trafegopagopage",
+      "target": "src_lib_format_fmtcurrencycents"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
+      "source_location": "L76",
+      "weight": 1.0,
+      "source": "src_app_dash_trafego_pago_page_trafegopagopage",
+      "target": "src_lib_format_fmtint"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
+      "source_location": "L81",
+      "weight": 1.0,
+      "source": "src_app_dash_trafego_pago_page_trafegopagopage",
+      "target": "src_lib_format_fmtmultiplier"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
+      "source_location": "L78",
+      "weight": 1.0,
+      "source": "src_app_dash_trafego_pago_page_trafegopagopage",
+      "target": "src_lib_format_fmtpercent"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
+      "source_location": "L51",
+      "weight": 1.0,
+      "source": "src_app_dash_trafego_pago_page_trafegopagopage",
+      "target": "src_lib_metrics_queries_getadmetrics"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
+      "source_location": "L46",
+      "weight": 1.0,
+      "source": "src_app_dash_trafego_pago_page_trafegopagopage",
+      "target": "src_lib_metrics_queries_getclients"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
+      "source_location": "L48",
+      "weight": 1.0,
+      "source": "src_app_dash_trafego_pago_page_trafegopagopage",
+      "target": "src_lib_metrics_queries_platformsfromsearch"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
+      "source_location": "L47",
+      "weight": 1.0,
+      "source": "src_app_dash_trafego_pago_page_trafegopagopage",
+      "target": "src_lib_metrics_queries_resolveclient"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
+      "source_location": "L45",
+      "weight": 1.0,
+      "source": "src_app_dash_trafego_pago_page_trafegopagopage",
+      "target": "src_lib_range_rangefromsearch"
     },
     {
       "relation": "contains",
@@ -3555,6 +4631,400 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L18",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_lib_metrics_queries",
+      "target": "src_lib_metrics_queries_admetricrow"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L268",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_lib_metrics_queries",
+      "target": "src_lib_metrics_queries_filteradmetrics"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L283",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_lib_metrics_queries",
+      "target": "src_lib_metrics_queries_filterwebmetrics"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L123",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_lib_metrics_queries",
+      "target": "src_lib_metrics_queries_getadmetrics"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L64",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_lib_metrics_queries",
+      "target": "src_lib_metrics_queries_getclients"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L86",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_lib_metrics_queries",
+      "target": "src_lib_metrics_queries_getintegrationaccounts"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L185",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_lib_metrics_queries",
+      "target": "src_lib_metrics_queries_getwebmetrics"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L54",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_lib_metrics_queries",
+      "target": "src_lib_metrics_queries_ismissingintegrationshape"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L49",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_lib_metrics_queries",
+      "target": "src_lib_metrics_queries_logqueryerror"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L259",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_lib_metrics_queries",
+      "target": "src_lib_metrics_queries_platformsfromsearch"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L241",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_lib_metrics_queries",
+      "target": "src_lib_metrics_queries_resolveclient"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L250",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_lib_metrics_queries",
+      "target": "src_lib_metrics_queries_resolveintegrationaccount"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L31",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_lib_metrics_queries",
+      "target": "src_lib_metrics_queries_webmetricrow"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_lib_metrics_queries",
+      "target": "src_lib_mock_data"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_lib_metrics_queries",
+      "target": "src_lib_supabase_config"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_lib_metrics_queries",
+      "target": "src_lib_supabase_config_issupabaseconfigured"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_lib_metrics_queries",
+      "target": "src_lib_supabase_server"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_lib_metrics_queries",
+      "target": "src_lib_supabase_server_createsupabaseserverclient"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_lib_metrics_queries",
+      "target": "src_lib_types"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_lib_metrics_queries",
+      "target": "src_lib_types_admetric"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_lib_metrics_queries",
+      "target": "src_lib_types_client"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_lib_metrics_queries",
+      "target": "src_lib_types_daterange"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_lib_metrics_queries",
+      "target": "src_lib_types_integrationaccount"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_lib_metrics_queries",
+      "target": "src_lib_types_platform"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_lib_metrics_queries",
+      "target": "src_lib_types_webmetric"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L168",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_lib_metrics_queries_getadmetrics",
+      "target": "src_lib_metrics_queries_logqueryerror"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L74",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_lib_metrics_queries_getclients",
+      "target": "src_lib_metrics_queries_logqueryerror"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L107",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_lib_metrics_queries_getintegrationaccounts",
+      "target": "src_lib_metrics_queries_logqueryerror"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L223",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_lib_metrics_queries_getwebmetrics",
+      "target": "src_lib_metrics_queries_logqueryerror"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L153",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_lib_metrics_queries_getadmetrics",
+      "target": "src_lib_metrics_queries_ismissingintegrationshape"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L209",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_lib_metrics_queries_getwebmetrics",
+      "target": "src_lib_metrics_queries_ismissingintegrationshape"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L67",
+      "weight": 1.0,
+      "source": "src_lib_metrics_queries_getclients",
+      "target": "src_lib_supabase_server_createsupabaseserverclient"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L95",
+      "weight": 1.0,
+      "source": "src_lib_metrics_queries_getintegrationaccounts",
+      "target": "src_lib_supabase_server_createsupabaseserverclient"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L130",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_lib_metrics_queries_getadmetrics",
+      "target": "src_lib_metrics_queries_filteradmetrics"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L137",
+      "weight": 1.0,
+      "source": "src_lib_metrics_queries_getadmetrics",
+      "target": "src_lib_supabase_server_createsupabaseserverclient"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L191",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_lib_metrics_queries_getwebmetrics",
+      "target": "src_lib_metrics_queries_filterwebmetrics"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L194",
+      "weight": 1.0,
+      "source": "src_lib_metrics_queries_getwebmetrics",
+      "target": "src_lib_supabase_server_createsupabaseserverclient"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "src/lib/range.ts",
       "source_location": "L27",
       "weight": 1.0,
@@ -3872,6 +5342,86 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "src/lib/types.ts",
+      "source_location": "L28",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_lib_types",
+      "target": "src_lib_types_admetric"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/types.ts",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_lib_types",
+      "target": "src_lib_types_client"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/types.ts",
+      "source_location": "L55",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_lib_types",
+      "target": "src_lib_types_daterange"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/types.ts",
+      "source_location": "L17",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_lib_types",
+      "target": "src_lib_types_integrationaccount"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/types.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_lib_types",
+      "target": "src_lib_types_integrationprovider"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/types.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_lib_types",
+      "target": "src_lib_types_integrationstatus"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/types.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_lib_types",
+      "target": "src_lib_types_platform"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/types.ts",
+      "source_location": "L41",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_lib_types",
+      "target": "src_lib_types_webmetric"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "tsconfig.json",
       "source_location": "L2",
       "weight": 1.0,
@@ -4072,221 +5622,8 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "src/app/(dash)/analytics/page.tsx",
-      "source_location": "L15",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_dash_analytics_page",
-      "target": "src_app_dash_analytics_page_analyticspage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/(dash)/analytics/page.tsx",
-      "source_location": "L13",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_dash_analytics_page",
-      "target": "src_app_dash_analytics_page_sp"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/(dash)/analytics/page.tsx",
-      "source_location": "L8",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_dash_analytics_page",
-      "target": "src_lib_metrics_queries"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/(dash)/analytics/page.tsx",
-      "source_location": "L8",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_dash_analytics_page",
-      "target": "src_lib_metrics_queries_getclients"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/(dash)/analytics/page.tsx",
-      "source_location": "L8",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_dash_analytics_page",
-      "target": "src_lib_metrics_queries_getwebmetrics"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/(dash)/analytics/page.tsx",
-      "source_location": "L8",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_dash_analytics_page",
-      "target": "src_lib_metrics_queries_resolveclient"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/app/(dash)/analytics/page.tsx",
-      "source_location": "L22",
-      "weight": 1.0,
-      "source": "src_app_dash_analytics_page_analyticspage",
-      "target": "src_lib_metrics_queries_getclients"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/app/(dash)/analytics/page.tsx",
-      "source_location": "L26",
-      "weight": 1.0,
-      "source": "src_app_dash_analytics_page_analyticspage",
-      "target": "src_lib_metrics_queries_getwebmetrics"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/app/(dash)/analytics/page.tsx",
-      "source_location": "L23",
-      "weight": 1.0,
-      "source": "src_app_dash_analytics_page_analyticspage",
-      "target": "src_lib_metrics_queries_resolveclient"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/(dash)/clientes/actions.ts",
-      "source_location": "L21",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_dash_clientes_actions",
-      "target": "src_app_dash_clientes_actions_accountinput"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/(dash)/clientes/actions.ts",
-      "source_location": "L122",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_dash_clientes_actions",
-      "target": "src_app_dash_clientes_actions_buildaccounts"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/(dash)/clientes/actions.ts",
-      "source_location": "L10",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_dash_clientes_actions",
-      "target": "src_app_dash_clientes_actions_clientschema"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/(dash)/clientes/actions.ts",
-      "source_location": "L28",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_dash_clientes_actions",
-      "target": "src_app_dash_clientes_actions_createclientwithaccounts"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/(dash)/clientes/actions.ts",
-      "source_location": "L110",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_dash_clientes_actions",
-      "target": "src_app_dash_clientes_actions_normalizeslug"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/(dash)/clientes/actions.ts",
-      "source_location": "L8",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_dash_clientes_actions",
-      "target": "src_lib_types"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/(dash)/clientes/actions.ts",
-      "source_location": "L8",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_dash_clientes_actions",
-      "target": "src_lib_types_integrationprovider"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
       "source_file": "src/app/(dash)/clientes/page.tsx",
-      "source_location": "L11",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_dash_clientes_page",
-      "target": "src_app_dash_clientes_actions"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/(dash)/clientes/actions.ts",
-      "source_location": "L79",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_dash_clientes_actions_createclientwithaccounts",
-      "target": "src_app_dash_clientes_actions_buildaccounts"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/(dash)/clientes/actions.ts",
-      "source_location": "L59",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_dash_clientes_actions_createclientwithaccounts",
-      "target": "src_app_dash_clientes_actions_normalizeslug"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/(dash)/clientes/page.tsx",
-      "source_location": "L11",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_dash_clientes_page",
-      "target": "src_app_dash_clientes_actions_createclientwithaccounts"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/(dash)/clientes/page.tsx",
-      "source_location": "L159",
+      "source_location": "L191",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "src_app_dash_clientes_page",
@@ -4296,7 +5633,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/app/(dash)/clientes/page.tsx",
-      "source_location": "L22",
+      "source_location": "L19",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "src_app_dash_clientes_page",
@@ -4316,7 +5653,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/app/(dash)/clientes/page.tsx",
-      "source_location": "L178",
+      "source_location": "L236",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "src_app_dash_clientes_page",
@@ -4326,7 +5663,27 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/app/(dash)/clientes/page.tsx",
-      "source_location": "L15",
+      "source_location": "L210",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_clientes_page",
+      "target": "src_app_dash_clientes_page_collectionflow"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/clientes/page.tsx",
+      "source_location": "L176",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_dash_clientes_page",
+      "target": "src_app_dash_clientes_page_formsection"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/clientes/page.tsx",
+      "source_location": "L12",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "src_app_dash_clientes_page",
@@ -4336,7 +5693,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/app/(dash)/clientes/page.tsx",
-      "source_location": "L13",
+      "source_location": "L10",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "src_app_dash_clientes_page",
@@ -4346,7 +5703,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/app/(dash)/clientes/page.tsx",
-      "source_location": "L273",
+      "source_location": "L331",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "src_app_dash_clientes_page",
@@ -4356,531 +5713,11 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/app/(dash)/clientes/page.tsx",
-      "source_location": "L266",
+      "source_location": "L324",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "src_app_dash_clientes_page",
       "target": "src_app_dash_clientes_page_statusvariant"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/(dash)/clientes/page.tsx",
-      "source_location": "L5",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_dash_clientes_page",
-      "target": "src_lib_metrics_queries"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/(dash)/clientes/page.tsx",
-      "source_location": "L5",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_dash_clientes_page",
-      "target": "src_lib_metrics_queries_getclients"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/(dash)/clientes/page.tsx",
-      "source_location": "L5",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_dash_clientes_page",
-      "target": "src_lib_metrics_queries_getintegrationaccounts"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/(dash)/clientes/page.tsx",
-      "source_location": "L10",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_dash_clientes_page",
-      "target": "src_lib_types"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/(dash)/clientes/page.tsx",
-      "source_location": "L10",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_dash_clientes_page",
-      "target": "src_lib_types_client"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/(dash)/clientes/page.tsx",
-      "source_location": "L10",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_dash_clientes_page",
-      "target": "src_lib_types_integrationaccount"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/(dash)/clientes/page.tsx",
-      "source_location": "L10",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_dash_clientes_page",
-      "target": "src_lib_types_integrationprovider"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/app/(dash)/clientes/page.tsx",
-      "source_location": "L29",
-      "weight": 1.0,
-      "source": "src_app_dash_clientes_page_clientespage",
-      "target": "src_lib_metrics_queries_getclients"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/app/(dash)/clientes/page.tsx",
-      "source_location": "L30",
-      "weight": 1.0,
-      "source": "src_app_dash_clientes_page_clientespage",
-      "target": "src_lib_metrics_queries_getintegrationaccounts"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/(dash)/layout.tsx",
-      "source_location": "L9",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_dash_layout",
-      "target": "src_app_dash_layout_dashlayout"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/(dash)/layout.tsx",
-      "source_location": "L40",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_dash_layout",
-      "target": "src_app_dash_layout_demobanner"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/(dash)/layout.tsx",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_dash_layout",
-      "target": "src_components_layout_sidebar"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/(dash)/layout.tsx",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_dash_layout",
-      "target": "src_components_layout_sidebar_sidebar"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/(dash)/layout.tsx",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_dash_layout",
-      "target": "src_components_layout_topbar"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/(dash)/layout.tsx",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_dash_layout",
-      "target": "src_components_layout_topbar_topbar"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/(dash)/layout.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_dash_layout",
-      "target": "src_lib_metrics_queries"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/(dash)/layout.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_dash_layout",
-      "target": "src_lib_metrics_queries_getclients"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/(dash)/layout.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_dash_layout",
-      "target": "src_lib_metrics_queries_getintegrationaccounts"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/app/(dash)/layout.tsx",
-      "source_location": "L15",
-      "weight": 1.0,
-      "source": "src_app_dash_layout_dashlayout",
-      "target": "src_lib_metrics_queries_getclients"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/app/(dash)/layout.tsx",
-      "source_location": "L16",
-      "weight": 1.0,
-      "source": "src_app_dash_layout_dashlayout",
-      "target": "src_lib_metrics_queries_getintegrationaccounts"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/(dash)/page.tsx",
-      "source_location": "L40",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_dash_page",
-      "target": "src_app_dash_page_overviewpage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/(dash)/page.tsx",
-      "source_location": "L205",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_dash_page",
-      "target": "src_app_dash_page_platformlabel"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/(dash)/page.tsx",
-      "source_location": "L38",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_dash_page",
-      "target": "src_app_dash_page_sp"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/(dash)/page.tsx",
-      "source_location": "L16",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_dash_page",
-      "target": "src_lib_metrics_queries"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/(dash)/page.tsx",
-      "source_location": "L16",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_dash_page",
-      "target": "src_lib_metrics_queries_getadmetrics"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/(dash)/page.tsx",
-      "source_location": "L16",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_dash_page",
-      "target": "src_lib_metrics_queries_getclients"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/(dash)/page.tsx",
-      "source_location": "L16",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_dash_page",
-      "target": "src_lib_metrics_queries_getwebmetrics"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/(dash)/page.tsx",
-      "source_location": "L16",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_dash_page",
-      "target": "src_lib_metrics_queries_platformsfromsearch"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/(dash)/page.tsx",
-      "source_location": "L16",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_dash_page",
-      "target": "src_lib_metrics_queries_resolveclient"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/(dash)/page.tsx",
-      "source_location": "L77",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_dash_page_overviewpage",
-      "target": "src_app_dash_page_platformlabel"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/app/(dash)/page.tsx",
-      "source_location": "L56",
-      "weight": 1.0,
-      "source": "src_app_dash_page_overviewpage",
-      "target": "src_lib_metrics_queries_getadmetrics"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/app/(dash)/page.tsx",
-      "source_location": "L49",
-      "weight": 1.0,
-      "source": "src_app_dash_page_overviewpage",
-      "target": "src_lib_metrics_queries_getclients"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/app/(dash)/page.tsx",
-      "source_location": "L58",
-      "weight": 1.0,
-      "source": "src_app_dash_page_overviewpage",
-      "target": "src_lib_metrics_queries_getwebmetrics"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/app/(dash)/page.tsx",
-      "source_location": "L52",
-      "weight": 1.0,
-      "source": "src_app_dash_page_overviewpage",
-      "target": "src_lib_metrics_queries_platformsfromsearch"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/app/(dash)/page.tsx",
-      "source_location": "L50",
-      "weight": 1.0,
-      "source": "src_app_dash_page_overviewpage",
-      "target": "src_lib_metrics_queries_resolveclient"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
-      "source_location": "L196",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_dash_trafego_pago_page",
-      "target": "src_app_dash_trafego_pago_page_platformlabel"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
-      "source_location": "L37",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_dash_trafego_pago_page",
-      "target": "src_app_dash_trafego_pago_page_sp"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
-      "source_location": "L39",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_dash_trafego_pago_page",
-      "target": "src_app_dash_trafego_pago_page_trafegopagopage"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
-      "source_location": "L15",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_dash_trafego_pago_page",
-      "target": "src_lib_metrics_queries"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
-      "source_location": "L15",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_dash_trafego_pago_page",
-      "target": "src_lib_metrics_queries_getadmetrics"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
-      "source_location": "L15",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_dash_trafego_pago_page",
-      "target": "src_lib_metrics_queries_getclients"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
-      "source_location": "L15",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_dash_trafego_pago_page",
-      "target": "src_lib_metrics_queries_platformsfromsearch"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
-      "source_location": "L15",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_dash_trafego_pago_page",
-      "target": "src_lib_metrics_queries_resolveclient"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
-      "source_location": "L69",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_dash_trafego_pago_page_trafegopagopage",
-      "target": "src_app_dash_trafego_pago_page_platformlabel"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
-      "source_location": "L51",
-      "weight": 1.0,
-      "source": "src_app_dash_trafego_pago_page_trafegopagopage",
-      "target": "src_lib_metrics_queries_getadmetrics"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
-      "source_location": "L46",
-      "weight": 1.0,
-      "source": "src_app_dash_trafego_pago_page_trafegopagopage",
-      "target": "src_lib_metrics_queries_getclients"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
-      "source_location": "L48",
-      "weight": 1.0,
-      "source": "src_app_dash_trafego_pago_page_trafegopagopage",
-      "target": "src_lib_metrics_queries_platformsfromsearch"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/app/(dash)/trafego-pago/page.tsx",
-      "source_location": "L47",
-      "weight": 1.0,
-      "source": "src_app_dash_trafego_pago_page_trafegopagopage",
-      "target": "src_lib_metrics_queries_resolveclient"
     },
     {
       "relation": "contains",
@@ -4916,7 +5753,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/components/layout/Topbar.tsx",
-      "source_location": "L219",
+      "source_location": "L242",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "src_components_layout_topbar",
@@ -4930,767 +5767,17 @@
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "src_components_layout_topbar",
-      "target": "src_components_layout_topbar_topbar"
+      "target": "src_components_layout_topbar_platform_options"
     },
     {
-      "relation": "imports_from",
-      "context": "import",
+      "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/components/layout/Topbar.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_components_layout_topbar",
-      "target": "src_lib_types"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/layout/Topbar.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_components_layout_topbar",
-      "target": "src_lib_types_client"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/layout/Topbar.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_components_layout_topbar",
-      "target": "src_lib_types_integrationaccount"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L18",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_metrics_queries",
-      "target": "src_lib_metrics_queries_admetricrow"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L268",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_metrics_queries",
-      "target": "src_lib_metrics_queries_filteradmetrics"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L283",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_metrics_queries",
-      "target": "src_lib_metrics_queries_filterwebmetrics"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L123",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_metrics_queries",
-      "target": "src_lib_metrics_queries_getadmetrics"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L64",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_metrics_queries",
-      "target": "src_lib_metrics_queries_getclients"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L86",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_metrics_queries",
-      "target": "src_lib_metrics_queries_getintegrationaccounts"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L185",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_metrics_queries",
-      "target": "src_lib_metrics_queries_getwebmetrics"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L54",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_metrics_queries",
-      "target": "src_lib_metrics_queries_ismissingintegrationshape"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L49",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_metrics_queries",
-      "target": "src_lib_metrics_queries_logqueryerror"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L259",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_metrics_queries",
-      "target": "src_lib_metrics_queries_platformsfromsearch"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L241",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_metrics_queries",
-      "target": "src_lib_metrics_queries_resolveclient"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L250",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_metrics_queries",
-      "target": "src_lib_metrics_queries_resolveintegrationaccount"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L31",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_metrics_queries",
-      "target": "src_lib_metrics_queries_webmetricrow"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_metrics_queries",
-      "target": "src_lib_mock_data"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_metrics_queries",
-      "target": "src_lib_mock_data_generateadmetrics"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_metrics_queries",
-      "target": "src_lib_mock_data_generatewebmetrics"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_metrics_queries",
-      "target": "src_lib_mock_data_mock_clients"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_metrics_queries",
-      "target": "src_lib_mock_data_mock_integration_accounts"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L9",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_metrics_queries",
-      "target": "src_lib_types"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L9",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_metrics_queries",
-      "target": "src_lib_types_admetric"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L9",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_metrics_queries",
-      "target": "src_lib_types_client"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L9",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_metrics_queries",
-      "target": "src_lib_types_daterange"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L9",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_metrics_queries",
-      "target": "src_lib_types_integrationaccount"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L9",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_metrics_queries",
-      "target": "src_lib_types_platform"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L9",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_metrics_queries",
-      "target": "src_lib_types_webmetric"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L168",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_metrics_queries_getadmetrics",
-      "target": "src_lib_metrics_queries_logqueryerror"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L74",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_metrics_queries_getclients",
-      "target": "src_lib_metrics_queries_logqueryerror"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L107",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_metrics_queries_getintegrationaccounts",
-      "target": "src_lib_metrics_queries_logqueryerror"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L223",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_metrics_queries_getwebmetrics",
-      "target": "src_lib_metrics_queries_logqueryerror"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L153",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_metrics_queries_getadmetrics",
-      "target": "src_lib_metrics_queries_ismissingintegrationshape"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L209",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_metrics_queries_getwebmetrics",
-      "target": "src_lib_metrics_queries_ismissingintegrationshape"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L130",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_metrics_queries_getadmetrics",
-      "target": "src_lib_metrics_queries_filteradmetrics"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L131",
-      "weight": 1.0,
-      "source": "src_lib_metrics_queries_getadmetrics",
-      "target": "src_lib_mock_data_generateadmetrics"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L191",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_metrics_queries_getwebmetrics",
-      "target": "src_lib_metrics_queries_filterwebmetrics"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L191",
-      "weight": 1.0,
-      "source": "src_lib_metrics_queries_getwebmetrics",
-      "target": "src_lib_mock_data_generatewebmetrics"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/mock/data.ts",
-      "source_location": "L51",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_mock_data",
-      "target": "src_lib_mock_data_campaigns"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/mock/data.ts",
-      "source_location": "L107",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_mock_data",
-      "target": "src_lib_mock_data_client_scale"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/mock/data.ts",
-      "source_location": "L114",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_mock_data",
-      "target": "src_lib_mock_data_dayfactor"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/mock/data.ts",
-      "source_location": "L95",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_mock_data",
-      "target": "src_lib_mock_data_eachdate"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/mock/data.ts",
-      "source_location": "L121",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_mock_data",
-      "target": "src_lib_mock_data_generateadmetrics"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/mock/data.ts",
-      "source_location": "L161",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_mock_data",
-      "target": "src_lib_mock_data_generatewebmetrics"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/mock/data.ts",
-      "source_location": "L76",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_mock_data",
-      "target": "src_lib_mock_data_hashseed"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/mock/data.ts",
       "source_location": "L16",
       "weight": 1.0,
       "confidence_score": 1.0,
-      "source": "src_lib_mock_data",
-      "target": "src_lib_mock_data_mock_clients"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/mock/data.ts",
-      "source_location": "L22",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_mock_data",
-      "target": "src_lib_mock_data_mock_integration_accounts"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/mock/data.ts",
-      "source_location": "L85",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_mock_data",
-      "target": "src_lib_mock_data_rng"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/mock/data.ts",
-      "source_location": "L66",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_mock_data",
-      "target": "src_lib_mock_data_web_sources"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/mock/data.ts",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_mock_data",
-      "target": "src_lib_types"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/mock/data.ts",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_mock_data",
-      "target": "src_lib_types_admetric"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/mock/data.ts",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_mock_data",
-      "target": "src_lib_types_client"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/mock/data.ts",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_mock_data",
-      "target": "src_lib_types_daterange"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/mock/data.ts",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_mock_data",
-      "target": "src_lib_types_integrationaccount"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/mock/data.ts",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_mock_data",
-      "target": "src_lib_types_platform"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/mock/data.ts",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_mock_data",
-      "target": "src_lib_types_webmetric"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/mock/data.ts",
-      "source_location": "L131",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_mock_data_generateadmetrics",
-      "target": "src_lib_mock_data_hashseed"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/mock/data.ts",
-      "source_location": "L170",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_mock_data_generatewebmetrics",
-      "target": "src_lib_mock_data_hashseed"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/mock/data.ts",
-      "source_location": "L131",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_mock_data_generateadmetrics",
-      "target": "src_lib_mock_data_rng"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/mock/data.ts",
-      "source_location": "L170",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_mock_data_generatewebmetrics",
-      "target": "src_lib_mock_data_rng"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/mock/data.ts",
-      "source_location": "L123",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_mock_data_generateadmetrics",
-      "target": "src_lib_mock_data_eachdate"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/mock/data.ts",
-      "source_location": "L163",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_mock_data_generatewebmetrics",
-      "target": "src_lib_mock_data_eachdate"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/mock/data.ts",
-      "source_location": "L132",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_mock_data_generateadmetrics",
-      "target": "src_lib_mock_data_dayfactor"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/mock/data.ts",
-      "source_location": "L171",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_mock_data_generatewebmetrics",
-      "target": "src_lib_mock_data_dayfactor"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/types.ts",
-      "source_location": "L28",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_types",
-      "target": "src_lib_types_admetric"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/types.ts",
-      "source_location": "L9",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_types",
-      "target": "src_lib_types_client"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/types.ts",
-      "source_location": "L55",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_types",
-      "target": "src_lib_types_daterange"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/types.ts",
-      "source_location": "L17",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_types",
-      "target": "src_lib_types_integrationaccount"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/types.ts",
-      "source_location": "L5",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_types",
-      "target": "src_lib_types_integrationprovider"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/types.ts",
-      "source_location": "L7",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_types",
-      "target": "src_lib_types_integrationstatus"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/types.ts",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_types",
-      "target": "src_lib_types_platform"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/types.ts",
-      "source_location": "L41",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_lib_types",
-      "target": "src_lib_types_webmetric"
+      "source": "src_components_layout_topbar",
+      "target": "src_components_layout_topbar_topbar"
     },
     {
       "relation": "references",
@@ -5729,24 +5816,16 @@
       "confidence": "INFERRED",
       "confidence_score": 0.9,
       "source_file": "REGRAS-PROJETO.md",
-      "source": "src_app_page",
+      "source": "src_app_dash_page",
       "target": "src_lib_metrics_aggregate"
     },
     {
-      "relation": "references",
+      "relation": "calls",
       "confidence": "INFERRED",
       "confidence_score": 0.9,
-      "source_file": "REGRAS-PROJETO.md",
-      "source": "src_app_trafego_pago",
-      "target": "supabase_table_ad_metrics"
-    },
-    {
-      "relation": "references",
-      "confidence": "INFERRED",
-      "confidence_score": 0.9,
-      "source_file": "REGRAS-PROJETO.md",
-      "source": "src_app_analytics",
-      "target": "supabase_table_web_metrics"
+      "source_file": "README.md",
+      "source": "src_app_dash_page",
+      "target": "src_lib_supabase"
     },
     {
       "relation": "references",
@@ -5754,23 +5833,23 @@
       "confidence_score": 1.0,
       "source_file": "REGRAS-PROJETO.md",
       "source": "src_app_clientes",
-      "target": "supabase_table_integration_accounts"
+      "target": "supabase_migrations_0004_integration"
     },
     {
       "relation": "calls",
       "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "README.md",
+      "confidence_score": 0.9,
+      "source_file": "REGRAS-PROJETO.md",
       "source": "src_proxy",
       "target": "src_lib_supabase"
     },
     {
       "relation": "calls",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/ingestao-n8n.md",
-      "source": "n8n_workflow",
-      "target": "supabase_table_ad_metrics"
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "REGRAS-PROJETO.md",
+      "source": "src_lib_metrics_aggregate",
+      "target": "src_lib_mock_data"
     },
     {
       "relation": "calls",
@@ -5778,7 +5857,7 @@
       "confidence_score": 1.0,
       "source_file": "docs/ingestao-n8n.md",
       "source": "n8n_workflow",
-      "target": "supabase_table_web_metrics"
+      "target": "supabase_db"
     }
   ],
   "hyperedges": [
@@ -5787,29 +5866,43 @@
       "label": "Data Ingestion Pipeline",
       "nodes": [
         "n8n_workflow",
-        "supabase_table_ad_metrics",
-        "supabase_table_web_metrics",
+        "supabase_db",
+        "src_app_clientes",
         "docs_ingestao_n8n"
       ],
       "relation": "participate_in",
       "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
+      "confidence_score": 0.95,
       "source_file": "docs/ingestao-n8n.md"
     },
     {
-      "id": "dashboard_pages",
-      "label": "Dashboard Protected Routes",
+      "id": "auth_architecture",
+      "label": "Authentication & Authorization",
       "nodes": [
-        "src_app_page",
-        "src_app_trafego_pago",
-        "src_app_analytics",
-        "src_app_clientes"
+        "src_proxy",
+        "src_app_login",
+        "src_lib_supabase",
+        "supabase_migrations_0001_init"
       ],
       "relation": "form",
       "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
+      "confidence_score": 0.9,
+      "source_file": "REGRAS-PROJETO.md"
+    },
+    {
+      "id": "metrics_visualization",
+      "label": "Metrics Visualization Layer",
+      "nodes": [
+        "src_app_dash_page",
+        "src_app_trafego_pago",
+        "src_app_analytics",
+        "src_lib_metrics_aggregate"
+      ],
+      "relation": "participate_in",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
       "source_file": "README.md"
     }
   ],
-  "built_at_commit": "c422de1201e172549122500e741c23ab488a9c75"
+  "built_at_commit": "e70615ddb76bfd2835e350c476673edef07b6e88"
 }

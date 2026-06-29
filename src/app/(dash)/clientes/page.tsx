@@ -2,10 +2,7 @@ import { CheckCircle2, CircleAlert, Plus } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
 import { Card, CardBody, CardHeader } from "@/components/ui/Card";
 import { PageHeader } from "@/components/ui/PageHeader";
-import {
-  getClients,
-  getIntegrationAccounts,
-} from "@/lib/metrics/queries";
+import { getClients, getIntegrationAccounts } from "@/lib/metrics/queries";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
 import type { Client, IntegrationAccount, IntegrationProvider } from "@/lib/types";
 import { createClientWithAccounts } from "./actions";
@@ -34,8 +31,8 @@ export default async function ClientesPage({
   return (
     <div className="space-y-6">
       <PageHeader
-        title="Clientes e contas"
-        subtitle="Cadastre clientes e IDs de Google Ads, Meta Ads, GA4 e GTM."
+        title="Clientes e integrações"
+        subtitle="Cliente é a empresa atendida. Integrações são as fontes de dados ligadas a ela."
       />
 
       {created && (
@@ -55,7 +52,10 @@ export default async function ClientesPage({
 
       <div className="grid grid-cols-1 gap-6 xl:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
         <ClientForm />
-        <ClientList clients={clients} accounts={accounts} />
+        <div className="space-y-6">
+          <CollectionFlow />
+          <ClientList clients={clients} accounts={accounts} />
+        </div>
       </div>
     </div>
   );
@@ -66,10 +66,14 @@ function ClientForm() {
     <Card>
       <CardHeader
         title="Novo cliente"
-        subtitle="Os IDs abaixo são usados pelo n8n para preencher as métricas."
+        subtitle="Cadastre a empresa e os IDs que apontam para as fontes que serão coletadas."
       />
       <CardBody>
         <form action={createClientWithAccounts} className="space-y-5">
+          <FormSection
+            title="Dados do cliente"
+            description="Informações usadas para filtrar o painel e organizar permissões."
+          />
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div className="sm:col-span-2">
               <label className="field-label" htmlFor="name">
@@ -119,6 +123,19 @@ function ClientForm() {
             </div>
           </div>
 
+          <FormSection
+            title="Mapeamento das integrações"
+            description="IDs identificam quais contas o n8n deve buscar. Tokens, OAuth e chaves de API ficam configurados no n8n."
+          />
+
+          <div className="rounded-[10px] border border-line bg-surface-2 px-4 py-3 text-sm text-muted">
+            <p className="font-semibold text-ink">ID não é credencial.</p>
+            <p className="mt-1">
+              O GTM ajuda no tracking do site, mas as métricas do painel vêm das
+              APIs de Google Ads, Meta Ads e GA4.
+            </p>
+          </div>
+
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <AccountField
               id="googleAdsCustomerId"
@@ -137,7 +154,7 @@ function ClientForm() {
             />
             <AccountField
               id="gtmContainerId"
-              label="GTM Container ID"
+              label="GTM Container ID (auditoria)"
               placeholder="GTM-XXXXXXX"
             />
           </div>
@@ -148,11 +165,26 @@ function ClientForm() {
             className="btn btn-primary w-full"
           >
             <Plus size={16} />
-            Cadastrar cliente
+            Salvar cliente e integrações
           </button>
         </form>
       </CardBody>
     </Card>
+  );
+}
+
+function FormSection({
+  title,
+  description,
+}: {
+  title: string;
+  description: string;
+}) {
+  return (
+    <div>
+      <p className="text-sm font-bold text-ink">{title}</p>
+      <p className="mt-1 text-sm text-muted">{description}</p>
+    </div>
   );
 }
 
@@ -175,6 +207,32 @@ function AccountField({
   );
 }
 
+function CollectionFlow() {
+  return (
+    <Card>
+      <CardHeader
+        title="Como a coleta funciona"
+        subtitle="O painel não puxa API direto do navegador."
+      />
+      <CardBody className="space-y-3">
+        {[
+          "O painel guarda cliente, IDs externos e status da integração.",
+          "O n8n guarda credenciais OAuth, tokens e chaves em ambiente seguro.",
+          "Workflows agendados consultam Google Ads, Meta Ads e GA4.",
+          "O n8n grava no Supabase; o painel lê e mostra as métricas.",
+        ].map((item, index) => (
+          <div key={item} className="flex gap-3">
+            <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-brand-soft text-xs font-bold text-brand-ink">
+              {index + 1}
+            </span>
+            <p className="text-sm text-muted">{item}</p>
+          </div>
+        ))}
+      </CardBody>
+    </Card>
+  );
+}
+
 function ClientList({
   clients,
   accounts,
@@ -185,7 +243,7 @@ function ClientList({
   return (
     <Card>
       <CardHeader
-        title="Contas cadastradas"
+        title="Integrações cadastradas"
         subtitle={`${clients.length} clientes · ${accounts.length} integrações`}
       />
       <div className="overflow-x-auto">
@@ -193,7 +251,7 @@ function ClientList({
           <thead>
             <tr className="border-b border-line bg-surface-2 text-left text-xs font-semibold uppercase tracking-wide text-faint">
               <th className="px-5 py-3">Cliente</th>
-              <th className="px-3 py-3">Conta</th>
+              <th className="px-3 py-3">Fonte</th>
               <th className="px-3 py-3">Origem</th>
               <th className="px-3 py-3">ID externo</th>
               <th className="px-5 py-3">Status</th>
@@ -211,7 +269,7 @@ function ClientList({
                       {client.name}
                     </td>
                     <td className="px-3 py-3 text-muted" colSpan={3}>
-                      Nenhuma conta cadastrada
+                      Nenhuma integração cadastrada
                     </td>
                     <td className="px-5 py-3">
                       <Badge variant={client.status === "active" ? "brand" : "warning"}>
