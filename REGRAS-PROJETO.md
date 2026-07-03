@@ -105,3 +105,12 @@ Telas: Login, Visão geral, Tráfego pago, GA4 / Sites. Build OK.
   (sessões, origem/mídia, eventos) e não substitui Google/Meta Ads para custo,
   impressões e campanhas. GTM fica como fonte de auditoria/tracking: dispara
   eventos que aparecem em GA4, Google Ads e Meta quando as tags estão corretas.
+- **2026-07-02** — Setup Google Ads API (lado Google). Usuário criou o **MCC
+  267-295-5792** e emitiu o **developer token** na Central de API (nível
+  "Acesso às Análises" = Explorer Access: 2.880 ops/dia contra contas de
+  produção, leitura — **já dá pra construir o workflow n8n sem esperar
+  aprovação**). Aplicação de Acesso básico em andamento; gerado
+  `docs/google-ads-api-design-doc.pdf` (design doc exigido no formulário).
+  Contas a vincular ao MCC: 999-534-2886 (Madeireira Adrianna), 274-181-7052
+  (Casa das Unhas Gravataí), 573-813-6627 (GTech). Token guardado só no n8n;
+  rotacionar via "Redefinir token" após o setup (apareceu em screenshot).

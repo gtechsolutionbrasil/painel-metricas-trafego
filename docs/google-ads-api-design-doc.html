@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Google Ads API Tool — Design Document — GTech Solution Brasil</title>
+<style>
+  @page { margin: 2cm; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    color: #1a202c; font-size: 11.5px; line-height: 1.55;
+    max-width: 780px; margin: 0 auto;
+  }
+  h1 { font-size: 22px; color: #14532d; margin: 0 0 2px; }
+  .subtitle { color: #4b5563; font-size: 12.5px; margin-bottom: 4px; }
+  .meta { color: #6b7280; font-size: 10.5px; border-bottom: 3px solid #16A34A; padding-bottom: 14px; margin-bottom: 22px; }
+  h2 { font-size: 14.5px; color: #14532d; border-bottom: 1px solid #d1d5db; padding-bottom: 4px; margin: 26px 0 10px; }
+  h3 { font-size: 12px; margin: 14px 0 6px; }
+  table { border-collapse: collapse; width: 100%; margin: 10px 0; }
+  th, td { border: 1px solid #d1d5db; padding: 6px 9px; text-align: left; vertical-align: top; }
+  th { background: #f0fdf4; color: #14532d; font-size: 10.5px; text-transform: uppercase; letter-spacing: .03em; }
+  code, pre { font-family: "SF Mono", Menlo, Consolas, monospace; background: #f3f4f6; border-radius: 4px; }
+  code { padding: 1px 5px; font-size: 10.5px; }
+  pre { padding: 12px 14px; font-size: 10px; line-height: 1.5; overflow-x: auto; border: 1px solid #e5e7eb; }
+  .diagram { background: #f8fafc; border: 1px solid #cbd5e1; }
+  ul { padding-left: 20px; margin: 8px 0; }
+  li { margin-bottom: 4px; }
+  .note { background: #f0fdf4; border-left: 4px solid #16A34A; padding: 10px 14px; margin: 12px 0; }
+</style>
+</head>
+<body>
+
+<h1>Google Ads API Tool — Design Document</h1>
+<div class="subtitle">Internal Advertising Performance Reporting Pipeline</div>
+<div class="meta">
+  <strong>Company:</strong> GTech Solution Brasil (Digital Marketing Agency) &nbsp;·&nbsp;
+  <strong>MCC:</strong> 267-295-5792 &nbsp;·&nbsp;
+  <strong>API contact:</strong> gabriel@gtechsolutionbrasil.com &nbsp;·&nbsp;
+  <strong>Date:</strong> July 2, 2026 &nbsp;·&nbsp;
+  <strong>Version:</strong> 1.0
+</div>
+
+<h2>1. Purpose and Scope</h2>
+<p>
+GTech Solution Brasil is a digital marketing agency that manages Google Ads accounts for small and
+medium business clients. All client accounts are linked to our Google Ads manager account
+(MCC <strong>267-295-5792</strong>).
+</p>
+<p>
+This document describes our internal reporting tool. Its single purpose is to <strong>read daily
+advertising performance metrics</strong> from the client accounts under our MCC and consolidate them
+into an internal web dashboard used by our team and shared with the respective clients.
+</p>
+<div class="note">
+<strong>Reporting-only:</strong> the tool performs <strong>no write operations</strong>. It does not create,
+edit, pause or remove campaigns, ad groups, ads, keywords, budgets, bids, audiences or any other
+account entity. It does not upload conversions and does not use the App Conversion Tracking and
+Remarketing API.
+</div>
+
+<h2>2. Architecture Overview</h2>
+<pre class="diagram">
++---------------------+        OAuth2 (agency user, read-only usage)
+|  Google Ads API     |        Developer token: attached to MCC 267-295-5792
+|  (v_latest, REST)   |        login-customer-id: 2672955792
++----------+----------+
+           |
+           |  1x per day, scheduled (early morning America/Sao_Paulo)
+           v
++---------------------+       +----------------------------+
+|  n8n (self-hosted)  | ----> |  PostgreSQL (Supabase)     |
+|  scheduled workflow |  SQL  |  table: ad_metrics         |
+|  GAQL search calls  | upsert|  1 row = day x account x   |
++---------------------+       |  campaign                  |
+                              +-------------+--------------+
+                                            |
+                                            |  read-only (Row Level Security)
+                                            v
+                              +----------------------------+
+                              |  Internal Web Dashboard    |
+                              |  (Next.js, auth required)  |
+                              |  agency staff + clients    |
+                              +----------------------------+
+</pre>
+
+<h3>Components</h3>
+<table>
+  <tr><th>Component</th><th>Technology</th><th>Role</th></tr>
+  <tr>
+    <td>Scheduler / integration</td>
+    <td>n8n (self-hosted, developed in-house)</td>
+    <td>Runs one scheduled workflow per data source. The Google Ads workflow iterates over the
+        client accounts registered in our database and issues GAQL report queries.</td>
+  </tr>
+  <tr>
+    <td>Storage</td>
+    <td>PostgreSQL (Supabase)</td>
+    <td>Stores normalized daily metrics. Idempotent upserts keyed by
+        (client, date, platform, campaign) allow safe reprocessing of recent days.</td>
+  </tr>
+  <tr>
+    <td>Presentation</td>
+    <td>Next.js web application</td>
+    <td>Login-protected dashboard. Reads only from our own database — it never calls the
+        Google Ads API directly. Derived metrics (CTR, CPC, ROAS) are computed at display time.</td>
+  </tr>
+</table>
+
+<h2>3. Google Ads API Usage</h2>
+<h3>3.1 Services and methods</h3>
+<ul>
+  <li><code>GoogleAdsService.SearchStream / Search</code> — daily performance report per client account (only read method used).</li>
+  <li><code>CustomerService.ListAccessibleCustomers</code> — occasional discovery of accounts linked to the MCC.</li>
+</ul>
+
+<h3>3.2 Example GAQL query</h3>
+<pre>
+SELECT
+  segments.date,
+  campaign.id,
+  campaign.name,
+  metrics.cost_micros,
+  metrics.impressions,
+  metrics.clicks,
+  metrics.conversions,
+  metrics.conversions_value
+FROM campaign
+WHERE segments.date DURING LAST_7_DAYS
+ORDER BY segments.date
+</pre>
+<p>
+The 7-day window is re-fetched on every run so that retroactive adjustments made by Google Ads are
+reflected in our database (rows are upserted, never duplicated). <code>cost_micros</code> is converted
+to currency units (÷ 1,000,000) before storage.
+</p>
+
+<h3>3.3 Request volume</h3>
+<table>
+  <tr><th>Item</th><th>Value</th></tr>
+  <tr><td>Client accounts (current)</td><td>3 (expected growth: &lt; 30 in 12 months)</td></tr>
+  <tr><td>Schedule</td><td>1 run per day (plus occasional manual re-runs)</td></tr>
+  <tr><td>API operations per run</td><td>~1–2 search requests per account ≈ 3–6 operations/day</td></tr>
+  <tr><td>Projected daily operations</td><td>&lt; 100/day, far below Basic Access limits</td></tr>
+</table>
+
+<h2>4. Authentication and Security</h2>
+<ul>
+  <li><strong>OAuth 2.0</strong>: authorization via a Google Cloud OAuth client; the refresh token
+      belongs to an agency user with access to the MCC. <code>login-customer-id</code> is set to the MCC.</li>
+  <li><strong>Developer token</strong> and OAuth credentials are stored exclusively in n8n's encrypted
+      credential store on our self-hosted instance. They are never embedded in the dashboard,
+      never exposed to browsers, and never shared with third parties.</li>
+  <li>The web dashboard authenticates users (email/password via Supabase Auth) and enforces
+      row-level security so each client only sees their own metrics.</li>
+  <li>API responses are stored as aggregated daily metrics only; no personal or end-user data is
+      retrieved or stored.</li>
+</ul>
+
+<h2>5. Access Model</h2>
+<ul>
+  <li><strong>API tool (n8n workflows):</strong> internal — accessible only to GTech Solution Brasil staff.</li>
+  <li><strong>Dashboard:</strong> GTech staff (all clients) and each client (own data only, after login).</li>
+  <li>The tool is not distributed, resold, or offered to external developers, and the developer
+      token is not used by any software developed by third parties.</li>
+</ul>
+
+<h2>6. Error Handling and Compliance</h2>
+<ul>
+  <li>Failed runs are logged (status, row counts, error message) and retried; partial failures do
+      not corrupt stored data thanks to idempotent upserts.</li>
+  <li>Rate limits and quotas are respected; requests are batched per account and paced by the scheduler.</li>
+  <li>The API contact e-mail (gabriel@gtechsolutionbrasil.com) is actively monitored and will be
+      kept up to date in the API Center.</li>
+  <li>Required Minimum Functionality (RMF) does not apply, as the tool is reporting-only and does
+      not expose campaign management features.</li>
+</ul>
+
+</body>
+</html>
