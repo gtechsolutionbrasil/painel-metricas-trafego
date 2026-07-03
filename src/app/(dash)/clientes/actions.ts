@@ -25,12 +25,29 @@ type AccountInput = {
   websiteUrl?: string;
 };
 
+const FIELD_LABELS: Record<string, string> = {
+  name: "Nome do cliente",
+  slug: "Slug",
+  status: "Status",
+  websiteUrl: "Site",
+  googleAdsCustomerId: "Google Ads Customer ID",
+  metaAdAccountId: "Meta Ad Account ID",
+  ga4PropertyId: "GA4 Property ID",
+  gtmContainerId: "GTM Container ID",
+};
+
+// Volta pro formulário com a mensagem num banner (?error=...), em vez de
+// estourar um erro 500 sem contexto pro usuário.
+function redirectWithError(message: string): never {
+  redirect(`/clientes?error=${encodeURIComponent(message)}`);
+}
+
 export async function createClientWithAccounts(formData: FormData) {
   if (!isSupabaseConfigured) {
-    throw new Error("Configure o Supabase para cadastrar clientes reais.");
+    redirectWithError("Configure o Supabase para cadastrar clientes reais.");
   }
 
-  const parsed = clientSchema.parse({
+  const parsed = clientSchema.safeParse({
     name: formData.get("name"),
     slug: formData.get("slug") || undefined,
     status: formData.get("status") || "active",
@@ -40,12 +57,17 @@ export async function createClientWithAccounts(formData: FormData) {
     ga4PropertyId: formData.get("ga4PropertyId") || undefined,
     gtmContainerId: formData.get("gtmContainerId") || undefined,
   });
+  if (!parsed.success) {
+    const issue = parsed.error.issues[0];
+    const field = FIELD_LABELS[String(issue.path[0])] ?? String(issue.path[0]);
+    redirectWithError(`${field}: ${issue.message}`);
+  }
 
   const supabase = await createSupabaseServerClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  if (!user) throw new Error("Você precisa estar logado.");
+  if (!user) redirectWithError("Você precisa estar logado.");
 
   const { data: profile, error: profileError } = await supabase
     .from("profiles")
@@ -53,22 +75,24 @@ export async function createClientWithAccounts(formData: FormData) {
     .eq("id", user.id)
     .single();
   if (profileError || profile?.role !== "admin") {
-    throw new Error("Apenas administradores podem cadastrar clientes.");
+    redirectWithError("Apenas administradores podem cadastrar clientes.");
   }
 
-  const slug = normalizeSlug(parsed.slug || parsed.name);
+  const slug = normalizeSlug(parsed.data.slug || parsed.data.name);
   const { data: client, error: clientError } = await supabase
     .from("clients")
     .insert({
-      name: parsed.name,
+      name: parsed.data.name,
       slug,
-      status: parsed.status,
+      status: parsed.data.status,
     })
     .select("id")
     .single();
 
   if (clientError || !client) {
-    throw new Error(clientError?.message || "Não foi possível criar o cliente.");
+    redirectWithError(
+      clientError?.message || "Não foi possível criar o cliente.",
+    );
   }
 
   await supabase.from("client_access").upsert({
@@ -76,11 +100,11 @@ export async function createClientWithAccounts(formData: FormData) {
     client_id: client.id,
   });
 
-  const accounts = buildAccounts(parsed.name, parsed.websiteUrl, {
-    googleAdsCustomerId: parsed.googleAdsCustomerId,
-    metaAdAccountId: parsed.metaAdAccountId,
-    ga4PropertyId: parsed.ga4PropertyId,
-    gtmContainerId: parsed.gtmContainerId,
+  const accounts = buildAccounts(parsed.data.name, parsed.data.websiteUrl, {
+    googleAdsCustomerId: parsed.data.googleAdsCustomerId,
+    metaAdAccountId: parsed.data.metaAdAccountId,
+    ga4PropertyId: parsed.data.ga4PropertyId,
+    gtmContainerId: parsed.data.gtmContainerId,
   });
 
   if (accounts.length) {
@@ -98,7 +122,10 @@ export async function createClientWithAccounts(formData: FormData) {
       );
 
     if (accountsError) {
-      throw new Error(accountsError.message);
+      // Cliente já foi criado; avisa que as integrações não entraram.
+      redirectWithError(
+        `Cliente "${parsed.data.name}" criado, mas houve erro ao salvar as integrações: ${accountsError.message}`,
+      );
     }
   }
 

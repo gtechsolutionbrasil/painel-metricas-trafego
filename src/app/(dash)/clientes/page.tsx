@@ -27,6 +27,7 @@ export default async function ClientesPage({
     getIntegrationAccounts(),
   ]);
   const created = Array.isArray(sp.created) ? sp.created[0] : sp.created;
+  const errorMsg = Array.isArray(sp.error) ? sp.error[0] : sp.error;
 
   return (
     <div className="space-y-6">
@@ -39,6 +40,13 @@ export default async function ClientesPage({
         <div className="flex items-center gap-2 rounded-lg border border-brand-border bg-brand-soft px-4 py-3 text-sm font-semibold text-brand-ink">
           <CheckCircle2 size={17} />
           Cliente cadastrado: {created}
+        </div>
+      )}
+
+      {errorMsg && (
+        <div className="flex items-center gap-2 rounded-lg border border-[#fecaca] bg-[#fef2f2] px-4 py-3 text-sm font-semibold text-[#991b1b]">
+          <CircleAlert size={17} />
+          {errorMsg}
         </div>
       )}
 

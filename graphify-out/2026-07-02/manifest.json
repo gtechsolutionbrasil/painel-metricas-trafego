@@ -195,8 +195,8 @@
     "semantic_hash": ""
   },
   "REGRAS-PROJETO.md": {
-    "mtime": 1782695406.5245292,
-    "ast_hash": "7cb7a24fadf015d24fa489f51887181e",
+    "mtime": 1783040159.8025608,
+    "ast_hash": "ebc323cd6a58d46563dc1a5f9750b49f",
     "semantic_hash": ""
   },
   "docs/ingestao-n8n.md": {
@@ -283,5 +283,15 @@
     "mtime": 1782693074.7660863,
     "ast_hash": "e87194f062676fbd653308e3ca56d6dc",
     "semantic_hash": "e87194f062676fbd653308e3ca56d6dc"
+  },
+  "docs/google-ads-api-design-doc.html": {
+    "mtime": 1783040105.429528,
+    "ast_hash": "45a77bd6cd0e93431f1a7f054c78850c",
+    "semantic_hash": ""
+  },
+  "docs/google-ads-api-design-doc.pdf": {
+    "mtime": 1783040118.0928125,
+    "ast_hash": "5361661d01c6de583739ab838178ed3f",
+    "semantic_hash": ""
   }
 }

@@ -120,9 +120,9 @@
     "semantic_hash": "967450f3f22e9795253cb26ab8b3d791"
   },
   "src/lib/metrics/queries.ts": {
-    "mtime": 1782693283.7886825,
-    "ast_hash": "0ba8bc02b70319a6bffaded4dd6efe38",
-    "semantic_hash": "0ba8bc02b70319a6bffaded4dd6efe38"
+    "mtime": 1783040867.6920335,
+    "ast_hash": "86d19d4d366dfb81b17ebcf6cb3c272f",
+    "semantic_hash": ""
   },
   "src/lib/mock/data.ts": {
     "mtime": 1782692836.7092912,
@@ -195,14 +195,14 @@
     "semantic_hash": ""
   },
   "REGRAS-PROJETO.md": {
-    "mtime": 1783040159.8025608,
-    "ast_hash": "ebc323cd6a58d46563dc1a5f9750b49f",
+    "mtime": 1783040997.7952707,
+    "ast_hash": "784edb0e94e95bd6528d0f8ed327b3e2",
     "semantic_hash": ""
   },
   "docs/ingestao-n8n.md": {
-    "mtime": 1782694108.5232832,
-    "ast_hash": "6e64bfabe6c6ee0e912cee154f2c9051",
-    "semantic_hash": "6e64bfabe6c6ee0e912cee154f2c9051"
+    "mtime": 1783040825.7472124,
+    "ast_hash": "f47103cf17d6c602d4d962abc0b37950",
+    "semantic_hash": ""
   },
   "public/brand/favicon.png": {
     "mtime": 1782686435.7071648,
@@ -270,14 +270,14 @@
     "semantic_hash": ""
   },
   "src/app/(dash)/clientes/actions.ts": {
-    "mtime": 1782693115.4573076,
-    "ast_hash": "659487306c77d81209b60119954e187a",
-    "semantic_hash": "659487306c77d81209b60119954e187a"
+    "mtime": 1783040934.1709738,
+    "ast_hash": "44e06050096bac57bb4683d0629b43e2",
+    "semantic_hash": ""
   },
   "src/app/(dash)/clientes/page.tsx": {
-    "mtime": 1782694067.9738624,
-    "ast_hash": "e0c85b68895322df585dfff774cbf8c8",
-    "semantic_hash": "e0c85b68895322df585dfff774cbf8c8"
+    "mtime": 1783040949.60021,
+    "ast_hash": "f59d5ffdbcb4e4be6444c9deb738281c",
+    "semantic_hash": ""
   },
   "supabase/migrations/0004_client_integration_accounts.sql": {
     "mtime": 1782693074.7660863,
@@ -292,6 +292,11 @@
   "docs/google-ads-api-design-doc.pdf": {
     "mtime": 1783040118.0928125,
     "ast_hash": "5361661d01c6de583739ab838178ed3f",
+    "semantic_hash": ""
+  },
+  "supabase/migrations/0005_upsert_key_with_account.sql": {
+    "mtime": 1783040812.0324454,
+    "ast_hash": "f845872b8b2d6dc669d08474b6ff3af8",
     "semantic_hash": ""
   }
 }

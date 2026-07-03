@@ -45,7 +45,7 @@ APIs com as credenciais dele -> n8n grava métricas normalizadas -> painel exibe
 ## Tabelas e chaves de upsert
 
 ### `ad_metrics` — Meta Ads + Google Ads
-Chave de conflito: `(client_id, date, platform, campaign)`
+Chave de conflito: `(client_id, account_external_id, date, platform, campaign)`
 
 | coluna | tipo | origem |
 |---|---|---|
@@ -61,7 +61,7 @@ Chave de conflito: `(client_id, date, platform, campaign)`
 | `revenue` | numeric | receita (purchase/conversion value) |
 
 ### `web_metrics` — GA4
-Chave de conflito: `(client_id, date, source, medium)`
+Chave de conflito: `(client_id, account_external_id, date, source, medium)`
 
 | coluna | tipo | origem (GA4) |
 |---|---|---|
@@ -92,8 +92,11 @@ Content-Type: application/json
 Prefer: resolution=merge-duplicates
 ```
 
-Query: `?on_conflict=client_id,date,platform,campaign`
+Query: `?on_conflict=client_id,account_external_id,date,platform,campaign`
 Body: array de objetos com as colunas acima (envie em lote).
+
+> Atenção (Google Ads): a API retorna `cost_micros` — divida por 1.000.000
+> antes de gravar em `spend`.
 
 > No n8n dá para usar o **node Supabase** (operação upsert) ou um **HTTP
 > Request** com os headers acima.

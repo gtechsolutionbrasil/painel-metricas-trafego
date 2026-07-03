@@ -51,15 +51,9 @@ function logQueryError(operation: string, error: unknown) {
   console.error(`[metrics] ${operation} failed`, error);
 }
 
-function isMissingIntegrationShape(error: unknown) {
-  const message = String(
-    (error as { message?: string; code?: string } | null)?.message ?? "",
-  );
-  return (
-    message.includes("account_external_id") ||
-    message.includes("integration_accounts")
-  );
-}
+// PostgREST devolve no máximo 1000 linhas por padrão; sem .range() explícito
+// as métricas seriam truncadas SILENCIOSAMENTE e os KPIs sairiam errados.
+const MAX_METRIC_ROWS = 50_000;
 
 export async function getClients(): Promise<Client[]> {
   if (!isSupabaseConfigured) return MOCK_CLIENTS;
@@ -142,28 +136,14 @@ export async function getAdMetrics(
       "client_id, account_external_id, date, platform, campaign, spend, impressions, clicks, conversions, revenue",
     )
     .gte("date", range.from)
-    .lte("date", range.to);
+    .lte("date", range.to)
+    .range(0, MAX_METRIC_ROWS - 1);
   if (clientId) q = q.eq("client_id", clientId);
   if (platforms?.length) q = q.in("platform", platforms);
   if (accountId) q = q.eq("account_external_id", accountId);
 
-  const result = await q;
-  let error = result.error;
-  let rows = result.data as AdMetricRow[] | null;
-  if (error && isMissingIntegrationShape(error) && !accountId) {
-    let fallback = supabase
-      .from("ad_metrics")
-      .select(
-        "client_id, date, platform, campaign, spend, impressions, clicks, conversions, revenue",
-      )
-      .gte("date", range.from)
-      .lte("date", range.to);
-    if (clientId) fallback = fallback.eq("client_id", clientId);
-    if (platforms?.length) fallback = fallback.in("platform", platforms);
-    const fallbackResult = await fallback;
-    rows = fallbackResult.data as AdMetricRow[] | null;
-    error = fallbackResult.error;
-  }
+  const { data, error } = await q;
+  const rows = data as AdMetricRow[] | null;
   if (error || !rows) {
     logQueryError("getAdMetrics", error);
     return [];
@@ -199,26 +179,13 @@ export async function getWebMetrics(
       "client_id, account_external_id, date, source, medium, sessions, users, pageviews, bounce_rate, avg_duration",
     )
     .gte("date", range.from)
-    .lte("date", range.to);
+    .lte("date", range.to)
+    .range(0, MAX_METRIC_ROWS - 1);
   if (clientId) q = q.eq("client_id", clientId);
   if (accountId) q = q.eq("account_external_id", accountId);
 
-  const result = await q;
-  let error = result.error;
-  let rows = result.data as WebMetricRow[] | null;
-  if (error && isMissingIntegrationShape(error) && !accountId) {
-    let fallback = supabase
-      .from("web_metrics")
-      .select(
-        "client_id, date, source, medium, sessions, users, pageviews, bounce_rate, avg_duration",
-      )
-      .gte("date", range.from)
-      .lte("date", range.to);
-    if (clientId) fallback = fallback.eq("client_id", clientId);
-    const fallbackResult = await fallback;
-    rows = fallbackResult.data as WebMetricRow[] | null;
-    error = fallbackResult.error;
-  }
+  const { data, error } = await q;
+  const rows = data as WebMetricRow[] | null;
   if (error || !rows) {
     logQueryError("getWebMetrics", error);
     return [];

@@ -114,3 +114,15 @@ Telas: Login, Visão geral, Tráfego pago, GA4 / Sites. Build OK.
   Contas a vincular ao MCC: 999-534-2886 (Madeireira Adrianna), 274-181-7052
   (Casa das Unhas Gravataí), 573-813-6627 (GTech). Token guardado só no n8n;
   rotacionar via "Redefinir token" após o setup (apareceu em screenshot).
+- **2026-07-02** — Fase A (hardening pré-ingestão). Migration
+  `0005_upsert_key_with_account.sql`: chave de upsert de `ad_metrics`/
+  `web_metrics` passa a incluir `account_external_id` (evita mesclar dados de
+  duas contas da mesma plataforma com campanhas homônimas). `queries.ts`:
+  removido o fallback `isMissingIntegrationShape` (dívida da 0004 não aplicada)
+  e adicionado `.range(0, 49_999)` — sem isso o PostgREST truncava em 1.000
+  linhas e os KPIs saíam errados silenciosamente. `clientes/actions.ts`:
+  `safeParse` + redirect com `?error=` (banner na página) no lugar de erro 500.
+  `docs/ingestao-n8n.md`: chaves de conflito atualizadas + aviso `cost_micros`.
+  Build verde. **Migrations 0003/0004/0005 ainda pendentes de aplicar no
+  Supabase** (aguardando SUPABASE_DB_URL no `.env.local`). n8n acessível via
+  MCP (`n8n.gtechsolutionbrasil.com`).
