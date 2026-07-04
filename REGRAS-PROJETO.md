@@ -45,16 +45,20 @@ Telas: Login, Visão geral, Tráfego pago, GA4 / Sites. Build OK.
 
 ## Pendências / próximos passos
 
-- [ ] **Rotacionar segredos** expostos no chat (anon ok; rotacionar service_role,
-      sb_secret e senha do banco em Settings → API/Database).
-- [ ] Trocar a senha temporária do admin.
-- [ ] Aplicar no Supabase a migration `0003_harden_profile_updates.sql`
-      (hardening contra update de `role` pelo próprio usuário).
-- [ ] Aplicar no Supabase a migration `0004_client_integration_accounts.sql`
-      (integrações/fontes + `account_external_id` nas métricas).
-- [ ] Fase 5: construir os 3 workflows n8n (Meta, Google, GA4) → Supabase
-      preenchendo `account_external_id` (usar `SUPABASE_SERVICE_ROLE_KEY`;
-      contrato em `docs/ingestao-n8n.md`; credenciais ficam no n8n, não no painel).
+- [x] ~~Aplicar migrations 0003/0004/0005~~ (aplicadas em 2026-07-03 via
+      node+pg; senha do banco foi resetada = rotacionada).
+- [ ] **Rotacionar segredos restantes**: service_role e sb_secret
+      (Settings → API). Trocar a senha temporária do admin.
+- [ ] Rotacionar o **developer token** do Google Ads ("Redefinir token" na
+      Central de API) depois que o n8n estiver configurado (apareceu em chat).
+- [ ] Fase 5 (EM ANDAMENTO): 3 workflows n8n (GA4 → Google → Meta) → Supabase
+      preenchendo `account_external_id` (contrato em `docs/ingestao-n8n.md`;
+      credenciais ficam no n8n, não no painel).
+- [ ] Google Cloud: projeto + OAuth client (Google Ads/n8n) + service account
+      (GA4). Redirect OAuth do n8n:
+      `https://n8n.gtechsolutionbrasil.com/rest/oauth2-credential/callback`.
+- [ ] Vincular as contas dos clientes ao MCC 267-295-5792 e cadastrar os IDs
+      na página /clientes.
 - [ ] Fase 6 sugerida: página **Conversões do site** por evento/canal
       (ver `docs/integracoes-ads-analytics.md`).
 - [ ] Deploy na Vercel (configurar as 3 env vars; lembrar que `NEXT_PUBLIC_*`
@@ -65,8 +69,12 @@ Telas: Login, Visão geral, Tráfego pago, GA4 / Sites. Build OK.
 
 - Supabase URL: `https://oqsjdhrwpmpdrihgbgtx.supabase.co`
 - Chaves no `.env.local` (não versionado). `.env.example` documenta os campos.
-- Rodar migration nova: não há psql/CLI local — usar SQL Editor do Supabase,
-  ou `node` + `pg` com a connection string (Settings → Database).
+- Rodar migration nova: não há psql/CLI local — usar `node` + `pg` com a
+  `SUPABASE_DB_URL` do `.env.local` (Session pooler `aws-1-sa-east-1`;
+  o host direto `db.<ref>.supabase.co` não resolve em IPv4). Alternativa:
+  SQL Editor do Supabase.
+- n8n da agência: `https://n8n.gtechsolutionbrasil.com` (acessível via MCP
+  `n8n-mcp` — MCP essencial permanente deste projeto para a fase de ingestão).
 
 ## Histórico de iterações
 
@@ -126,3 +134,11 @@ Telas: Login, Visão geral, Tráfego pago, GA4 / Sites. Build OK.
   Build verde. **Migrations 0003/0004/0005 ainda pendentes de aplicar no
   Supabase** (aguardando SUPABASE_DB_URL no `.env.local`). n8n acessível via
   MCP (`n8n.gtechsolutionbrasil.com`).
+- **2026-07-03** — Migrations 0003/0004/0005 APLICADAS no Supabase de produção
+  (autorizado pelo usuário; senha do banco resetada e salva como
+  `SUPABASE_DB_URL` no `.env.local`). Validação pós-aplicação: tabela
+  `integration_accounts` criada, `account_external_id` em ad/web_metrics,
+  constraints `ad_metrics_upsert_key`/`web_metrics_upsert_key` ativas, policy
+  `profiles_update_own_full_name` no lugar da antiga, dados intactos
+  (3 clients / 2160 ad / 1620 web). Região do pooler: `aws-1-sa-east-1`.
+  Aplicação de Acesso básico da Google Ads API submetida (form + design doc).
