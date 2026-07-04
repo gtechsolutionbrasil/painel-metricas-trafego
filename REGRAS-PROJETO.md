@@ -154,3 +154,9 @@ Telas: Login, Visão geral, Tráfego pago, GA4 / Sites. Build OK.
   MCP bloqueada pelo classificador — criar na UI ou autorizar), OAuth client
   no Google Cloud, credenciais GA4/Google Ads no n8n, anexar aos nós, testar
   e ativar. Workflow Meta fica pra depois (precisa token do Business Manager).
+- **2026-07-04** — Credencial `Supabase - Painel Métricas (service role)` criada
+  no n8n via MCP (id `sfp0d2ZkWr7zz5wM`, autorizada pelo usuário) e anexada aos
+  6 nós Supabase dos 2 workflows. Tag `painel-metricas-trafego` nos dois
+  (pasta é só UI — usuário arrasta). Google Cloud: usuário no projeto
+  `project-90820b4a-ac18-4f5d-914` (trial), próximo passo = ativar APIs +
+  OAuth client. Falta: credenciais Google no n8n → anexar → testar → ativar.
