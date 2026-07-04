@@ -142,3 +142,15 @@ Telas: Login, Visão geral, Tráfego pago, GA4 / Sites. Build OK.
   `profiles_update_own_full_name` no lugar da antiga, dados intactos
   (3 clients / 2160 ad / 1620 web). Região do pooler: `aws-1-sa-east-1`.
   Aplicação de Acesso básico da Google Ads API submetida (form + design doc).
+- **2026-07-03** — Workflows n8n criados via MCP (inativos, aguardando
+  credenciais): **GA4 → Supabase** (`oFVQoWFdstKOZcM4`, diário 06:00) e
+  **Google Ads → Supabase** (`Ui5tKcvG1aRmWptS`, diário 06:30, API v21,
+  `login-customer-id` = MCC 2672955792). Padrão dos dois: Schedule →
+  busca `integration_accounts` por provider → API do Google por conta →
+  Code mapeia (GA4: YYYYMMDD→ISO, bounce 0..1; Ads: cost_micros/1e6,
+  conversions arredondado) → upsert com `on_conflict` incluindo
+  `account_external_id` → log em `sync_runs`. Retry 3x nos nós HTTP.
+  Ambos validados (0 erros). Falta: credencial Supabase no n8n (criação via
+  MCP bloqueada pelo classificador — criar na UI ou autorizar), OAuth client
+  no Google Cloud, credenciais GA4/Google Ads no n8n, anexar aos nós, testar
+  e ativar. Workflow Meta fica pra depois (precisa token do Business Manager).
