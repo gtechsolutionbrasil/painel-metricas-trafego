@@ -37,11 +37,33 @@ Google Ads)** e **GA4/sites**, com login e recorte por cliente
 
 ## Estado atual
 
-**Supabase no ar com dados reais.** Projeto ref `oqsjdhrwpmpdrihgbgtx`. Migrations
-0001+0002 aplicadas (clients=3, ad_metrics=2160, web_metrics=1620). Auth + RLS
-validados: usuário admin `guedesint@gmail.com` (role admin), login OK, RLS
-liberando os 3 clientes e as métricas. `.env.local` configurado (gitignored).
+**Ingestão real no ar (GA4).** Projeto Supabase ref `oqsjdhrwpmpdrihgbgtx`,
+migrations 0001–0005 aplicadas. Auth + RLS validados. `.env.local` configurado.
 Telas: Login, Visão geral, Tráfego pago, GA4 / Sites. Build OK.
+
+**Workflows n8n (`n8n.gtechsolutionbrasil.com`, tag `painel-metricas-trafego`):**
+- **GA4 → Supabase** (id `oFVQoWFdstKOZcM4`): ✅ ATIVO e testado com dado real —
+  gravou 25 linhas reais da Madeireira (property 541643814) em `web_metrics`.
+  Roda todo dia 06:00.
+- **Google Ads → Supabase** (id `Ui5tKcvG1aRmWptS`): ✅ ATIVO, pipeline
+  100% correto (OAuth + developer-token + GAQL validados). **Bloqueado só pelo
+  vínculo MCC**: retorna `USER_PERMISSION_DENIED` até as contas dos clientes
+  serem vinculadas ao MCC 267-295-5792 e o convite aceito. Roda 06:30.
+- Credenciais n8n: `Supabase - Painel Métricas` (sfp0d2ZkWr7zz5wM),
+  `Google Analytics account` (I8evqpJf7UDmKsGB),
+  `Google Ads account` (tcBb8A3FKBjc2nOt). OAuth client reaproveitado
+  `n8n-app-googlecloud` (Google Cloud project-90820b4a-ac18-4f5d-914,
+  publicado/Em produção).
+
+**Clientes reais cadastrados** (via SQL, autorizado): Madeireira Adrianna
+(GA4 541643814 + Ads 999-534-2886), Casa das Unhas Gravataí (Ads 274-181-7052).
+Os 3 do seed (Aurora, Nova, Vitta) permanecem como demonstração.
+
+**Aprendizados Google Ads API (HTTP Request genérico):** (1) o header
+`developer-token` NÃO é injetado automaticamente pelo predefinedCredentialType —
+adicionar manualmente; (2) `googleAds:search` NÃO aceita `pageSize` no body
+(fixo 10.000); (3) `cost_micros` ÷ 1.000.000; (4) `login-customer-id` = MCC sem
+hífens.
 
 ## Pendências / próximos passos
 
@@ -160,3 +182,10 @@ Telas: Login, Visão geral, Tráfego pago, GA4 / Sites. Build OK.
   (pasta é só UI — usuário arrasta). Google Cloud: usuário no projeto
   `project-90820b4a-ac18-4f5d-914` (trial), próximo passo = ativar APIs +
   OAuth client. Falta: credenciais Google no n8n → anexar → testar → ativar.
+- **2026-07-05** — Ingestão real ligada. Aplicadas migrations 0003/0004/0005 e
+  cadastrados clientes reais (Madeireira, Casa das Unhas) + integrações via SQL.
+  Criadas credenciais Google (GA4 + Ads) no n8n e anexadas aos 2 workflows.
+  **GA4 testado E2E com dado real (25 linhas da Madeireira em web_metrics)** e
+  ativado (06:00). Google Ads: corrigidos 3 erros de API (developer-token header,
+  pageSize, formato) — pipeline OK; ativo mas retorna USER_PERMISSION_DENIED até
+  vincular as contas ao MCC 267-295-5792. Ambos com schedule diário ativo.
