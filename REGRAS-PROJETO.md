@@ -195,3 +195,13 @@ hífens.
   em ad_metrics (R$ 254,12 / 383 cliques / 7 dias). Casa das Unhas (274-181-7052)
   ainda NÃO vinculada ao MCC (não aparece na lista de contas do MCC) — entra
   sozinha assim que o vínculo for aceito. GA4 + Google Ads ativos e validados E2E.
+- **2026-07-05 (UI)** — Reorganização por canal com linguagem simples (pedido do
+  usuário). Nav nova: **Visão geral · Google · Meta · Site** (+ Integrações).
+  Criado `src/components/pages/ChannelPage.tsx` (compartilhado Google/Meta, com
+  empty state e comparativo vs período anterior); `/site` substitui `/analytics`;
+  `/trafego-pago` e `/analytics` viram redirects. Topbar perdeu o filtro de
+  plataforma (separação agora é por página). Nomes simples: Impressões→"Vezes
+  exibido", Conversões→"Contatos gerados", CPC/CPL→"Custo por clique/contato",
+  ROAS→"Retorno", Sessões→"Visitas no site", Rejeição→"Saíram sem interagir";
+  origens do GA4 traduzidas ("Busca no Google", "Anúncio", "Acesso direto").
+  Visão geral ganhou cards-resumo clicáveis por canal. Deploy: push → Vercel.

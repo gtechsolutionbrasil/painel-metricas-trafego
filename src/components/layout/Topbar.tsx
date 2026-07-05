@@ -7,12 +7,6 @@ import { Check, ChevronDown, Plus, Users } from "lucide-react";
 import type { Client, IntegrationAccount } from "@/lib/types";
 import { RANGE_PRESETS } from "@/lib/range";
 
-const PLATFORM_OPTIONS = [
-  { value: "all", label: "Google + Meta" },
-  { value: "google", label: "Google Ads" },
-  { value: "meta", label: "Meta Ads" },
-];
-
 export function Topbar({
   clients,
   accounts,
@@ -29,7 +23,6 @@ export function Topbar({
   const activeDays = RANGE_PRESETS.some((p) => p.days === days) ? days : 30;
   const activeSlug = search.get("client") ?? "all";
   const active = clients.find((c) => c.slug === activeSlug) ?? null;
-  const activePlatform = search.get("platform") ?? "all";
   const activeAccountId = search.get("account") ?? "all";
   const visibleAccounts = active
     ? accounts.filter((a) => a.clientId === active.id)
@@ -68,10 +61,6 @@ export function Topbar({
 
   function selectAccount(value: string) {
     setParam("account", value === "all" ? null : value);
-  }
-
-  function selectPlatform(value: string) {
-    setParam("platform", value === "all" ? null : value);
   }
 
   return (
@@ -166,32 +155,6 @@ export function Topbar({
         </div>
 
         <div className="flex flex-col gap-3 md:flex-row md:items-center">
-          <div className="rounded-[10px] border border-line bg-surface px-3 py-2">
-            <p className="text-[10px] font-bold uppercase tracking-[0.08em] text-faint">
-              Origem de mídia paga
-            </p>
-            <div className="mt-1 flex rounded-lg bg-surface-2 p-1">
-              {PLATFORM_OPTIONS.map((item) => {
-                const isActive = activePlatform === item.value;
-                return (
-                  <button
-                    key={item.value}
-                    type="button"
-                    aria-pressed={isActive}
-                    onClick={() => selectPlatform(item.value)}
-                    className={`flex h-8 flex-1 items-center justify-center rounded-md px-3 text-[13px] font-semibold transition-colors md:flex-none ${
-                      isActive
-                        ? "bg-surface text-brand-ink shadow-sm"
-                        : "text-muted hover:text-ink"
-                    }`}
-                  >
-                    {item.label}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
           <div className="hidden rounded-[10px] border border-line bg-surface px-3 py-2 sm:block">
             <p className="text-[10px] font-bold uppercase tracking-[0.08em] text-faint">
               Período

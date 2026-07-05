@@ -1,7 +1,11 @@
+import Link from "next/link";
 import {
+  ArrowRight,
   DollarSign,
   Globe,
   MousePointerClick,
+  Search,
+  Share2,
   Target,
   TrendingUp,
 } from "lucide-react";
@@ -11,22 +15,14 @@ import { Card, CardBody, CardHeader } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { TrendAreaChart } from "@/components/charts/TrendAreaChart";
 import { BarsChart } from "@/components/charts/BarsChart";
-import { DonutChart } from "@/components/charts/DonutChart";
 import { CHART_COLORS } from "@/components/charts/theme";
 import {
   getAdMetrics,
   getWebMetrics,
   getClients,
-  platformsFromSearch,
   resolveClient,
 } from "@/lib/metrics/queries";
-import {
-  adByDay,
-  adByPlatform,
-  adKpis,
-  webBySource,
-  webKpis,
-} from "@/lib/metrics/aggregate";
+import { adByDay, adByPlatform, adKpis, webKpis } from "@/lib/metrics/aggregate";
 import { previousRange, rangeFromSearch, delta } from "@/lib/range";
 import {
   fmtCurrency,
@@ -49,12 +45,11 @@ export default async function OverviewPage({
   const clients = await getClients();
   const client = resolveClient(clients, sp.client);
   const cid = client?.id;
-  const platformsFilter = platformsFromSearch(sp.platform);
   const accountExternalId = Array.isArray(sp.account) ? sp.account[0] : sp.account;
 
   const [ads, adsPrev, web, webPrev] = await Promise.all([
-    getAdMetrics(range, cid, platformsFilter, accountExternalId),
-    getAdMetrics(prev, cid, platformsFilter, accountExternalId),
+    getAdMetrics(range, cid, undefined, accountExternalId),
+    getAdMetrics(prev, cid, undefined, accountExternalId),
     getWebMetrics(range, cid, accountExternalId),
     getWebMetrics(prev, cid, accountExternalId),
   ]);
@@ -66,59 +61,102 @@ export default async function OverviewPage({
 
   const byDay = adByDay(ads);
   const platforms = adByPlatform(ads);
-  const sources = webBySource(web)
-    .slice(0, 6)
-    .map((s) => ({ label: `${s.source} / ${s.medium}`, value: s.sessions }));
+  const google = platforms.find((p) => p.platform === "google");
+  const meta = platforms.find((p) => p.platform === "meta");
 
   return (
     <div className="space-y-6">
       <PageHeader
         title="Visão geral"
-        subtitle={`${client ? client.name : "Todos os clientes"} · ${platformLabel(platformsFilter)} · últimos ${range.from === range.to ? "1 dia" : `${(byDay.length || 0)} dias`}`}
+        subtitle={`Resumo de todos os canais · ${client ? client.name : "Todos os clientes"}`}
       />
 
-      {/* KPIs principais */}
+      {/* O essencial do período */}
       <div className="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-5">
         <KpiCard
           label="Investimento"
           value={fmtCurrency(k.spend)}
           icon={DollarSign}
+          hint="total em anúncios"
           trend={{ value: delta(k.spend, kPrev.spend) }}
         />
         <KpiCard
-          label="Conversões"
+          label="Contatos gerados"
           value={fmtInt(k.conversions)}
           icon={Target}
+          hint="leads, conversas ou vendas"
           trend={{ value: delta(k.conversions, kPrev.conversions) }}
         />
         <KpiCard
-          label="CPL médio"
+          label="Custo por contato"
           value={fmtCurrencyCents(k.cpl)}
           icon={MousePointerClick}
-          hint="custo por conversão"
           trend={{ value: delta(k.cpl, kPrev.cpl), positiveIsGood: false }}
         />
         <KpiCard
-          label="ROAS"
+          label="Retorno"
           value={fmtMultiplier(k.roas)}
           icon={TrendingUp}
-          hint="retorno sobre investimento"
+          hint="R$ que voltou por R$ investido"
           trend={{ value: delta(k.roas, kPrev.roas) }}
         />
         <KpiCard
-          label="Sessões (web)"
+          label="Visitas no site"
           value={fmtInt(w.sessions)}
           icon={Globe}
           trend={{ value: delta(w.sessions, wPrev.sessions) }}
         />
       </div>
 
-      {/* Tendência + plataformas */}
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-        <Card className="lg:col-span-2">
+      {/* Um card por canal, clicável */}
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+        <ChannelSummary
+          href="/google"
+          sp={sp}
+          icon={<Search size={17} />}
+          name="Google"
+          description="Anúncios na pesquisa"
+          headline={google ? fmtCurrency(google.spend) : "—"}
+          detail={
+            google
+              ? `${fmtInt(google.conversions)} contatos · retorno ${fmtMultiplier(google.roas)}`
+              : "Sem dados no período"
+          }
+        />
+        <ChannelSummary
+          href="/meta"
+          sp={sp}
+          icon={<Share2 size={17} />}
+          name="Meta"
+          description="Facebook e Instagram"
+          headline={meta ? fmtCurrency(meta.spend) : "—"}
+          detail={
+            meta
+              ? `${fmtInt(meta.conversions)} contatos · retorno ${fmtMultiplier(meta.roas)}`
+              : "Sem dados no período"
+          }
+        />
+        <ChannelSummary
+          href="/site"
+          sp={sp}
+          icon={<Globe size={17} />}
+          name="Site"
+          description="Visitas e comportamento"
+          headline={fmtInt(w.sessions)}
+          detail={
+            w.sessions
+              ? `${fmtInt(w.users)} visitantes no período`
+              : "Sem dados no período"
+          }
+        />
+      </div>
+
+      {/* Evolução do período */}
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <Card>
           <CardHeader
-            title="Investimento × Receita"
-            subtitle="Evolução diária no período"
+            title="Investimento por dia"
+            subtitle="Todos os canais somados"
           />
           <CardBody>
             <TrendAreaChart
@@ -131,70 +169,25 @@ export default async function OverviewPage({
                   color: CHART_COLORS.brand,
                   format: "currency",
                 },
-                {
-                  key: "revenue",
-                  label: "Receita",
-                  color: CHART_COLORS.teal,
-                  format: "currency",
-                },
               ]}
             />
           </CardBody>
         </Card>
 
         <Card>
-          <CardHeader title="Por plataforma" subtitle="Investimento e ROAS" />
-          <CardBody className="space-y-4">
-            {platforms.map((p) => (
-              <div
-                key={p.platform}
-                className="rounded-xl border border-line bg-surface-2 p-4"
-              >
-                <div className="flex items-center justify-between">
-                  <span className="font-semibold text-ink">{p.label}</span>
-                  <Badge variant="neutral" dot>
-                    ROAS {fmtMultiplier(p.roas)}
-                  </Badge>
-                </div>
-                <p className="mt-2 text-xl font-extrabold text-ink">
-                  {fmtCurrency(p.spend)}
-                </p>
-                <p className="text-xs text-muted">
-                  {fmtInt(p.conversions)} conversões · {fmtCurrency(p.revenue)}{" "}
-                  em receita
-                </p>
-              </div>
-            ))}
-          </CardBody>
-        </Card>
-      </div>
-
-      {/* Conversões por dia + origem das sessões */}
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-        <Card className="lg:col-span-2">
           <CardHeader
-            title="Conversões por dia"
-            subtitle="Total Meta + Google no período"
+            title="Contatos por dia"
+            subtitle="Leads, conversas ou vendas geradas"
           />
           <CardBody>
             <BarsChart
               data={byDay}
               dataKey="conversions"
-              name="Conversões"
-              color={CHART_COLORS.brand}
+              name="Contatos"
+              color={CHART_COLORS.teal}
               format="int"
               yFormat="compact"
             />
-          </CardBody>
-        </Card>
-
-        <Card>
-          <CardHeader
-            title="Origem das sessões"
-            subtitle="Distribuição do tráfego web"
-          />
-          <CardBody>
-            <DonutChart data={sources} />
           </CardBody>
         </Card>
       </div>
@@ -202,7 +195,59 @@ export default async function OverviewPage({
   );
 }
 
-function platformLabel(platforms?: ReturnType<typeof platformsFromSearch>) {
-  if (!platforms?.length) return "Google + Meta";
-  return platforms[0] === "google" ? "Google Ads" : "Meta Ads";
+// Card-resumo de um canal, leva pra página dedicada mantendo os filtros.
+function ChannelSummary({
+  href,
+  sp,
+  icon,
+  name,
+  description,
+  headline,
+  detail,
+}: {
+  href: string;
+  sp: Record<string, string | string[] | undefined>;
+  icon: React.ReactNode;
+  name: string;
+  description: string;
+  headline: string;
+  detail: string;
+}) {
+  const qs = new URLSearchParams();
+  for (const [key, value] of Object.entries(sp)) {
+    if (typeof value === "string") qs.set(key, value);
+  }
+  const suffix = qs.size ? `?${qs}` : "";
+
+  return (
+    <Link
+      href={`${href}${suffix}`}
+      className="group rounded-2xl border border-line bg-surface p-5 shadow-[var(--shadow-card,0_1px_2px_rgba(16,24,40,0.06))] transition-all hover:-translate-y-0.5 hover:border-brand-border hover:shadow-md"
+    >
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2.5">
+          <span className="grid h-9 w-9 place-items-center rounded-xl bg-brand-soft text-brand">
+            {icon}
+          </span>
+          <div>
+            <p className="text-sm font-bold text-ink">{name}</p>
+            <p className="text-xs text-faint">{description}</p>
+          </div>
+        </div>
+        <Badge variant="neutral">
+          <span className="inline-flex items-center gap-1">
+            Ver detalhes
+            <ArrowRight
+              size={12}
+              className="transition-transform group-hover:translate-x-0.5"
+            />
+          </span>
+        </Badge>
+      </div>
+      <p className="mt-4 text-2xl font-extrabold tracking-tight text-ink">
+        {headline}
+      </p>
+      <p className="mt-0.5 text-xs text-muted">{detail}</p>
+    </Link>
+  );
 }

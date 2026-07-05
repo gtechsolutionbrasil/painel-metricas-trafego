@@ -1,16 +1,16 @@
-# Graph Report - painel-metricas-trafego  (2026-07-05)
+# Graph Report - painel-metricas-trafego  (2026-07-02)
 
 ## Corpus Check
-- 51 files · ~31,689 words
+- 47 files · ~30,522 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 280 nodes · 523 edges · 28 communities (10 shown, 18 thin omitted)
+- 269 nodes · 517 edges · 26 communities (10 shown, 16 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `50189b4b`
+- Built from commit: `35e94f6c`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -21,7 +21,6 @@
 - [[_COMMUNITY_Gráficos (Recharts)|Gráficos (Recharts)]]
 - [[_COMMUNITY_TypeScript config|TypeScript config]]
 - [[_COMMUNITY_Páginas dashboard & UI cards|Páginas dashboard & UI cards]]
-- [[_COMMUNITY_Community 6|Community 6]]
 - [[_COMMUNITY_Agregação de métricas|Agregação de métricas]]
 - [[_COMMUNITY_Analytics web & métricas web|Analytics web & métricas web]]
 - [[_COMMUNITY_Root layout (fontes)|Root layout (fontes)]]
@@ -41,14 +40,13 @@
 - [[_COMMUNITY_Community 24|Community 24]]
 - [[_COMMUNITY_Community 25|Community 25]]
 - [[_COMMUNITY_Community 26|Community 26]]
-- [[_COMMUNITY_Community 27|Community 27]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `ChannelPage()` - 17 edges
-2. `compilerOptions` - 16 edges
-3. `OverviewPage()` - 14 edges
+1. `OverviewPage()` - 17 edges
+2. `TrafegoPagoPage()` - 16 edges
+3. `compilerOptions` - 16 edges
 4. `getClients()` - 13 edges
-5. `SitePage()` - 12 edges
+5. `AnalyticsPage()` - 12 edges
 6. `formatValue()` - 12 edges
 7. `rangeFromSearch()` - 10 edges
 8. `getAdMetrics()` - 9 edges
@@ -56,16 +54,16 @@
 10. `fmtInt()` - 8 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `OverviewPage()` --calls--> `fmtInt()`  [EXTRACTED]
-  src/app/(dash)/page.tsx → src/lib/format.ts
+- `AnalyticsPage()` --calls--> `getClients()`  [EXTRACTED]
+  src/app/(dash)/analytics/page.tsx → src/lib/metrics/queries.ts
+- `AnalyticsPage()` --calls--> `getWebMetrics()`  [EXTRACTED]
+  src/app/(dash)/analytics/page.tsx → src/lib/metrics/queries.ts
+- `createClientWithAccounts()` --calls--> `createSupabaseServerClient()`  [EXTRACTED]
+  src/app/(dash)/clientes/actions.ts → src/lib/supabase/server.ts
 - `OverviewPage()` --calls--> `getAdMetrics()`  [EXTRACTED]
   src/app/(dash)/page.tsx → src/lib/metrics/queries.ts
 - `OverviewPage()` --calls--> `getClients()`  [EXTRACTED]
   src/app/(dash)/page.tsx → src/lib/metrics/queries.ts
-- `OverviewPage()` --calls--> `getWebMetrics()`  [EXTRACTED]
-  src/app/(dash)/page.tsx → src/lib/metrics/queries.ts
-- `OverviewPage()` --calls--> `previousRange()`  [EXTRACTED]
-  src/app/(dash)/page.tsx → src/lib/range.ts
 
 ## Import Cycles
 - None detected.
@@ -75,19 +73,19 @@
 - **Data Ingestion Flow** — n8n_workflow, google_ads_api, meta_marketing_api, ga4_data_api, supabase_migrations_0001_init [EXTRACTED 1.00]
 - **Dashboard Pages** — src_app_dash_page, src_app_dash_trafego_pago, src_app_dash_analytics, src_app_dash_clientes [EXTRACTED 1.00]
 
-## Communities (28 total, 18 thin omitted)
+## Communities (26 total, 16 thin omitted)
 
 ### Community 0 - "Dependências (package.json)"
-Cohesion: 0.07
-Nodes (45): eslintConfig, AccountInput, buildAccounts(), clientSchema, createClientWithAccounts(), FIELD_LABELS, normalizeSlug(), redirectWithError() (+37 more)
+Cohesion: 0.10
+Nodes (33): ClientesPage(), DashLayout(), PLATFORM_OPTIONS, Topbar(), AdMetricRow, filterAdMetrics(), filterWebMetrics(), getAdMetrics() (+25 more)
 
 ### Community 1 - "Login, Layout & ESLint"
-Cohesion: 0.12
-Nodes (28): cap(), friendlyOrigin(), SitePage(), SP, BarsChart(), ChartTooltip(), Item, DonutChart() (+20 more)
+Cohesion: 0.20
+Nodes (12): BarsChart(), ChartTooltip(), Item, DonutChart(), DonutSlice, AXIS, CHART_COLORS, SERIES_PALETTE (+4 more)
 
 ### Community 2 - "Topbar & Camada de dados"
-Cohesion: 0.33
-Nodes (9): Topbar(), defaultRange(), fromIso(), iso(), isValidIsoDate(), previousRange(), RANGE_PRESETS, rangeDays() (+1 more)
+Cohesion: 0.09
+Nodes (18): eslintConfig, AccountInput, buildAccounts(), clientSchema, createClientWithAccounts(), FIELD_LABELS, normalizeSlug(), redirectWithError() (+10 more)
 
 ### Community 3 - "Gráficos (Recharts)"
 Cohesion: 0.10
@@ -107,31 +105,31 @@ Nodes (8): Acesso (dev), Convenções técnicas, Estado atual, Histórico de ite
 
 ### Community 11 - "Componente KpiCard"
 Cohesion: 0.09
-Nodes (31): SP, SP, OverviewPage(), SP, ChannelPage(), SP, Badge(), CLASS (+23 more)
+Nodes (50): AnalyticsPage(), SP, OverviewPage(), platformLabel(), SP, platformLabel(), SP, TrafegoPagoPage() (+42 more)
 
 ### Community 13 - "Next config"
 Cohesion: 0.08
 Nodes (22): `ad_metrics` — Meta Ads + Google Ads, Cadastro no painel x credenciais no n8n, Como gravar (Supabase REST / upsert), Ingestão de dados via n8n, Princípios, `sync_runs` — log (opcional, recomendado), Tabelas e chaves de upsert, `web_metrics` — GA4 (+14 more)
 
 ## Knowledge Gaps
-- **117 isolated node(s):** `eslintConfig`, `nextConfig`, `name`, `version`, `private` (+112 more)
+- **114 isolated node(s):** `eslintConfig`, `nextConfig`, `name`, `version`, `private` (+109 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **18 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **16 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `getClients()` connect `Dependências (package.json)` to `Login, Layout & ESLint`, `Componente KpiCard`?**
-  _High betweenness centrality (0.021) - this node is a cross-community bridge._
-- **Why does `isSupabaseConfigured` connect `Dependências (package.json)` to `Páginas dashboard & UI cards`?**
-  _High betweenness centrality (0.016) - this node is a cross-community bridge._
-- **Why does `ChannelPage()` connect `Componente KpiCard` to `Dependências (package.json)`, `Login, Layout & ESLint`, `Topbar & Camada de dados`?**
-  _High betweenness centrality (0.005) - this node is a cross-community bridge._
+- **Why does `getClients()` connect `Dependências (package.json)` to `Topbar & Camada de dados`, `Componente KpiCard`?**
+  _High betweenness centrality (0.022) - this node is a cross-community bridge._
+- **Why does `isSupabaseConfigured` connect `Topbar & Camada de dados` to `Dependências (package.json)`, `Páginas dashboard & UI cards`?**
+  _High betweenness centrality (0.017) - this node is a cross-community bridge._
 - **What connects `eslintConfig`, `nextConfig`, `name` to the rest of the system?**
-  _117 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _114 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Dependências (package.json)` be split into smaller, more focused modules?**
-  _Cohesion score 0.06538461538461539 - nodes in this community are weakly interconnected._
-- **Should `Login, Layout & ESLint` be split into smaller, more focused modules?**
-  _Cohesion score 0.12222222222222222 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.1048780487804878 - nodes in this community are weakly interconnected._
+- **Should `Topbar & Camada de dados` be split into smaller, more focused modules?**
+  _Cohesion score 0.08901515151515152 - nodes in this community are weakly interconnected._
 - **Should `Gráficos (Recharts)` be split into smaller, more focused modules?**
   _Cohesion score 0.1 - nodes in this community are weakly interconnected._
+- **Should `TypeScript config` be split into smaller, more focused modules?**
+  _Cohesion score 0.07142857142857142 - nodes in this community are weakly interconnected._

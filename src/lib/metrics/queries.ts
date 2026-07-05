@@ -223,15 +223,6 @@ export function resolveIntegrationAccount(
   return accounts.find((a) => a.externalId === id) ?? null;
 }
 
-export function platformsFromSearch(
-  value?: string | string[],
-): Platform[] | undefined {
-  const raw = Array.isArray(value) ? value[0] : value;
-  if (raw === "google") return ["google"];
-  if (raw === "meta") return ["meta"];
-  return undefined;
-}
-
 function filterAdMetrics(
   rows: AdMetric[],
   platforms?: Platform[],

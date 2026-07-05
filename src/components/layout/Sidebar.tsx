@@ -7,7 +7,8 @@ import {
   Building2,
   Globe,
   LayoutDashboard,
-  Megaphone,
+  Search,
+  Share2,
   type LucideIcon,
 } from "lucide-react";
 import { Logo } from "@/components/brand/Logo";
@@ -16,8 +17,9 @@ type NavItem = { href: string; label: string; icon: LucideIcon };
 
 const NAV: NavItem[] = [
   { href: "/", label: "Visão geral", icon: LayoutDashboard },
-  { href: "/trafego-pago", label: "Tráfego pago", icon: Megaphone },
-  { href: "/analytics", label: "GA4 / Sites", icon: Globe },
+  { href: "/google", label: "Google", icon: Search },
+  { href: "/meta", label: "Meta", icon: Share2 },
+  { href: "/site", label: "Site", icon: Globe },
   { href: "/clientes", label: "Integrações", icon: Building2 },
 ];
 
@@ -70,9 +72,9 @@ export function Sidebar() {
         <div className="flex items-center gap-2.5 rounded-[10px] bg-surface-2 px-3 py-2.5">
           <BarChart3 size={16} className="text-brand" />
           <p className="text-xs text-muted">
-            Dados de <span className="font-semibold text-ink">Meta</span>,{" "}
-            <span className="font-semibold text-ink">Google</span> e{" "}
-            <span className="font-semibold text-ink">GA4</span>
+            Dados de <span className="font-semibold text-ink">Google</span>,{" "}
+            <span className="font-semibold text-ink">Meta</span> e do{" "}
+            <span className="font-semibold text-ink">site</span>
           </p>
         </div>
       </div>
