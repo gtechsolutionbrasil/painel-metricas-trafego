@@ -189,3 +189,9 @@ hífens.
   ativado (06:00). Google Ads: corrigidos 3 erros de API (developer-token header,
   pageSize, formato) — pipeline OK; ativo mas retorna USER_PERMISSION_DENIED até
   vincular as contas ao MCC 267-295-5792. Ambos com schedule diário ativo.
+- **2026-07-05 (cont.)** — Google Ads também gravando REAL. Tornado o nó GAQL
+  resiliente (`onError: continueRegularOutput`, maxTries 2): conta sem vínculo MCC
+  falha sem derrubar as demais. Madeireira (999-534-2886) gravou 14 linhas reais
+  em ad_metrics (R$ 254,12 / 383 cliques / 7 dias). Casa das Unhas (274-181-7052)
+  ainda NÃO vinculada ao MCC (não aparece na lista de contas do MCC) — entra
+  sozinha assim que o vínculo for aceito. GA4 + Google Ads ativos e validados E2E.
