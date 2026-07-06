@@ -37,9 +37,16 @@ Google Ads)** e **GA4/sites**, com login e recorte por cliente
 
 ## Estado atual
 
-**Ingestão real no ar (GA4).** Projeto Supabase ref `oqsjdhrwpmpdrihgbgtx`,
+**No ar em produção.** Projeto Supabase ref `oqsjdhrwpmpdrihgbgtx`,
 migrations 0001–0005 aplicadas. Auth + RLS validados. `.env.local` configurado.
-Telas: Login, Visão geral, Tráfego pago, GA4 / Sites. Build OK.
+Telas: Login, **Visão geral · Google · Meta · Site · Integrações** (nav por canal
+com linguagem simples). Build OK.
+**Deploy:** Vercel — `painel-metricas-trafego.vercel.app` (Auth ativo em prod,
+só 2 env vars `NEXT_PUBLIC_*`; service_role NÃO vai pro front). Subdomínio
+`painelmetricas.gtechsolutionbrasil.com.br` aguardando propagação de DNS
+(CNAME + TXT no Hostinger).
+**Admin:** login `gabriel@gtechsolutionbrasil.com` (email+senha redefinidos nesta
+sessão via Supabase Admin API; role admin preservada).
 
 **Workflows n8n (`n8n.gtechsolutionbrasil.com`, tag `painel-metricas-trafego`):**
 - **GA4 → Supabase** (id `oFVQoWFdstKOZcM4`): ✅ ATIVO e testado com dado real —
@@ -69,8 +76,15 @@ hífens.
 
 - [x] ~~Aplicar migrations 0003/0004/0005~~ (aplicadas em 2026-07-03 via
       node+pg; senha do banco foi resetada = rotacionada).
+- [x] ~~Trocar senha temporária do admin~~ (feito 2026-07-05: email →
+      `gabriel@gtechsolutionbrasil.com`, senha redefinida via Admin API).
 - [ ] **Rotacionar segredos restantes**: service_role e sb_secret
-      (Settings → API). Trocar a senha temporária do admin.
+      (Settings → API) — expostos em chat; rotacionar antes de uso amplo.
+- [ ] **DNS do subdomínio**: criar no Hostinger CNAME `painelmetricas` →
+      `3709d20de58b6c30.vercel-dns-017.com` + TXT `_vercel` (verificação). Depois
+      Refresh na Vercel e conferir SSL.
+- [ ] **Supabase Auth URL config** (pós-DNS): Site URL + Redirect URL =
+      `https://painelmetricas.gtechsolutionbrasil.com.br`.
 - [ ] Rotacionar o **developer token** do Google Ads ("Redefinir token" na
       Central de API) depois que o n8n estiver configurado (apareceu em chat).
 - [ ] Fase 5 (EM ANDAMENTO): 3 workflows n8n (GA4 → Google → Meta) → Supabase
@@ -79,7 +93,10 @@ hífens.
 - [ ] Google Cloud: projeto + OAuth client (Google Ads/n8n) + service account
       (GA4). Redirect OAuth do n8n:
       `https://n8n.gtechsolutionbrasil.com/rest/oauth2-credential/callback`.
-- [ ] Vincular as contas dos clientes ao MCC 267-295-5792 e cadastrar os IDs
+- [ ] Vincular **Casa das Unhas** (274-181-7052) ao MCC 267-295-5792 e aceitar
+      o convite (Madeireira já vinculada e gravando). Entra sozinha no próximo
+      06:30 após o vínculo — workflow já resiliente.
+- [ ] (histórico) Vincular contas ao MCC e cadastrar os IDs
       na página /clientes.
 - [ ] Fase 6 sugerida: página **Conversões do site** por evento/canal
       (ver `docs/integracoes-ads-analytics.md`).
@@ -205,3 +222,12 @@ hífens.
   ROAS→"Retorno", Sessões→"Visitas no site", Rejeição→"Saíram sem interagir";
   origens do GA4 traduzidas ("Busca no Google", "Anúncio", "Acesso direto").
   Visão geral ganhou cards-resumo clicáveis por canal. Deploy: push → Vercel.
+- **2026-07-05 (fecho)** — Painel publicado + credenciais. Deploy na **Vercel**
+  (`painel-metricas-trafego.vercel.app`) com as 2 env vars `NEXT_PUBLIC_*`;
+  confirmado modo produção (rotas protegidas → 307 /login). Subdomínio
+  `painelmetricas.gtechsolutionbrasil.com.br` adicionado na Vercel; falta criar
+  CNAME+TXT no Hostinger. Admin do painel migrado para
+  `gabriel@gtechsolutionbrasil.com` + senha nova (Supabase Admin API, role
+  preservada, login validado E2E). Reorganização de UI por canal já commitada
+  (06b9fd3). Ambos os workflows n8n seguem ativos e gravando (GA4 + Google Ads
+  da Madeireira).
