@@ -123,6 +123,18 @@ hífens.
 - [ ] **ROAS/receita**: removidos da UI a pedido do usuário (2026-07-06).
       As colunas `revenue`/cálculo `roas` continuam no banco/agregadores —
       NÃO recolocar na UI sem o usuário pedir.
+- [ ] **GTM Madeireira — conversão WhatsApp não registra no Google Ads**
+      (diagnóstico 2026-07-06 via API, execuções 3137/3138): o evento
+      `whatsapp_click` DISPARA no site (GA4: 68x/30d) e a ação
+      "WhatsApp - Clique" existe ENABLED+primária no Ads, mas TODAS as 4
+      conversões WEBPAGE via GTM (WhatsApp, Formulário, Rota, Ligação) =
+      0 conversões em 30d, enquanto as GOOGLE_HOSTED registram normal.
+      Causa provável = banner do GTM "tag do Google ausente" (falta a tag
+      AW- do Ads no container). **Fix: GTM → Corrigir (adiciona a Tag do
+      Google) → Enviar/publicar → testar com Visualizar**. Bônus:
+      "Formulário - Orçamento" está como conversão SECUNDÁRIA (não conta
+      em metrics.conversions) — promover a principal se formulário deve
+      contar como conversão.
 
 ## Acesso (dev)
 
