@@ -1,5 +1,6 @@
-import { KeyRound, MapPin, MousePointerClick, Target } from "lucide-react";
+import { Globe, KeyRound, MapPin, MousePointerClick, Search } from "lucide-react";
 import { Card, CardHeader } from "@/components/ui/Card";
+import type { ConversionSource } from "@/lib/types";
 import {
   getAdClickTypes,
   getAdConversionActions,
@@ -10,7 +11,7 @@ import {
 } from "@/lib/metrics/queries";
 import {
   byClickType,
-  byConversionAction,
+  byConversionActionGrouped,
   byKeyword,
   byRegion,
 } from "@/lib/metrics/aggregate";
@@ -105,59 +106,71 @@ export async function GoogleInsights({ searchParams }: { searchParams: SP }) {
   const keywords = byKeyword(only(keywordsRaw)).slice(0, 15);
   const regions = byRegion(only(geoRaw)).slice(0, 10);
   const clickTypes = byClickType(only(clickTypesRaw));
-  const actions = byConversionAction(only(actionsRaw));
+  const actionGroups = byConversionActionGrouped(only(actionsRaw));
 
   if (
     !keywords.length &&
     !regions.length &&
     !clickTypes.length &&
-    !actions.length
+    !actionGroups.length
   ) {
     return null;
   }
 
   return (
     <>
-      {/* Onde foram os cliques + o que gerou as conversões */}
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        {clickTypes.length > 0 && (
-          <Card>
-            <CardHeader
-              title="Onde foram os cliques"
-              subtitle="O que a pessoa clicou no anúncio"
-            />
-            <ShareList
-              icon={<MousePointerClick size={15} />}
-              rows={clickTypes.map((c) => ({
-                label: clickTypeLabel(c.clickType),
-                sublabel: null,
-                value: c.clicks,
-                share: c.share,
-              }))}
-              valueLabel="cliques"
-            />
-          </Card>
-        )}
+      {/* Conversões separadas por origem: site do cliente vs Google */}
+      {actionGroups.length > 0 && (
+        <Card>
+          <CardHeader
+            title="Conversões por tipo de contato"
+            subtitle="Separadas por onde a pessoa agiu: no seu site ou direto no Google"
+          />
+          <div className="grid grid-cols-1 gap-px bg-line md:grid-cols-2">
+            {actionGroups.map((g) => (
+              <div key={g.source} className="bg-surface p-4">
+                <SourceHeader source={g.source} total={g.total} />
+                <ShareList
+                  icon={
+                    g.source === "site" ? (
+                      <Globe size={15} />
+                    ) : (
+                      <Search size={15} />
+                    )
+                  }
+                  rows={g.rows.map((a) => ({
+                    label: a.actionName,
+                    sublabel: categoryLabel(a.actionCategory) || null,
+                    value: a.conversions,
+                    share: a.share,
+                  }))}
+                  valueLabel="conversões"
+                />
+              </div>
+            ))}
+          </div>
+        </Card>
+      )}
 
-        {actions.length > 0 && (
-          <Card>
-            <CardHeader
-              title="Conversões por tipo de contato"
-              subtitle="Que ação a pessoa fez (ligação, rota, formulário...)"
-            />
-            <ShareList
-              icon={<Target size={15} />}
-              rows={actions.map((a) => ({
-                label: a.actionName,
-                sublabel: categoryLabel(a.actionCategory) || null,
-                value: a.conversions,
-                share: a.share,
-              }))}
-              valueLabel="conversões"
-            />
-          </Card>
-        )}
-      </div>
+      {/* Onde foram os cliques */}
+      {clickTypes.length > 0 && (
+        <Card>
+          <CardHeader
+            title="Onde foram os cliques"
+            subtitle="O que a pessoa clicou no anúncio"
+          />
+          <ShareList
+            icon={<MousePointerClick size={15} />}
+            rows={clickTypes.map((c) => ({
+              label: clickTypeLabel(c.clickType),
+              sublabel: null,
+              value: c.clicks,
+              share: c.share,
+            }))}
+            valueLabel="cliques"
+          />
+        </Card>
+      )}
 
       {/* Palavras-chave que performam */}
       {keywords.length > 0 && (
@@ -271,6 +284,45 @@ export async function GoogleInsights({ searchParams }: { searchParams: SP }) {
         </Card>
       )}
     </>
+  );
+}
+
+// Cabeçalho de um grupo de origem, explicando de onde vem a conversão.
+function SourceHeader({
+  source,
+  total,
+}: {
+  source: ConversionSource;
+  total: number;
+}) {
+  const site = source === "site";
+  return (
+    <div className="mb-1 flex items-center justify-between gap-2 px-2">
+      <div className="flex items-center gap-2">
+        <span
+          className={`grid h-7 w-7 place-items-center rounded-lg ${
+            site
+              ? "bg-brand-soft text-brand"
+              : "bg-[#eff6ff] text-[#1d4ed8]"
+          }`}
+        >
+          {site ? <Globe size={15} /> : <Search size={15} />}
+        </span>
+        <div>
+          <p className="text-sm font-bold text-ink">
+            {site ? "No site do cliente" : "No Google"}
+          </p>
+          <p className="text-[11px] text-faint">
+            {site
+              ? "disparado pelo site (via GTM)"
+              : "perfil da empresa, Maps e anúncio"}
+          </p>
+        </div>
+      </div>
+      <span className="shrink-0 text-sm font-extrabold text-ink">
+        {fmtInt(total)}
+      </span>
+    </div>
   );
 }
 

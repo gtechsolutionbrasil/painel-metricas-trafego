@@ -79,8 +79,14 @@ export type AdConversionActionMetric = {
   campaign: string;
   actionName: string;
   actionCategory: string; // PHONE_CALL_LEAD | SUBMIT_LEAD_FORM | ...
+  // Origem da ação: WEBSITE (site do cliente, via GTM) vs GOOGLE_HOSTED /
+  // CALL_FROM_ADS / STORE / ... (dentro do Google, sem tocar o site).
+  origin: string;
   conversions: number;
 };
+
+// Grupo de origem simplificado pra UI: o que é do site vs do Google.
+export type ConversionSource = "site" | "google";
 
 export type WebMetric = {
   clientId: string;

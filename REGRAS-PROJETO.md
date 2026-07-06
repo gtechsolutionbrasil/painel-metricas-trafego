@@ -134,7 +134,14 @@ hífens.
       Google) → Enviar/publicar → testar com Visualizar**. Bônus:
       "Formulário - Orçamento" está como conversão SECUNDÁRIA (não conta
       em metrics.conversions) — promover a principal se formulário deve
-      contar como conversão.
+      contar como conversão. NOTA: essas 2 ações (GTM + promover) são no
+      GTM/Google Ads (interfaces web do Google) — o agente NÃO tem conector
+      pra fazer; usuário faz manual (~2 cliques cada).
+- [x] ~~Distinguir conversão do site vs do Google no painel~~ (FEITO
+      2026-07-06): migration 0007 (`ad_conversion_actions.origin`), workflow
+      coleta `conversion_action.origin` (nó "GAQL Origem das ações" encadeado
+      antes de "GAQL Conversões por ação", cruzado por resource_name), UI
+      agrupa em "No site do cliente" (origin=WEBSITE) vs "No Google" (resto).
 
 ## Acesso (dev)
 
@@ -299,3 +306,17 @@ hífens.
   os cliques", "Conversões por tipo de contato", "Palavras-chave" (top 15) e
   "Desempenho por região", enums traduzidos pra PT; KPI "Parcela de
   impressões" no Google. Respeita filtro de campanha. tsc/eslint/build verdes.
+- **2026-07-06 (origem das conversões)** — Diagnóstico via API (execs
+  3137/3138): conversão WhatsApp do GTM dispara no site (GA4 68x/30d) mas
+  registra 0 no Google Ads — falta a Tag do Google (AW) no container GTM
+  (banner "tag ausente"); as 4 ações WEBPAGE do site = 0, só as GOOGLE_HOSTED
+  contam. Orientado usuário a Corrigir→Enviar no GTM (ação dele; agente não
+  tem conector GTM/Ads). Pra "deixar claro o que é do site vs do Google":
+  migration 0007 (`ad_conversion_actions.origin`); workflow ganhou nó "GAQL
+  Origem das ações" (SELECT conversion_action.origin, encadeado ANTES de
+  "GAQL Conversões por ação" pra garantir ordem; cruzado por resource_name
+  global, não por índice — robusto a onError); UI reescrita: "Conversões por
+  tipo de contato" agora em 2 grupos lado a lado — "No site do cliente"
+  (WEBSITE/GTM) e "No Google" (perfil/Maps/anúncio), com participação dentro
+  de cada grupo. Testado E2E (Madeireira: tudo GOOGLE_HOSTED/CALL_FROM_ADS,
+  0 WEBSITE — confirma o GTM quebrado). Também: ROAS já removido antes.

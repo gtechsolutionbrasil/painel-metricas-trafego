@@ -4,9 +4,17 @@ import type {
   AdGeoMetric,
   AdKeywordMetric,
   AdMetric,
+  ConversionSource,
   Platform,
   WebMetric,
 } from "../types";
+
+// Origem "WEBSITE" = disparada pelo site do cliente (via GTM). Todo o resto
+// (GOOGLE_HOSTED, CALL_FROM_ADS, STORE, GOOGLE_ANALYTICS...) acontece dentro
+// do Google, sem tocar o site.
+export function conversionSource(origin: string): ConversionSource {
+  return origin === "WEBSITE" ? "site" : "google";
+}
 
 // --------------------------- Tráfego pago (ads) ----------------------------
 
@@ -320,31 +328,51 @@ export function byClickType(rows: AdClickTypeMetric[]): ClickTypeRow[] {
 export type ConversionActionRow = {
   actionName: string;
   actionCategory: string;
+  source: ConversionSource;
   conversions: number;
-  share: number;
+  share: number; // fração dentro do próprio grupo (site ou google)
 };
 
-export function byConversionAction(
+export type ConversionActionGroup = {
+  source: ConversionSource;
+  total: number;
+  rows: ConversionActionRow[];
+};
+
+// Agrupa as ações por origem (site vs Google), com a participação de cada
+// ação calculada dentro do seu grupo. Retorna só os grupos que têm dados.
+export function byConversionActionGrouped(
   rows: AdConversionActionMetric[],
-): ConversionActionRow[] {
+): ConversionActionGroup[] {
   const map = new Map<string, ConversionActionRow>();
-  let total = 0;
   for (const r of rows) {
+    const source = conversionSource(r.origin);
+    const key = `${source}|${r.actionName}`;
     const a =
-      map.get(r.actionName) ??
+      map.get(key) ??
       {
         actionName: r.actionName,
         actionCategory: r.actionCategory,
+        source,
         conversions: 0,
         share: 0,
       };
     a.conversions += r.conversions;
-    total += r.conversions;
-    map.set(r.actionName, a);
+    map.set(key, a);
   }
-  const out = [...map.values()];
-  out.forEach((a) => (a.share = total ? a.conversions / total : 0));
-  return out.sort((a, b) => b.conversions - a.conversions);
+
+  const groups: ConversionActionGroup[] = (["site", "google"] as const).map(
+    (source) => {
+      const groupRows = [...map.values()]
+        .filter((a) => a.source === source)
+        .sort((a, b) => b.conversions - a.conversions);
+      const total = groupRows.reduce((s, a) => s + a.conversions, 0);
+      groupRows.forEach((a) => (a.share = total ? a.conversions / total : 0));
+      return { source, total, rows: groupRows };
+    },
+  );
+
+  return groups.filter((g) => g.rows.length > 0);
 }
 
 export function webBySource(rows: WebMetric[]): SourceRow[] {
