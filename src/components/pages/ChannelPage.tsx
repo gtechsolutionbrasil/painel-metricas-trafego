@@ -1,11 +1,11 @@
 import {
   DollarSign,
   Eye,
+  Gauge,
   MousePointerClick,
   Percent,
   PlugZap,
   Target,
-  TrendingUp,
 } from "lucide-react";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { KpiCard } from "@/components/ui/KpiCard";
@@ -23,7 +23,6 @@ import {
   fmtCurrency,
   fmtCurrencyCents,
   fmtInt,
-  fmtMultiplier,
   fmtPercent,
 } from "@/lib/format";
 import Link from "next/link";
@@ -33,19 +32,22 @@ type SP = Record<string, string | string[] | undefined>;
 
 // ---------------------------------------------------------------------------
 // Página de canal pago (Google Ads ou Meta Ads) com as métricas padrão do
-// tráfego: investimento, impressões, cliques, CTR, CPC, conversões, custo por
-// conversão e ROAS — com filtro por campanha.
+// tráfego: investimento, impressões, cliques, CTR, CPC, conversões e custo
+// por conversão — com filtro por campanha. Sem ROAS (decisão do usuário).
 // ---------------------------------------------------------------------------
 export async function ChannelPage({
   platform,
   title,
   subtitle,
   searchParams,
+  extra,
 }: {
   platform: Platform;
   title: string;
   subtitle: string;
   searchParams: SP;
+  // Seções extras específicas do canal (ex.: detalhamento do Google Ads).
+  extra?: React.ReactNode;
 }) {
   const { range } = rangeFromSearch(searchParams);
   const prev = previousRange(range);
@@ -147,7 +149,11 @@ export async function ChannelPage({
           </div>
 
           {/* Eficiência: quanto custa cada resultado */}
-          <div className="grid grid-cols-2 gap-4 xl:grid-cols-4">
+          <div
+            className={`grid grid-cols-2 gap-4 ${
+              platform === "google" ? "xl:grid-cols-4" : "xl:grid-cols-3"
+            }`}
+          >
             <KpiCard
               label="CTR"
               value={fmtPercent(k.ctr)}
@@ -169,13 +175,18 @@ export async function ChannelPage({
               hint="investimento ÷ conversões"
               trend={{ value: delta(k.cpl, kPrev.cpl), positiveIsGood: false }}
             />
-            <KpiCard
-              label="Retorno (ROAS)"
-              value={fmtMultiplier(k.roas)}
-              icon={TrendingUp}
-              hint="R$ que voltou por R$ investido"
-              trend={{ value: delta(k.roas, kPrev.roas) }}
-            />
+            {platform === "google" && (
+              <KpiCard
+                label="Parcela de impressões"
+                value={
+                  k.impressionShare != null
+                    ? fmtPercent(k.impressionShare)
+                    : "—"
+                }
+                icon={Gauge}
+                hint="% das buscas em que o anúncio apareceu"
+              />
+            )}
           </div>
 
           {/* Evolução no período */}
@@ -225,7 +236,7 @@ export async function ChannelPage({
               subtitle={`${campaigns.length} campanha${campaigns.length === 1 ? "" : "s"} no período`}
             />
             <div className="overflow-x-auto">
-              <table className="w-full min-w-[960px] text-sm">
+              <table className="w-full min-w-[880px] text-sm">
                 <thead>
                   <tr className="border-b border-line bg-surface-2 text-left text-xs font-semibold uppercase tracking-wide text-faint">
                     <th className="px-5 py-3">Campanha</th>
@@ -235,8 +246,7 @@ export async function ChannelPage({
                     <th className="px-3 py-3 text-right">CTR</th>
                     <th className="px-3 py-3 text-right">CPC</th>
                     <th className="px-3 py-3 text-right">Conversões</th>
-                    <th className="px-3 py-3 text-right">Custo/conv.</th>
-                    <th className="px-5 py-3 text-right">ROAS</th>
+                    <th className="px-5 py-3 text-right">Custo/conv.</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -266,17 +276,8 @@ export async function ChannelPage({
                       <td className="px-3 py-3 text-right font-semibold text-ink">
                         {fmtInt(c.conversions)}
                       </td>
-                      <td className="px-3 py-3 text-right text-muted">
+                      <td className="px-5 py-3 text-right text-muted">
                         {fmtCurrencyCents(c.cpl)}
-                      </td>
-                      <td className="px-5 py-3 text-right">
-                        <span
-                          className={`font-bold ${
-                            c.roas >= 1 ? "text-brand-ink" : "text-[#991b1b]"
-                          }`}
-                        >
-                          {fmtMultiplier(c.roas)}
-                        </span>
                       </td>
                     </tr>
                   ))}
@@ -284,6 +285,9 @@ export async function ChannelPage({
               </table>
             </div>
           </Card>
+
+          {/* Seções extras do canal (detalhamento) */}
+          {extra}
         </>
       )}
     </div>

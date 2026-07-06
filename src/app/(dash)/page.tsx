@@ -8,7 +8,6 @@ import {
   Search,
   Share2,
   Target,
-  TrendingUp,
 } from "lucide-react";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { KpiCard } from "@/components/ui/KpiCard";
@@ -26,12 +25,7 @@ import {
 } from "@/lib/metrics/queries";
 import { adByDay, adByPlatform, adKpis, webKpis } from "@/lib/metrics/aggregate";
 import { previousRange, rangeFromSearch, delta } from "@/lib/range";
-import {
-  fmtCurrency,
-  fmtCurrencyCents,
-  fmtInt,
-  fmtMultiplier,
-} from "@/lib/format";
+import { fmtCurrency, fmtCurrencyCents, fmtInt } from "@/lib/format";
 
 type SP = Promise<Record<string, string | string[] | undefined>>;
 
@@ -74,7 +68,7 @@ export default async function OverviewPage({
       />
 
       {/* O essencial do período */}
-      <div className="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-5">
+      <div className="grid grid-cols-2 gap-4 xl:grid-cols-4">
         <KpiCard
           label="Investimento"
           value={fmtCurrency(k.spend)}
@@ -97,13 +91,6 @@ export default async function OverviewPage({
           trend={{ value: delta(k.cpl, kPrev.cpl), positiveIsGood: false }}
         />
         <KpiCard
-          label="Retorno (ROAS)"
-          value={fmtMultiplier(k.roas)}
-          icon={TrendingUp}
-          hint="R$ que voltou por R$ investido"
-          trend={{ value: delta(k.roas, kPrev.roas) }}
-        />
-        <KpiCard
           label="Visitas no site"
           value={fmtInt(w.sessions)}
           icon={Globe}
@@ -120,11 +107,7 @@ export default async function OverviewPage({
           name="Google Ads"
           description="Anúncios na pesquisa"
           headline={google ? fmtCurrency(google.spend) : "—"}
-          detail={
-            google
-              ? `${fmtInt(google.conversions)} conversões · ROAS ${fmtMultiplier(google.roas)}`
-              : "Sem dados no período"
-          }
+          detail={google ? platformDetail(google) : "Sem dados no período"}
         />
         <ChannelSummary
           href="/meta"
@@ -133,11 +116,7 @@ export default async function OverviewPage({
           name="Meta Ads"
           description="Facebook e Instagram"
           headline={meta ? fmtCurrency(meta.spend) : "—"}
-          detail={
-            meta
-              ? `${fmtInt(meta.conversions)} conversões · ROAS ${fmtMultiplier(meta.roas)}`
-              : "Sem dados no período"
-          }
+          detail={meta ? platformDetail(meta) : "Sem dados no período"}
         />
         <ChannelSummary
           href="/site"
@@ -215,6 +194,13 @@ export default async function OverviewPage({
       )}
     </div>
   );
+}
+
+// Resumo do canal: conversões e custo por conversão (sem ROAS, a pedido).
+function platformDetail(p: { conversions: number; spend: number }) {
+  const conv = `${fmtInt(p.conversions)} conversões`;
+  if (!p.conversions) return conv;
+  return `${conv} · ${fmtCurrencyCents(p.spend / p.conversions)} por conversão`;
 }
 
 // Card-resumo de um canal, leva pra página dedicada mantendo os filtros.

@@ -35,8 +35,8 @@
     "semantic_hash": ""
   },
   "src/app/(dash)/page.tsx": {
-    "mtime": 1783366450.2120643,
-    "ast_hash": "103f58e7ec2761feb2ffcc6f050d9a24",
+    "mtime": 1783372928.9449496,
+    "ast_hash": "f08ab610109f6fa6215eaadf7acb5df6",
     "semantic_hash": ""
   },
   "src/app/(dash)/trafego-pago/page.tsx": {
@@ -115,13 +115,13 @@
     "semantic_hash": "0ddecd5c41ff1345bc502f253ae3e39e"
   },
   "src/lib/metrics/aggregate.ts": {
-    "mtime": 1782686721.4392214,
-    "ast_hash": "967450f3f22e9795253cb26ab8b3d791",
-    "semantic_hash": "967450f3f22e9795253cb26ab8b3d791"
+    "mtime": 1783373609.7578962,
+    "ast_hash": "e43c256c83051a63aa864e3fcfa080a0",
+    "semantic_hash": ""
   },
   "src/lib/metrics/queries.ts": {
-    "mtime": 1783288667.2032177,
-    "ast_hash": "58d0646126cb504d3754a769493121e1",
+    "mtime": 1783373579.8399699,
+    "ast_hash": "2e4de26141e90d419f460aaa3536c2fb",
     "semantic_hash": ""
   },
   "src/lib/mock/data.ts": {
@@ -155,9 +155,9 @@
     "semantic_hash": "e120c87497fabf3af25d474aa240d5a1"
   },
   "src/lib/types.ts": {
-    "mtime": 1782692822.5767012,
-    "ast_hash": "fcdb40c402b49375da95233b0cef6b19",
-    "semantic_hash": "fcdb40c402b49375da95233b0cef6b19"
+    "mtime": 1783373542.9505296,
+    "ast_hash": "90027922fb5542f60933224be4aa14cc",
+    "semantic_hash": ""
   },
   "src/proxy.ts": {
     "mtime": 1782686657.22511,
@@ -195,8 +195,8 @@
     "semantic_hash": ""
   },
   "REGRAS-PROJETO.md": {
-    "mtime": 1783369587.7684815,
-    "ast_hash": "ba16b49f1fc4c6b3f4ae3c5c39721ed0",
+    "mtime": 1783373813.3693957,
+    "ast_hash": "678188f5f5517bc3c07df24c33958ce7",
     "semantic_hash": ""
   },
   "docs/ingestao-n8n.md": {
@@ -300,8 +300,8 @@
     "semantic_hash": ""
   },
   "src/app/(dash)/google/page.tsx": {
-    "mtime": 1783366302.1206567,
-    "ast_hash": "fdb0c02acf9aafe30f8ed5f8c75d94f1",
+    "mtime": 1783373708.347034,
+    "ast_hash": "2489f8874120a54e0b61579174b8738c",
     "semantic_hash": ""
   },
   "src/app/(dash)/meta/page.tsx": {
@@ -315,8 +315,8 @@
     "semantic_hash": ""
   },
   "src/components/pages/ChannelPage.tsx": {
-    "mtime": 1783366413.675418,
-    "ast_hash": "6b338f456c36e5cdb26604b9a1375b5f",
+    "mtime": 1783373704.467268,
+    "ast_hash": "ff66fda5dce6b798680132bddafeb65a",
     "semantic_hash": ""
   },
   "src/app/(dash)/clientes/DeleteClientButton.tsx": {
@@ -332,6 +332,16 @@
   "src/components/ui/EmptyState.tsx": {
     "mtime": 1783363594.7409859,
     "ast_hash": "4fbfd8344f66f00ac736bddbda1a73c6",
+    "semantic_hash": ""
+  },
+  "src/components/pages/GoogleInsights.tsx": {
+    "mtime": 1783373680.5420547,
+    "ast_hash": "b201338765d83faf11db23202fe83fd0",
+    "semantic_hash": ""
+  },
+  "supabase/migrations/0006_google_ads_breakdowns.sql": {
+    "mtime": 1783373008.3891816,
+    "ast_hash": "70ee683854e15f79ed71300e348f013a",
     "semantic_hash": ""
   }
 }

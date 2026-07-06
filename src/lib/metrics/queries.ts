@@ -7,6 +7,10 @@ import {
   generateWebMetrics,
 } from "../mock/data";
 import type {
+  AdClickTypeMetric,
+  AdConversionActionMetric,
+  AdGeoMetric,
+  AdKeywordMetric,
   AdMetric,
   Client,
   DateRange,
@@ -26,6 +30,7 @@ type AdMetricRow = {
   clicks: number | string;
   conversions: number | string;
   revenue: number | string;
+  search_impression_share?: number | string | null;
 };
 
 type WebMetricRow = {
@@ -133,7 +138,7 @@ export async function getAdMetrics(
   let q = supabase
     .from("ad_metrics")
     .select(
-      "client_id, account_external_id, date, platform, campaign, spend, impressions, clicks, conversions, revenue",
+      "client_id, account_external_id, date, platform, campaign, spend, impressions, clicks, conversions, revenue, search_impression_share",
     )
     .gte("date", range.from)
     .lte("date", range.to)
@@ -159,6 +164,125 @@ export async function getAdMetrics(
     clicks: Number(r.clicks),
     conversions: Number(r.conversions),
     revenue: Number(r.revenue),
+    searchImpressionShare:
+      r.search_impression_share == null
+        ? null
+        : Number(r.search_impression_share),
+  }));
+}
+
+// ------------------ Detalhamento do Google Ads (fase 7) ------------------
+// Tabelas alimentadas pelo workflow n8n. Sem Supabase, não há detalhamento.
+
+type BreakdownRow = Record<string, unknown>;
+
+async function getBreakdown(
+  table: string,
+  columns: string,
+  range: DateRange,
+  clientId?: string,
+): Promise<BreakdownRow[]> {
+  if (!isSupabaseConfigured) return [];
+
+  const supabase = await createSupabaseServerClient();
+  let q = supabase
+    .from(table)
+    .select(columns)
+    .eq("platform", "google")
+    .gte("date", range.from)
+    .lte("date", range.to)
+    .range(0, MAX_METRIC_ROWS - 1);
+  if (clientId) q = q.eq("client_id", clientId);
+
+  const { data, error } = await q;
+  if (error || !data) {
+    logQueryError(`getBreakdown(${table})`, error);
+    return [];
+  }
+  return data as unknown as BreakdownRow[];
+}
+
+export async function getAdKeywords(
+  range: DateRange,
+  clientId?: string,
+): Promise<AdKeywordMetric[]> {
+  const rows = await getBreakdown(
+    "ad_keywords",
+    "client_id, date, campaign, keyword, match_type, impressions, clicks, spend, conversions",
+    range,
+    clientId,
+  );
+  return rows.map((r) => ({
+    clientId: String(r.client_id),
+    date: String(r.date),
+    campaign: String(r.campaign),
+    keyword: String(r.keyword),
+    matchType: String(r.match_type ?? ""),
+    impressions: Number(r.impressions),
+    clicks: Number(r.clicks),
+    spend: Number(r.spend),
+    conversions: Number(r.conversions),
+  }));
+}
+
+export async function getAdGeo(
+  range: DateRange,
+  clientId?: string,
+): Promise<AdGeoMetric[]> {
+  const rows = await getBreakdown(
+    "ad_geo",
+    "client_id, date, campaign, region, impressions, clicks, spend, conversions",
+    range,
+    clientId,
+  );
+  return rows.map((r) => ({
+    clientId: String(r.client_id),
+    date: String(r.date),
+    campaign: String(r.campaign),
+    region: String(r.region),
+    impressions: Number(r.impressions),
+    clicks: Number(r.clicks),
+    spend: Number(r.spend),
+    conversions: Number(r.conversions),
+  }));
+}
+
+export async function getAdClickTypes(
+  range: DateRange,
+  clientId?: string,
+): Promise<AdClickTypeMetric[]> {
+  const rows = await getBreakdown(
+    "ad_click_types",
+    "client_id, date, campaign, click_type, clicks",
+    range,
+    clientId,
+  );
+  return rows.map((r) => ({
+    clientId: String(r.client_id),
+    date: String(r.date),
+    campaign: String(r.campaign),
+    clickType: String(r.click_type),
+    clicks: Number(r.clicks),
+  }));
+}
+
+export async function getAdConversionActions(
+  range: DateRange,
+  clientId?: string,
+): Promise<AdConversionActionMetric[]> {
+  const rows = await getBreakdown(
+    "ad_conversion_actions",
+    "client_id, date, campaign, action_name, action_category, conversions",
+    range,
+    clientId,
+  );
+  return rows.map((r) => ({
+    clientId: String(r.client_id),
+    date: String(r.date),
+    campaign: String(r.campaign),
+    actionName: String(r.action_name),
+    actionCategory: String(r.action_category ?? ""),
+    conversions: Number(r.conversions),
   }));
 }
 

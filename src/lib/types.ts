@@ -36,6 +36,50 @@ export type AdMetric = {
   clicks: number;
   conversions: number;
   revenue: number;
+  // Parcela de impressões da rede de pesquisa (0..1; null quando não se aplica)
+  searchImpressionShare?: number | null;
+};
+
+// ------------------ Detalhamento do Google Ads (fase 7) ------------------
+
+export type AdKeywordMetric = {
+  clientId: string;
+  date: string;
+  campaign: string;
+  keyword: string;
+  matchType: string; // EXACT | PHRASE | BROAD
+  impressions: number;
+  clicks: number;
+  spend: number;
+  conversions: number;
+};
+
+export type AdGeoMetric = {
+  clientId: string;
+  date: string;
+  campaign: string;
+  region: string;
+  impressions: number;
+  clicks: number;
+  spend: number;
+  conversions: number;
+};
+
+export type AdClickTypeMetric = {
+  clientId: string;
+  date: string;
+  campaign: string;
+  clickType: string; // CALLS | GET_DIRECTIONS | URL_CLICKS | ...
+  clicks: number;
+};
+
+export type AdConversionActionMetric = {
+  clientId: string;
+  date: string;
+  campaign: string;
+  actionName: string;
+  actionCategory: string; // PHONE_CALL_LEAD | SUBMIT_LEAD_FORM | ...
+  conversions: number;
 };
 
 export type WebMetric = {

@@ -54,10 +54,16 @@ sessão via Supabase Admin API; role admin preservada).
 - **GA4 → Supabase** (id `oFVQoWFdstKOZcM4`): ✅ ATIVO e testado com dado real —
   gravou 25 linhas reais da Madeireira (property 541643814) em `web_metrics`.
   Roda todo dia 06:00.
-- **Google Ads → Supabase** (id `Ui5tKcvG1aRmWptS`): ✅ ATIVO, pipeline
-  100% correto (OAuth + developer-token + GAQL validados). **Bloqueado só pelo
-  vínculo MCC**: retorna `USER_PERMISSION_DENIED` até as contas dos clientes
-  serem vinculadas ao MCC 267-295-5792 e o convite aceito. Roda 06:30.
+- **Google Ads → Supabase** (id `Ui5tKcvG1aRmWptS`): ✅ ATIVO, 20 nós, coleta
+  **5 relatórios por conta** (fan-out após "Buscar contas"): campanhas
+  (`ad_metrics`, agora com `search_impression_share`), palavras-chave
+  (`ad_keywords` via keyword_view), tipos de clique (`ad_click_types` via
+  segments.click_type), conversões por ação (`ad_conversion_actions` via
+  segments.conversion_action_*) e regiões (`ad_geo` via geographic_view, com
+  tradução de geoTargetConstants → nome em 2 passos). Testado E2E 2026-07-06
+  (execução 3136: 165 keywords + 33 click types + 13 ações + 14 regiões da
+  Madeireira). Contas sem vínculo MCC não derrubam o fluxo (onError continue).
+  Roda 06:30.
 - Credenciais n8n: `Supabase - Painel Métricas` (sfp0d2ZkWr7zz5wM),
   `Google Analytics account` (I8evqpJf7UDmKsGB),
   `Google Ads account` (tcBb8A3FKBjc2nOt). OAuth client reaproveitado
@@ -109,14 +115,14 @@ hífens.
       são embutidas no build).
 - [x] ~~Seletor de período custom (datas)~~ (feito 2026-07-06: De/Até na Topbar).
 - [ ] (Opcional) export de relatório/PDF.
-- [ ] **Fase 7 proposta — métricas ricas do Google Ads** (pedido do usuário
-      2026-07-06): palavras-chave que performam, região, tipos de clique
-      (WhatsApp, ligação, Maps, site), conversões por ação (formulário vs
-      WhatsApp), impression share. Exige novas queries GAQL no workflow n8n
-      (keyword_view, geographic_view, segments.click_type, conversion_action)
-      + novas tabelas/migration + seções novas na página Google Ads.
+- [x] ~~Fase 7 — métricas ricas do Google Ads~~ (FEITA 2026-07-06: migration
+      0006 aplicada, workflow expandido pra 5 relatórios, UI `GoogleInsights`
+      na página Google Ads, dado real validado E2E).
 - [ ] **Redeploy Vercel** com as mudanças de 2026-07-06 (usuário viu versão
       antiga no ar — prints com nav velha e dados de seed).
+- [ ] **ROAS/receita**: removidos da UI a pedido do usuário (2026-07-06).
+      As colunas `revenue`/cálculo `roas` continuam no banco/agregadores —
+      NÃO recolocar na UI sem o usuário pedir.
 
 ## Acesso (dev)
 
@@ -262,3 +268,22 @@ hífens.
   botão com confirm). tsc/eslint/build verdes; rotas protegidas 307 OK.
   Pendente do feedback: fase 7 (métricas ricas Google Ads — precisa n8n+schema)
   e redeploy Vercel.
+- **2026-07-06 (fase 7)** — Métricas ricas do Google Ads no ar, ponta a ponta.
+  **ROAS removido de toda a UI** a pedido do usuário (KPIs, tabela de
+  campanhas, cards de canal — cards agora mostram custo/conversão).
+  **Migration 0006** (autorizada): tabelas `ad_keywords`, `ad_geo`,
+  `ad_click_types`, `ad_conversion_actions` (RLS select por acesso, escrita
+  service role, platform pronto pra Meta) + coluna
+  `ad_metrics.search_impression_share`. **Workflow n8n expandido** 6→20 nós:
+  fan-out de "Buscar contas" pra 4 ramos novos de GAQL (keyword_view;
+  segments.click_type; segments.conversion_action_name/category;
+  geographic_view com 2º passo geo_target_constant pra traduzir ID→nome);
+  query principal ganhou search_impression_share. Validação 0 erros; teste via
+  webhook temporário (removido): execução 3136 success 12s, dado real da
+  Madeireira nas 4 tabelas (top keyword "material de construção são leopoldo"
+  163 cliques/5 conv; 55 ligações, 170 cliques no local/Maps, 16 rotas;
+  ações: 40 rotas Maps, 8 ligações; share 34-45%). **UI**: `GoogleInsights`
+  (só na página Google Ads, via prop `extra` do ChannelPage) com "Onde foram
+  os cliques", "Conversões por tipo de contato", "Palavras-chave" (top 15) e
+  "Desempenho por região", enums traduzidos pra PT; KPI "Parcela de
+  impressões" no Google. Respeita filtro de campanha. tsc/eslint/build verdes.

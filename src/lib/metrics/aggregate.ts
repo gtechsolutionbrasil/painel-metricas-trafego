@@ -1,4 +1,12 @@
-import type { AdMetric, Platform, WebMetric } from "../types";
+import type {
+  AdClickTypeMetric,
+  AdConversionActionMetric,
+  AdGeoMetric,
+  AdKeywordMetric,
+  AdMetric,
+  Platform,
+  WebMetric,
+} from "../types";
 
 // --------------------------- Tráfego pago (ads) ----------------------------
 
@@ -12,6 +20,8 @@ export type AdKpis = {
   cpc: number; // spend / clicks
   cpl: number; // spend / conversions (custo por lead/conversão)
   roas: number; // revenue / spend
+  // Parcela de impressões da pesquisa, ponderada por impressões (null = sem dado)
+  impressionShare: number | null;
 };
 
 export function adKpis(rows: AdMetric[]): AdKpis {
@@ -22,16 +32,35 @@ export function adKpis(rows: AdMetric[]): AdKpis {
       a.clicks += r.clicks;
       a.conversions += r.conversions;
       a.revenue += r.revenue;
+      if (r.searchImpressionShare != null && r.impressions > 0) {
+        a.shareWeighted += r.searchImpressionShare * r.impressions;
+        a.shareImpressions += r.impressions;
+      }
       return a;
     },
-    { spend: 0, impressions: 0, clicks: 0, conversions: 0, revenue: 0 },
+    {
+      spend: 0,
+      impressions: 0,
+      clicks: 0,
+      conversions: 0,
+      revenue: 0,
+      shareWeighted: 0,
+      shareImpressions: 0,
+    },
   );
   return {
-    ...t,
+    spend: t.spend,
+    impressions: t.impressions,
+    clicks: t.clicks,
+    conversions: t.conversions,
+    revenue: t.revenue,
     ctr: t.impressions ? t.clicks / t.impressions : 0,
     cpc: t.clicks ? t.spend / t.clicks : 0,
     cpl: t.conversions ? t.spend / t.conversions : 0,
     roas: t.spend ? t.revenue / t.spend : 0,
+    impressionShare: t.shareImpressions
+      ? t.shareWeighted / t.shareImpressions
+      : null,
   };
 }
 
@@ -201,6 +230,122 @@ export type SourceRow = {
   users: number;
   share: number; // fração do total de sessões
 };
+
+// --------------- Detalhamento do Google Ads (fase 7) -----------------------
+
+export type KeywordRow = {
+  keyword: string;
+  matchType: string;
+  impressions: number;
+  clicks: number;
+  spend: number;
+  conversions: number;
+  ctr: number;
+  cpc: number;
+  cpl: number;
+};
+
+export function byKeyword(rows: AdKeywordMetric[]): KeywordRow[] {
+  const map = new Map<string, KeywordRow>();
+  for (const r of rows) {
+    const key = `${r.keyword}|${r.matchType}`;
+    const k =
+      map.get(key) ??
+      {
+        keyword: r.keyword,
+        matchType: r.matchType,
+        impressions: 0,
+        clicks: 0,
+        spend: 0,
+        conversions: 0,
+        ctr: 0,
+        cpc: 0,
+        cpl: 0,
+      };
+    k.impressions += r.impressions;
+    k.clicks += r.clicks;
+    k.spend += r.spend;
+    k.conversions += r.conversions;
+    map.set(key, k);
+  }
+  const out = [...map.values()];
+  out.forEach((k) => {
+    k.ctr = k.impressions ? k.clicks / k.impressions : 0;
+    k.cpc = k.clicks ? k.spend / k.clicks : 0;
+    k.cpl = k.conversions ? k.spend / k.conversions : 0;
+  });
+  return out.sort((a, b) => b.clicks - a.clicks);
+}
+
+export type GeoRow = {
+  region: string;
+  impressions: number;
+  clicks: number;
+  spend: number;
+  conversions: number;
+};
+
+export function byRegion(rows: AdGeoMetric[]): GeoRow[] {
+  const map = new Map<string, GeoRow>();
+  for (const r of rows) {
+    const g =
+      map.get(r.region) ??
+      { region: r.region, impressions: 0, clicks: 0, spend: 0, conversions: 0 };
+    g.impressions += r.impressions;
+    g.clicks += r.clicks;
+    g.spend += r.spend;
+    g.conversions += r.conversions;
+    map.set(r.region, g);
+  }
+  return [...map.values()].sort((a, b) => b.clicks - a.clicks);
+}
+
+export type ClickTypeRow = { clickType: string; clicks: number; share: number };
+
+export function byClickType(rows: AdClickTypeMetric[]): ClickTypeRow[] {
+  const map = new Map<string, ClickTypeRow>();
+  let total = 0;
+  for (const r of rows) {
+    const c =
+      map.get(r.clickType) ?? { clickType: r.clickType, clicks: 0, share: 0 };
+    c.clicks += r.clicks;
+    total += r.clicks;
+    map.set(r.clickType, c);
+  }
+  const out = [...map.values()];
+  out.forEach((c) => (c.share = total ? c.clicks / total : 0));
+  return out.sort((a, b) => b.clicks - a.clicks);
+}
+
+export type ConversionActionRow = {
+  actionName: string;
+  actionCategory: string;
+  conversions: number;
+  share: number;
+};
+
+export function byConversionAction(
+  rows: AdConversionActionMetric[],
+): ConversionActionRow[] {
+  const map = new Map<string, ConversionActionRow>();
+  let total = 0;
+  for (const r of rows) {
+    const a =
+      map.get(r.actionName) ??
+      {
+        actionName: r.actionName,
+        actionCategory: r.actionCategory,
+        conversions: 0,
+        share: 0,
+      };
+    a.conversions += r.conversions;
+    total += r.conversions;
+    map.set(r.actionName, a);
+  }
+  const out = [...map.values()];
+  out.forEach((a) => (a.share = total ? a.conversions / total : 0));
+  return out.sort((a, b) => b.conversions - a.conversions);
+}
 
 export function webBySource(rows: WebMetric[]): SourceRow[] {
   const map = new Map<string, SourceRow>();
