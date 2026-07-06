@@ -6,6 +6,7 @@ import { getClients, getIntegrationAccounts } from "@/lib/metrics/queries";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
 import type { Client, IntegrationAccount, IntegrationProvider } from "@/lib/types";
 import { createClientWithAccounts } from "./actions";
+import { DeleteClientButton } from "./DeleteClientButton";
 
 type SP = Promise<Record<string, string | string[] | undefined>>;
 
@@ -27,6 +28,7 @@ export default async function ClientesPage({
     getIntegrationAccounts(),
   ]);
   const created = Array.isArray(sp.created) ? sp.created[0] : sp.created;
+  const deleted = Array.isArray(sp.deleted) ? sp.deleted[0] : sp.deleted;
   const errorMsg = Array.isArray(sp.error) ? sp.error[0] : sp.error;
 
   return (
@@ -40,6 +42,13 @@ export default async function ClientesPage({
         <div className="flex items-center gap-2 rounded-lg border border-brand-border bg-brand-soft px-4 py-3 text-sm font-semibold text-brand-ink">
           <CheckCircle2 size={17} />
           Cliente cadastrado: {created}
+        </div>
+      )}
+
+      {deleted && (
+        <div className="flex items-center gap-2 rounded-lg border border-brand-border bg-brand-soft px-4 py-3 text-sm font-semibold text-brand-ink">
+          <CheckCircle2 size={17} />
+          Cliente excluído: {deleted}
         </div>
       )}
 
@@ -262,7 +271,8 @@ function ClientList({
               <th className="px-3 py-3">Fonte</th>
               <th className="px-3 py-3">Origem</th>
               <th className="px-3 py-3">ID externo</th>
-              <th className="px-5 py-3">Status</th>
+              <th className="px-3 py-3">Status</th>
+              <th className="px-5 py-3 text-right">Ações</th>
             </tr>
           </thead>
           <tbody>
@@ -279,10 +289,18 @@ function ClientList({
                     <td className="px-3 py-3 text-muted" colSpan={3}>
                       Nenhuma integração cadastrada
                     </td>
-                    <td className="px-5 py-3">
+                    <td className="px-3 py-3">
                       <Badge variant={client.status === "active" ? "brand" : "warning"}>
                         {client.status === "active" ? "Ativo" : "Pausado"}
                       </Badge>
+                    </td>
+                    <td className="px-5 py-3">
+                      <div className="flex justify-end">
+                        <DeleteClientButton
+                          clientId={client.id}
+                          clientName={client.name}
+                        />
+                      </div>
                     </td>
                   </tr>
                 );
@@ -314,10 +332,20 @@ function ClientList({
                   <td className="px-3 py-3 font-mono text-xs text-muted">
                     {account.externalId}
                   </td>
-                  <td className="px-5 py-3">
+                  <td className="px-3 py-3">
                     <Badge variant={statusVariant(account.status)}>
                       {statusLabel(account.status)}
                     </Badge>
+                  </td>
+                  <td className="px-5 py-3">
+                    {index === 0 && (
+                      <div className="flex justify-end">
+                        <DeleteClientButton
+                          clientId={client.id}
+                          clientName={client.name}
+                        />
+                      </div>
+                    )}
                   </td>
                 </tr>
               ));

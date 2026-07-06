@@ -4,44 +4,35 @@ import Link from "next/link";
 import { useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Check, ChevronDown, Plus, Users } from "lucide-react";
-import type { Client, IntegrationAccount } from "@/lib/types";
-import { RANGE_PRESETS } from "@/lib/range";
+import type { Client } from "@/lib/types";
+import { RANGE_PRESETS, rangeFromSearch } from "@/lib/range";
 
-export function Topbar({
-  clients,
-  accounts,
-}: {
-  clients: Client[];
-  accounts: IntegrationAccount[];
-}) {
+const iso = (d: Date) => {
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+};
+
+export function Topbar({ clients }: { clients: Client[] }) {
   const router = useRouter();
   const pathname = usePathname();
   const search = useSearchParams();
   const [clientOpen, setClientOpen] = useState(false);
 
-  const days = Number(search.get("days")) || 30;
-  const activeDays = RANGE_PRESETS.some((p) => p.days === days) ? days : 30;
+  const { range, days } = rangeFromSearch(Object.fromEntries(search.entries()));
+  const isCustom = Boolean(search.get("from") && search.get("to"));
+  const today = iso(new Date());
+
   const activeSlug = search.get("client") ?? "all";
   const active = clients.find((c) => c.slug === activeSlug) ?? null;
-  const activeAccountId = search.get("account") ?? "all";
-  const visibleAccounts = active
-    ? accounts.filter((a) => a.clientId === active.id)
-    : accounts;
-  const activeAccount =
-    visibleAccounts.find((a) => a.externalId === activeAccountId) ?? null;
 
   function pushParams(params: URLSearchParams) {
     const qs = params.toString();
     router.push(`${pathname}${qs ? `?${qs}` : ""}`);
   }
 
-  function setParam(key: string, value: string | null) {
-    const params = new URLSearchParams(search.toString());
-    if (value === null) params.delete(key);
-    else params.set(key, value);
-    pushParams(params);
-  }
-
+  // Atalho de período (últimos N dias).
   function selectDays(value: string) {
     const params = new URLSearchParams(search.toString());
     params.set("days", value);
@@ -50,152 +41,143 @@ export function Topbar({
     pushParams(params);
   }
 
+  // Período personalizado (?from=&to=). Só aplica com as duas datas válidas.
+  function selectRange(from: string, to: string) {
+    if (!from || !to || from > to) return;
+    const params = new URLSearchParams(search.toString());
+    params.set("from", from);
+    params.set("to", to);
+    params.delete("days");
+    pushParams(params);
+  }
+
   function selectClient(slug: string | null) {
     setClientOpen(false);
     const params = new URLSearchParams(search.toString());
     if (slug) params.set("client", slug);
     else params.delete("client");
+    // Filtros que pertencem ao cliente anterior não fazem sentido no novo.
     params.delete("account");
+    params.delete("campaign");
     pushParams(params);
-  }
-
-  function selectAccount(value: string) {
-    setParam("account", value === "all" ? null : value);
   }
 
   return (
     <header className="sticky top-0 z-30 border-b border-line bg-surface/95 px-4 py-3 backdrop-blur sm:px-6">
-      <div className="flex flex-col gap-3 2xl:flex-row 2xl:items-center 2xl:justify-between">
-        <div className="grid grid-cols-1 gap-3 md:grid-cols-[280px_minmax(220px,280px)]">
-          <div className="relative">
-            <button
-              type="button"
-              onClick={() => setClientOpen((v) => !v)}
-              className="flex h-14 w-full items-center justify-between gap-3 rounded-[10px] border border-line bg-surface px-3 text-left transition-colors hover:bg-surface-2"
-            >
-              <span className="flex min-w-0 items-center gap-2.5">
-                <span className="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-brand-soft text-brand">
-                  <Users size={15} />
+      <div className="flex flex-col gap-3 xl:flex-row xl:items-center xl:justify-between">
+        <div className="relative w-full md:max-w-[300px]">
+          <button
+            type="button"
+            onClick={() => setClientOpen((v) => !v)}
+            className="flex h-14 w-full items-center justify-between gap-3 rounded-[10px] border border-line bg-surface px-3 text-left transition-colors hover:bg-surface-2"
+          >
+            <span className="flex min-w-0 items-center gap-2.5">
+              <span className="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-brand-soft text-brand">
+                <Users size={15} />
+              </span>
+              <span className="min-w-0">
+                <span className="block text-[10px] font-bold uppercase tracking-[0.08em] text-faint">
+                  Cliente
                 </span>
-                <span className="min-w-0">
-                  <span className="block text-[10px] font-bold uppercase tracking-[0.08em] text-faint">
-                    Cliente
-                  </span>
-                  <span className="block truncate text-sm font-semibold text-ink">
-                    {active ? active.name : "Todos os clientes"}
-                  </span>
+                <span className="block truncate text-sm font-semibold text-ink">
+                  {active ? active.name : "Todos os clientes"}
                 </span>
               </span>
-              <ChevronDown size={16} className="shrink-0 text-faint" />
-            </button>
+            </span>
+            <ChevronDown size={16} className="shrink-0 text-faint" />
+          </button>
 
-            {clientOpen && (
-              <>
-                <button
-                  type="button"
-                  aria-label="Fechar"
-                  className="fixed inset-0 z-40 cursor-default"
-                  onClick={() => setClientOpen(false)}
-                />
-                <div className="absolute left-0 top-[calc(100%+8px)] z-50 w-80 overflow-hidden rounded-xl border border-line bg-surface shadow-[var(--shadow-pop)]">
-                  <div className="flex items-center justify-between border-b border-line px-3 py-2">
-                    <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-faint">
-                      Cliente
-                    </p>
-                    <Link
-                      href="/clientes"
-                      className="inline-flex items-center gap-1 rounded-md px-2 py-1 text-xs font-bold text-brand-ink hover:bg-brand-soft"
-                    >
-                      <Plus size={13} />
-                      Novo
-                    </Link>
-                  </div>
-                  <div className="max-h-80 overflow-y-auto p-1.5">
-                    <ClientOption
-                      label="Todos os clientes"
-                      selected={!active}
-                      onClick={() => selectClient(null)}
-                    />
-                    {clients.map((c) => (
-                      <ClientOption
-                        key={c.id}
-                        label={c.name}
-                        status={c.status}
-                        selected={active?.slug === c.slug}
-                        onClick={() => selectClient(c.slug)}
-                      />
-                    ))}
-                  </div>
+          {clientOpen && (
+            <>
+              <button
+                type="button"
+                aria-label="Fechar"
+                className="fixed inset-0 z-40 cursor-default"
+                onClick={() => setClientOpen(false)}
+              />
+              <div className="absolute left-0 top-[calc(100%+8px)] z-50 w-80 overflow-hidden rounded-xl border border-line bg-surface shadow-[var(--shadow-pop)]">
+                <div className="flex items-center justify-between border-b border-line px-3 py-2">
+                  <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-faint">
+                    Cliente
+                  </p>
+                  <Link
+                    href="/clientes"
+                    className="inline-flex items-center gap-1 rounded-md px-2 py-1 text-xs font-bold text-brand-ink hover:bg-brand-soft"
+                  >
+                    <Plus size={13} />
+                    Novo
+                  </Link>
                 </div>
-              </>
-            )}
-          </div>
-
-          <div className="flex h-14 flex-col justify-center rounded-[10px] border border-line bg-surface px-3">
-            <label
-              className="text-[10px] font-bold uppercase tracking-[0.08em] text-faint"
-              htmlFor="account-filter"
-            >
-              Fonte de dados
-            </label>
-            <select
-              id="account-filter"
-              value={activeAccount?.externalId ?? "all"}
-              onChange={(e) => selectAccount(e.target.value)}
-              className="-ml-1 mt-0.5 w-[calc(100%+8px)] rounded-md bg-transparent px-1 text-sm font-semibold text-ink outline-none"
-            >
-              <option value="all">Todas as fontes</option>
-              {visibleAccounts.map((account) => (
-                <option key={account.id} value={account.externalId}>
-                  {account.accountName}
-                </option>
-              ))}
-            </select>
-          </div>
+                <div className="max-h-80 overflow-y-auto p-1.5">
+                  <ClientOption
+                    label="Todos os clientes"
+                    selected={!active}
+                    onClick={() => selectClient(null)}
+                  />
+                  {clients.map((c) => (
+                    <ClientOption
+                      key={c.id}
+                      label={c.name}
+                      status={c.status}
+                      selected={active?.slug === c.slug}
+                      onClick={() => selectClient(c.slug)}
+                    />
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
         </div>
 
-        <div className="flex flex-col gap-3 md:flex-row md:items-center">
-          <div className="hidden rounded-[10px] border border-line bg-surface px-3 py-2 sm:block">
+        {/* Período: atalhos + datas livres (De/Até) */}
+        <div className="flex flex-wrap items-center gap-3 rounded-[10px] border border-line bg-surface px-3 py-2">
+          <div>
             <p className="text-[10px] font-bold uppercase tracking-[0.08em] text-faint">
               Período
             </p>
-            <div className="mt-1 flex rounded-lg bg-surface-2 p-1">
-              {RANGE_PRESETS.map((p) => {
-                const isActive = days === p.days;
-                return (
-                  <button
-                    key={p.days}
-                    type="button"
-                    aria-pressed={isActive}
-                    onClick={() => selectDays(String(p.days))}
-                    className={`rounded-md px-3 py-1.5 text-[13px] font-semibold transition-colors ${
-                      isActive
-                        ? "bg-surface text-brand-ink shadow-sm"
-                        : "text-muted hover:text-ink"
-                    }`}
-                  >
-                    {p.label}
-                  </button>
-                );
-              })}
-            </div>
+            <select
+              value={isCustom ? "custom" : String(days)}
+              onChange={(e) => {
+                if (e.target.value === "custom") {
+                  selectRange(range.from, range.to);
+                } else {
+                  selectDays(e.target.value);
+                }
+              }}
+              className="-ml-1 mt-0.5 rounded-md bg-transparent px-1 text-sm font-semibold text-ink outline-none"
+            >
+              {RANGE_PRESETS.map((p) => (
+                <option key={p.days} value={p.days}>
+                  Últimos {p.label}
+                </option>
+              ))}
+              <option value="custom">Personalizado</option>
+            </select>
           </div>
 
-          <label className="sr-only" htmlFor="period-mobile">
-            Período
+          <div className="h-9 w-px bg-line" />
+
+          <label className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.08em] text-faint">
+            De
+            <input
+              type="date"
+              value={range.from}
+              max={range.to}
+              onChange={(e) => selectRange(e.target.value, range.to)}
+              className="rounded-md border border-line bg-surface px-2 py-1.5 text-[13px] font-semibold normal-case tracking-normal text-ink outline-none transition-colors focus:border-brand"
+            />
           </label>
-          <select
-            id="period-mobile"
-            value={activeDays}
-            onChange={(e) => selectDays(e.target.value)}
-            className="h-10 rounded-[10px] border border-line bg-surface px-2.5 text-[13px] font-semibold text-ink sm:hidden"
-          >
-            {RANGE_PRESETS.map((p) => (
-              <option key={p.days} value={p.days}>
-                {p.label}
-              </option>
-            ))}
-          </select>
+          <label className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.08em] text-faint">
+            Até
+            <input
+              type="date"
+              value={range.to}
+              min={range.from}
+              max={today}
+              onChange={(e) => selectRange(range.from, e.target.value)}
+              className="rounded-md border border-line bg-surface px-2 py-1.5 text-[13px] font-semibold normal-case tracking-normal text-ink outline-none transition-colors focus:border-brand"
+            />
+          </label>
         </div>
       </div>
     </header>

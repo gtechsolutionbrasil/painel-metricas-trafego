@@ -134,6 +134,49 @@ export async function createClientWithAccounts(formData: FormData) {
   redirect(`/clientes?created=${slug}`);
 }
 
+// Exclui o cliente e, por cascade no banco, todas as integrações, métricas e
+// acessos ligados a ele. Só admin (RLS clients_admin_delete garante no banco).
+export async function deleteClient(formData: FormData) {
+  if (!isSupabaseConfigured) {
+    redirectWithError("Configure o Supabase para gerenciar clientes.");
+  }
+
+  const clientId = String(formData.get("clientId") ?? "");
+  const clientName = String(formData.get("clientName") ?? "cliente");
+  if (!clientId) redirectWithError("Cliente inválido.");
+
+  const supabase = await createSupabaseServerClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) redirectWithError("Você precisa estar logado.");
+
+  const { data: profile, error: profileError } = await supabase
+    .from("profiles")
+    .select("role")
+    .eq("id", user.id)
+    .single();
+  if (profileError || profile?.role !== "admin") {
+    redirectWithError("Apenas administradores podem excluir clientes.");
+  }
+
+  const { error, count } = await supabase
+    .from("clients")
+    .delete({ count: "exact" })
+    .eq("id", clientId);
+
+  if (error) redirectWithError(error.message);
+  if (!count) {
+    redirectWithError(
+      "Nenhum cliente foi excluído (verifique suas permissões).",
+    );
+  }
+
+  revalidatePath("/");
+  revalidatePath("/clientes");
+  redirect(`/clientes?deleted=${encodeURIComponent(clientName)}`);
+}
+
 function normalizeSlug(value: string) {
   return (
     value

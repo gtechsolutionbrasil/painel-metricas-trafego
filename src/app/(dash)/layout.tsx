@@ -1,7 +1,7 @@
 import { Suspense, type ReactNode } from "react";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { Topbar } from "@/components/layout/Topbar";
-import { getClients, getIntegrationAccounts } from "@/lib/metrics/queries";
+import { getClients } from "@/lib/metrics/queries";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
 
 export const dynamic = "force-dynamic";
@@ -11,10 +11,7 @@ export default async function DashLayout({
 }: {
   children: ReactNode;
 }) {
-  const [clients, accounts] = await Promise.all([
-    getClients(),
-    getIntegrationAccounts(),
-  ]);
+  const clients = await getClients();
 
   return (
     <div className="flex min-h-screen">
@@ -24,7 +21,7 @@ export default async function DashLayout({
 
       <div className="flex min-w-0 flex-1 flex-col">
         <Suspense fallback={<div className="h-16 border-b border-line bg-surface" />}>
-          <Topbar clients={clients} accounts={accounts} />
+          <Topbar clients={clients} />
         </Suspense>
 
         {!isSupabaseConfigured && <DemoBanner />}

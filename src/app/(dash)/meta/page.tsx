@@ -10,7 +10,7 @@ export default async function MetaPage({
   return (
     <ChannelPage
       platform="meta"
-      title="Meta"
+      title="Meta Ads"
       subtitle="Anúncios no Facebook e Instagram"
       searchParams={await searchParams}
     />

@@ -1,7 +1,9 @@
-import { Clock, FileText, MousePointer2, Users } from "lucide-react";
+import { Clock, FileText, MousePointer2, PlugZap, Users } from "lucide-react";
+import Link from "next/link";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { KpiCard } from "@/components/ui/KpiCard";
 import { Card, CardBody, CardHeader } from "@/components/ui/Card";
+import { EmptyState } from "@/components/ui/EmptyState";
 import { TrendAreaChart } from "@/components/charts/TrendAreaChart";
 import { DonutChart } from "@/components/charts/DonutChart";
 import { CHART_COLORS } from "@/components/charts/theme";
@@ -42,10 +44,37 @@ export default async function SitePage({
     .slice(0, 6)
     .map((s) => ({ label: friendlyOrigin(s.source, s.medium), value: s.sessions }));
 
+  if (web.length === 0) {
+    return (
+      <div className="space-y-6">
+        <PageHeader
+          title="Sites"
+          subtitle={`O que acontece no site do cliente · ${client ? client.name : "Todos os clientes"}`}
+        />
+        <EmptyState
+          icon={PlugZap}
+          title="Ainda não há dados do site neste período"
+          description={
+            <>
+              Confira se o GA4 está conectado em{" "}
+              <Link
+                href="/clientes"
+                className="font-semibold text-brand-ink underline"
+              >
+                Integrações
+              </Link>{" "}
+              ou selecione outro período/cliente acima.
+            </>
+          }
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6">
       <PageHeader
-        title="Site"
+        title="Sites"
         subtitle={`O que acontece no site do cliente · ${client ? client.name : "Todos os clientes"}`}
       />
 

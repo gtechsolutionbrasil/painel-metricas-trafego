@@ -4,6 +4,7 @@ import {
   DollarSign,
   Globe,
   MousePointerClick,
+  PlugZap,
   Search,
   Share2,
   Target,
@@ -12,6 +13,7 @@ import {
 import { PageHeader } from "@/components/ui/PageHeader";
 import { KpiCard } from "@/components/ui/KpiCard";
 import { Card, CardBody, CardHeader } from "@/components/ui/Card";
+import { EmptyState } from "@/components/ui/EmptyState";
 import { Badge } from "@/components/ui/Badge";
 import { TrendAreaChart } from "@/components/charts/TrendAreaChart";
 import { BarsChart } from "@/components/charts/BarsChart";
@@ -81,20 +83,21 @@ export default async function OverviewPage({
           trend={{ value: delta(k.spend, kPrev.spend) }}
         />
         <KpiCard
-          label="Contatos gerados"
+          label="Conversões"
           value={fmtInt(k.conversions)}
           icon={Target}
-          hint="leads, conversas ou vendas"
+          hint="contatos: lead, WhatsApp, formulário"
           trend={{ value: delta(k.conversions, kPrev.conversions) }}
         />
         <KpiCard
-          label="Custo por contato"
+          label="Custo por conversão"
           value={fmtCurrencyCents(k.cpl)}
           icon={MousePointerClick}
+          hint="investimento ÷ conversões"
           trend={{ value: delta(k.cpl, kPrev.cpl), positiveIsGood: false }}
         />
         <KpiCard
-          label="Retorno"
+          label="Retorno (ROAS)"
           value={fmtMultiplier(k.roas)}
           icon={TrendingUp}
           hint="R$ que voltou por R$ investido"
@@ -114,12 +117,12 @@ export default async function OverviewPage({
           href="/google"
           sp={sp}
           icon={<Search size={17} />}
-          name="Google"
+          name="Google Ads"
           description="Anúncios na pesquisa"
           headline={google ? fmtCurrency(google.spend) : "—"}
           detail={
             google
-              ? `${fmtInt(google.conversions)} contatos · retorno ${fmtMultiplier(google.roas)}`
+              ? `${fmtInt(google.conversions)} conversões · ROAS ${fmtMultiplier(google.roas)}`
               : "Sem dados no período"
           }
         />
@@ -127,12 +130,12 @@ export default async function OverviewPage({
           href="/meta"
           sp={sp}
           icon={<Share2 size={17} />}
-          name="Meta"
+          name="Meta Ads"
           description="Facebook e Instagram"
           headline={meta ? fmtCurrency(meta.spend) : "—"}
           detail={
             meta
-              ? `${fmtInt(meta.conversions)} contatos · retorno ${fmtMultiplier(meta.roas)}`
+              ? `${fmtInt(meta.conversions)} conversões · ROAS ${fmtMultiplier(meta.roas)}`
               : "Sem dados no período"
           }
         />
@@ -140,7 +143,7 @@ export default async function OverviewPage({
           href="/site"
           sp={sp}
           icon={<Globe size={17} />}
-          name="Site"
+          name="Sites"
           description="Visitas e comportamento"
           headline={fmtInt(w.sessions)}
           detail={
@@ -152,45 +155,64 @@ export default async function OverviewPage({
       </div>
 
       {/* Evolução do período */}
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        <Card>
-          <CardHeader
-            title="Investimento por dia"
-            subtitle="Todos os canais somados"
-          />
-          <CardBody>
-            <TrendAreaChart
-              data={byDay}
-              yFormat="compact"
-              series={[
-                {
-                  key: "spend",
-                  label: "Investimento",
-                  color: CHART_COLORS.brand,
-                  format: "currency",
-                },
-              ]}
+      {ads.length === 0 && web.length === 0 ? (
+        <EmptyState
+          icon={PlugZap}
+          title="Ainda não há dados neste período"
+          description={
+            <>
+              Confira se as contas estão conectadas em{" "}
+              <Link
+                href="/clientes"
+                className="font-semibold text-brand-ink underline"
+              >
+                Integrações
+              </Link>{" "}
+              ou selecione outro período/cliente acima.
+            </>
+          }
+        />
+      ) : (
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+          <Card>
+            <CardHeader
+              title="Investimento por dia"
+              subtitle="Todos os canais somados"
             />
-          </CardBody>
-        </Card>
+            <CardBody>
+              <TrendAreaChart
+                data={byDay}
+                yFormat="compact"
+                series={[
+                  {
+                    key: "spend",
+                    label: "Investimento",
+                    color: CHART_COLORS.brand,
+                    format: "currency",
+                  },
+                ]}
+              />
+            </CardBody>
+          </Card>
 
-        <Card>
-          <CardHeader
-            title="Contatos por dia"
-            subtitle="Leads, conversas ou vendas geradas"
-          />
-          <CardBody>
-            <BarsChart
-              data={byDay}
-              dataKey="conversions"
-              name="Contatos"
-              color={CHART_COLORS.teal}
-              format="int"
-              yFormat="compact"
+          <Card>
+            <CardHeader
+              title="Conversões por dia"
+              subtitle="Leads, WhatsApp e formulários gerados"
             />
-          </CardBody>
-        </Card>
-      </div>
+            <CardBody>
+              <BarsChart
+                data={byDay}
+                dataKey="conversions"
+                name="Conversões"
+                color={CHART_COLORS.teal}
+                format="int"
+                yFormat="compact"
+              />
+            </CardBody>
+          </Card>
+        </div>
+      )}
     </div>
   );
 }

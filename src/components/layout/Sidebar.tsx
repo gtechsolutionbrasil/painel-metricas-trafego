@@ -17,9 +17,9 @@ type NavItem = { href: string; label: string; icon: LucideIcon };
 
 const NAV: NavItem[] = [
   { href: "/", label: "Visão geral", icon: LayoutDashboard },
-  { href: "/google", label: "Google", icon: Search },
-  { href: "/meta", label: "Meta", icon: Share2 },
-  { href: "/site", label: "Site", icon: Globe },
+  { href: "/google", label: "Google Ads", icon: Search },
+  { href: "/meta", label: "Meta Ads", icon: Share2 },
+  { href: "/site", label: "Sites", icon: Globe },
   { href: "/clientes", label: "Integrações", icon: Building2 },
 ];
 

@@ -7,10 +7,11 @@ import {
   Target,
   TrendingUp,
 } from "lucide-react";
-import Link from "next/link";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { KpiCard } from "@/components/ui/KpiCard";
 import { Card, CardBody, CardHeader } from "@/components/ui/Card";
+import { EmptyState } from "@/components/ui/EmptyState";
+import { CampaignFilter } from "@/components/pages/CampaignFilter";
 import { TrendAreaChart } from "@/components/charts/TrendAreaChart";
 import { BarsChart } from "@/components/charts/BarsChart";
 import { CHART_COLORS } from "@/components/charts/theme";
@@ -25,13 +26,15 @@ import {
   fmtMultiplier,
   fmtPercent,
 } from "@/lib/format";
+import Link from "next/link";
 import type { Platform } from "@/lib/types";
 
 type SP = Record<string, string | string[] | undefined>;
 
 // ---------------------------------------------------------------------------
-// Página de canal pago (Google ou Meta) com linguagem simples:
-// investimento, cliques, contatos gerados, retorno.
+// Página de canal pago (Google Ads ou Meta Ads) com as métricas padrão do
+// tráfego: investimento, impressões, cliques, CTR, CPC, conversões, custo por
+// conversão e ROAS — com filtro por campanha.
 // ---------------------------------------------------------------------------
 export async function ChannelPage({
   platform,
@@ -52,10 +55,29 @@ export async function ChannelPage({
     ? searchParams.account[0]
     : searchParams.account;
 
-  const [ads, adsPrev] = await Promise.all([
+  const [adsAll, adsPrevAll] = await Promise.all([
     getAdMetrics(range, client?.id, [platform], accountExternalId),
     getAdMetrics(prev, client?.id, [platform], accountExternalId),
   ]);
+
+  // Filtro por campanha (?campaign=). Nome desconhecido = sem filtro, pra
+  // navegação entre canais não zerar a página.
+  const campaignParam = Array.isArray(searchParams.campaign)
+    ? searchParams.campaign[0]
+    : searchParams.campaign;
+  const campaignNames = [...new Set(adsAll.map((r) => r.campaign))].sort();
+  const selectedCampaign =
+    campaignParam && campaignNames.includes(campaignParam)
+      ? campaignParam
+      : null;
+
+  const ads = selectedCampaign
+    ? adsAll.filter((r) => r.campaign === selectedCampaign)
+    : adsAll;
+  const adsPrev = selectedCampaign
+    ? adsPrevAll.filter((r) => r.campaign === selectedCampaign)
+    : adsPrevAll;
+
   const k = adKpis(ads);
   const kPrev = adKpis(adsPrev);
   const byDay = adByDay(ads);
@@ -66,83 +88,93 @@ export async function ChannelPage({
       <PageHeader
         title={title}
         subtitle={`${subtitle} · ${client ? client.name : "Todos os clientes"}`}
+        actions={
+          campaignNames.length > 0 ? (
+            <CampaignFilter campaigns={campaignNames} />
+          ) : undefined
+        }
       />
 
-      {ads.length === 0 ? (
-        <Card>
-          <CardBody className="flex flex-col items-center gap-3 py-14 text-center">
-            <span className="grid h-12 w-12 place-items-center rounded-2xl bg-brand-soft text-brand">
-              <PlugZap size={22} />
-            </span>
-            <p className="text-base font-bold text-ink">
-              Ainda não há dados de {title} neste período
-            </p>
-            <p className="max-w-md text-sm text-muted">
+      {adsAll.length === 0 ? (
+        <EmptyState
+          icon={PlugZap}
+          title={`Ainda não há dados de ${title} neste período`}
+          description={
+            <>
               Confira se a conta está conectada em{" "}
-              <Link href="/clientes" className="font-semibold text-brand-ink underline">
+              <Link
+                href="/clientes"
+                className="font-semibold text-brand-ink underline"
+              >
                 Integrações
               </Link>{" "}
               ou selecione outro período/cliente acima.
-            </p>
-          </CardBody>
-        </Card>
+            </>
+          }
+        />
       ) : (
         <>
-          {/* O que importa primeiro: quanto investiu e o que voltou */}
+          {/* Volume: quanto rodou e o que gerou */}
           <div className="grid grid-cols-2 gap-4 xl:grid-cols-4">
             <KpiCard
               label="Investimento"
               value={fmtCurrency(k.spend)}
               icon={DollarSign}
-              hint="quanto foi gasto em anúncios"
+              hint="custo total no período"
               trend={{ value: delta(k.spend, kPrev.spend) }}
+            />
+            <KpiCard
+              label="Impressões"
+              value={fmtCompact(k.impressions)}
+              icon={Eye}
+              hint="vezes que o anúncio foi exibido"
+              trend={{ value: delta(k.impressions, kPrev.impressions) }}
             />
             <KpiCard
               label="Cliques"
               value={fmtInt(k.clicks)}
               icon={MousePointerClick}
-              hint="pessoas que clicaram no anúncio"
+              hint="cliques no anúncio"
               trend={{ value: delta(k.clicks, kPrev.clicks) }}
             />
             <KpiCard
-              label="Contatos gerados"
+              label="Conversões"
               value={fmtInt(k.conversions)}
               icon={Target}
-              hint="leads, conversas ou vendas"
+              hint="contatos: lead, WhatsApp, formulário"
               trend={{ value: delta(k.conversions, kPrev.conversions) }}
-            />
-            <KpiCard
-              label="Retorno"
-              value={fmtMultiplier(k.roas)}
-              icon={TrendingUp}
-              hint="R$ que voltou por R$ investido"
-              trend={{ value: delta(k.roas, kPrev.roas) }}
             />
           </div>
 
-          {/* Detalhes de eficiência */}
+          {/* Eficiência: quanto custa cada resultado */}
           <div className="grid grid-cols-2 gap-4 xl:grid-cols-4">
             <KpiCard
-              label="Vezes exibido"
-              value={fmtCompact(k.impressions)}
-              icon={Eye}
-              hint="quantas vezes o anúncio apareceu"
-            />
-            <KpiCard
-              label="Taxa de cliques"
+              label="CTR"
               value={fmtPercent(k.ctr)}
               icon={Percent}
-              hint="% de quem viu e clicou"
+              hint="cliques ÷ impressões"
+              trend={{ value: delta(k.ctr, kPrev.ctr) }}
             />
             <KpiCard
               label="Custo por clique"
               value={fmtCurrencyCents(k.cpc)}
               icon={MousePointerClick}
+              hint="investimento ÷ cliques"
+              trend={{ value: delta(k.cpc, kPrev.cpc), positiveIsGood: false }}
             />
             <KpiCard
-              label="Custo por contato"
+              label="Custo por conversão"
               value={fmtCurrencyCents(k.cpl)}
               icon={Target}
+              hint="investimento ÷ conversões"
+              trend={{ value: delta(k.cpl, kPrev.cpl), positiveIsGood: false }}
+            />
+            <KpiCard
+              label="Retorno (ROAS)"
+              value={fmtMultiplier(k.roas)}
+              icon={TrendingUp}
+              hint="R$ que voltou por R$ investido"
+              trend={{ value: delta(k.roas, kPrev.roas) }}
             />
           </div>
 
@@ -170,14 +202,14 @@ export async function ChannelPage({
             </Card>
             <Card>
               <CardHeader
-                title="Contatos por dia"
-                subtitle="Leads, conversas ou vendas geradas"
+                title="Conversões por dia"
+                subtitle="Leads, WhatsApp e formulários gerados"
               />
               <CardBody>
                 <BarsChart
                   data={byDay}
                   dataKey="conversions"
-                  name="Contatos"
+                  name="Conversões"
                   color={CHART_COLORS.teal}
                   format="int"
                   yFormat="compact"
@@ -186,24 +218,25 @@ export async function ChannelPage({
             </Card>
           </div>
 
-          {/* Campanhas em linguagem simples */}
+          {/* Desempenho por campanha */}
           <Card>
             <CardHeader
               title="Suas campanhas"
               subtitle={`${campaigns.length} campanha${campaigns.length === 1 ? "" : "s"} no período`}
             />
             <div className="overflow-x-auto">
-              <table className="w-full min-w-[880px] text-sm">
+              <table className="w-full min-w-[960px] text-sm">
                 <thead>
                   <tr className="border-b border-line bg-surface-2 text-left text-xs font-semibold uppercase tracking-wide text-faint">
                     <th className="px-5 py-3">Campanha</th>
                     <th className="px-3 py-3 text-right">Investido</th>
-                    <th className="px-3 py-3 text-right">Vezes exibido</th>
+                    <th className="px-3 py-3 text-right">Impressões</th>
                     <th className="px-3 py-3 text-right">Cliques</th>
-                    <th className="px-3 py-3 text-right">Custo por clique</th>
-                    <th className="px-3 py-3 text-right">Contatos</th>
-                    <th className="px-3 py-3 text-right">Custo por contato</th>
-                    <th className="px-5 py-3 text-right">Retorno</th>
+                    <th className="px-3 py-3 text-right">CTR</th>
+                    <th className="px-3 py-3 text-right">CPC</th>
+                    <th className="px-3 py-3 text-right">Conversões</th>
+                    <th className="px-3 py-3 text-right">Custo/conv.</th>
+                    <th className="px-5 py-3 text-right">ROAS</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -223,6 +256,9 @@ export async function ChannelPage({
                       </td>
                       <td className="px-3 py-3 text-right text-muted">
                         {fmtInt(c.clicks)}
+                      </td>
+                      <td className="px-3 py-3 text-right text-muted">
+                        {fmtPercent(c.ctr)}
                       </td>
                       <td className="px-3 py-3 text-right text-muted">
                         {fmtCurrencyCents(c.cpc)}

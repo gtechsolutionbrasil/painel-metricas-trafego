@@ -30,13 +30,13 @@
     "semantic_hash": ""
   },
   "src/app/(dash)/layout.tsx": {
-    "mtime": 1783366357.2057862,
-    "ast_hash": "3946d667b4216edb8430ecc2c2e9eace",
-    "semantic_hash": ""
+    "mtime": 1782692943.3086658,
+    "ast_hash": "f017bf5b6a24be4fb3d8b990c205528b",
+    "semantic_hash": "f017bf5b6a24be4fb3d8b990c205528b"
   },
   "src/app/(dash)/page.tsx": {
-    "mtime": 1783366450.2120643,
-    "ast_hash": "103f58e7ec2761feb2ffcc6f050d9a24",
+    "mtime": 1783288650.7448382,
+    "ast_hash": "98b6709413d1ec99f77b61749f24d617",
     "semantic_hash": ""
   },
   "src/app/(dash)/trafego-pago/page.tsx": {
@@ -80,13 +80,13 @@
     "semantic_hash": "31a15f7a3f84c9a7cac2a48458505b3a"
   },
   "src/components/layout/Sidebar.tsx": {
-    "mtime": 1783366300.1914163,
-    "ast_hash": "06bd9fa80582059319e789ccd4aff4f8",
+    "mtime": 1783288592.2213402,
+    "ast_hash": "07ac43c5b7e1dea3e5023e18ec2014c0",
     "semantic_hash": ""
   },
   "src/components/layout/Topbar.tsx": {
-    "mtime": 1783366355.8062751,
-    "ast_hash": "ed7f3d58d0d3811788e0aa10ca49038d",
+    "mtime": 1783288614.6137717,
+    "ast_hash": "145def6297911895312dd80cc303fb94",
     "semantic_hash": ""
   },
   "src/components/ui/Badge.tsx": {
@@ -195,8 +195,8 @@
     "semantic_hash": ""
   },
   "REGRAS-PROJETO.md": {
-    "mtime": 1783369587.7684815,
-    "ast_hash": "ba16b49f1fc4c6b3f4ae3c5c39721ed0",
+    "mtime": 1783288720.0836627,
+    "ast_hash": "2fe0c2d1b46134b65facdf1b9606a6e7",
     "semantic_hash": ""
   },
   "docs/ingestao-n8n.md": {
@@ -270,13 +270,13 @@
     "semantic_hash": ""
   },
   "src/app/(dash)/clientes/actions.ts": {
-    "mtime": 1783366492.7925742,
-    "ast_hash": "022fb21675ec6667b3325f363ab7e8e6",
+    "mtime": 1783040934.1709738,
+    "ast_hash": "44e06050096bac57bb4683d0629b43e2",
     "semantic_hash": ""
   },
   "src/app/(dash)/clientes/page.tsx": {
-    "mtime": 1783366532.2367058,
-    "ast_hash": "a810ac2b4d449bc21b8a70ba4a614426",
+    "mtime": 1783040949.60021,
+    "ast_hash": "f59d5ffdbcb4e4be6444c9deb738281c",
     "semantic_hash": ""
   },
   "supabase/migrations/0004_client_integration_accounts.sql": {
@@ -300,38 +300,23 @@
     "semantic_hash": ""
   },
   "src/app/(dash)/google/page.tsx": {
-    "mtime": 1783366302.1206567,
-    "ast_hash": "fdb0c02acf9aafe30f8ed5f8c75d94f1",
+    "mtime": 1783288532.8352613,
+    "ast_hash": "e1b56179717757e51afdd7ba480f3e21",
     "semantic_hash": ""
   },
   "src/app/(dash)/meta/page.tsx": {
-    "mtime": 1783366304.0862348,
-    "ast_hash": "9e76efd9d664285a6f810b5f622ffb5d",
+    "mtime": 1783288534.4565923,
+    "ast_hash": "5f10cc63d816465996cdf885c5e46699",
     "semantic_hash": ""
   },
   "src/app/(dash)/site/page.tsx": {
-    "mtime": 1783366480.0994503,
-    "ast_hash": "5c6c18df58f59261225d6df9359c500b",
+    "mtime": 1783288562.934153,
+    "ast_hash": "185379835e0a34d4472f8bdc83a44016",
     "semantic_hash": ""
   },
   "src/components/pages/ChannelPage.tsx": {
-    "mtime": 1783366413.675418,
-    "ast_hash": "6b338f456c36e5cdb26604b9a1375b5f",
-    "semantic_hash": ""
-  },
-  "src/app/(dash)/clientes/DeleteClientButton.tsx": {
-    "mtime": 1783366497.402313,
-    "ast_hash": "0e6bb9956b41109096837c8b976f0699",
-    "semantic_hash": ""
-  },
-  "src/components/pages/CampaignFilter.tsx": {
-    "mtime": 1783366377.506821,
-    "ast_hash": "bbae085234361b4b8de2d1ad8a5ebc39",
-    "semantic_hash": ""
-  },
-  "src/components/ui/EmptyState.tsx": {
-    "mtime": 1783363594.7409859,
-    "ast_hash": "4fbfd8344f66f00ac736bddbda1a73c6",
+    "mtime": 1783288523.002069,
+    "ast_hash": "4a1503b978d3f2053a4aa574eae108f0",
     "semantic_hash": ""
   }
 }

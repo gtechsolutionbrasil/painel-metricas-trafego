@@ -39,8 +39,10 @@ Google Ads)** e **GA4/sites**, com login e recorte por cliente
 
 **No ar em produção.** Projeto Supabase ref `oqsjdhrwpmpdrihgbgtx`,
 migrations 0001–0005 aplicadas. Auth + RLS validados. `.env.local` configurado.
-Telas: Login, **Visão geral · Google · Meta · Site · Integrações** (nav por canal
-com linguagem simples). Build OK.
+Telas: Login, **Visão geral · Google Ads · Meta Ads · Sites · Integrações**
+(nav por canal; métricas com nomes padrão de tráfego + hints; filtro de
+campanha por página de canal; período com datas livres De/Até + atalhos;
+exclusão de cliente na página Integrações). Build OK.
 **Deploy:** Vercel — `painel-metricas-trafego.vercel.app` (Auth ativo em prod,
 só 2 env vars `NEXT_PUBLIC_*`; service_role NÃO vai pro front). Subdomínio
 `painelmetricas.gtechsolutionbrasil.com.br` aguardando propagação de DNS
@@ -64,7 +66,10 @@ sessão via Supabase Admin API; role admin preservada).
 
 **Clientes reais cadastrados** (via SQL, autorizado): Madeireira Adrianna
 (GA4 541643814 + Ads 999-534-2886), Casa das Unhas Gravataí (Ads 274-181-7052).
-Os 3 do seed (Aurora, Nova, Vitta) permanecem como demonstração.
+Os 3 do seed (Aurora, Nova, Vitta) foram **excluídos do banco em 2026-07-06**
+a pedido do usuário (2.160 ad_metrics + 1.620 web_metrics removidas). Atenção:
+`0002_seed.sql` recriaria os fakes se aplicada num banco novo — não reaplicar
+em produção.
 
 **Aprendizados Google Ads API (HTTP Request genérico):** (1) o header
 `developer-token` NÃO é injetado automaticamente pelo predefinedCredentialType —
@@ -102,7 +107,16 @@ hífens.
       (ver `docs/integracoes-ads-analytics.md`).
 - [ ] Deploy na Vercel (configurar as 3 env vars; lembrar que `NEXT_PUBLIC_*`
       são embutidas no build).
-- [ ] (Opcional) seletor de período custom (datas), export de relatório/PDF.
+- [x] ~~Seletor de período custom (datas)~~ (feito 2026-07-06: De/Até na Topbar).
+- [ ] (Opcional) export de relatório/PDF.
+- [ ] **Fase 7 proposta — métricas ricas do Google Ads** (pedido do usuário
+      2026-07-06): palavras-chave que performam, região, tipos de clique
+      (WhatsApp, ligação, Maps, site), conversões por ação (formulário vs
+      WhatsApp), impression share. Exige novas queries GAQL no workflow n8n
+      (keyword_view, geographic_view, segments.click_type, conversion_action)
+      + novas tabelas/migration + seções novas na página Google Ads.
+- [ ] **Redeploy Vercel** com as mudanças de 2026-07-06 (usuário viu versão
+      antiga no ar — prints com nav velha e dados de seed).
 
 ## Acesso (dev)
 
@@ -231,3 +245,20 @@ hífens.
   preservada, login validado E2E). Reorganização de UI por canal já commitada
   (06b9fd3). Ambos os workflows n8n seguem ativos e gravando (GA4 + Google Ads
   da Madeireira).
+- **2026-07-06** — Ajustes do painel a partir de 9 feedbacks do usuário (prints
+  eram de versão antiga no ar + dados de seed; parte já estava resolvida no
+  código). Feito: **seeds excluídos do banco** (Aurora/Nova/Vitta + 3.780
+  linhas de métricas — só Madeireira e Casa das Unhas ficaram); nav renomeada
+  (**Google Ads · Meta Ads · Sites**); Topbar sem o seletor "Fonte de dados" e
+  com **período de datas livres** (De/Até + atalhos 7/14/30/90 no select);
+  métricas de volta aos **nomes técnicos** (Impressões, Cliques, CTR, CPC,
+  Conversões, Custo por conversão, ROAS) com hints em linguagem simples e
+  trends também na linha de eficiência; **filtro de campanha** (?campaign=)
+  nas páginas de canal via `CampaignFilter` (nome desconhecido = ignora, pra
+  navegação Google↔Meta não zerar); coluna CTR na tabela de campanhas;
+  componente `EmptyState` reutilizável (Visão geral, canal e Sites);
+  **exclusão de cliente** na página Integrações (server action `deleteClient`
+  com checagem admin + RLS `clients_admin_delete` + cascade limpa métricas,
+  botão com confirm). tsc/eslint/build verdes; rotas protegidas 307 OK.
+  Pendente do feedback: fase 7 (métricas ricas Google Ads — precisa n8n+schema)
+  e redeploy Vercel.
