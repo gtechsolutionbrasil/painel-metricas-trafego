@@ -80,8 +80,8 @@
     "semantic_hash": "31a15f7a3f84c9a7cac2a48458505b3a"
   },
   "src/components/layout/Sidebar.tsx": {
-    "mtime": 1783382224.1234002,
-    "ast_hash": "249b991d00de3cc7f18957db9c31433e",
+    "mtime": 1783366300.1914163,
+    "ast_hash": "06bd9fa80582059319e789ccd4aff4f8",
     "semantic_hash": ""
   },
   "src/components/layout/Topbar.tsx": {
@@ -120,8 +120,8 @@
     "semantic_hash": ""
   },
   "src/lib/metrics/queries.ts": {
-    "mtime": 1783433715.9401548,
-    "ast_hash": "b034a74fadce653e523e30bc8ad216f0",
+    "mtime": 1783378611.7071705,
+    "ast_hash": "d0f8e5525d4e68ca9a74b3fcd4c9ca96",
     "semantic_hash": ""
   },
   "src/lib/mock/data.ts": {
@@ -195,8 +195,8 @@
     "semantic_hash": ""
   },
   "REGRAS-PROJETO.md": {
-    "mtime": 1783380470.4600782,
-    "ast_hash": "cd1252b1d520a4b192135e5560cf446f",
+    "mtime": 1783378745.1723888,
+    "ast_hash": "42c076888b058f6fe3a80d6313d9d262",
     "semantic_hash": ""
   },
   "docs/ingestao-n8n.md": {
@@ -335,8 +335,8 @@
     "semantic_hash": ""
   },
   "src/components/pages/GoogleInsights.tsx": {
-    "mtime": 1783433767.3549442,
-    "ast_hash": "2c389150977a28daca37c197124e9c3d",
+    "mtime": 1783378669.1902895,
+    "ast_hash": "b07cb89facbdc739a29643d9c959fcdc",
     "semantic_hash": ""
   },
   "supabase/migrations/0006_google_ads_breakdowns.sql": {
@@ -347,11 +347,6 @@
   "supabase/migrations/0007_conversion_action_origin.sql": {
     "mtime": 1783378432.585493,
     "ast_hash": "1be5277fe7f0f98c1f53c3131dd90709",
-    "semantic_hash": ""
-  },
-  "src/components/brand/ChannelIcons.tsx": {
-    "mtime": 1783382206.2392805,
-    "ast_hash": "640034a46695a03193550844d2fbc21d",
     "semantic_hash": ""
   }
 }

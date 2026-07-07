@@ -59,6 +59,19 @@ const MATCH_LABEL: Record<string, string> = {
   BROAD: "Ampla",
 };
 
+// Nomes das ações de conversão que o Google entrega em inglês → PT.
+const ACTION_NAME_LABEL: Record<string, string> = {
+  "Local actions - Directions": "Rota no Maps",
+  "Local actions - Other engagements": "Outras ações no Maps",
+  "Local actions - Website visits": "Visita ao site (via Maps)",
+  "Local actions - Calls": "Ligação (perfil do Maps)",
+  "Calls from ads": "Ligações pelo anúncio",
+  "Chamadas a partir de anúncios": "Ligações pelo anúncio",
+  "Clicks to call": "Cliques pra ligar",
+  "Store visits": "Visitas à loja",
+};
+const actionNameLabel = (n: string) => ACTION_NAME_LABEL[n] ?? n;
+
 // Fallback legível pra enums não mapeados: "SOME_ENUM" -> "Some enum".
 function prettyEnum(value: string) {
   const s = value.replace(/_/g, " ").toLowerCase();
@@ -119,35 +132,48 @@ export async function GoogleInsights({ searchParams }: { searchParams: SP }) {
 
   return (
     <>
-      {/* Conversões separadas por origem: site do cliente vs Google */}
+      {/* Conversões separadas por origem: site do cliente vs Google.
+          Mostra sempre os 2 lados (com placeholder no vazio) pra ficar claro
+          o contraste entre o que vem do site e o que vem do Google. */}
       {actionGroups.length > 0 && (
         <Card>
           <CardHeader
             title="Conversões por tipo de contato"
-            subtitle="Separadas por onde a pessoa agiu: no seu site ou direto no Google"
+            subtitle="No seu site (WhatsApp, formulário) x direto no Google (rota no Maps, ligação do anúncio)"
           />
           <div className="grid grid-cols-1 gap-px bg-line md:grid-cols-2">
-            {actionGroups.map((g) => (
-              <div key={g.source} className="bg-surface p-4">
-                <SourceHeader source={g.source} total={g.total} />
-                <ShareList
-                  icon={
-                    g.source === "site" ? (
-                      <Globe size={15} />
-                    ) : (
-                      <Search size={15} />
-                    )
-                  }
-                  rows={g.rows.map((a) => ({
-                    label: a.actionName,
-                    sublabel: categoryLabel(a.actionCategory) || null,
-                    value: a.conversions,
-                    share: a.share,
-                  }))}
-                  valueLabel="conversões"
-                />
-              </div>
-            ))}
+            {(["site", "google"] as const).map((source) => {
+              const g = actionGroups.find((x) => x.source === source);
+              return (
+                <div key={source} className="bg-surface p-4">
+                  <SourceHeader source={source} total={g?.total ?? 0} />
+                  {g ? (
+                    <ShareList
+                      icon={
+                        source === "site" ? (
+                          <Globe size={15} />
+                        ) : (
+                          <Search size={15} />
+                        )
+                      }
+                      rows={g.rows.map((a) => ({
+                        label: actionNameLabel(a.actionName),
+                        sublabel: categoryLabel(a.actionCategory) || null,
+                        value: a.conversions,
+                        share: a.share,
+                      }))}
+                      valueLabel="conversões"
+                    />
+                  ) : (
+                    <p className="px-3 py-8 text-center text-xs text-faint">
+                      {source === "site"
+                        ? "Ainda sem conversões pelo site no período. Se o rastreamento foi ligado agora, aparece em 24–48h."
+                        : "Sem conversões pelo Google no período."}
+                    </p>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </Card>
       )}
@@ -157,7 +183,7 @@ export async function GoogleInsights({ searchParams }: { searchParams: SP }) {
         <Card>
           <CardHeader
             title="Onde foram os cliques"
-            subtitle="O que a pessoa clicou no anúncio"
+            subtitle="Pra onde cada clique no anúncio levou (site, ligação, Maps...)"
           />
           <ShareList
             icon={<MousePointerClick size={15} />}
@@ -177,7 +203,7 @@ export async function GoogleInsights({ searchParams }: { searchParams: SP }) {
         <Card>
           <CardHeader
             title="Palavras-chave"
-            subtitle="O que as pessoas pesquisaram (top 15 por cliques)"
+            subtitle="Palavras-chave que você configurou (top 15 por cliques)"
             action={
               <span className="grid h-9 w-9 place-items-center rounded-xl bg-brand-soft text-brand">
                 <KeyRound size={17} />
@@ -236,8 +262,8 @@ export async function GoogleInsights({ searchParams }: { searchParams: SP }) {
       {regions.length > 0 && (
         <Card>
           <CardHeader
-            title="Desempenho por região"
-            subtitle="De onde vêm as pessoas que veem e clicam"
+            title="Desempenho por cidade"
+            subtitle="De quais cidades vêm as pessoas que veem e clicam"
             action={
               <span className="grid h-9 w-9 place-items-center rounded-xl bg-brand-soft text-brand">
                 <MapPin size={17} />
@@ -248,7 +274,7 @@ export async function GoogleInsights({ searchParams }: { searchParams: SP }) {
             <table className="w-full min-w-[640px] text-sm">
               <thead>
                 <tr className="border-b border-line bg-surface-2 text-left text-xs font-semibold uppercase tracking-wide text-faint">
-                  <th className="px-5 py-3">Região</th>
+                  <th className="px-5 py-3">Cidade</th>
                   <th className="px-3 py-3 text-right">Impressões</th>
                   <th className="px-3 py-3 text-right">Cliques</th>
                   <th className="px-3 py-3 text-right">Investido</th>

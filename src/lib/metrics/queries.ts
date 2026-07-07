@@ -235,16 +235,20 @@ export async function getAdGeo(
     range,
     clientId,
   );
-  return rows.map((r) => ({
-    clientId: String(r.client_id),
-    date: String(r.date),
-    campaign: String(r.campaign),
-    region: String(r.region),
-    impressions: Number(r.impressions),
-    clicks: Number(r.clicks),
-    spend: Number(r.spend),
-    conversions: Number(r.conversions),
-  }));
+  return rows
+    // Linhas antigas eram por estado ("State of ..."); agora coletamos cidade.
+    // As órfãs de estado continuam no banco, mas ficam fora do painel.
+    .filter((r) => !String(r.region ?? "").startsWith("State of"))
+    .map((r) => ({
+      clientId: String(r.client_id),
+      date: String(r.date),
+      campaign: String(r.campaign),
+      region: String(r.region),
+      impressions: Number(r.impressions),
+      clicks: Number(r.clicks),
+      spend: Number(r.spend),
+      conversions: Number(r.conversions),
+    }));
 }
 
 export async function getAdClickTypes(

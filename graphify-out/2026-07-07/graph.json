@@ -56,7 +56,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "eslint_config",
-      "community": 29,
+      "community": 5,
       "norm_label": "eslint.config.mjs"
     },
     {
@@ -66,7 +66,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "eslint_config_eslintconfig",
-      "community": 29,
+      "community": 5,
       "norm_label": "eslintconfig"
     },
     {
@@ -606,7 +606,7 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "src_app_dash_clientes_page_clientespage",
-      "community": 29,
+      "community": 5,
       "norm_label": "clientespage()"
     },
     {
@@ -716,7 +716,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_dash_layout",
-      "community": 29,
+      "community": 5,
       "norm_label": "layout.tsx"
     },
     {
@@ -726,7 +726,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_app_dash_layout_dashlayout",
-      "community": 29,
+      "community": 5,
       "norm_label": "dashlayout()"
     },
     {
@@ -736,7 +736,7 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "src_app_dash_layout_demobanner",
-      "community": 29,
+      "community": 5,
       "norm_label": "demobanner()"
     },
     {
@@ -746,7 +746,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_dash_meta_page",
-      "community": 1,
+      "community": 11,
       "norm_label": "page.tsx"
     },
     {
@@ -756,7 +756,7 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "src_app_dash_meta_page_sp",
-      "community": 1,
+      "community": 11,
       "norm_label": "sp"
     },
     {
@@ -766,7 +766,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "src_app_dash_meta_page_metapage",
-      "community": 1,
+      "community": 11,
       "norm_label": "metapage()"
     },
     {
@@ -776,7 +776,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_dash_page",
-      "community": 1,
+      "community": 11,
       "norm_label": "page.tsx"
     },
     {
@@ -786,7 +786,7 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "src_app_dash_page_sp",
-      "community": 1,
+      "community": 11,
       "norm_label": "sp"
     },
     {
@@ -796,7 +796,7 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "src_app_dash_page_overviewpage",
-      "community": 1,
+      "community": 11,
       "norm_label": "overviewpage()"
     },
     {
@@ -806,7 +806,7 @@
       "source_location": "L200",
       "_origin": "ast",
       "id": "src_app_dash_page_platformdetail",
-      "community": 1,
+      "community": 11,
       "norm_label": "platformdetail()"
     },
     {
@@ -816,7 +816,7 @@
       "source_location": "L207",
       "_origin": "ast",
       "id": "src_app_dash_page_channelsummary",
-      "community": 1,
+      "community": 11,
       "norm_label": "channelsummary()"
     },
     {
@@ -938,46 +938,6 @@
       "id": "src_app_layout_rootlayout",
       "community": 9,
       "norm_label": "rootlayout()"
-    },
-    {
-      "label": "ChannelIcons.tsx",
-      "file_type": "code",
-      "source_file": "src/components/brand/ChannelIcons.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "src_components_brand_channelicons",
-      "community": 5,
-      "norm_label": "channelicons.tsx"
-    },
-    {
-      "label": "IconProps",
-      "file_type": "code",
-      "source_file": "src/components/brand/ChannelIcons.tsx",
-      "source_location": "L4",
-      "_origin": "ast",
-      "id": "src_components_brand_channelicons_iconprops",
-      "community": 5,
-      "norm_label": "iconprops"
-    },
-    {
-      "label": "GoogleAdsIcon()",
-      "file_type": "code",
-      "source_file": "src/components/brand/ChannelIcons.tsx",
-      "source_location": "L6",
-      "_origin": "ast",
-      "id": "src_components_brand_channelicons_googleadsicon",
-      "community": 5,
-      "norm_label": "googleadsicon()"
-    },
-    {
-      "label": "MetaAdsIcon()",
-      "file_type": "code",
-      "source_file": "src/components/brand/ChannelIcons.tsx",
-      "source_location": "L39",
-      "_origin": "ast",
-      "id": "src_components_brand_channelicons_metaadsicon",
-      "community": 5,
-      "norm_label": "metaadsicon()"
     },
     {
       "label": "Logo.tsx",
@@ -1160,20 +1120,10 @@
       "norm_label": "sidebar.tsx"
     },
     {
-      "label": "NavIcon",
-      "file_type": "code",
-      "source_file": "src/components/layout/Sidebar.tsx",
-      "source_location": "L10",
-      "_origin": "ast",
-      "id": "src_components_layout_sidebar_navicon",
-      "community": 5,
-      "norm_label": "navicon"
-    },
-    {
       "label": "NavItem",
       "file_type": "code",
       "source_file": "src/components/layout/Sidebar.tsx",
-      "source_location": "L15",
+      "source_location": "L16",
       "_origin": "ast",
       "id": "src_components_layout_sidebar_navitem",
       "community": 5,
@@ -1183,7 +1133,7 @@
       "label": "NAV",
       "file_type": "code",
       "source_file": "src/components/layout/Sidebar.tsx",
-      "source_location": "L17",
+      "source_location": "L18",
       "_origin": "ast",
       "id": "src_components_layout_sidebar_nav",
       "community": 5,
@@ -1193,7 +1143,7 @@
       "label": "Sidebar()",
       "file_type": "code",
       "source_file": "src/components/layout/Sidebar.tsx",
-      "source_location": "L25",
+      "source_location": "L26",
       "_origin": "ast",
       "id": "src_components_layout_sidebar_sidebar",
       "community": 5,
@@ -1246,7 +1196,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_pages_campaignfilter",
-      "community": 1,
+      "community": 11,
       "norm_label": "campaignfilter.tsx"
     },
     {
@@ -1256,7 +1206,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "src_components_pages_campaignfilter_campaignfilter",
-      "community": 1,
+      "community": 11,
       "norm_label": "campaignfilter()"
     },
     {
@@ -1266,7 +1216,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_pages_channelpage",
-      "community": 1,
+      "community": 11,
       "norm_label": "channelpage.tsx"
     },
     {
@@ -1276,7 +1226,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "src_components_pages_channelpage_sp",
-      "community": 1,
+      "community": 11,
       "norm_label": "sp"
     },
     {
@@ -1286,7 +1236,7 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "src_components_pages_channelpage_channelpage",
-      "community": 1,
+      "community": 11,
       "norm_label": "channelpage()"
     },
     {
@@ -1340,30 +1290,10 @@
       "norm_label": "match_label"
     },
     {
-      "label": "ACTION_NAME_LABEL",
-      "file_type": "code",
-      "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L63",
-      "_origin": "ast",
-      "id": "src_components_pages_googleinsights_action_name_label",
-      "community": 28,
-      "norm_label": "action_name_label"
-    },
-    {
-      "label": "actionNameLabel()",
-      "file_type": "code",
-      "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L73",
-      "_origin": "ast",
-      "id": "src_components_pages_googleinsights_actionnamelabel",
-      "community": 28,
-      "norm_label": "actionnamelabel()"
-    },
-    {
       "label": "prettyEnum()",
       "file_type": "code",
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L76",
+      "source_location": "L63",
       "_origin": "ast",
       "id": "src_components_pages_googleinsights_prettyenum",
       "community": 28,
@@ -1373,7 +1303,7 @@
       "label": "clickTypeLabel()",
       "file_type": "code",
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L81",
+      "source_location": "L68",
       "_origin": "ast",
       "id": "src_components_pages_googleinsights_clicktypelabel",
       "community": 28,
@@ -1383,7 +1313,7 @@
       "label": "categoryLabel()",
       "file_type": "code",
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L82",
+      "source_location": "L69",
       "_origin": "ast",
       "id": "src_components_pages_googleinsights_categorylabel",
       "community": 28,
@@ -1393,7 +1323,7 @@
       "label": "regionLabel()",
       "file_type": "code",
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L85",
+      "source_location": "L72",
       "_origin": "ast",
       "id": "src_components_pages_googleinsights_regionlabel",
       "community": 28,
@@ -1403,7 +1333,7 @@
       "label": "GoogleInsights()",
       "file_type": "code",
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L91",
+      "source_location": "L78",
       "_origin": "ast",
       "id": "src_components_pages_googleinsights_googleinsights",
       "community": 28,
@@ -1413,7 +1343,7 @@
       "label": "SourceHeader()",
       "file_type": "code",
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L317",
+      "source_location": "L291",
       "_origin": "ast",
       "id": "src_components_pages_googleinsights_sourceheader",
       "community": 28,
@@ -1423,7 +1353,7 @@
       "label": "ShareList()",
       "file_type": "code",
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L356",
+      "source_location": "L330",
       "_origin": "ast",
       "id": "src_components_pages_googleinsights_sharelist",
       "community": 28,
@@ -1436,7 +1366,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_ui_badge",
-      "community": 29,
+      "community": 11,
       "norm_label": "badge.tsx"
     },
     {
@@ -1446,7 +1376,7 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "src_components_ui_badge_variant",
-      "community": 29,
+      "community": 11,
       "norm_label": "variant"
     },
     {
@@ -1456,7 +1386,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "src_components_ui_badge_class",
-      "community": 29,
+      "community": 11,
       "norm_label": "class"
     },
     {
@@ -1466,7 +1396,7 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "src_components_ui_badge_badge",
-      "community": 29,
+      "community": 11,
       "norm_label": "badge()"
     },
     {
@@ -1476,7 +1406,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_ui_card",
-      "community": 1,
+      "community": 11,
       "norm_label": "card.tsx"
     },
     {
@@ -1486,7 +1416,7 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "src_components_ui_card_card",
-      "community": 1,
+      "community": 11,
       "norm_label": "card()"
     },
     {
@@ -1496,7 +1426,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "src_components_ui_card_cardheader",
-      "community": 1,
+      "community": 11,
       "norm_label": "cardheader()"
     },
     {
@@ -1506,7 +1436,7 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "src_components_ui_card_cardbody",
-      "community": 1,
+      "community": 11,
       "norm_label": "cardbody()"
     },
     {
@@ -1516,7 +1446,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_ui_emptystate",
-      "community": 1,
+      "community": 11,
       "norm_label": "emptystate.tsx"
     },
     {
@@ -1526,7 +1456,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "src_components_ui_emptystate_emptystate",
-      "community": 1,
+      "community": 11,
       "norm_label": "emptystate()"
     },
     {
@@ -1536,7 +1466,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_ui_kpicard",
-      "community": 1,
+      "community": 11,
       "norm_label": "kpicard.tsx"
     },
     {
@@ -1546,7 +1476,7 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "src_components_ui_kpicard_trend",
-      "community": 1,
+      "community": 11,
       "norm_label": "trend"
     },
     {
@@ -1556,7 +1486,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "src_components_ui_kpicard_kpicard",
-      "community": 1,
+      "community": 11,
       "norm_label": "kpicard()"
     },
     {
@@ -1566,7 +1496,7 @@
       "source_location": "L36",
       "_origin": "ast",
       "id": "src_components_ui_kpicard_trendpill",
-      "community": 1,
+      "community": 11,
       "norm_label": "trendpill()"
     },
     {
@@ -1576,7 +1506,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_ui_pageheader",
-      "community": 1,
+      "community": 11,
       "norm_label": "pageheader.tsx"
     },
     {
@@ -1586,7 +1516,7 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "src_components_ui_pageheader_pageheader",
-      "community": 1,
+      "community": 11,
       "norm_label": "pageheader()"
     },
     {
@@ -1646,7 +1576,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "src_lib_format_fmtcurrency",
-      "community": 1,
+      "community": 11,
       "norm_label": "fmtcurrency()"
     },
     {
@@ -1656,7 +1586,7 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "src_lib_format_fmtcurrencycents",
-      "community": 1,
+      "community": 11,
       "norm_label": "fmtcurrencycents()"
     },
     {
@@ -1666,7 +1596,7 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "src_lib_format_fmtint",
-      "community": 1,
+      "community": 11,
       "norm_label": "fmtint()"
     },
     {
@@ -1786,7 +1716,7 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_adkpis",
-      "community": 28,
+      "community": 11,
       "norm_label": "adkpis"
     },
     {
@@ -1806,7 +1736,7 @@
       "source_location": "L83",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_adbyday",
-      "community": 1,
+      "community": 11,
       "norm_label": "adbyday()"
     },
     {
@@ -1836,7 +1766,7 @@
       "source_location": "L112",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_adbyplatform",
-      "community": 1,
+      "community": 11,
       "norm_label": "adbyplatform()"
     },
     {
@@ -1856,7 +1786,7 @@
       "source_location": "L150",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_adbycampaign",
-      "community": 28,
+      "community": 11,
       "norm_label": "adbycampaign()"
     },
     {
@@ -2036,7 +1966,7 @@
       "source_location": "L54",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_logqueryerror",
-      "community": 29,
+      "community": 0,
       "norm_label": "logqueryerror()"
     },
     {
@@ -2046,7 +1976,7 @@
       "source_location": "L63",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_getclients",
-      "community": 29,
+      "community": 5,
       "norm_label": "getclients()"
     },
     {
@@ -2056,7 +1986,7 @@
       "source_location": "L85",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_getintegrationaccounts",
-      "community": 29,
+      "community": 0,
       "norm_label": "getintegrationaccounts()"
     },
     {
@@ -2066,7 +1996,7 @@
       "source_location": "L122",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_getadmetrics",
-      "community": 1,
+      "community": 0,
       "norm_label": "getadmetrics()"
     },
     {
@@ -2113,7 +2043,7 @@
       "label": "getAdClickTypes()",
       "file_type": "code",
       "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L254",
+      "source_location": "L250",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_getadclicktypes",
       "community": 28,
@@ -2123,7 +2053,7 @@
       "label": "getAdConversionActions()",
       "file_type": "code",
       "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L273",
+      "source_location": "L269",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_getadconversionactions",
       "community": 28,
@@ -2133,27 +2063,27 @@
       "label": "getWebMetrics()",
       "file_type": "code",
       "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L294",
+      "source_location": "L290",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_getwebmetrics",
-      "community": 1,
+      "community": 0,
       "norm_label": "getwebmetrics()"
     },
     {
       "label": "resolveClient()",
       "file_type": "code",
       "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L337",
+      "source_location": "L333",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_resolveclient",
-      "community": 1,
+      "community": 11,
       "norm_label": "resolveclient()"
     },
     {
       "label": "resolveIntegrationAccount()",
       "file_type": "code",
       "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L346",
+      "source_location": "L342",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_resolveintegrationaccount",
       "community": 0,
@@ -2163,7 +2093,7 @@
       "label": "filterAdMetrics()",
       "file_type": "code",
       "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L355",
+      "source_location": "L351",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_filteradmetrics",
       "community": 0,
@@ -2173,10 +2103,10 @@
       "label": "filterWebMetrics()",
       "file_type": "code",
       "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L370",
+      "source_location": "L366",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_filterwebmetrics",
-      "community": 1,
+      "community": 0,
       "norm_label": "filterwebmetrics()"
     },
     {
@@ -2396,7 +2326,7 @@
       "source_location": "L72",
       "_origin": "ast",
       "id": "src_lib_range_delta",
-      "community": 1,
+      "community": 11,
       "norm_label": "delta()"
     },
     {
@@ -2426,7 +2356,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_supabase_config",
-      "community": 29,
+      "community": 5,
       "norm_label": "config.ts"
     },
     {
@@ -2436,7 +2366,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "src_lib_supabase_config_issupabaseconfigured",
-      "community": 29,
+      "community": 5,
       "norm_label": "issupabaseconfigured"
     },
     {
@@ -2446,7 +2376,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_supabase_server",
-      "community": 29,
+      "community": 5,
       "norm_label": "server.ts"
     },
     {
@@ -2456,7 +2386,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "src_lib_supabase_server_createsupabaseserverclient",
-      "community": 29,
+      "community": 0,
       "norm_label": "createsupabaseserverclient()"
     },
     {
@@ -2466,7 +2396,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_supabase_updatesession",
-      "community": 29,
+      "community": 5,
       "norm_label": "updatesession.ts"
     },
     {
@@ -2476,7 +2406,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "src_lib_supabase_updatesession_updatesession",
-      "community": 29,
+      "community": 5,
       "norm_label": "updatesession()"
     },
     {
@@ -2526,7 +2456,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_lib_types_client",
-      "community": 0,
+      "community": 2,
       "norm_label": "client"
     },
     {
@@ -2596,7 +2526,7 @@
       "source_location": "L89",
       "_origin": "ast",
       "id": "src_lib_types_conversionsource",
-      "community": 28,
+      "community": 0,
       "norm_label": "conversionsource"
     },
     {
@@ -2626,7 +2556,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_proxy",
-      "community": 29,
+      "community": 5,
       "norm_label": "proxy.ts"
     },
     {
@@ -2636,7 +2566,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "src_proxy_proxy",
-      "community": 29,
+      "community": 5,
       "norm_label": "proxy()"
     },
     {
@@ -2646,7 +2576,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "src_proxy_config",
-      "community": 29,
+      "community": 5,
       "norm_label": "config"
     },
     {
@@ -3013,7 +2943,7 @@
       "label": "Acesso (dev)",
       "file_type": "document",
       "source_file": "REGRAS-PROJETO.md",
-      "source_location": "L153",
+      "source_location": "L146",
       "_origin": "ast",
       "id": "regras_projeto_acesso_dev",
       "community": 7,
@@ -3023,7 +2953,7 @@
       "label": "Hist\u00f3rico de itera\u00e7\u00f5es",
       "file_type": "document",
       "source_file": "REGRAS-PROJETO.md",
-      "source_location": "L164",
+      "source_location": "L157",
       "_origin": "ast",
       "id": "regras_projeto_hist\u00f3rico_de_itera\u00e7\u00f5es",
       "community": 7,
@@ -5767,69 +5697,6 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "src/components/brand/ChannelIcons.tsx",
-      "source_location": "L6",
-      "weight": 1.0,
-      "source": "src_components_brand_channelicons",
-      "target": "src_components_brand_channelicons_googleadsicon",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/brand/ChannelIcons.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "source": "src_components_brand_channelicons",
-      "target": "src_components_brand_channelicons_iconprops",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/brand/ChannelIcons.tsx",
-      "source_location": "L39",
-      "weight": 1.0,
-      "source": "src_components_brand_channelicons",
-      "target": "src_components_brand_channelicons_metaadsicon",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/layout/Sidebar.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "source": "src_components_layout_sidebar",
-      "target": "src_components_brand_channelicons",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/layout/Sidebar.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "source": "src_components_layout_sidebar",
-      "target": "src_components_brand_channelicons_googleadsicon",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/layout/Sidebar.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "source": "src_components_layout_sidebar",
-      "target": "src_components_brand_channelicons_metaadsicon",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
       "source_file": "src/components/brand/Logo.tsx",
       "source_location": "L5",
       "weight": 1.0,
@@ -5842,7 +5709,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/components/layout/Sidebar.tsx",
-      "source_location": "L6",
+      "source_location": "L14",
       "weight": 1.0,
       "source": "src_components_layout_sidebar",
       "target": "src_components_brand_logo",
@@ -5853,7 +5720,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/components/layout/Sidebar.tsx",
-      "source_location": "L6",
+      "source_location": "L14",
       "weight": 1.0,
       "source": "src_components_layout_sidebar",
       "target": "src_components_brand_logo_logo",
@@ -6282,7 +6149,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/components/layout/Sidebar.tsx",
-      "source_location": "L17",
+      "source_location": "L18",
       "weight": 1.0,
       "source": "src_components_layout_sidebar",
       "target": "src_components_layout_sidebar_nav",
@@ -6292,17 +6159,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/components/layout/Sidebar.tsx",
-      "source_location": "L10",
-      "weight": 1.0,
-      "source": "src_components_layout_sidebar",
-      "target": "src_components_layout_sidebar_navicon",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/layout/Sidebar.tsx",
-      "source_location": "L15",
+      "source_location": "L16",
       "weight": 1.0,
       "source": "src_components_layout_sidebar",
       "target": "src_components_layout_sidebar_navitem",
@@ -6312,7 +6169,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/components/layout/Sidebar.tsx",
-      "source_location": "L25",
+      "source_location": "L26",
       "weight": 1.0,
       "source": "src_components_layout_sidebar",
       "target": "src_components_layout_sidebar_sidebar",
@@ -6954,26 +6811,6 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L63",
-      "weight": 1.0,
-      "source": "src_components_pages_googleinsights",
-      "target": "src_components_pages_googleinsights_action_name_label",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L73",
-      "weight": 1.0,
-      "source": "src_components_pages_googleinsights",
-      "target": "src_components_pages_googleinsights_actionnamelabel",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/pages/GoogleInsights.tsx",
       "source_location": "L44",
       "weight": 1.0,
       "source": "src_components_pages_googleinsights",
@@ -6984,7 +6821,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L82",
+      "source_location": "L69",
       "weight": 1.0,
       "source": "src_components_pages_googleinsights",
       "target": "src_components_pages_googleinsights_categorylabel",
@@ -7004,7 +6841,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L81",
+      "source_location": "L68",
       "weight": 1.0,
       "source": "src_components_pages_googleinsights",
       "target": "src_components_pages_googleinsights_clicktypelabel",
@@ -7014,7 +6851,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L91",
+      "source_location": "L78",
       "weight": 1.0,
       "source": "src_components_pages_googleinsights",
       "target": "src_components_pages_googleinsights_googleinsights",
@@ -7034,7 +6871,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L76",
+      "source_location": "L63",
       "weight": 1.0,
       "source": "src_components_pages_googleinsights",
       "target": "src_components_pages_googleinsights_prettyenum",
@@ -7044,7 +6881,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L85",
+      "source_location": "L72",
       "weight": 1.0,
       "source": "src_components_pages_googleinsights",
       "target": "src_components_pages_googleinsights_regionlabel",
@@ -7054,7 +6891,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L356",
+      "source_location": "L330",
       "weight": 1.0,
       "source": "src_components_pages_googleinsights",
       "target": "src_components_pages_googleinsights_sharelist",
@@ -7064,7 +6901,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L317",
+      "source_location": "L291",
       "weight": 1.0,
       "source": "src_components_pages_googleinsights",
       "target": "src_components_pages_googleinsights_sourceheader",
@@ -7360,7 +7197,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L83",
+      "source_location": "L70",
       "weight": 1.0,
       "source": "src_components_pages_googleinsights_categorylabel",
       "target": "src_components_pages_googleinsights_prettyenum",
@@ -7371,7 +7208,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L81",
+      "source_location": "L68",
       "weight": 1.0,
       "source": "src_components_pages_googleinsights_clicktypelabel",
       "target": "src_components_pages_googleinsights_prettyenum",
@@ -7383,7 +7220,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L121",
+      "source_location": "L108",
       "weight": 1.0,
       "source": "src_components_pages_googleinsights_googleinsights",
       "target": "src_lib_metrics_aggregate_byclicktype"
@@ -7394,7 +7231,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L122",
+      "source_location": "L109",
       "weight": 1.0,
       "source": "src_components_pages_googleinsights_googleinsights",
       "target": "src_lib_metrics_aggregate_byconversionactiongrouped"
@@ -7405,7 +7242,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L119",
+      "source_location": "L106",
       "weight": 1.0,
       "source": "src_components_pages_googleinsights_googleinsights",
       "target": "src_lib_metrics_aggregate_bykeyword"
@@ -7416,7 +7253,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L120",
+      "source_location": "L107",
       "weight": 1.0,
       "source": "src_components_pages_googleinsights_googleinsights",
       "target": "src_lib_metrics_aggregate_byregion"
@@ -7427,7 +7264,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L99",
+      "source_location": "L86",
       "weight": 1.0,
       "source": "src_components_pages_googleinsights_googleinsights",
       "target": "src_lib_metrics_queries_getadclicktypes"
@@ -7438,7 +7275,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L100",
+      "source_location": "L87",
       "weight": 1.0,
       "source": "src_components_pages_googleinsights_googleinsights",
       "target": "src_lib_metrics_queries_getadconversionactions"
@@ -7449,7 +7286,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L98",
+      "source_location": "L85",
       "weight": 1.0,
       "source": "src_components_pages_googleinsights_googleinsights",
       "target": "src_lib_metrics_queries_getadgeo"
@@ -7460,7 +7297,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L97",
+      "source_location": "L84",
       "weight": 1.0,
       "source": "src_components_pages_googleinsights_googleinsights",
       "target": "src_lib_metrics_queries_getadkeywords"
@@ -7471,7 +7308,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L93",
+      "source_location": "L80",
       "weight": 1.0,
       "source": "src_components_pages_googleinsights_googleinsights",
       "target": "src_lib_metrics_queries_getclients"
@@ -7482,7 +7319,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L94",
+      "source_location": "L81",
       "weight": 1.0,
       "source": "src_components_pages_googleinsights_googleinsights",
       "target": "src_lib_metrics_queries_resolveclient"
@@ -7493,7 +7330,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L92",
+      "source_location": "L79",
       "weight": 1.0,
       "source": "src_components_pages_googleinsights_googleinsights",
       "target": "src_lib_range_rangefromsearch"
@@ -7504,7 +7341,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L349",
+      "source_location": "L323",
       "weight": 1.0,
       "source": "src_components_pages_googleinsights_sourceheader",
       "target": "src_lib_format_fmtint"
@@ -8264,7 +8101,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L355",
+      "source_location": "L351",
       "weight": 1.0,
       "source": "src_lib_metrics_queries",
       "target": "src_lib_metrics_queries_filteradmetrics",
@@ -8274,7 +8111,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L370",
+      "source_location": "L366",
       "weight": 1.0,
       "source": "src_lib_metrics_queries",
       "target": "src_lib_metrics_queries_filterwebmetrics",
@@ -8284,7 +8121,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L254",
+      "source_location": "L250",
       "weight": 1.0,
       "source": "src_lib_metrics_queries",
       "target": "src_lib_metrics_queries_getadclicktypes",
@@ -8294,7 +8131,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L273",
+      "source_location": "L269",
       "weight": 1.0,
       "source": "src_lib_metrics_queries",
       "target": "src_lib_metrics_queries_getadconversionactions",
@@ -8364,7 +8201,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L294",
+      "source_location": "L290",
       "weight": 1.0,
       "source": "src_lib_metrics_queries",
       "target": "src_lib_metrics_queries_getwebmetrics",
@@ -8384,7 +8221,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L337",
+      "source_location": "L333",
       "weight": 1.0,
       "source": "src_lib_metrics_queries",
       "target": "src_lib_metrics_queries_resolveclient",
@@ -8394,7 +8231,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L346",
+      "source_location": "L342",
       "weight": 1.0,
       "source": "src_lib_metrics_queries",
       "target": "src_lib_metrics_queries_resolveintegrationaccount",
@@ -8679,7 +8516,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L319",
+      "source_location": "L315",
       "weight": 1.0,
       "source": "src_lib_metrics_queries_getwebmetrics",
       "target": "src_lib_metrics_queries_logqueryerror",
@@ -8745,7 +8582,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L258",
+      "source_location": "L254",
       "weight": 1.0,
       "source": "src_lib_metrics_queries_getadclicktypes",
       "target": "src_lib_metrics_queries_getbreakdown",
@@ -8756,7 +8593,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L277",
+      "source_location": "L273",
       "weight": 1.0,
       "source": "src_lib_metrics_queries_getadconversionactions",
       "target": "src_lib_metrics_queries_getbreakdown",
@@ -8800,7 +8637,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L300",
+      "source_location": "L296",
       "weight": 1.0,
       "source": "src_lib_metrics_queries_getwebmetrics",
       "target": "src_lib_metrics_queries_filterwebmetrics",
@@ -8812,7 +8649,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L300",
+      "source_location": "L296",
       "weight": 1.0,
       "source": "src_lib_metrics_queries_getwebmetrics",
       "target": "src_lib_mock_data_generatewebmetrics"
@@ -8823,7 +8660,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/metrics/queries.ts",
-      "source_location": "L303",
+      "source_location": "L299",
       "weight": 1.0,
       "source": "src_lib_metrics_queries_getwebmetrics",
       "target": "src_lib_supabase_server_createsupabaseserverclient"
@@ -9888,7 +9725,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "REGRAS-PROJETO.md",
-      "source_location": "L153",
+      "source_location": "L146",
       "weight": 1.0,
       "source": "regras_projeto_regras_projeto_painel_de_m\u00e9tricas_de_tr\u00e1fego_gtech_solution",
       "target": "regras_projeto_acesso_dev",
@@ -9918,7 +9755,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "REGRAS-PROJETO.md",
-      "source_location": "L164",
+      "source_location": "L157",
       "weight": 1.0,
       "source": "regras_projeto_regras_projeto_painel_de_m\u00e9tricas_de_tr\u00e1fego_gtech_solution",
       "target": "regras_projeto_hist\u00f3rico_de_itera\u00e7\u00f5es",
@@ -10180,5 +10017,5 @@
       "source_file": "README.md"
     }
   ],
-  "built_at_commit": "a938745b3a68ac0f1e3f1a771391c5115e3a92ec"
+  "built_at_commit": "909c182868932c09adfd4fd3f4146361bcb21ae9"
 }

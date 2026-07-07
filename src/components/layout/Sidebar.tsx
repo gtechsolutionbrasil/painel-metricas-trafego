@@ -2,23 +2,22 @@
 
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
-import {
-  BarChart3,
-  Building2,
-  Globe,
-  LayoutDashboard,
-  Search,
-  Share2,
-  type LucideIcon,
-} from "lucide-react";
+import { BarChart3, Building2, Globe, LayoutDashboard } from "lucide-react";
 import { Logo } from "@/components/brand/Logo";
+import { GoogleAdsIcon, MetaAdsIcon } from "@/components/brand/ChannelIcons";
 
-type NavItem = { href: string; label: string; icon: LucideIcon };
+// Aceita tanto ícones lucide quanto os SVGs de marca (mesma assinatura).
+type NavIcon = React.ComponentType<{
+  size?: number;
+  className?: string;
+  strokeWidth?: number;
+}>;
+type NavItem = { href: string; label: string; icon: NavIcon; brand?: boolean };
 
 const NAV: NavItem[] = [
   { href: "/", label: "Visão geral", icon: LayoutDashboard },
-  { href: "/google", label: "Google Ads", icon: Search },
-  { href: "/meta", label: "Meta Ads", icon: Share2 },
+  { href: "/google", label: "Google Ads", icon: GoogleAdsIcon, brand: true },
+  { href: "/meta", label: "Meta Ads", icon: MetaAdsIcon, brand: true },
   { href: "/site", label: "Sites", icon: Globe },
   { href: "/clientes", label: "Integrações", icon: Building2 },
 ];
@@ -57,11 +56,17 @@ export function Sidebar() {
                   : "border border-transparent text-muted hover:bg-surface-2 hover:text-ink"
               }`}
             >
-              <Icon
-                size={18}
-                strokeWidth={2.2}
-                className={active ? "text-brand" : "text-faint"}
-              />
+              {item.brand ? (
+                // Logos de marca: cor própria (não seguem o estado ativo),
+                // levemente esmaecidos quando inativos.
+                <Icon size={18} className={active ? "" : "opacity-60"} />
+              ) : (
+                <Icon
+                  size={18}
+                  strokeWidth={2.2}
+                  className={active ? "text-brand" : "text-faint"}
+                />
+              )}
               {item.label}
             </Link>
           );
