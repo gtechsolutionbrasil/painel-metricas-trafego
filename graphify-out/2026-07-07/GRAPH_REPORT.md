@@ -1,16 +1,16 @@
 # Graph Report - painel-metricas-trafego  (2026-07-07)
 
 ## Corpus Check
-- 67 files · ~44,536 words
+- 67 files · ~44,842 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 418 nodes · 792 edges · 33 communities (14 shown, 19 thin omitted)
+- 422 nodes · 800 edges · 33 communities (14 shown, 19 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `e8d8f278`
+- Built from commit: `d4bc2b56`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -61,16 +61,16 @@
 10. `createSupabaseServerClient()` - 11 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `SourceHeader()` --calls--> `fmtInt()`  [EXTRACTED]
-  src/components/pages/GoogleInsights.tsx → src/lib/format.ts
-- `createClientWithAccounts()` --calls--> `createSupabaseServerClient()`  [EXTRACTED]
-  src/app/(dash)/clientes/actions.ts → src/lib/supabase/server.ts
-- `deleteClient()` --calls--> `createSupabaseServerClient()`  [EXTRACTED]
-  src/app/(dash)/clientes/actions.ts → src/lib/supabase/server.ts
 - `DashLayout()` --calls--> `getClients()`  [EXTRACTED]
   src/app/(dash)/layout.tsx → src/lib/metrics/queries.ts
-- `OverviewPage()` --calls--> `getAdMetrics()`  [EXTRACTED]
-  src/app/(dash)/page.tsx → src/lib/metrics/queries.ts
+- `SourceHeader()` --calls--> `fmtInt()`  [EXTRACTED]
+  src/components/pages/GoogleInsights.tsx → src/lib/format.ts
+- `ClientesPage()` --calls--> `getClients()`  [EXTRACTED]
+  src/app/(dash)/clientes/page.tsx → src/lib/metrics/queries.ts
+- `OverviewPage()` --calls--> `previousRange()`  [EXTRACTED]
+  src/app/(dash)/page.tsx → src/lib/range.ts
+- `OverviewPage()` --calls--> `rangeFromSearch()`  [EXTRACTED]
+  src/app/(dash)/page.tsx → src/lib/range.ts
 
 ## Import Cycles
 - None detected.
@@ -83,12 +83,12 @@
 ## Communities (33 total, 19 thin omitted)
 
 ### Community 0 - "Dependências (package.json)"
-Cohesion: 0.07
-Nodes (45): CampaignFilter(), AdDayPoint, AdGroupRow, byConversionActionGrouped(), CampaignRow, ClickTypeRow, ConversionActionGroup, ConversionActionRow (+37 more)
+Cohesion: 0.11
+Nodes (30): CampaignFilter(), AdMetricRow, BreakdownRow, filterAdMetrics(), WebMetricRow, CAMPAigns, CLIENT_SCALE, dayFactor() (+22 more)
 
 ### Community 1 - "Login, Layout & ESLint"
-Cohesion: 0.08
-Nodes (51): SP, OverviewPage(), platformDetail(), SP, cap(), friendlyOrigin(), SitePage(), SP (+43 more)
+Cohesion: 0.07
+Nodes (58): SP, OverviewPage(), platformDetail(), SP, cap(), friendlyOrigin(), SitePage(), SP (+50 more)
 
 ### Community 2 - "Topbar & Camada de dados"
 Cohesion: 0.19
@@ -103,8 +103,8 @@ Cohesion: 0.07
 Nodes (28): dependencies, date-fns, lucide-react, next, react, react-dom, recharts, @supabase/ssr (+20 more)
 
 ### Community 5 - "Community 5"
-Cohesion: 0.11
-Nodes (19): ClientesPage(), DashLayout(), GoogleAdsIcon(), IconProps, MetaAdsIcon(), NAV, NavIcon, NavItem (+11 more)
+Cohesion: 0.09
+Nodes (18): eslintConfig, LoginForm(), safeNextPath(), DashLayout(), GoogleAdsIcon(), IconProps, MetaAdsIcon(), Logo() (+10 more)
 
 ### Community 7 - "Agregação de métricas"
 Cohesion: 0.18
@@ -119,40 +119,40 @@ Cohesion: 0.08
 Nodes (22): `ad_metrics` — Meta Ads + Google Ads, Cadastro no painel x credenciais no n8n, Como gravar (Supabase REST / upsert), Ingestão de dados via n8n, Princípios, `sync_runs` — log (opcional, recomendado), Tabelas e chaves de upsert, `web_metrics` — GA4 (+14 more)
 
 ### Community 28 - "Community 28"
-Cohesion: 0.10
-Nodes (25): SP, ACTION_NAME_LABEL, CATEGORY_LABEL, categoryLabel(), CLICK_TYPE_LABEL, clickTypeLabel(), GoogleInsights(), MATCH_LABEL (+17 more)
+Cohesion: 0.07
+Nodes (40): SP, ACTION_NAME_LABEL, CATEGORY_LABEL, categoryLabel(), CLICK_TYPE_LABEL, clickTypeLabel(), GoogleInsights(), MATCH_LABEL (+32 more)
 
 ### Community 29 - "Community 29"
-Cohesion: 0.07
-Nodes (25): eslintConfig, LoginForm(), safeNextPath(), AccountInput, buildAccounts(), clientSchema, createClientWithAccounts(), deleteClient() (+17 more)
+Cohesion: 0.10
+Nodes (19): AccountInput, buildAccounts(), clientSchema, createClientWithAccounts(), deleteClient(), FIELD_LABELS, normalizeMetaAdAccountId(), normalizeSlug() (+11 more)
 
 ### Community 30 - "Community 30"
 Cohesion: 0.50
 Nodes (3): code, root, workflow
 
 ### Community 32 - "Community 32"
-Cohesion: 0.17
-Nodes (10): CONVERSION_ACTION_TYPES, int(), metaGetAll(), money(), num(), sb(), STARTED_AT, SUPABASE_URL (+2 more)
+Cohesion: 0.15
+Nodes (14): CONVERSION_ACTION_TYPES, dedupeCampaigns(), int(), mergeConversions(), mergeMetrics(), metaGetAll(), money(), num() (+6 more)
 
 ## Knowledge Gaps
-- **153 isolated node(s):** `eslintConfig`, `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `META_ACCESS_TOKEN`, `META_GRAPH_API_VERSION` (+148 more)
+- **154 isolated node(s):** `eslintConfig`, `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `META_ACCESS_TOKEN`, `META_GRAPH_API_VERSION` (+149 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **19 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `getClients()` connect `Community 5` to `Dependências (package.json)`, `Login, Layout & ESLint`, `Community 28`, `Community 29`?**
+- **Why does `getClients()` connect `Login, Layout & ESLint` to `Dependências (package.json)`, `Community 5`, `Community 28`, `Community 29`?**
   _High betweenness centrality (0.020) - this node is a cross-community bridge._
 - **Why does `rangeFromSearch()` connect `Topbar & Camada de dados` to `Login, Layout & ESLint`, `Community 28`?**
-  _High betweenness centrality (0.013) - this node is a cross-community bridge._
-- **Why does `isSupabaseConfigured` connect `Community 29` to `Dependências (package.json)`, `Community 5`?**
+  _High betweenness centrality (0.012) - this node is a cross-community bridge._
+- **Why does `isSupabaseConfigured` connect `Community 5` to `Dependências (package.json)`, `Community 29`?**
   _High betweenness centrality (0.011) - this node is a cross-community bridge._
 - **What connects `eslintConfig`, `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` to the rest of the system?**
-  _153 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _154 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Dependências (package.json)` be split into smaller, more focused modules?**
-  _Cohesion score 0.07164404223227752 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.10793650793650794 - nodes in this community are weakly interconnected._
 - **Should `Login, Layout & ESLint` be split into smaller, more focused modules?**
-  _Cohesion score 0.08056265984654731 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.07279562542720437 - nodes in this community are weakly interconnected._
 - **Should `Gráficos (Recharts)` be split into smaller, more focused modules?**
   _Cohesion score 0.1 - nodes in this community are weakly interconnected._

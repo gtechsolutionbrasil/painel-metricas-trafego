@@ -111,11 +111,13 @@ com uma credencial só: MADEIREIRA ADS (`act_1176296527286706`) e CA - Clínica
 - **Supabase populado (Madeireira, 30d):** R$ 289,97 · 83.009 impressões · 510
   cliques · **26 conversas** · 21 campanhas (2 ativas). Números batem 1:1 com a
   API Meta. `integration_accounts` da Madeireira → `connected`.
-- Workflow n8n **`CHPOb8H46wVXjBDw`** ("Meta Ads -> Supabase"): jsCode já
-  corrigido via MCP. **FALTA (ação do usuário):** colar os 3 segredos no node
-  "Configurar segredos" (`SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`,
-  `META_ACCESS_TOKEN` — bloqueado p/ o agente gravar o token em texto no n8n) e
-  **ativar** (schedule 07:00). Aí a coleta vira diária/automática.
+- Workflow n8n **`CHPOb8H46wVXjBDw`** ("Meta Ads -> Supabase"): **REFEITO e
+  ATIVO, testado E2E (execução success).** O Code monolítico do Codex não rodava
+  — esta instância n8n usa **task-runner isolado sem `fetch`/`$helpers`**. Refeito
+  no padrão do Google Ads (HTTP Request nodes fazem HTTP; Code só transforma).
+  Auth via credentials (`supabaseApi` + `httpHeaderAuth` do Meta). Roda 07:00
+  diário sozinho — **sem ação pendente do usuário.** Fonte:
+  `scripts/build-n8n-meta-workflow.mjs` → `npm run build:n8n:meta`.
 
 **Pendências Meta:** cadastrar a conta **CA - Clínica** (criar `client` + linha
 `integration_accounts` provider=meta_ads external_id `act_1343805573609263`) p/
