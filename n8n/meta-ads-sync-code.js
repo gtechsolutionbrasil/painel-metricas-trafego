@@ -44,12 +44,14 @@ function money(value) {
 }
 
 function buildUrl(base, params = {}) {
-  const url = new URL(base);
-  for (const [key, value] of Object.entries(params)) {
-    if (value == null || value === "") continue;
-    url.searchParams.set(key, String(value));
-  }
-  return url.toString();
+  const query = Object.entries(params)
+    .filter(([, value]) => value != null && value !== "")
+    .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(String(value))}`)
+    .join("&");
+
+  if (!query) return base;
+
+  return `${base}${base.includes("?") ? "&" : "?"}${query}`;
 }
 
 function supabaseHeaders(extra = {}) {
