@@ -1,5 +1,5 @@
 import type { LucideIcon } from "lucide-react";
-import { ArrowDownRight, ArrowUpRight } from "lucide-react";
+import { ArrowDownRight, ArrowUpRight, HelpCircle } from "lucide-react";
 
 type Trend = { value: number; positiveIsGood?: boolean };
 
@@ -8,12 +8,15 @@ export function KpiCard({
   value,
   icon: Icon,
   hint,
+  help,
   trend,
 }: {
   label: string;
   value: string;
   icon: LucideIcon;
   hint?: string;
+  // Explicação didática, em linguagem simples, mostrada ao passar o mouse no "?".
+  help?: string;
   trend?: Trend;
 }) {
   return (
@@ -24,12 +27,34 @@ export function KpiCard({
         </span>
         {trend && <TrendPill {...trend} />}
       </div>
-      <p className="eyebrow mt-4">{label}</p>
+      <p className="eyebrow mt-4 flex items-center gap-1.5">
+        {label}
+        {help && <HelpTip text={help} />}
+      </p>
       <p className="mt-1 text-[26px] font-extrabold tracking-tight text-ink">
         {value}
       </p>
       {hint && <p className="mt-0.5 text-xs text-faint">{hint}</p>}
     </div>
+  );
+}
+
+// Tooltip só-CSS (sem JS): balão aparece no hover/foco do ícone "?".
+function HelpTip({ text }: { text: string }) {
+  return (
+    <span className="group relative inline-flex" tabIndex={0}>
+      <HelpCircle
+        size={13}
+        strokeWidth={2.2}
+        className="cursor-help text-faint/60 transition-colors group-hover:text-brand"
+      />
+      <span
+        role="tooltip"
+        className="pointer-events-none absolute left-1/2 top-[calc(100%+8px)] z-50 w-60 -translate-x-1/2 rounded-lg border border-line bg-surface px-3 py-2 text-[11px] font-normal normal-case leading-snug tracking-normal text-ink opacity-0 shadow-[var(--shadow-pop)] transition-opacity duration-150 group-hover:opacity-100 group-focus:opacity-100"
+      >
+        {text}
+      </span>
+    </span>
   );
 }
 
@@ -39,6 +64,7 @@ function TrendPill({ value, positiveIsGood = true }: Trend) {
   const Icon = up ? ArrowUpRight : ArrowDownRight;
   return (
     <span
+      title="Variação em relação ao período anterior de mesmo tamanho"
       className={`inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs font-semibold ${
         good
           ? "bg-brand-soft-2 text-brand-ink"

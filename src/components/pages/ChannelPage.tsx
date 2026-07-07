@@ -123,6 +123,27 @@ export async function ChannelPage({
         />
       ) : (
         <>
+          {/* Como ler: o funil de tráfego em 1 linha */}
+          <div className="card flex flex-wrap items-center gap-x-2.5 gap-y-1 px-4 py-3 text-sm text-faint">
+            <span className="font-bold uppercase tracking-wide text-[11px] text-brand">
+              Como ler
+            </span>
+            <span>
+              o anúncio <b className="font-semibold text-ink">aparece</b> pra pessoas (Impressões)
+            </span>
+            <span className="text-brand">→</span>
+            <span>
+              algumas <b className="font-semibold text-ink">clicam</b> (Cliques)
+            </span>
+            <span className="text-brand">→</span>
+            <span>
+              algumas viram <b className="font-semibold text-ink">contato</b> (Conversões)
+            </span>
+            <span className="w-full text-xs text-faint sm:ml-auto sm:w-auto">
+              passe o mouse no “?” de cada número pra entender · setas = variação vs. período anterior
+            </span>
+          </div>
+
           {/* Volume: quanto rodou e o que gerou */}
           <div className="grid grid-cols-2 gap-4 xl:grid-cols-4">
             <KpiCard
@@ -130,6 +151,7 @@ export async function ChannelPage({
               value={fmtCurrency(k.spend)}
               icon={DollarSign}
               hint="custo total no período"
+              help="Quanto você gastou em anúncios nesse período. É o dinheiro que saiu — não o resultado."
               trend={{ value: delta(k.spend, kPrev.spend) }}
             />
             <KpiCard
@@ -137,6 +159,7 @@ export async function ChannelPage({
               value={fmtCompact(k.impressions)}
               icon={Eye}
               hint="vezes que o anúncio foi exibido"
+              help="Quantas vezes o anúncio apareceu na tela. A mesma pessoa pode ver várias vezes, e cada exibição conta uma. (Alcance seria o nº de pessoas distintas — sempre menor.)"
               trend={{ value: delta(k.impressions, kPrev.impressions) }}
             />
             <KpiCard
@@ -144,6 +167,7 @@ export async function ChannelPage({
               value={fmtInt(k.clicks)}
               icon={MousePointerClick}
               hint="cliques no anúncio"
+              help="Quantas vezes clicaram no anúncio pra ir ao site ou WhatsApp. Mostra interesse — mas ainda não é um contato."
               trend={{ value: delta(k.clicks, kPrev.clicks) }}
             />
             <KpiCard
@@ -151,6 +175,7 @@ export async function ChannelPage({
               value={fmtInt(k.conversions)}
               icon={Target}
               hint="contatos: lead, WhatsApp, formulário"
+              help="O resultado que importa: contatos gerados (conversa no WhatsApp, lead, formulário, ligação). É o que o anúncio produziu de concreto."
               trend={{ value: delta(k.conversions, kPrev.conversions) }}
             />
           </div>
@@ -166,6 +191,7 @@ export async function ChannelPage({
               value={fmtPercent(k.ctr)}
               icon={Percent}
               hint="cliques ÷ impressões"
+              help="De cada 100 pessoas que viram o anúncio, quantas clicaram. Mede o quanto ele chama atenção. Acima de ~2% costuma ser bom."
               trend={{ value: delta(k.ctr, kPrev.ctr) }}
             />
             <KpiCard
@@ -173,6 +199,7 @@ export async function ChannelPage({
               value={fmtCurrencyCents(k.cpc)}
               icon={MousePointerClick}
               hint="investimento ÷ cliques"
+              help="Quanto você paga, em média, cada vez que alguém clica no anúncio."
               trend={{ value: delta(k.cpc, kPrev.cpc), positiveIsGood: false }}
             />
             <KpiCard
@@ -180,6 +207,7 @@ export async function ChannelPage({
               value={fmtCurrencyCents(k.cpl)}
               icon={Target}
               hint="investimento ÷ conversões"
+              help="Quanto custa, em média, gerar um contato. Quanto MENOR, melhor — é o preço de cada resultado."
               trend={{ value: delta(k.cpl, kPrev.cpl), positiveIsGood: false }}
             />
             {platform === "google" && (
@@ -192,6 +220,7 @@ export async function ChannelPage({
                 }
                 icon={Gauge}
                 hint="% das buscas em que o anúncio apareceu"
+              help="De todas as buscas em que seu anúncio PODERIA ter aparecido, em quantas % ele apareceu. Baixo = perdendo espaço por orçamento ou lance baixo."
               />
             )}
           </div>
