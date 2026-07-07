@@ -24,8 +24,9 @@ export const RANGE_PRESETS = [
   { days: 90, label: "90 dias" },
 ] as const;
 
-// Atalhos de período no estilo do Meta Ads. Cada um resolve pra um DateRange
-// concreto (from/to) com base na data de hoje.
+// Atalhos de período no estilo do Meta Ads. Os "últimos N dias" TERMINAM ONTEM
+// (o dia atual tem dados incompletos e Meta/Google não o incluem), pra o painel
+// bater exatamente com as plataformas na comparação.
 export type PeriodShortcut = { id: string; label: string; range: () => DateRange };
 
 const shift = (base: Date, days: number) => {
@@ -44,9 +45,9 @@ export const PERIOD_SHORTCUTS: PeriodShortcut[] = [
       return { from: iso(y), to: iso(y) };
     },
   },
-  { id: "7d", label: "Últimos 7 dias", range: () => ({ from: iso(shift(new Date(), -6)), to: iso(new Date()) }) },
-  { id: "14d", label: "Últimos 14 dias", range: () => ({ from: iso(shift(new Date(), -13)), to: iso(new Date()) }) },
-  { id: "30d", label: "Últimos 30 dias", range: () => ({ from: iso(shift(new Date(), -29)), to: iso(new Date()) }) },
+  { id: "7d", label: "Últimos 7 dias", range: () => ({ from: iso(shift(new Date(), -7)), to: iso(shift(new Date(), -1)) }) },
+  { id: "14d", label: "Últimos 14 dias", range: () => ({ from: iso(shift(new Date(), -14)), to: iso(shift(new Date(), -1)) }) },
+  { id: "30d", label: "Últimos 30 dias", range: () => ({ from: iso(shift(new Date(), -30)), to: iso(shift(new Date(), -1)) }) },
   {
     id: "this_month",
     label: "Este mês",
@@ -68,9 +69,10 @@ export const PERIOD_SHORTCUTS: PeriodShortcut[] = [
 ];
 
 export function defaultRange(days = 30): DateRange {
-  const to = new Date();
-  const from = new Date();
-  from.setDate(from.getDate() - (days - 1));
+  // Termina ONTEM (dia atual incompleto; Meta/Google não incluem hoje nos
+  // "últimos N dias") pra o painel bater com as plataformas.
+  const to = shift(new Date(), -1);
+  const from = shift(to, -(days - 1));
   return { from: iso(from), to: iso(to) };
 }
 
