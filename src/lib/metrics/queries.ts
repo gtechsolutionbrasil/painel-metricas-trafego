@@ -7,6 +7,7 @@ import {
   generateWebMetrics,
 } from "../mock/data";
 import type {
+  AdCampaign,
   AdClickTypeMetric,
   AdConversionActionMetric,
   AdGeoMetric,
@@ -269,6 +270,32 @@ export async function getAdClickTypes(
     campaign: String(r.campaign),
     clickType: String(r.click_type),
     clicks: Number(r.clicks),
+  }));
+}
+
+// Campanhas do cliente com o status atual (pro filtro do painel).
+export async function getAdCampaigns(
+  clientId?: string,
+  platform: Platform = "google",
+): Promise<AdCampaign[]> {
+  if (!isSupabaseConfigured) return [];
+
+  const supabase = await createSupabaseServerClient();
+  let q = supabase
+    .from("ad_campaigns")
+    .select("campaign, status")
+    .eq("platform", platform)
+    .order("campaign");
+  if (clientId) q = q.eq("client_id", clientId);
+
+  const { data, error } = await q;
+  if (error || !data) {
+    logQueryError("getAdCampaigns", error);
+    return [];
+  }
+  return data.map((r) => ({
+    campaign: String(r.campaign),
+    status: String(r.status ?? "UNKNOWN"),
   }));
 }
 

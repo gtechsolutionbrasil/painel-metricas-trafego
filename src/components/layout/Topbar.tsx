@@ -5,14 +5,7 @@ import { useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Check, ChevronDown, Plus, Users } from "lucide-react";
 import type { Client } from "@/lib/types";
-import { RANGE_PRESETS, rangeFromSearch } from "@/lib/range";
-
-const iso = (d: Date) => {
-  const year = d.getFullYear();
-  const month = String(d.getMonth() + 1).padStart(2, "0");
-  const day = String(d.getDate()).padStart(2, "0");
-  return `${year}-${month}-${day}`;
-};
+import { PeriodPicker } from "@/components/layout/PeriodPicker";
 
 export function Topbar({ clients }: { clients: Client[] }) {
   const router = useRouter();
@@ -20,36 +13,8 @@ export function Topbar({ clients }: { clients: Client[] }) {
   const search = useSearchParams();
   const [clientOpen, setClientOpen] = useState(false);
 
-  const { range, days } = rangeFromSearch(Object.fromEntries(search.entries()));
-  const isCustom = Boolean(search.get("from") && search.get("to"));
-  const today = iso(new Date());
-
   const activeSlug = search.get("client") ?? "all";
   const active = clients.find((c) => c.slug === activeSlug) ?? null;
-
-  function pushParams(params: URLSearchParams) {
-    const qs = params.toString();
-    router.push(`${pathname}${qs ? `?${qs}` : ""}`);
-  }
-
-  // Atalho de período (últimos N dias).
-  function selectDays(value: string) {
-    const params = new URLSearchParams(search.toString());
-    params.set("days", value);
-    params.delete("from");
-    params.delete("to");
-    pushParams(params);
-  }
-
-  // Período personalizado (?from=&to=). Só aplica com as duas datas válidas.
-  function selectRange(from: string, to: string) {
-    if (!from || !to || from > to) return;
-    const params = new URLSearchParams(search.toString());
-    params.set("from", from);
-    params.set("to", to);
-    params.delete("days");
-    pushParams(params);
-  }
 
   function selectClient(slug: string | null) {
     setClientOpen(false);
@@ -59,13 +24,14 @@ export function Topbar({ clients }: { clients: Client[] }) {
     // Filtros que pertencem ao cliente anterior não fazem sentido no novo.
     params.delete("account");
     params.delete("campaign");
-    pushParams(params);
+    const qs = params.toString();
+    router.push(`${pathname}${qs ? `?${qs}` : ""}`);
   }
 
   return (
     <header className="sticky top-0 z-30 border-b border-line bg-surface/95 px-4 py-3 backdrop-blur sm:px-6">
-      <div className="flex flex-col gap-3 xl:flex-row xl:items-center xl:justify-between">
-        <div className="relative w-full md:max-w-[300px]">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="relative w-full sm:max-w-[300px]">
           <button
             type="button"
             onClick={() => setClientOpen((v) => !v)}
@@ -129,56 +95,7 @@ export function Topbar({ clients }: { clients: Client[] }) {
           )}
         </div>
 
-        {/* Período: atalhos + datas livres (De/Até) */}
-        <div className="flex flex-wrap items-center gap-3 rounded-[10px] border border-line bg-surface px-3 py-2">
-          <div>
-            <p className="text-[10px] font-bold uppercase tracking-[0.08em] text-faint">
-              Período
-            </p>
-            <select
-              value={isCustom ? "custom" : String(days)}
-              onChange={(e) => {
-                if (e.target.value === "custom") {
-                  selectRange(range.from, range.to);
-                } else {
-                  selectDays(e.target.value);
-                }
-              }}
-              className="-ml-1 mt-0.5 rounded-md bg-transparent px-1 text-sm font-semibold text-ink outline-none"
-            >
-              {RANGE_PRESETS.map((p) => (
-                <option key={p.days} value={p.days}>
-                  Últimos {p.label}
-                </option>
-              ))}
-              <option value="custom">Personalizado</option>
-            </select>
-          </div>
-
-          <div className="h-9 w-px bg-line" />
-
-          <label className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.08em] text-faint">
-            De
-            <input
-              type="date"
-              value={range.from}
-              max={range.to}
-              onChange={(e) => selectRange(e.target.value, range.to)}
-              className="rounded-md border border-line bg-surface px-2 py-1.5 text-[13px] font-semibold normal-case tracking-normal text-ink outline-none transition-colors focus:border-brand"
-            />
-          </label>
-          <label className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.08em] text-faint">
-            Até
-            <input
-              type="date"
-              value={range.to}
-              min={range.from}
-              max={today}
-              onChange={(e) => selectRange(range.from, e.target.value)}
-              className="rounded-md border border-line bg-surface px-2 py-1.5 text-[13px] font-semibold normal-case tracking-normal text-ink outline-none transition-colors focus:border-brand"
-            />
-          </label>
-        </div>
+        <PeriodPicker />
       </div>
     </header>
   );

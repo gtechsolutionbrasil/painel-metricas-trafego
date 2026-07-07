@@ -15,8 +15,14 @@ import { CampaignFilter } from "@/components/pages/CampaignFilter";
 import { TrendAreaChart } from "@/components/charts/TrendAreaChart";
 import { BarsChart } from "@/components/charts/BarsChart";
 import { CHART_COLORS } from "@/components/charts/theme";
-import { getAdMetrics, getClients, resolveClient } from "@/lib/metrics/queries";
+import {
+  getAdCampaigns,
+  getAdMetrics,
+  getClients,
+  resolveClient,
+} from "@/lib/metrics/queries";
 import { adByCampaign, adByDay, adKpis } from "@/lib/metrics/aggregate";
+import { selectedCampaigns } from "@/lib/campaigns";
 import { delta, previousRange, rangeFromSearch } from "@/lib/range";
 import {
   fmtCompact,
@@ -57,27 +63,28 @@ export async function ChannelPage({
     ? searchParams.account[0]
     : searchParams.account;
 
-  const [adsAll, adsPrevAll] = await Promise.all([
+  const [adsAll, adsPrevAll, campaignList] = await Promise.all([
     getAdMetrics(range, client?.id, [platform], accountExternalId),
     getAdMetrics(prev, client?.id, [platform], accountExternalId),
+    getAdCampaigns(client?.id, platform),
   ]);
 
-  // Filtro por campanha (?campaign=). Nome desconhecido = sem filtro, pra
-  // navegação entre canais não zerar a página.
-  const campaignParam = Array.isArray(searchParams.campaign)
-    ? searchParams.campaign[0]
-    : searchParams.campaign;
-  const campaignNames = [...new Set(adsAll.map((r) => r.campaign))].sort();
-  const selectedCampaign =
-    campaignParam && campaignNames.includes(campaignParam)
-      ? campaignParam
-      : null;
+  // Lista de campanhas pro filtro: usa o status coletado; se não houver, cai
+  // pros nomes que aparecem nas métricas (status desconhecido).
+  const campaignOptions =
+    campaignList.length > 0
+      ? campaignList
+      : [...new Set(adsAll.map((r) => r.campaign))]
+          .sort()
+          .map((campaign) => ({ campaign, status: "UNKNOWN" }));
 
-  const ads = selectedCampaign
-    ? adsAll.filter((r) => r.campaign === selectedCampaign)
+  // Filtro multi (?campaign= repetível). Nenhuma selecionada = todas.
+  const filter = selectedCampaigns(searchParams, campaignOptions);
+  const ads = filter.size
+    ? adsAll.filter((r) => filter.has(r.campaign))
     : adsAll;
-  const adsPrev = selectedCampaign
-    ? adsPrevAll.filter((r) => r.campaign === selectedCampaign)
+  const adsPrev = filter.size
+    ? adsPrevAll.filter((r) => filter.has(r.campaign))
     : adsPrevAll;
 
   const k = adKpis(ads);
@@ -91,8 +98,8 @@ export async function ChannelPage({
         title={title}
         subtitle={`${subtitle} · ${client ? client.name : "Todos os clientes"}`}
         actions={
-          campaignNames.length > 0 ? (
-            <CampaignFilter campaigns={campaignNames} />
+          campaignOptions.length > 0 ? (
+            <CampaignFilter campaigns={campaignOptions} />
           ) : undefined
         }
       />

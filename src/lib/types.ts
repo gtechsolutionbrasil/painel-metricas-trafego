@@ -73,6 +73,12 @@ export type AdClickTypeMetric = {
   clicks: number;
 };
 
+// Status atual de uma campanha (pro filtro ativas/pausadas).
+export type AdCampaign = {
+  campaign: string;
+  status: string; // ENABLED | PAUSED | UNKNOWN
+};
+
 export type AdSearchTermMetric = {
   clientId: string;
   date: string;

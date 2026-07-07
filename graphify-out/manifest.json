@@ -85,8 +85,8 @@
     "semantic_hash": ""
   },
   "src/components/layout/Topbar.tsx": {
-    "mtime": 1783366355.8062751,
-    "ast_hash": "ed7f3d58d0d3811788e0aa10ca49038d",
+    "mtime": 1783437326.2755296,
+    "ast_hash": "cca66fdb3a91ab05e18ddc7be13356e0",
     "semantic_hash": ""
   },
   "src/components/ui/Badge.tsx": {
@@ -120,8 +120,8 @@
     "semantic_hash": ""
   },
   "src/lib/metrics/queries.ts": {
-    "mtime": 1783434937.7102115,
-    "ast_hash": "ac91445dd815631c4a26757ed1001aa2",
+    "mtime": 1783437126.7609808,
+    "ast_hash": "0c593a8b976fc399b1549dfe30eec389",
     "semantic_hash": ""
   },
   "src/lib/mock/data.ts": {
@@ -130,9 +130,9 @@
     "semantic_hash": "00a39782fbf372b1b3d713ebf631cb1e"
   },
   "src/lib/range.ts": {
-    "mtime": 1782691823.9793637,
-    "ast_hash": "9a0c313448da08373e174c7e499e5011",
-    "semantic_hash": "9a0c313448da08373e174c7e499e5011"
+    "mtime": 1783437141.705199,
+    "ast_hash": "4b0b8b0b0402023d256164720f3d9f42",
+    "semantic_hash": ""
   },
   "src/lib/supabase/client.ts": {
     "mtime": 1782686638.7704515,
@@ -155,8 +155,8 @@
     "semantic_hash": "e120c87497fabf3af25d474aa240d5a1"
   },
   "src/lib/types.ts": {
-    "mtime": 1783434921.725308,
-    "ast_hash": "cbaeba193f422ed94bff1061fc4c7fe5",
+    "mtime": 1783437114.002099,
+    "ast_hash": "dbf09e3594a8fa2c4da20fd7074bd6ae",
     "semantic_hash": ""
   },
   "src/proxy.ts": {
@@ -315,8 +315,8 @@
     "semantic_hash": ""
   },
   "src/components/pages/ChannelPage.tsx": {
-    "mtime": 1783373704.467268,
-    "ast_hash": "ff66fda5dce6b798680132bddafeb65a",
+    "mtime": 1783437271.1152356,
+    "ast_hash": "591d697094ca774312a89171710c2d30",
     "semantic_hash": ""
   },
   "src/app/(dash)/clientes/DeleteClientButton.tsx": {
@@ -325,8 +325,8 @@
     "semantic_hash": ""
   },
   "src/components/pages/CampaignFilter.tsx": {
-    "mtime": 1783366377.506821,
-    "ast_hash": "bbae085234361b4b8de2d1ad8a5ebc39",
+    "mtime": 1783437226.3988862,
+    "ast_hash": "559587a787d6a344417c82c2f6019566",
     "semantic_hash": ""
   },
   "src/components/ui/EmptyState.tsx": {
@@ -335,8 +335,8 @@
     "semantic_hash": ""
   },
   "src/components/pages/GoogleInsights.tsx": {
-    "mtime": 1783435045.8174138,
-    "ast_hash": "72a3a5816af841ac094f991340401a8a",
+    "mtime": 1783437301.965944,
+    "ast_hash": "689e1322d059d4184132882f1ece30ca",
     "semantic_hash": ""
   },
   "supabase/migrations/0006_google_ads_breakdowns.sql": {
@@ -357,6 +357,21 @@
   "supabase/migrations/0008_search_terms_ad_groups.sql": {
     "mtime": 1783434296.1172435,
     "ast_hash": "2f59dd3df40b8994117569cfcb568264",
+    "semantic_hash": ""
+  },
+  "src/components/layout/PeriodPicker.tsx": {
+    "mtime": 1783437177.8630571,
+    "ast_hash": "e336baf41ccf4f775cd9b9e66af2f607",
+    "semantic_hash": ""
+  },
+  "src/lib/campaigns.ts": {
+    "mtime": 1783437288.2349932,
+    "ast_hash": "f3151355ac2dd512575db0fbf468a74a",
+    "semantic_hash": ""
+  },
+  "supabase/migrations/0009_ad_campaigns_status.sql": {
+    "mtime": 1783436994.2501209,
+    "ast_hash": "0d49610b62ca90570c9cb58afd86babe",
     "semantic_hash": ""
   }
 }

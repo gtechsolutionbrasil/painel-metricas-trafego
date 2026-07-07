@@ -24,6 +24,49 @@ export const RANGE_PRESETS = [
   { days: 90, label: "90 dias" },
 ] as const;
 
+// Atalhos de período no estilo do Meta Ads. Cada um resolve pra um DateRange
+// concreto (from/to) com base na data de hoje.
+export type PeriodShortcut = { id: string; label: string; range: () => DateRange };
+
+const shift = (base: Date, days: number) => {
+  const d = new Date(base);
+  d.setDate(d.getDate() + days);
+  return d;
+};
+
+export const PERIOD_SHORTCUTS: PeriodShortcut[] = [
+  { id: "today", label: "Hoje", range: () => ({ from: iso(new Date()), to: iso(new Date()) }) },
+  {
+    id: "yesterday",
+    label: "Ontem",
+    range: () => {
+      const y = shift(new Date(), -1);
+      return { from: iso(y), to: iso(y) };
+    },
+  },
+  { id: "7d", label: "Últimos 7 dias", range: () => ({ from: iso(shift(new Date(), -6)), to: iso(new Date()) }) },
+  { id: "14d", label: "Últimos 14 dias", range: () => ({ from: iso(shift(new Date(), -13)), to: iso(new Date()) }) },
+  { id: "30d", label: "Últimos 30 dias", range: () => ({ from: iso(shift(new Date(), -29)), to: iso(new Date()) }) },
+  {
+    id: "this_month",
+    label: "Este mês",
+    range: () => {
+      const now = new Date();
+      return { from: iso(new Date(now.getFullYear(), now.getMonth(), 1)), to: iso(now) };
+    },
+  },
+  {
+    id: "last_month",
+    label: "Mês passado",
+    range: () => {
+      const now = new Date();
+      const first = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+      const last = new Date(now.getFullYear(), now.getMonth(), 0);
+      return { from: iso(first), to: iso(last) };
+    },
+  },
+];
+
 export function defaultRange(days = 30): DateRange {
   const to = new Date();
   const from = new Date();

@@ -28,6 +28,7 @@ import {
   bySearchTerm,
 } from "@/lib/metrics/aggregate";
 import { rangeFromSearch } from "@/lib/range";
+import { selectedCampaigns } from "@/lib/campaigns";
 import {
   fmtCompact,
   fmtCurrency,
@@ -115,21 +116,20 @@ export async function GoogleInsights({ searchParams }: { searchParams: SP }) {
       getAdGroups(range, client?.id),
     ]);
 
-  // Respeita o filtro de campanha da página (mesma regra do ChannelPage:
-  // campanha desconhecida = sem filtro).
-  const campaignParam = Array.isArray(searchParams.campaign)
-    ? searchParams.campaign[0]
-    : searchParams.campaign;
-  const allCampaigns = new Set([
-    ...keywordsRaw.map((r) => r.campaign),
-    ...geoRaw.map((r) => r.campaign),
-    ...clickTypesRaw.map((r) => r.campaign),
-    ...actionsRaw.map((r) => r.campaign),
-  ]);
-  const filterCampaign =
-    campaignParam && allCampaigns.has(campaignParam) ? campaignParam : null;
+  // Respeita o filtro multi de campanha da página (mesmo helper do ChannelPage).
+  const knownCampaigns = [
+    ...new Set([
+      ...keywordsRaw.map((r) => r.campaign),
+      ...geoRaw.map((r) => r.campaign),
+      ...clickTypesRaw.map((r) => r.campaign),
+      ...actionsRaw.map((r) => r.campaign),
+      ...searchTermsRaw.map((r) => r.campaign),
+      ...groupsRaw.map((r) => r.campaign),
+    ]),
+  ].map((campaign) => ({ campaign }));
+  const filter = selectedCampaigns(searchParams, knownCampaigns);
   const only = <T extends { campaign: string }>(rows: T[]) =>
-    filterCampaign ? rows.filter((r) => r.campaign === filterCampaign) : rows;
+    filter.size ? rows.filter((r) => filter.has(r.campaign)) : rows;
 
   const keywords = byKeyword(only(keywordsRaw)).slice(0, 15);
   const regions = byRegion(only(geoRaw)).slice(0, 10);
