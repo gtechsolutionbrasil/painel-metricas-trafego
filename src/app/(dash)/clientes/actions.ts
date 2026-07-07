@@ -211,7 +211,7 @@ function buildAccounts(
     accounts.push({
       provider: "meta_ads",
       accountName: `${clientName} - Meta Ads`,
-      externalId: ids.metaAdAccountId,
+      externalId: normalizeMetaAdAccountId(ids.metaAdAccountId),
     });
   }
   if (ids.ga4PropertyId) {
@@ -231,4 +231,10 @@ function buildAccounts(
     });
   }
   return accounts;
+}
+
+function normalizeMetaAdAccountId(value: string) {
+  const trimmed = value.trim();
+  if (trimmed.toLowerCase().startsWith("act_")) return `act_${trimmed.slice(4)}`;
+  return `act_${trimmed.replace(/\D/g, "") || trimmed}`;
 }

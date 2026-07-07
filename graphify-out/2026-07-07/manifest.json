@@ -10,9 +10,9 @@
     "semantic_hash": "9b77af189a21a7a64e4bd7a426f64176"
   },
   "package.json": {
-    "mtime": 1782686504.702972,
-    "ast_hash": "a4b6548d958f2658b7bb21185c3e4494",
-    "semantic_hash": "a4b6548d958f2658b7bb21185c3e4494"
+    "mtime": 1783439482.966596,
+    "ast_hash": "864eedfe1dfa7a0a46475ea2eab538b4",
+    "semantic_hash": ""
   },
   "postcss.config.mjs": {
     "mtime": 1782686238.8142471,
@@ -195,13 +195,13 @@
     "semantic_hash": ""
   },
   "REGRAS-PROJETO.md": {
-    "mtime": 1783438311.3463674,
-    "ast_hash": "51ecc4e4424659375fb6d79c5a99dbc2",
+    "mtime": 1783439668.0094512,
+    "ast_hash": "2fbdc1d7ea98cf1de251611d17161bf1",
     "semantic_hash": ""
   },
   "docs/ingestao-n8n.md": {
-    "mtime": 1783040825.7472124,
-    "ast_hash": "f47103cf17d6c602d4d962abc0b37950",
+    "mtime": 1783439490.531341,
+    "ast_hash": "ed2c783969d393ef6977178fdd16b94c",
     "semantic_hash": ""
   },
   "public/brand/favicon.png": {
@@ -372,6 +372,26 @@
   "supabase/migrations/0009_ad_campaigns_status.sql": {
     "mtime": 1783436994.2501209,
     "ast_hash": "0d49610b62ca90570c9cb58afd86babe",
+    "semantic_hash": ""
+  },
+  "n8n/meta-ads-supabase.workflow.json": {
+    "mtime": 1783439561.9131947,
+    "ast_hash": "53abd7c9913eedd5226386da7849ba32",
+    "semantic_hash": ""
+  },
+  "n8n/meta-ads-sync-code.js": {
+    "mtime": 1783439554.6079073,
+    "ast_hash": "54d0f47c57168e7e6379eece6d88bdec",
+    "semantic_hash": ""
+  },
+  "scripts/build-n8n-meta-workflow.mjs": {
+    "mtime": 1783439482.9655592,
+    "ast_hash": "88661a4bbc5878b5bd8a939247863632",
+    "semantic_hash": ""
+  },
+  "n8n/README.md": {
+    "mtime": 1783439554.6086836,
+    "ast_hash": "1c4549d3b3c3d8219d1ad7d0703631c1",
     "semantic_hash": ""
   }
 }

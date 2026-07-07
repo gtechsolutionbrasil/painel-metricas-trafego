@@ -195,8 +195,8 @@
     "semantic_hash": ""
   },
   "REGRAS-PROJETO.md": {
-    "mtime": 1783439668.0094512,
-    "ast_hash": "2fbdc1d7ea98cf1de251611d17161bf1",
+    "mtime": 1783440208.4843974,
+    "ast_hash": "5aa5a09b05d958e51dd428a8ffb3a22b",
     "semantic_hash": ""
   },
   "docs/ingestao-n8n.md": {
@@ -270,13 +270,13 @@
     "semantic_hash": ""
   },
   "src/app/(dash)/clientes/actions.ts": {
-    "mtime": 1783366492.7925742,
-    "ast_hash": "022fb21675ec6667b3325f363ab7e8e6",
+    "mtime": 1783440121.1053774,
+    "ast_hash": "aa82f599f43850c4c70e64f374c6c6a3",
     "semantic_hash": ""
   },
   "src/app/(dash)/clientes/page.tsx": {
-    "mtime": 1783366532.2367058,
-    "ast_hash": "a810ac2b4d449bc21b8a70ba4a614426",
+    "mtime": 1783440121.1042802,
+    "ast_hash": "153da1026dd5faf54be0deb1b3030044",
     "semantic_hash": ""
   },
   "supabase/migrations/0004_client_integration_accounts.sql": {

@@ -1,4 +1,13 @@
-import { CheckCircle2, CircleAlert, Plus } from "lucide-react";
+import {
+  CheckCircle2,
+  CircleAlert,
+  KeyRound,
+  Link2,
+  ListChecks,
+  Plus,
+  ShieldCheck,
+  Workflow,
+} from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
 import { Card, CardBody, CardHeader } from "@/components/ui/Card";
 import { PageHeader } from "@/components/ui/PageHeader";
@@ -70,6 +79,7 @@ export default async function ClientesPage({
       <div className="grid grid-cols-1 gap-6 xl:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
         <ClientForm />
         <div className="space-y-6">
+          <NewClientGuide />
           <CollectionFlow />
           <ClientList clients={clients} accounts={accounts} />
         </div>
@@ -148,8 +158,8 @@ function ClientForm() {
           <div className="rounded-[10px] border border-line bg-surface-2 px-4 py-3 text-sm text-muted">
             <p className="font-semibold text-ink">ID não é credencial.</p>
             <p className="mt-1">
-              O GTM ajuda no tracking do site, mas as métricas do painel vêm das
-              APIs de Google Ads, Meta Ads e GA4.
+              Primeiro vincule as contas nas plataformas. Depois cole aqui os
+              IDs para o n8n saber qual conta buscar para este cliente.
             </p>
           </div>
 
@@ -158,21 +168,25 @@ function ClientForm() {
               id="googleAdsCustomerId"
               label="Google Ads Customer ID"
               placeholder="123-456-7890"
+              help="ID da conta final do cliente, não o MCC. Pode colar com hífens."
             />
             <AccountField
               id="metaAdAccountId"
               label="Meta Ad Account ID"
               placeholder="act_123456789"
+              help="Conta de anúncios do cliente. Se vier só o número, use act_ antes."
             />
             <AccountField
               id="ga4PropertyId"
               label="GA4 Property ID"
               placeholder="123456789"
+              help="ID numérico da propriedade GA4 que mede o site."
             />
             <AccountField
               id="gtmContainerId"
               label="GTM Container ID (auditoria)"
               placeholder="GTM-XXXXXXX"
+              help="Ajuda a auditar tags; não substitui o GA4."
             />
           </div>
 
@@ -209,10 +223,12 @@ function AccountField({
   id,
   label,
   placeholder,
+  help,
 }: {
   id: string;
   label: string;
   placeholder: string;
+  help?: string;
 }) {
   return (
     <div>
@@ -220,7 +236,99 @@ function AccountField({
         {label}
       </label>
       <input id={id} name={id} className="input" placeholder={placeholder} />
+      {help && <p className="mt-1.5 text-xs leading-5 text-faint">{help}</p>}
     </div>
+  );
+}
+
+function NewClientGuide() {
+  const guide = [
+    {
+      title: "Google Ads",
+      icon: Link2,
+      steps: [
+        "Pedir ou enviar convite pelo MCC da agência.",
+        "Cliente aceita em Acesso e segurança > Gerentes.",
+        "Colar aqui o Customer ID da conta final.",
+      ],
+      footer: "Depois de aceito, o workflow Google coleta no próximo agendamento.",
+    },
+    {
+      title: "Meta Ads",
+      icon: KeyRound,
+      steps: [
+        "Business do cliente compartilha a conta de anúncios com a agência.",
+        "System User/token da agência precisa ter acesso à conta.",
+        "Colar aqui o act_ da conta de anúncios.",
+      ],
+      footer: "Um token central pode ler várias contas que estiverem atribuídas a ele.",
+    },
+    {
+      title: "Site, GA4 e GTM",
+      icon: ShieldCheck,
+      steps: [
+        "Garantir acesso à propriedade GA4 do cliente.",
+        "Conferir se o GTM publica WhatsApp, formulário, ligação e rota.",
+        "Colar Property ID, domínio e Container ID.",
+      ],
+      footer: "GA4 mostra comportamento no site; GTM é auditoria de tags.",
+    },
+  ];
+
+  return (
+    <Card>
+      <CardHeader
+        title="Checklist para cadastrar cliente novo"
+        subtitle="Faça o vínculo real nas plataformas, depois preencha os IDs no formulário."
+      />
+      <CardBody className="space-y-4">
+        <div className="grid grid-cols-1 gap-3 lg:grid-cols-3">
+          {guide.map((item) => {
+            const Icon = item.icon;
+            return (
+              <div
+                key={item.title}
+                className="rounded-[10px] border border-line bg-surface-2 p-4"
+              >
+                <div className="flex items-center gap-2.5">
+                  <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-brand-soft text-brand-ink">
+                    <Icon size={16} />
+                  </span>
+                  <p className="font-bold text-ink">{item.title}</p>
+                </div>
+                <ol className="mt-4 space-y-3">
+                  {item.steps.map((step, index) => (
+                    <li key={step} className="flex gap-2.5 text-sm text-muted">
+                      <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-surface text-[11px] font-bold text-brand-ink ring-1 ring-line">
+                        {index + 1}
+                      </span>
+                      <span>{step}</span>
+                    </li>
+                  ))}
+                </ol>
+                <p className="mt-4 border-t border-line pt-3 text-xs leading-5 text-faint">
+                  {item.footer}
+                </p>
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="grid grid-cols-1 gap-3 rounded-[10px] border border-brand-border bg-brand-soft p-4 text-sm text-brand-ink md:grid-cols-[auto_1fr]">
+          <span className="grid h-9 w-9 place-items-center rounded-lg bg-surface text-brand">
+            <ListChecks size={18} />
+          </span>
+          <div>
+            <p className="font-bold">Regra de ouro</p>
+            <p className="mt-1 text-brand-ink/80">
+              Cliente novo só aparece com dados quando existem duas coisas: a
+              conta está vinculada na plataforma e o ID correto está cadastrado
+              aqui. Token e chaves ficam no n8n, nunca no painel.
+            </p>
+          </div>
+        </div>
+      </CardBody>
+    </Card>
   );
 }
 
@@ -228,21 +336,36 @@ function CollectionFlow() {
   return (
     <Card>
       <CardHeader
-        title="Como a coleta funciona"
+        title="O que acontece depois de salvar"
         subtitle="O painel não puxa API direto do navegador."
       />
       <CardBody className="space-y-3">
         {[
-          "O painel guarda cliente, IDs externos e status da integração.",
-          "O n8n guarda credenciais OAuth, tokens e chaves em ambiente seguro.",
-          "Workflows agendados consultam Google Ads, Meta Ads e GA4.",
-          "O n8n grava no Supabase; o painel lê e mostra as métricas.",
-        ].map((item, index) => (
-          <div key={item} className="flex gap-3">
-            <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-brand-soft text-xs font-bold text-brand-ink">
-              {index + 1}
+          {
+            icon: ListChecks,
+            text: "O painel guarda cliente, IDs externos e status da integração.",
+          },
+          {
+            icon: ShieldCheck,
+            text: "O n8n guarda OAuth, tokens e chaves em ambiente seguro.",
+          },
+          {
+            icon: Workflow,
+            text: "Workflows agendados consultam Google Ads, Meta Ads e GA4.",
+          },
+          {
+            icon: CheckCircle2,
+            text: "O n8n grava no Supabase; o painel lê e mostra as métricas.",
+          },
+        ].map(({ icon: Icon, text }, index) => (
+          <div key={text} className="flex gap-3">
+            <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-brand-soft text-brand-ink">
+              <Icon size={13} />
             </span>
-            <p className="text-sm text-muted">{item}</p>
+            <p className="text-sm text-muted">
+              <span className="font-semibold text-ink">{index + 1}.</span>{" "}
+              {text}
+            </p>
           </div>
         ))}
       </CardBody>

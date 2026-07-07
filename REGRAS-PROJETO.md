@@ -403,3 +403,11 @@ dashboard Vercel + Redeploy. O dev local (localhost:3000) reflete tudo.
   `npm run build:n8n:meta`. Validações: `npm run lint` e `npm run build`
   verdes. Pendente: corrigir role do System User no app Meta, gerar token,
   criar variáveis no n8n, importar/ativar workflow e testar E2E.
+- **2026-07-07 (guia de cadastro de integrações)** — Página Integrações
+  (`/clientes`) ganhou checklist operacional para cliente novo: Google Ads
+  (vínculo MCC → Customer ID), Meta Ads (Business/conta compartilhada →
+  System User/token → `act_...`) e GA4/GTM (Property ID, domínio e container).
+  Formulário recebeu textos de apoio nos campos e reforço de que ID não é
+  credencial; tokens ficam no n8n. Server action passou a normalizar Meta Ad
+  Account ID numérico para `act_<id>`. Validações: `npm run lint` e
+  `npm run build` verdes.
