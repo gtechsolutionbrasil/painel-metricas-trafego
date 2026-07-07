@@ -91,7 +91,39 @@ adicionar manualmente; (2) `googleAds:search` NÃO aceita `pageSize` no body
 (fixo 10.000); (3) `cost_micros` ÷ 1.000.000; (4) `login-customer-id` = MCC sem
 hífens.
 
-## >>> HANDOFF 2026-07-07 (Claude → Codex): onde parou o Meta Ads
+## >>> RESOLVIDO 2026-07-07 (Claude): Meta Ads ligado
+
+O bloqueio do token foi **resolvido** — o usuário criou o App Meta e gerou um
+token **SYSTEM_USER long-lived (não expira)** com scopes `ads_read`,
+`ads_management`, `read_insights`, `business_management`. O token lê **2 contas**
+com uma credencial só: MADEIREIRA ADS (`act_1176296527286706`) e CA - Clínica
+(`act_1343805573609263`).
+
+**Feito nesta sessão:**
+- Validado token via Graph API (permissões + contas + validade/debug_token).
+- **Corrigida a lógica de conversão** do workflow: a regex do Codex somava vários
+  tipos de `messaging` (dupla contagem). Trocada por **allowlist canônica** — a
+  conversão de campanha de mensagem é `onsite_conversion.messaging_conversation_started_7d`
+  ("Conversas iniciadas"), + leads/compras. Ver `CONVERSION_ACTION_TYPES` no
+  Code node e em `scripts/meta-sync.mjs`.
+- Criado **`scripts/meta-sync.mjs`** (mesma lógica do workflow, rodável local p/
+  backfill/teste; lê env `SUPABASE_URL`/`SUPABASE_SERVICE_ROLE_KEY`/`META_ACCESS_TOKEN`).
+- **Supabase populado (Madeireira, 30d):** R$ 289,97 · 83.009 impressões · 510
+  cliques · **26 conversas** · 21 campanhas (2 ativas). Números batem 1:1 com a
+  API Meta. `integration_accounts` da Madeireira → `connected`.
+- Workflow n8n **`CHPOb8H46wVXjBDw`** ("Meta Ads -> Supabase"): jsCode já
+  corrigido via MCP. **FALTA (ação do usuário):** colar os 3 segredos no node
+  "Configurar segredos" (`SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`,
+  `META_ACCESS_TOKEN` — bloqueado p/ o agente gravar o token em texto no n8n) e
+  **ativar** (schedule 07:00). Aí a coleta vira diária/automática.
+
+**Pendências Meta:** cadastrar a conta **CA - Clínica** (criar `client` + linha
+`integration_accounts` provider=meta_ads external_id `act_1343805573609263`) p/
+o fluxo puxar ela também. Página `/meta` já renderiza (usa `ChannelPage`).
+
+---
+
+### Handoff original (contexto histórico, já resolvido)
 
 **Objetivo em curso:** ligar a ingestão do **Meta Ads** (workflow n8n Meta →
 Supabase, análogo ao Google Ads id `Ui5tKcvG1aRmWptS`). Codex já preparou o
