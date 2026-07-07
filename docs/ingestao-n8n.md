@@ -106,6 +106,14 @@ Body: array de objetos com as colunas acima (envie em lote).
 1. **Meta Ads → Supabase** — agendado (ex.: a cada hora ou 1×/dia). Para cada
    cliente: Insights API por dia/campanha → mapeia → upsert em `ad_metrics`
    (`platform='meta'`, `account_external_id='act_...'`).
+   - Workflow importável do projeto: `n8n/meta-ads-supabase.workflow.json`.
+   - Variáveis esperadas no n8n: `SUPABASE_URL`,
+     `SUPABASE_SERVICE_ROLE_KEY`, `META_ACCESS_TOKEN`; opcionais:
+     `META_GRAPH_API_VERSION` (padrão `v21.0`) e `META_DATE_PRESET` (padrão
+     `last_30d`).
+   - Também atualiza `ad_campaigns` para o filtro de campanhas e grava ações
+     relevantes em `ad_conversion_actions` (lead, contato, mensagens/WhatsApp,
+     compra).
 2. **Google Ads → Supabase** — idem, `platform='google'`,
    `account_external_id='<customer_id>'`.
 3. **GA4 → Supabase** — Data API (runReport) por dia/source/medium → upsert em

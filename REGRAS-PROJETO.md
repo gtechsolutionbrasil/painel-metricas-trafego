@@ -64,6 +64,12 @@ sessão via Supabase Admin API; role admin preservada).
   (execução 3136: 165 keywords + 33 click types + 13 ações + 14 regiões da
   Madeireira). Contas sem vínculo MCC não derrubam o fluxo (onError continue).
   Roda 06:30.
+- **Meta Ads → Supabase**: workflow importável preparado no repo
+  (`n8n/meta-ads-supabase.workflow.json`, gerado de
+  `n8n/meta-ads-sync-code.js`). Conta Madeireira
+  `act_1176296527286706` cadastrada em `integration_accounts` com status
+  `pending`. Falta gerar o token System User, criar as variáveis no n8n,
+  importar/ativar o workflow e testar E2E.
 - Credenciais n8n: `Supabase - Painel Métricas` (sfp0d2ZkWr7zz5wM),
   `Google Analytics account` (I8evqpJf7UDmKsGB),
   `Google Ads account` (tcBb8A3FKBjc2nOt). OAuth client reaproveitado
@@ -86,7 +92,9 @@ hífens.
 ## >>> HANDOFF 2026-07-07 (Claude → Codex): onde parou o Meta Ads
 
 **Objetivo em curso:** ligar a ingestão do **Meta Ads** (workflow n8n Meta →
-Supabase, análogo ao Google Ads id `Ui5tKcvG1aRmWptS`). Falta só o **token**.
+Supabase, análogo ao Google Ads id `Ui5tKcvG1aRmWptS`). Codex já preparou o
+workflow importável e cadastrou a conta Meta da Madeireira; falta gerar o
+**token**, criar as variáveis no n8n, importar/ativar e testar E2E.
 
 **Estado do token (parou aqui):** no Meta Business Settings da BM
 **madeireiraadriana** (business_id `765350283972003`) → Usuários do sistema, o
@@ -104,18 +112,20 @@ app"**.
     **`ads_read`** (e `read_insights` se aparecer) → expiração "Nunca" → Gerar.
     Alternativa: selecionar outro app onde o system user já tenha função.
 
-**Depois de ter o token (próximos passos do Codex):**
-1. Criar credencial no n8n (NÃO colar token em chat): tipo HTTP Header Auth ou
-   Facebook Graph API, com o access token. Anotar o id da credencial.
-2. Montar workflow n8n "Meta Ads → Supabase" (espelhar o do Google): Schedule →
+**Depois de ter o token (próximos passos):**
+1. Criar variáveis no n8n (NÃO colar token em chat): `SUPABASE_URL`,
+   `SUPABASE_SERVICE_ROLE_KEY`, `META_ACCESS_TOKEN`; opcionais
+   `META_GRAPH_API_VERSION` e `META_DATE_PRESET`.
+2. Importar o workflow `n8n/meta-ads-supabase.workflow.json`: Schedule →
    buscar `integration_accounts` provider=`meta_ads` → Graph API
    `GET /v21.0/act_<id>/insights` (fields: spend, impressions, clicks, reach,
    actions, cost_per_action_type; level=campaign; time_increment=1;
    date_preset=last_30d) → Code mapeia → upsert `ad_metrics` (platform='meta').
    Meta TEM **reach/alcance** (Google não tem) e conversões de **mensagem/
    conversa** (WhatsApp/Direct) via `actions`.
-3. Cadastrar a conta Meta em `integration_accounts` (provider `meta_ads`,
-   external_id `act_1176296527286706`, client Madeireira `b304d378-...`).
+3. Conta Meta já cadastrada em `integration_accounts` (provider `meta_ads`,
+   external_id `act_1176296527286706`, client Madeireira
+   `b304d378-ca60-42df-bdb3-57a77c025e5f`, status `pending`).
 4. Testar E2E (webhook temp), validar no banco, ativar schedule.
 5. UI: página `/meta` já existe (usa `ChannelPage platform="meta"`) — quando
    houver dado real de meta em `ad_metrics`, aparece sozinha.
@@ -382,3 +392,14 @@ dashboard Vercel + Redeploy. O dev local (localhost:3000) reflete tudo.
   (WEBSITE/GTM) e "No Google" (perfil/Maps/anúncio), com participação dentro
   de cada grupo. Testado E2E (Madeireira: tudo GOOGLE_HOSTED/CALL_FROM_ADS,
   0 WEBSITE — confirma o GTM quebrado). Também: ROAS já removido antes.
+- **2026-07-07 (Meta Ads prep Codex)** — Conta Meta da Madeireira
+  (`act_1176296527286706`) cadastrada no Supabase em `integration_accounts`
+  com status `pending`. Criado pacote n8n para Meta Ads:
+  `n8n/meta-ads-sync-code.js` (Code node com leitura de contas, Graph API
+  Insights/Campaigns, upsert em `ad_metrics`, `ad_campaigns`,
+  `ad_conversion_actions`, atualização de status e `sync_runs`),
+  `scripts/build-n8n-meta-workflow.mjs`, `n8n/meta-ads-supabase.workflow.json`
+  e `n8n/README.md`. Documentado em `docs/ingestao-n8n.md`; comando
+  `npm run build:n8n:meta`. Validações: `npm run lint` e `npm run build`
+  verdes. Pendente: corrigir role do System User no app Meta, gerar token,
+  criar variáveis no n8n, importar/ativar workflow e testar E2E.

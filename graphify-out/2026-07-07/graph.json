@@ -56,7 +56,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "eslint_config",
-      "community": 29,
+      "community": 5,
       "norm_label": "eslint.config.mjs"
     },
     {
@@ -66,7 +66,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "eslint_config_eslintconfig",
-      "community": 29,
+      "community": 5,
       "norm_label": "eslintconfig"
     },
     {
@@ -606,7 +606,7 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "src_app_dash_clientes_page_clientespage",
-      "community": 29,
+      "community": 28,
       "norm_label": "clientespage()"
     },
     {
@@ -716,7 +716,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_dash_layout",
-      "community": 29,
+      "community": 28,
       "norm_label": "layout.tsx"
     },
     {
@@ -726,7 +726,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_app_dash_layout_dashlayout",
-      "community": 29,
+      "community": 28,
       "norm_label": "dashlayout()"
     },
     {
@@ -736,7 +736,7 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "src_app_dash_layout_demobanner",
-      "community": 29,
+      "community": 28,
       "norm_label": "demobanner()"
     },
     {
@@ -1286,7 +1286,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_layout_topbar",
-      "community": 29,
+      "community": 2,
       "norm_label": "topbar.tsx"
     },
     {
@@ -1296,7 +1296,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "src_components_layout_topbar_topbar",
-      "community": 29,
+      "community": 2,
       "norm_label": "topbar()"
     },
     {
@@ -1306,7 +1306,7 @@
       "source_location": "L104",
       "_origin": "ast",
       "id": "src_components_layout_topbar_clientoption",
-      "community": 29,
+      "community": 2,
       "norm_label": "clientoption()"
     },
     {
@@ -1876,7 +1876,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate",
-      "community": 28,
+      "community": 0,
       "norm_label": "aggregate.ts"
     },
     {
@@ -1886,7 +1886,7 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_conversionsource",
-      "community": 28,
+      "community": 0,
       "norm_label": "conversionsource()"
     },
     {
@@ -1896,7 +1896,7 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_adkpis",
-      "community": 28,
+      "community": 1,
       "norm_label": "adkpis"
     },
     {
@@ -1906,7 +1906,7 @@
       "source_location": "L77",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_addaypoint",
-      "community": 28,
+      "community": 0,
       "norm_label": "addaypoint"
     },
     {
@@ -1926,7 +1926,7 @@
       "source_location": "L100",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_platformbreak",
-      "community": 28,
+      "community": 0,
       "norm_label": "platformbreak"
     },
     {
@@ -1936,7 +1936,7 @@
       "source_location": "L109",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_platform_label",
-      "community": 28,
+      "community": 0,
       "norm_label": "platform_label"
     },
     {
@@ -1956,7 +1956,7 @@
       "source_location": "L137",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_campaignrow",
-      "community": 28,
+      "community": 0,
       "norm_label": "campaignrow"
     },
     {
@@ -1966,7 +1966,7 @@
       "source_location": "L152",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_adbycampaign",
-      "community": 28,
+      "community": 0,
       "norm_label": "adbycampaign()"
     },
     {
@@ -1976,7 +1976,7 @@
       "source_location": "L200",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_webkpis",
-      "community": 28,
+      "community": 1,
       "norm_label": "webkpis"
     },
     {
@@ -1986,7 +1986,7 @@
       "source_location": "L223",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_webdaypoint",
-      "community": 28,
+      "community": 0,
       "norm_label": "webdaypoint"
     },
     {
@@ -1996,7 +1996,7 @@
       "source_location": "L225",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_webbyday",
-      "community": 1,
+      "community": 0,
       "norm_label": "webbyday()"
     },
     {
@@ -2006,7 +2006,7 @@
       "source_location": "L236",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_sourcerow",
-      "community": 28,
+      "community": 0,
       "norm_label": "sourcerow"
     },
     {
@@ -2016,7 +2016,7 @@
       "source_location": "L246",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_keywordrow",
-      "community": 28,
+      "community": 0,
       "norm_label": "keywordrow"
     },
     {
@@ -2036,7 +2036,7 @@
       "source_location": "L290",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_searchtermrow",
-      "community": 28,
+      "community": 0,
       "norm_label": "searchtermrow"
     },
     {
@@ -2056,7 +2056,7 @@
       "source_location": "L323",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_adgrouprow",
-      "community": 28,
+      "community": 0,
       "norm_label": "adgrouprow"
     },
     {
@@ -2076,7 +2076,7 @@
       "source_location": "L361",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_georow",
-      "community": 28,
+      "community": 0,
       "norm_label": "georow"
     },
     {
@@ -2096,7 +2096,7 @@
       "source_location": "L384",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_clicktyperow",
-      "community": 28,
+      "community": 0,
       "norm_label": "clicktyperow"
     },
     {
@@ -2106,7 +2106,7 @@
       "source_location": "L386",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_byclicktype",
-      "community": 28,
+      "community": 0,
       "norm_label": "byclicktype()"
     },
     {
@@ -2116,7 +2116,7 @@
       "source_location": "L401",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_conversionactionrow",
-      "community": 28,
+      "community": 0,
       "norm_label": "conversionactionrow"
     },
     {
@@ -2126,7 +2126,7 @@
       "source_location": "L409",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_conversionactiongroup",
-      "community": 28,
+      "community": 0,
       "norm_label": "conversionactiongroup"
     },
     {
@@ -2136,7 +2136,7 @@
       "source_location": "L417",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_byconversionactiongrouped",
-      "community": 28,
+      "community": 0,
       "norm_label": "byconversionactiongrouped()"
     },
     {
@@ -2146,7 +2146,7 @@
       "source_location": "L451",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_webbysource",
-      "community": 1,
+      "community": 0,
       "norm_label": "webbysource()"
     },
     {
@@ -2156,7 +2156,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_metrics_queries",
-      "community": 0,
+      "community": 28,
       "norm_label": "queries.ts"
     },
     {
@@ -2166,7 +2166,7 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_admetricrow",
-      "community": 0,
+      "community": 28,
       "norm_label": "admetricrow"
     },
     {
@@ -2176,7 +2176,7 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_webmetricrow",
-      "community": 0,
+      "community": 28,
       "norm_label": "webmetricrow"
     },
     {
@@ -2186,7 +2186,7 @@
       "source_location": "L57",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_logqueryerror",
-      "community": 29,
+      "community": 28,
       "norm_label": "logqueryerror()"
     },
     {
@@ -2196,7 +2196,7 @@
       "source_location": "L66",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_getclients",
-      "community": 29,
+      "community": 28,
       "norm_label": "getclients()"
     },
     {
@@ -2206,7 +2206,7 @@
       "source_location": "L88",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_getintegrationaccounts",
-      "community": 29,
+      "community": 28,
       "norm_label": "getintegrationaccounts()"
     },
     {
@@ -2216,7 +2216,7 @@
       "source_location": "L125",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_getadmetrics",
-      "community": 1,
+      "community": 28,
       "norm_label": "getadmetrics()"
     },
     {
@@ -2226,7 +2226,7 @@
       "source_location": "L180",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_breakdownrow",
-      "community": 0,
+      "community": 28,
       "norm_label": "breakdownrow"
     },
     {
@@ -2276,7 +2276,7 @@
       "source_location": "L277",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_getadcampaigns",
-      "community": 29,
+      "community": 28,
       "norm_label": "getadcampaigns()"
     },
     {
@@ -2316,7 +2316,7 @@
       "source_location": "L367",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_getwebmetrics",
-      "community": 1,
+      "community": 28,
       "norm_label": "getwebmetrics()"
     },
     {
@@ -2336,7 +2336,7 @@
       "source_location": "L419",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_resolveintegrationaccount",
-      "community": 0,
+      "community": 28,
       "norm_label": "resolveintegrationaccount()"
     },
     {
@@ -2346,7 +2346,7 @@
       "source_location": "L428",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_filteradmetrics",
-      "community": 1,
+      "community": 28,
       "norm_label": "filteradmetrics()"
     },
     {
@@ -2356,7 +2356,7 @@
       "source_location": "L443",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_filterwebmetrics",
-      "community": 1,
+      "community": 28,
       "norm_label": "filterwebmetrics()"
     },
     {
@@ -2366,7 +2366,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_mock_data",
-      "community": 0,
+      "community": 11,
       "norm_label": "data.ts"
     },
     {
@@ -2376,7 +2376,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "src_lib_mock_data_mock_clients",
-      "community": 0,
+      "community": 11,
       "norm_label": "mock_clients"
     },
     {
@@ -2386,7 +2386,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "src_lib_mock_data_mock_integration_accounts",
-      "community": 0,
+      "community": 11,
       "norm_label": "mock_integration_accounts"
     },
     {
@@ -2396,7 +2396,7 @@
       "source_location": "L51",
       "_origin": "ast",
       "id": "src_lib_mock_data_campaigns",
-      "community": 0,
+      "community": 11,
       "norm_label": "campaigns"
     },
     {
@@ -2406,7 +2406,7 @@
       "source_location": "L66",
       "_origin": "ast",
       "id": "src_lib_mock_data_web_sources",
-      "community": 0,
+      "community": 11,
       "norm_label": "web_sources"
     },
     {
@@ -2416,7 +2416,7 @@
       "source_location": "L76",
       "_origin": "ast",
       "id": "src_lib_mock_data_hashseed",
-      "community": 0,
+      "community": 11,
       "norm_label": "hashseed()"
     },
     {
@@ -2426,7 +2426,7 @@
       "source_location": "L85",
       "_origin": "ast",
       "id": "src_lib_mock_data_rng",
-      "community": 0,
+      "community": 11,
       "norm_label": "rng()"
     },
     {
@@ -2436,7 +2436,7 @@
       "source_location": "L95",
       "_origin": "ast",
       "id": "src_lib_mock_data_eachdate",
-      "community": 0,
+      "community": 11,
       "norm_label": "eachdate()"
     },
     {
@@ -2446,7 +2446,7 @@
       "source_location": "L107",
       "_origin": "ast",
       "id": "src_lib_mock_data_client_scale",
-      "community": 0,
+      "community": 11,
       "norm_label": "client_scale"
     },
     {
@@ -2456,7 +2456,7 @@
       "source_location": "L114",
       "_origin": "ast",
       "id": "src_lib_mock_data_dayfactor",
-      "community": 0,
+      "community": 11,
       "norm_label": "dayfactor()"
     },
     {
@@ -2466,7 +2466,7 @@
       "source_location": "L121",
       "_origin": "ast",
       "id": "src_lib_mock_data_generateadmetrics",
-      "community": 0,
+      "community": 11,
       "norm_label": "generateadmetrics()"
     },
     {
@@ -2476,7 +2476,7 @@
       "source_location": "L161",
       "_origin": "ast",
       "id": "src_lib_mock_data_generatewebmetrics",
-      "community": 0,
+      "community": 11,
       "norm_label": "generatewebmetrics()"
     },
     {
@@ -2636,7 +2636,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_supabase_config",
-      "community": 29,
+      "community": 5,
       "norm_label": "config.ts"
     },
     {
@@ -2646,7 +2646,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "src_lib_supabase_config_issupabaseconfigured",
-      "community": 29,
+      "community": 5,
       "norm_label": "issupabaseconfigured"
     },
     {
@@ -2656,7 +2656,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_supabase_server",
-      "community": 29,
+      "community": 5,
       "norm_label": "server.ts"
     },
     {
@@ -2666,7 +2666,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "src_lib_supabase_server_createsupabaseserverclient",
-      "community": 29,
+      "community": 28,
       "norm_label": "createsupabaseserverclient()"
     },
     {
@@ -2676,7 +2676,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_supabase_updatesession",
-      "community": 29,
+      "community": 5,
       "norm_label": "updatesession.ts"
     },
     {
@@ -2686,7 +2686,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "src_lib_supabase_updatesession_updatesession",
-      "community": 29,
+      "community": 5,
       "norm_label": "updatesession()"
     },
     {
@@ -2706,7 +2706,7 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "src_lib_types_platform",
-      "community": 0,
+      "community": 11,
       "norm_label": "platform"
     },
     {
@@ -2736,7 +2736,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_lib_types_client",
-      "community": 0,
+      "community": 2,
       "norm_label": "client"
     },
     {
@@ -2746,7 +2746,7 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "src_lib_types_integrationaccount",
-      "community": 0,
+      "community": 29,
       "norm_label": "integrationaccount"
     },
     {
@@ -2836,7 +2836,7 @@
       "source_location": "L117",
       "_origin": "ast",
       "id": "src_lib_types_conversionsource",
-      "community": 28,
+      "community": 0,
       "norm_label": "conversionsource"
     },
     {
@@ -2856,7 +2856,7 @@
       "source_location": "L133",
       "_origin": "ast",
       "id": "src_lib_types_daterange",
-      "community": 0,
+      "community": 2,
       "norm_label": "daterange"
     },
     {
@@ -2866,7 +2866,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_proxy",
-      "community": 29,
+      "community": 5,
       "norm_label": "proxy.ts"
     },
     {
@@ -2876,7 +2876,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "src_proxy_proxy",
-      "community": 29,
+      "community": 5,
       "norm_label": "proxy()"
     },
     {
@@ -2886,7 +2886,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "src_proxy_config",
-      "community": 29,
+      "community": 5,
       "norm_label": "config"
     },
     {
@@ -3240,10 +3240,20 @@
       "norm_label": "estado atual"
     },
     {
-      "label": "Pend\u00eancias / pr\u00f3ximos passos",
+      "label": ">>> HANDOFF 2026-07-07 (Claude \u2192 Codex): onde parou o Meta Ads",
       "file_type": "document",
       "source_file": "REGRAS-PROJETO.md",
       "source_location": "L86",
+      "_origin": "ast",
+      "id": "regras_projeto_handoff_2026_07_07_claude_codex_onde_parou_o_meta_ads",
+      "community": 7,
+      "norm_label": ">>> handoff 2026-07-07 (claude \u2192 codex): onde parou o meta ads"
+    },
+    {
+      "label": "Pend\u00eancias / pr\u00f3ximos passos",
+      "file_type": "document",
+      "source_file": "REGRAS-PROJETO.md",
+      "source_location": "L141",
       "_origin": "ast",
       "id": "regras_projeto_pend\u00eancias_pr\u00f3ximos_passos",
       "community": 7,
@@ -3253,7 +3263,7 @@
       "label": "Acesso (dev)",
       "file_type": "document",
       "source_file": "REGRAS-PROJETO.md",
-      "source_location": "L153",
+      "source_location": "L208",
       "_origin": "ast",
       "id": "regras_projeto_acesso_dev",
       "community": 7,
@@ -3263,7 +3273,7 @@
       "label": "Hist\u00f3rico de itera\u00e7\u00f5es",
       "file_type": "document",
       "source_file": "REGRAS-PROJETO.md",
-      "source_location": "L164",
+      "source_location": "L219",
       "_origin": "ast",
       "id": "regras_projeto_hist\u00f3rico_de_itera\u00e7\u00f5es",
       "community": 7,
@@ -10700,7 +10710,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "REGRAS-PROJETO.md",
-      "source_location": "L153",
+      "source_location": "L208",
       "weight": 1.0,
       "source": "regras_projeto_regras_projeto_painel_de_m\u00e9tricas_de_tr\u00e1fego_gtech_solution",
       "target": "regras_projeto_acesso_dev",
@@ -10730,7 +10740,17 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "REGRAS-PROJETO.md",
-      "source_location": "L164",
+      "source_location": "L86",
+      "weight": 1.0,
+      "source": "regras_projeto_regras_projeto_painel_de_m\u00e9tricas_de_tr\u00e1fego_gtech_solution",
+      "target": "regras_projeto_handoff_2026_07_07_claude_codex_onde_parou_o_meta_ads",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "REGRAS-PROJETO.md",
+      "source_location": "L219",
       "weight": 1.0,
       "source": "regras_projeto_regras_projeto_painel_de_m\u00e9tricas_de_tr\u00e1fego_gtech_solution",
       "target": "regras_projeto_hist\u00f3rico_de_itera\u00e7\u00f5es",
@@ -10750,7 +10770,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "REGRAS-PROJETO.md",
-      "source_location": "L86",
+      "source_location": "L141",
       "weight": 1.0,
       "source": "regras_projeto_regras_projeto_painel_de_m\u00e9tricas_de_tr\u00e1fego_gtech_solution",
       "target": "regras_projeto_pend\u00eancias_pr\u00f3ximos_passos",
@@ -10992,5 +11012,5 @@
       "source_file": "README.md"
     }
   ],
-  "built_at_commit": "2ebe9e98c8b2d02ad8150945817d97a5be4d8f74"
+  "built_at_commit": "1a3d4d18d8fa59e068a9c7fd36e87e33b812dbbd"
 }

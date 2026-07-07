@@ -56,7 +56,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "eslint_config",
-      "community": 5,
+      "community": 29,
       "norm_label": "eslint.config.mjs"
     },
     {
@@ -66,8 +66,368 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "eslint_config_eslintconfig",
-      "community": 5,
+      "community": 29,
       "norm_label": "eslintconfig"
+    },
+    {
+      "label": "meta-ads-sync-code.js",
+      "file_type": "code",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "n8n_meta_ads_sync_code",
+      "community": 11,
+      "norm_label": "meta-ads-sync-code.js"
+    },
+    {
+      "label": "SUPABASE_URL",
+      "file_type": "code",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "n8n_meta_ads_sync_code_supabase_url",
+      "community": 11,
+      "norm_label": "supabase_url"
+    },
+    {
+      "label": "SUPABASE_SERVICE_ROLE_KEY",
+      "file_type": "code",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "n8n_meta_ads_sync_code_supabase_service_role_key",
+      "community": 11,
+      "norm_label": "supabase_service_role_key"
+    },
+    {
+      "label": "META_ACCESS_TOKEN",
+      "file_type": "code",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "n8n_meta_ads_sync_code_meta_access_token",
+      "community": 11,
+      "norm_label": "meta_access_token"
+    },
+    {
+      "label": "META_GRAPH_API_VERSION",
+      "file_type": "code",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L6",
+      "_origin": "ast",
+      "id": "n8n_meta_ads_sync_code_meta_graph_api_version",
+      "community": 11,
+      "norm_label": "meta_graph_api_version"
+    },
+    {
+      "label": "META_DATE_PRESET",
+      "file_type": "code",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "n8n_meta_ads_sync_code_meta_date_preset",
+      "community": 11,
+      "norm_label": "meta_date_preset"
+    },
+    {
+      "label": "STARTED_AT",
+      "file_type": "code",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L8",
+      "_origin": "ast",
+      "id": "n8n_meta_ads_sync_code_started_at",
+      "community": 11,
+      "norm_label": "started_at"
+    },
+    {
+      "label": "varValue()",
+      "file_type": "code",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L12",
+      "_origin": "ast",
+      "id": "n8n_meta_ads_sync_code_varvalue",
+      "community": 11,
+      "norm_label": "varvalue()"
+    },
+    {
+      "label": "requiredVar()",
+      "file_type": "code",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L17",
+      "_origin": "ast",
+      "id": "n8n_meta_ads_sync_code_requiredvar",
+      "community": 11,
+      "norm_label": "requiredvar()"
+    },
+    {
+      "label": "numeric()",
+      "file_type": "code",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L25",
+      "_origin": "ast",
+      "id": "n8n_meta_ads_sync_code_numeric",
+      "community": 11,
+      "norm_label": "numeric()"
+    },
+    {
+      "label": "integer()",
+      "file_type": "code",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L30",
+      "_origin": "ast",
+      "id": "n8n_meta_ads_sync_code_integer",
+      "community": 11,
+      "norm_label": "integer()"
+    },
+    {
+      "label": "money()",
+      "file_type": "code",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L34",
+      "_origin": "ast",
+      "id": "n8n_meta_ads_sync_code_money",
+      "community": 11,
+      "norm_label": "money()"
+    },
+    {
+      "label": "buildUrl()",
+      "file_type": "code",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L38",
+      "_origin": "ast",
+      "id": "n8n_meta_ads_sync_code_buildurl",
+      "community": 11,
+      "norm_label": "buildurl()"
+    },
+    {
+      "label": "supabaseHeaders()",
+      "file_type": "code",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L47",
+      "_origin": "ast",
+      "id": "n8n_meta_ads_sync_code_supabaseheaders",
+      "community": 11,
+      "norm_label": "supabaseheaders()"
+    },
+    {
+      "label": "requestJson()",
+      "file_type": "code",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L56",
+      "_origin": "ast",
+      "id": "n8n_meta_ads_sync_code_requestjson",
+      "community": 11,
+      "norm_label": "requestjson()"
+    },
+    {
+      "label": "supabaseRequest()",
+      "file_type": "code",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L72",
+      "_origin": "ast",
+      "id": "n8n_meta_ads_sync_code_supabaserequest",
+      "community": 11,
+      "norm_label": "supabaserequest()"
+    },
+    {
+      "label": "upsert()",
+      "file_type": "code",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L81",
+      "_origin": "ast",
+      "id": "n8n_meta_ads_sync_code_upsert",
+      "community": 11,
+      "norm_label": "upsert()"
+    },
+    {
+      "label": "patchIntegrationAccount()",
+      "file_type": "code",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L97",
+      "_origin": "ast",
+      "id": "n8n_meta_ads_sync_code_patchintegrationaccount",
+      "community": 11,
+      "norm_label": "patchintegrationaccount()"
+    },
+    {
+      "label": "insertSyncRun()",
+      "file_type": "code",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L105",
+      "_origin": "ast",
+      "id": "n8n_meta_ads_sync_code_insertsyncrun",
+      "community": 11,
+      "norm_label": "insertsyncrun()"
+    },
+    {
+      "label": "fetchMetaAccounts()",
+      "file_type": "code",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L112",
+      "_origin": "ast",
+      "id": "n8n_meta_ads_sync_code_fetchmetaaccounts",
+      "community": 11,
+      "norm_label": "fetchmetaaccounts()"
+    },
+    {
+      "label": "metaHeaders()",
+      "file_type": "code",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L122",
+      "_origin": "ast",
+      "id": "n8n_meta_ads_sync_code_metaheaders",
+      "community": 11,
+      "norm_label": "metaheaders()"
+    },
+    {
+      "label": "metaGet()",
+      "file_type": "code",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L128",
+      "_origin": "ast",
+      "id": "n8n_meta_ads_sync_code_metaget",
+      "community": 11,
+      "norm_label": "metaget()"
+    },
+    {
+      "label": "metaGetAll()",
+      "file_type": "code",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L136",
+      "_origin": "ast",
+      "id": "n8n_meta_ads_sync_code_metagetall",
+      "community": 11,
+      "norm_label": "metagetall()"
+    },
+    {
+      "label": "isConversionAction()",
+      "file_type": "code",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L154",
+      "_origin": "ast",
+      "id": "n8n_meta_ads_sync_code_isconversionaction",
+      "community": 11,
+      "norm_label": "isconversionaction()"
+    },
+    {
+      "label": "isRevenueAction()",
+      "file_type": "code",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L174",
+      "_origin": "ast",
+      "id": "n8n_meta_ads_sync_code_isrevenueaction",
+      "community": 11,
+      "norm_label": "isrevenueaction()"
+    },
+    {
+      "label": "actionOrigin()",
+      "file_type": "code",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L178",
+      "_origin": "ast",
+      "id": "n8n_meta_ads_sync_code_actionorigin",
+      "community": 11,
+      "norm_label": "actionorigin()"
+    },
+    {
+      "label": "conversionTotal()",
+      "file_type": "code",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L189",
+      "_origin": "ast",
+      "id": "n8n_meta_ads_sync_code_conversiontotal",
+      "community": 11,
+      "norm_label": "conversiontotal()"
+    },
+    {
+      "label": "revenueTotal()",
+      "file_type": "code",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L195",
+      "_origin": "ast",
+      "id": "n8n_meta_ads_sync_code_revenuetotal",
+      "community": 11,
+      "norm_label": "revenuetotal()"
+    },
+    {
+      "label": "normalizeStatus()",
+      "file_type": "code",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L201",
+      "_origin": "ast",
+      "id": "n8n_meta_ads_sync_code_normalizestatus",
+      "community": 11,
+      "norm_label": "normalizestatus()"
+    },
+    {
+      "label": "campaignName()",
+      "file_type": "code",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L209",
+      "_origin": "ast",
+      "id": "n8n_meta_ads_sync_code_campaignname",
+      "community": 11,
+      "norm_label": "campaignname()"
+    },
+    {
+      "label": "mapMetric()",
+      "file_type": "code",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L213",
+      "_origin": "ast",
+      "id": "n8n_meta_ads_sync_code_mapmetric",
+      "community": 11,
+      "norm_label": "mapmetric()"
+    },
+    {
+      "label": "mapConversionActions()",
+      "file_type": "code",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L229",
+      "_origin": "ast",
+      "id": "n8n_meta_ads_sync_code_mapconversionactions",
+      "community": 11,
+      "norm_label": "mapconversionactions()"
+    },
+    {
+      "label": "mapCampaign()",
+      "file_type": "code",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L245",
+      "_origin": "ast",
+      "id": "n8n_meta_ads_sync_code_mapcampaign",
+      "community": 11,
+      "norm_label": "mapcampaign()"
+    },
+    {
+      "label": "collectAccount()",
+      "file_type": "code",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L256",
+      "_origin": "ast",
+      "id": "n8n_meta_ads_sync_code_collectaccount",
+      "community": 11,
+      "norm_label": "collectaccount()"
+    },
+    {
+      "label": "syncAccount()",
+      "file_type": "code",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L280",
+      "_origin": "ast",
+      "id": "n8n_meta_ads_sync_code_syncaccount",
+      "community": 11,
+      "norm_label": "syncaccount()"
+    },
+    {
+      "label": "summaries",
+      "file_type": "code",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L362",
+      "_origin": "ast",
+      "id": "n8n_meta_ads_sync_code_summaries",
+      "community": 11,
+      "norm_label": "summaries"
     },
     {
       "label": "next.config.ts",
@@ -170,10 +530,20 @@
       "norm_label": "start"
     },
     {
-      "label": "lint",
+      "label": "build:n8n:meta",
       "file_type": "code",
       "source_file": "package.json",
       "source_location": "L9",
+      "_origin": "ast",
+      "id": "package_scripts_build_n8n_meta",
+      "community": 4,
+      "norm_label": "build:n8n:meta"
+    },
+    {
+      "label": "lint",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L10",
       "_origin": "ast",
       "id": "package_scripts_lint",
       "community": 4,
@@ -183,7 +553,7 @@
       "label": "dependencies",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L11",
+      "source_location": "L12",
       "_origin": "ast",
       "id": "package_dependencies",
       "community": 4,
@@ -193,7 +563,7 @@
       "label": "@supabase/ssr",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L12",
+      "source_location": "L13",
       "_origin": "ast",
       "id": "package_dependencies_supabase_ssr",
       "community": 4,
@@ -203,7 +573,7 @@
       "label": "@supabase/supabase-js",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L13",
+      "source_location": "L14",
       "_origin": "ast",
       "id": "package_dependencies_supabase_supabase_js",
       "community": 4,
@@ -213,7 +583,7 @@
       "label": "date-fns",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L14",
+      "source_location": "L15",
       "_origin": "ast",
       "id": "package_dependencies_date_fns",
       "community": 4,
@@ -223,7 +593,7 @@
       "label": "lucide-react",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L15",
+      "source_location": "L16",
       "_origin": "ast",
       "id": "package_dependencies_lucide_react",
       "community": 4,
@@ -233,7 +603,7 @@
       "label": "next",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L16",
+      "source_location": "L17",
       "_origin": "ast",
       "id": "package_dependencies_next",
       "community": 4,
@@ -243,7 +613,7 @@
       "label": "react",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L17",
+      "source_location": "L18",
       "_origin": "ast",
       "id": "package_dependencies_react",
       "community": 4,
@@ -253,7 +623,7 @@
       "label": "react-dom",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L18",
+      "source_location": "L19",
       "_origin": "ast",
       "id": "package_dependencies_react_dom",
       "community": 4,
@@ -263,7 +633,7 @@
       "label": "recharts",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L19",
+      "source_location": "L20",
       "_origin": "ast",
       "id": "package_dependencies_recharts",
       "community": 4,
@@ -273,7 +643,7 @@
       "label": "zod",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L20",
+      "source_location": "L21",
       "_origin": "ast",
       "id": "package_dependencies_zod",
       "community": 4,
@@ -283,7 +653,7 @@
       "label": "devDependencies",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L22",
+      "source_location": "L23",
       "_origin": "ast",
       "id": "package_devdependencies",
       "community": 4,
@@ -293,7 +663,7 @@
       "label": "@tailwindcss/postcss",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L23",
+      "source_location": "L24",
       "_origin": "ast",
       "id": "package_devdependencies_tailwindcss_postcss",
       "community": 4,
@@ -303,7 +673,7 @@
       "label": "@types/node",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L24",
+      "source_location": "L25",
       "_origin": "ast",
       "id": "package_devdependencies_types_node",
       "community": 4,
@@ -313,7 +683,7 @@
       "label": "@types/react",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L25",
+      "source_location": "L26",
       "_origin": "ast",
       "id": "package_devdependencies_types_react",
       "community": 4,
@@ -323,7 +693,7 @@
       "label": "@types/react-dom",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L26",
+      "source_location": "L27",
       "_origin": "ast",
       "id": "package_devdependencies_types_react_dom",
       "community": 4,
@@ -333,7 +703,7 @@
       "label": "eslint",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L27",
+      "source_location": "L28",
       "_origin": "ast",
       "id": "package_devdependencies_eslint",
       "community": 4,
@@ -343,7 +713,7 @@
       "label": "eslint-config-next",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L28",
+      "source_location": "L29",
       "_origin": "ast",
       "id": "package_devdependencies_eslint_config_next",
       "community": 4,
@@ -353,7 +723,7 @@
       "label": "tailwindcss",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L29",
+      "source_location": "L30",
       "_origin": "ast",
       "id": "package_devdependencies_tailwindcss",
       "community": 4,
@@ -363,7 +733,7 @@
       "label": "typescript",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L30",
+      "source_location": "L31",
       "_origin": "ast",
       "id": "package_devdependencies_typescript",
       "community": 4,
@@ -388,6 +758,46 @@
       "id": "postcss_config_config",
       "community": 17,
       "norm_label": "config"
+    },
+    {
+      "label": "build-n8n-meta-workflow.mjs",
+      "file_type": "code",
+      "source_file": "scripts/build-n8n-meta-workflow.mjs",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "scripts_build_n8n_meta_workflow",
+      "community": 30,
+      "norm_label": "build-n8n-meta-workflow.mjs"
+    },
+    {
+      "label": "root",
+      "file_type": "code",
+      "source_file": "scripts/build-n8n-meta-workflow.mjs",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "scripts_build_n8n_meta_workflow_root",
+      "community": 30,
+      "norm_label": "root"
+    },
+    {
+      "label": "code",
+      "file_type": "code",
+      "source_file": "scripts/build-n8n-meta-workflow.mjs",
+      "source_location": "L6",
+      "_origin": "ast",
+      "id": "scripts_build_n8n_meta_workflow_code",
+      "community": 30,
+      "norm_label": "code"
+    },
+    {
+      "label": "workflow",
+      "file_type": "code",
+      "source_file": "scripts/build-n8n-meta-workflow.mjs",
+      "source_location": "L8",
+      "_origin": "ast",
+      "id": "scripts_build_n8n_meta_workflow_workflow",
+      "community": 30,
+      "norm_label": "workflow"
     },
     {
       "label": "page.tsx",
@@ -606,7 +1016,7 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "src_app_dash_clientes_page_clientespage",
-      "community": 28,
+      "community": 29,
       "norm_label": "clientespage()"
     },
     {
@@ -716,7 +1126,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_dash_layout",
-      "community": 28,
+      "community": 5,
       "norm_label": "layout.tsx"
     },
     {
@@ -726,7 +1136,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_app_dash_layout_dashlayout",
-      "community": 28,
+      "community": 5,
       "norm_label": "dashlayout()"
     },
     {
@@ -736,7 +1146,7 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "src_app_dash_layout_demobanner",
-      "community": 28,
+      "community": 5,
       "norm_label": "demobanner()"
     },
     {
@@ -1296,7 +1706,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "src_components_layout_topbar_topbar",
-      "community": 2,
+      "community": 5,
       "norm_label": "topbar()"
     },
     {
@@ -1876,7 +2286,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate",
-      "community": 0,
+      "community": 28,
       "norm_label": "aggregate.ts"
     },
     {
@@ -1886,7 +2296,7 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_conversionsource",
-      "community": 0,
+      "community": 28,
       "norm_label": "conversionsource()"
     },
     {
@@ -1906,7 +2316,7 @@
       "source_location": "L77",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_addaypoint",
-      "community": 0,
+      "community": 28,
       "norm_label": "addaypoint"
     },
     {
@@ -1926,7 +2336,7 @@
       "source_location": "L100",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_platformbreak",
-      "community": 0,
+      "community": 28,
       "norm_label": "platformbreak"
     },
     {
@@ -1936,7 +2346,7 @@
       "source_location": "L109",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_platform_label",
-      "community": 0,
+      "community": 28,
       "norm_label": "platform_label"
     },
     {
@@ -1956,7 +2366,7 @@
       "source_location": "L137",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_campaignrow",
-      "community": 0,
+      "community": 28,
       "norm_label": "campaignrow"
     },
     {
@@ -1966,7 +2376,7 @@
       "source_location": "L152",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_adbycampaign",
-      "community": 0,
+      "community": 1,
       "norm_label": "adbycampaign()"
     },
     {
@@ -1986,7 +2396,7 @@
       "source_location": "L223",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_webdaypoint",
-      "community": 0,
+      "community": 28,
       "norm_label": "webdaypoint"
     },
     {
@@ -1996,7 +2406,7 @@
       "source_location": "L225",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_webbyday",
-      "community": 0,
+      "community": 1,
       "norm_label": "webbyday()"
     },
     {
@@ -2006,7 +2416,7 @@
       "source_location": "L236",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_sourcerow",
-      "community": 0,
+      "community": 28,
       "norm_label": "sourcerow"
     },
     {
@@ -2016,7 +2426,7 @@
       "source_location": "L246",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_keywordrow",
-      "community": 0,
+      "community": 28,
       "norm_label": "keywordrow"
     },
     {
@@ -2036,7 +2446,7 @@
       "source_location": "L290",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_searchtermrow",
-      "community": 0,
+      "community": 28,
       "norm_label": "searchtermrow"
     },
     {
@@ -2056,7 +2466,7 @@
       "source_location": "L323",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_adgrouprow",
-      "community": 0,
+      "community": 28,
       "norm_label": "adgrouprow"
     },
     {
@@ -2076,7 +2486,7 @@
       "source_location": "L361",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_georow",
-      "community": 0,
+      "community": 28,
       "norm_label": "georow"
     },
     {
@@ -2096,7 +2506,7 @@
       "source_location": "L384",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_clicktyperow",
-      "community": 0,
+      "community": 28,
       "norm_label": "clicktyperow"
     },
     {
@@ -2106,7 +2516,7 @@
       "source_location": "L386",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_byclicktype",
-      "community": 0,
+      "community": 28,
       "norm_label": "byclicktype()"
     },
     {
@@ -2116,7 +2526,7 @@
       "source_location": "L401",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_conversionactionrow",
-      "community": 0,
+      "community": 28,
       "norm_label": "conversionactionrow"
     },
     {
@@ -2126,7 +2536,7 @@
       "source_location": "L409",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_conversionactiongroup",
-      "community": 0,
+      "community": 28,
       "norm_label": "conversionactiongroup"
     },
     {
@@ -2136,7 +2546,7 @@
       "source_location": "L417",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_byconversionactiongrouped",
-      "community": 0,
+      "community": 28,
       "norm_label": "byconversionactiongrouped()"
     },
     {
@@ -2146,7 +2556,7 @@
       "source_location": "L451",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_webbysource",
-      "community": 0,
+      "community": 1,
       "norm_label": "webbysource()"
     },
     {
@@ -2156,7 +2566,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_metrics_queries",
-      "community": 28,
+      "community": 0,
       "norm_label": "queries.ts"
     },
     {
@@ -2166,7 +2576,7 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_admetricrow",
-      "community": 28,
+      "community": 0,
       "norm_label": "admetricrow"
     },
     {
@@ -2176,7 +2586,7 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_webmetricrow",
-      "community": 28,
+      "community": 0,
       "norm_label": "webmetricrow"
     },
     {
@@ -2186,7 +2596,7 @@
       "source_location": "L57",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_logqueryerror",
-      "community": 28,
+      "community": 0,
       "norm_label": "logqueryerror()"
     },
     {
@@ -2196,7 +2606,7 @@
       "source_location": "L66",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_getclients",
-      "community": 28,
+      "community": 1,
       "norm_label": "getclients()"
     },
     {
@@ -2206,7 +2616,7 @@
       "source_location": "L88",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_getintegrationaccounts",
-      "community": 28,
+      "community": 29,
       "norm_label": "getintegrationaccounts()"
     },
     {
@@ -2216,7 +2626,7 @@
       "source_location": "L125",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_getadmetrics",
-      "community": 28,
+      "community": 0,
       "norm_label": "getadmetrics()"
     },
     {
@@ -2226,7 +2636,7 @@
       "source_location": "L180",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_breakdownrow",
-      "community": 28,
+      "community": 0,
       "norm_label": "breakdownrow"
     },
     {
@@ -2276,7 +2686,7 @@
       "source_location": "L277",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_getadcampaigns",
-      "community": 28,
+      "community": 0,
       "norm_label": "getadcampaigns()"
     },
     {
@@ -2316,7 +2726,7 @@
       "source_location": "L367",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_getwebmetrics",
-      "community": 28,
+      "community": 0,
       "norm_label": "getwebmetrics()"
     },
     {
@@ -2336,7 +2746,7 @@
       "source_location": "L419",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_resolveintegrationaccount",
-      "community": 28,
+      "community": 0,
       "norm_label": "resolveintegrationaccount()"
     },
     {
@@ -2346,7 +2756,7 @@
       "source_location": "L428",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_filteradmetrics",
-      "community": 28,
+      "community": 0,
       "norm_label": "filteradmetrics()"
     },
     {
@@ -2356,7 +2766,7 @@
       "source_location": "L443",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_filterwebmetrics",
-      "community": 28,
+      "community": 0,
       "norm_label": "filterwebmetrics()"
     },
     {
@@ -2366,7 +2776,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_mock_data",
-      "community": 11,
+      "community": 0,
       "norm_label": "data.ts"
     },
     {
@@ -2376,7 +2786,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "src_lib_mock_data_mock_clients",
-      "community": 11,
+      "community": 0,
       "norm_label": "mock_clients"
     },
     {
@@ -2386,7 +2796,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "src_lib_mock_data_mock_integration_accounts",
-      "community": 11,
+      "community": 0,
       "norm_label": "mock_integration_accounts"
     },
     {
@@ -2396,7 +2806,7 @@
       "source_location": "L51",
       "_origin": "ast",
       "id": "src_lib_mock_data_campaigns",
-      "community": 11,
+      "community": 0,
       "norm_label": "campaigns"
     },
     {
@@ -2406,7 +2816,7 @@
       "source_location": "L66",
       "_origin": "ast",
       "id": "src_lib_mock_data_web_sources",
-      "community": 11,
+      "community": 0,
       "norm_label": "web_sources"
     },
     {
@@ -2416,7 +2826,7 @@
       "source_location": "L76",
       "_origin": "ast",
       "id": "src_lib_mock_data_hashseed",
-      "community": 11,
+      "community": 0,
       "norm_label": "hashseed()"
     },
     {
@@ -2426,7 +2836,7 @@
       "source_location": "L85",
       "_origin": "ast",
       "id": "src_lib_mock_data_rng",
-      "community": 11,
+      "community": 0,
       "norm_label": "rng()"
     },
     {
@@ -2436,7 +2846,7 @@
       "source_location": "L95",
       "_origin": "ast",
       "id": "src_lib_mock_data_eachdate",
-      "community": 11,
+      "community": 0,
       "norm_label": "eachdate()"
     },
     {
@@ -2446,7 +2856,7 @@
       "source_location": "L107",
       "_origin": "ast",
       "id": "src_lib_mock_data_client_scale",
-      "community": 11,
+      "community": 0,
       "norm_label": "client_scale"
     },
     {
@@ -2456,7 +2866,7 @@
       "source_location": "L114",
       "_origin": "ast",
       "id": "src_lib_mock_data_dayfactor",
-      "community": 11,
+      "community": 0,
       "norm_label": "dayfactor()"
     },
     {
@@ -2466,7 +2876,7 @@
       "source_location": "L121",
       "_origin": "ast",
       "id": "src_lib_mock_data_generateadmetrics",
-      "community": 11,
+      "community": 0,
       "norm_label": "generateadmetrics()"
     },
     {
@@ -2476,7 +2886,7 @@
       "source_location": "L161",
       "_origin": "ast",
       "id": "src_lib_mock_data_generatewebmetrics",
-      "community": 11,
+      "community": 0,
       "norm_label": "generatewebmetrics()"
     },
     {
@@ -2636,7 +3046,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_supabase_config",
-      "community": 5,
+      "community": 29,
       "norm_label": "config.ts"
     },
     {
@@ -2646,7 +3056,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "src_lib_supabase_config_issupabaseconfigured",
-      "community": 5,
+      "community": 29,
       "norm_label": "issupabaseconfigured"
     },
     {
@@ -2656,7 +3066,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_supabase_server",
-      "community": 5,
+      "community": 29,
       "norm_label": "server.ts"
     },
     {
@@ -2666,7 +3076,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "src_lib_supabase_server_createsupabaseserverclient",
-      "community": 28,
+      "community": 29,
       "norm_label": "createsupabaseserverclient()"
     },
     {
@@ -2676,7 +3086,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_supabase_updatesession",
-      "community": 5,
+      "community": 29,
       "norm_label": "updatesession.ts"
     },
     {
@@ -2686,7 +3096,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "src_lib_supabase_updatesession_updatesession",
-      "community": 5,
+      "community": 29,
       "norm_label": "updatesession()"
     },
     {
@@ -2706,7 +3116,7 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "src_lib_types_platform",
-      "community": 11,
+      "community": 0,
       "norm_label": "platform"
     },
     {
@@ -2736,7 +3146,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_lib_types_client",
-      "community": 2,
+      "community": 0,
       "norm_label": "client"
     },
     {
@@ -2746,7 +3156,7 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "src_lib_types_integrationaccount",
-      "community": 29,
+      "community": 0,
       "norm_label": "integrationaccount"
     },
     {
@@ -2836,7 +3246,7 @@
       "source_location": "L117",
       "_origin": "ast",
       "id": "src_lib_types_conversionsource",
-      "community": 0,
+      "community": 28,
       "norm_label": "conversionsource"
     },
     {
@@ -2856,7 +3266,7 @@
       "source_location": "L133",
       "_origin": "ast",
       "id": "src_lib_types_daterange",
-      "community": 2,
+      "community": 0,
       "norm_label": "daterange"
     },
     {
@@ -2866,7 +3276,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_proxy",
-      "community": 5,
+      "community": 29,
       "norm_label": "proxy.ts"
     },
     {
@@ -2876,7 +3286,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "src_proxy_proxy",
-      "community": 5,
+      "community": 29,
       "norm_label": "proxy()"
     },
     {
@@ -2886,7 +3296,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "src_proxy_config",
-      "community": 5,
+      "community": 29,
       "norm_label": "config"
     },
     {
@@ -3243,7 +3653,7 @@
       "label": ">>> HANDOFF 2026-07-07 (Claude \u2192 Codex): onde parou o Meta Ads",
       "file_type": "document",
       "source_file": "REGRAS-PROJETO.md",
-      "source_location": "L86",
+      "source_location": "L92",
       "_origin": "ast",
       "id": "regras_projeto_handoff_2026_07_07_claude_codex_onde_parou_o_meta_ads",
       "community": 7,
@@ -3253,7 +3663,7 @@
       "label": "Pend\u00eancias / pr\u00f3ximos passos",
       "file_type": "document",
       "source_file": "REGRAS-PROJETO.md",
-      "source_location": "L141",
+      "source_location": "L151",
       "_origin": "ast",
       "id": "regras_projeto_pend\u00eancias_pr\u00f3ximos_passos",
       "community": 7,
@@ -3263,7 +3673,7 @@
       "label": "Acesso (dev)",
       "file_type": "document",
       "source_file": "REGRAS-PROJETO.md",
-      "source_location": "L208",
+      "source_location": "L218",
       "_origin": "ast",
       "id": "regras_projeto_acesso_dev",
       "community": 7,
@@ -3273,7 +3683,7 @@
       "label": "Hist\u00f3rico de itera\u00e7\u00f5es",
       "file_type": "document",
       "source_file": "REGRAS-PROJETO.md",
-      "source_location": "L219",
+      "source_location": "L229",
       "_origin": "ast",
       "id": "regras_projeto_hist\u00f3rico_de_itera\u00e7\u00f5es",
       "community": 7,
@@ -3470,6 +3880,36 @@
       "norm_label": "estado implementado no painel"
     },
     {
+      "label": "README.md",
+      "file_type": "document",
+      "source_file": "n8n/README.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "n8n_readme",
+      "community": 31,
+      "norm_label": "readme.md"
+    },
+    {
+      "label": "Workflows n8n do painel",
+      "file_type": "document",
+      "source_file": "n8n/README.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "n8n_readme_workflows_n8n_do_painel",
+      "community": 31,
+      "norm_label": "workflows n8n do painel"
+    },
+    {
+      "label": "Meta Ads -> Supabase",
+      "file_type": "document",
+      "source_file": "n8n/README.md",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "n8n_readme_meta_ads_supabase",
+      "community": 31,
+      "norm_label": "meta ads -> supabase"
+    },
+    {
       "label": "Login Page",
       "file_type": "code",
       "source_file": "src/app/(auth)/login",
@@ -3603,6 +4043,642 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L178",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code",
+      "target": "n8n_meta_ads_sync_code_actionorigin",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L38",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code",
+      "target": "n8n_meta_ads_sync_code_buildurl",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L209",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code",
+      "target": "n8n_meta_ads_sync_code_campaignname",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L256",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code",
+      "target": "n8n_meta_ads_sync_code_collectaccount",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L189",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code",
+      "target": "n8n_meta_ads_sync_code_conversiontotal",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L112",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code",
+      "target": "n8n_meta_ads_sync_code_fetchmetaaccounts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L105",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code",
+      "target": "n8n_meta_ads_sync_code_insertsyncrun",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L30",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code",
+      "target": "n8n_meta_ads_sync_code_integer",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L154",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code",
+      "target": "n8n_meta_ads_sync_code_isconversionaction",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L174",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code",
+      "target": "n8n_meta_ads_sync_code_isrevenueaction",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L245",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code",
+      "target": "n8n_meta_ads_sync_code_mapcampaign",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L229",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code",
+      "target": "n8n_meta_ads_sync_code_mapconversionactions",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L213",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code",
+      "target": "n8n_meta_ads_sync_code_mapmetric",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code",
+      "target": "n8n_meta_ads_sync_code_meta_access_token",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code",
+      "target": "n8n_meta_ads_sync_code_meta_date_preset",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code",
+      "target": "n8n_meta_ads_sync_code_meta_graph_api_version",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L128",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code",
+      "target": "n8n_meta_ads_sync_code_metaget",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L136",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code",
+      "target": "n8n_meta_ads_sync_code_metagetall",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L122",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code",
+      "target": "n8n_meta_ads_sync_code_metaheaders",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L34",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code",
+      "target": "n8n_meta_ads_sync_code_money",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L201",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code",
+      "target": "n8n_meta_ads_sync_code_normalizestatus",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L25",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code",
+      "target": "n8n_meta_ads_sync_code_numeric",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L97",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code",
+      "target": "n8n_meta_ads_sync_code_patchintegrationaccount",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L56",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code",
+      "target": "n8n_meta_ads_sync_code_requestjson",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code",
+      "target": "n8n_meta_ads_sync_code_requiredvar",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L195",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code",
+      "target": "n8n_meta_ads_sync_code_revenuetotal",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code",
+      "target": "n8n_meta_ads_sync_code_started_at",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L362",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code",
+      "target": "n8n_meta_ads_sync_code_summaries",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code",
+      "target": "n8n_meta_ads_sync_code_supabase_service_role_key",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code",
+      "target": "n8n_meta_ads_sync_code_supabase_url",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L47",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code",
+      "target": "n8n_meta_ads_sync_code_supabaseheaders",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L72",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code",
+      "target": "n8n_meta_ads_sync_code_supabaserequest",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L280",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code",
+      "target": "n8n_meta_ads_sync_code_syncaccount",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L81",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code",
+      "target": "n8n_meta_ads_sync_code_upsert",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code",
+      "target": "n8n_meta_ads_sync_code_varvalue",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code_requiredvar",
+      "target": "n8n_meta_ads_sync_code_varvalue",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L31",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code_integer",
+      "target": "n8n_meta_ads_sync_code_numeric",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L35",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code_money",
+      "target": "n8n_meta_ads_sync_code_numeric",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L221",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code_mapmetric",
+      "target": "n8n_meta_ads_sync_code_integer",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L220",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code_mapmetric",
+      "target": "n8n_meta_ads_sync_code_money",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L57",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code_requestjson",
+      "target": "n8n_meta_ads_sync_code_buildurl",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L77",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code_supabaserequest",
+      "target": "n8n_meta_ads_sync_code_supabaseheaders",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L130",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code_metaget",
+      "target": "n8n_meta_ads_sync_code_requestjson",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L148",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code_metagetall",
+      "target": "n8n_meta_ads_sync_code_requestjson",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L74",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code_supabaserequest",
+      "target": "n8n_meta_ads_sync_code_requestjson",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L113",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code_fetchmetaaccounts",
+      "target": "n8n_meta_ads_sync_code_supabaserequest",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L106",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code_insertsyncrun",
+      "target": "n8n_meta_ads_sync_code_supabaserequest",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L98",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code_patchintegrationaccount",
+      "target": "n8n_meta_ads_sync_code_supabaserequest",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L87",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code_upsert",
+      "target": "n8n_meta_ads_sync_code_supabaserequest",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L284",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code_syncaccount",
+      "target": "n8n_meta_ads_sync_code_upsert",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L300",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code_syncaccount",
+      "target": "n8n_meta_ads_sync_code_patchintegrationaccount",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L305",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code_syncaccount",
+      "target": "n8n_meta_ads_sync_code_insertsyncrun",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L131",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code_metaget",
+      "target": "n8n_meta_ads_sync_code_metaheaders",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L148",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code_metagetall",
+      "target": "n8n_meta_ads_sync_code_metaheaders",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L137",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code_metagetall",
+      "target": "n8n_meta_ads_sync_code_metaget",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L257",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code_collectaccount",
+      "target": "n8n_meta_ads_sync_code_metagetall",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L223",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code_mapmetric",
+      "target": "n8n_meta_ads_sync_code_conversiontotal",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L224",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code_mapmetric",
+      "target": "n8n_meta_ads_sync_code_revenuetotal",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L251",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code_mapcampaign",
+      "target": "n8n_meta_ads_sync_code_normalizestatus",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L219",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code_mapmetric",
+      "target": "n8n_meta_ads_sync_code_campaignname",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/meta-ads-sync-code.js",
+      "source_location": "L282",
+      "weight": 1.0,
+      "source": "n8n_meta_ads_sync_code_syncaccount",
+      "target": "n8n_meta_ads_sync_code_collectaccount",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "next.config.ts",
       "source_location": "L3",
       "weight": 1.0,
@@ -3614,7 +4690,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L11",
+      "source_location": "L12",
       "weight": 1.0,
       "source": "package",
       "target": "package_dependencies",
@@ -3624,7 +4700,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L22",
+      "source_location": "L23",
       "weight": 1.0,
       "source": "package",
       "target": "package_devdependencies",
@@ -3684,6 +4760,16 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "package_scripts",
+      "target": "package_scripts_build_n8n_meta",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
       "source_location": "L6",
       "weight": 1.0,
       "source": "package_scripts",
@@ -3694,7 +4780,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L9",
+      "source_location": "L10",
       "weight": 1.0,
       "source": "package_scripts",
       "target": "package_scripts_lint",
@@ -3714,7 +4800,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L14",
+      "source_location": "L15",
       "weight": 1.0,
       "source": "package_dependencies",
       "target": "package_dependencies_date_fns",
@@ -3724,7 +4810,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L15",
+      "source_location": "L16",
       "weight": 1.0,
       "source": "package_dependencies",
       "target": "package_dependencies_lucide_react",
@@ -3734,7 +4820,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L16",
+      "source_location": "L17",
       "weight": 1.0,
       "source": "package_dependencies",
       "target": "package_dependencies_next",
@@ -3744,7 +4830,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L17",
+      "source_location": "L18",
       "weight": 1.0,
       "source": "package_dependencies",
       "target": "package_dependencies_react",
@@ -3754,7 +4840,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L18",
+      "source_location": "L19",
       "weight": 1.0,
       "source": "package_dependencies",
       "target": "package_dependencies_react_dom",
@@ -3764,7 +4850,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L19",
+      "source_location": "L20",
       "weight": 1.0,
       "source": "package_dependencies",
       "target": "package_dependencies_recharts",
@@ -3774,7 +4860,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L12",
+      "source_location": "L13",
       "weight": 1.0,
       "source": "package_dependencies",
       "target": "package_dependencies_supabase_ssr",
@@ -3784,7 +4870,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L13",
+      "source_location": "L14",
       "weight": 1.0,
       "source": "package_dependencies",
       "target": "package_dependencies_supabase_supabase_js",
@@ -3794,7 +4880,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L20",
+      "source_location": "L21",
       "weight": 1.0,
       "source": "package_dependencies",
       "target": "package_dependencies_zod",
@@ -3804,7 +4890,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L27",
+      "source_location": "L28",
       "weight": 1.0,
       "source": "package_devdependencies",
       "target": "package_devdependencies_eslint",
@@ -3814,7 +4900,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L28",
+      "source_location": "L29",
       "weight": 1.0,
       "source": "package_devdependencies",
       "target": "package_devdependencies_eslint_config_next",
@@ -3824,7 +4910,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L29",
+      "source_location": "L30",
       "weight": 1.0,
       "source": "package_devdependencies",
       "target": "package_devdependencies_tailwindcss",
@@ -3834,7 +4920,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L23",
+      "source_location": "L24",
       "weight": 1.0,
       "source": "package_devdependencies",
       "target": "package_devdependencies_tailwindcss_postcss",
@@ -3844,7 +4930,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L24",
+      "source_location": "L25",
       "weight": 1.0,
       "source": "package_devdependencies",
       "target": "package_devdependencies_types_node",
@@ -3854,7 +4940,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L25",
+      "source_location": "L26",
       "weight": 1.0,
       "source": "package_devdependencies",
       "target": "package_devdependencies_types_react",
@@ -3864,7 +4950,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L26",
+      "source_location": "L27",
       "weight": 1.0,
       "source": "package_devdependencies",
       "target": "package_devdependencies_types_react_dom",
@@ -3874,7 +4960,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L30",
+      "source_location": "L31",
       "weight": 1.0,
       "source": "package_devdependencies",
       "target": "package_devdependencies_typescript",
@@ -3888,6 +4974,36 @@
       "weight": 1.0,
       "source": "postcss_config",
       "target": "postcss_config_config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/build-n8n-meta-workflow.mjs",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "scripts_build_n8n_meta_workflow",
+      "target": "scripts_build_n8n_meta_workflow_code",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/build-n8n-meta-workflow.mjs",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "scripts_build_n8n_meta_workflow",
+      "target": "scripts_build_n8n_meta_workflow_root",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/build-n8n-meta-workflow.mjs",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "scripts_build_n8n_meta_workflow",
+      "target": "scripts_build_n8n_meta_workflow_workflow",
       "confidence_score": 1.0
     },
     {
@@ -10710,7 +11826,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "REGRAS-PROJETO.md",
-      "source_location": "L208",
+      "source_location": "L218",
       "weight": 1.0,
       "source": "regras_projeto_regras_projeto_painel_de_m\u00e9tricas_de_tr\u00e1fego_gtech_solution",
       "target": "regras_projeto_acesso_dev",
@@ -10740,7 +11856,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "REGRAS-PROJETO.md",
-      "source_location": "L86",
+      "source_location": "L92",
       "weight": 1.0,
       "source": "regras_projeto_regras_projeto_painel_de_m\u00e9tricas_de_tr\u00e1fego_gtech_solution",
       "target": "regras_projeto_handoff_2026_07_07_claude_codex_onde_parou_o_meta_ads",
@@ -10750,7 +11866,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "REGRAS-PROJETO.md",
-      "source_location": "L219",
+      "source_location": "L229",
       "weight": 1.0,
       "source": "regras_projeto_regras_projeto_painel_de_m\u00e9tricas_de_tr\u00e1fego_gtech_solution",
       "target": "regras_projeto_hist\u00f3rico_de_itera\u00e7\u00f5es",
@@ -10770,7 +11886,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "REGRAS-PROJETO.md",
-      "source_location": "L141",
+      "source_location": "L151",
       "weight": 1.0,
       "source": "regras_projeto_regras_projeto_painel_de_m\u00e9tricas_de_tr\u00e1fego_gtech_solution",
       "target": "regras_projeto_pend\u00eancias_pr\u00f3ximos_passos",
@@ -10965,6 +12081,26 @@
       "source": "docs_integracoes_ads_analytics_como_conectar_cada_fonte",
       "target": "docs_integracoes_ads_analytics_meta_ads",
       "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/README.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "n8n_readme",
+      "target": "n8n_readme_workflows_n8n_do_painel",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "n8n/README.md",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "n8n_readme_workflows_n8n_do_painel",
+      "target": "n8n_readme_meta_ads_supabase",
+      "confidence_score": 1.0
     }
   ],
   "hyperedges": [
@@ -11012,5 +12148,5 @@
       "source_file": "README.md"
     }
   ],
-  "built_at_commit": "1a3d4d18d8fa59e068a9c7fd36e87e33b812dbbd"
+  "built_at_commit": "82697193fc7cf05d2833e3f9bd65fdd4ef3a9bfd"
 }
