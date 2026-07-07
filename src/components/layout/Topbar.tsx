@@ -6,6 +6,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Check, ChevronDown, Plus, Users } from "lucide-react";
 import type { Client } from "@/lib/types";
 import { PeriodPicker } from "@/components/layout/PeriodPicker";
+import { RefreshButton } from "@/components/layout/RefreshButton";
 
 export function Topbar({ clients }: { clients: Client[] }) {
   const router = useRouter();
@@ -95,7 +96,10 @@ export function Topbar({ clients }: { clients: Client[] }) {
           )}
         </div>
 
-        <PeriodPicker />
+        <div className="flex items-center gap-2">
+          <PeriodPicker />
+          <RefreshButton />
+        </div>
       </div>
     </header>
   );
