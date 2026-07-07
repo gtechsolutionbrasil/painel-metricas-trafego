@@ -91,6 +91,43 @@ async function metaGetAll(path, params) {
   return out;
 }
 
+// Dedupe/merge de campanhas homonimas (mesmo nome do Meta, ids diferentes) --
+function mergeMetrics(rows) {
+  const map = new Map();
+  for (const r of rows) {
+    const k = `${r.date}|${r.campaign}`;
+    const e = map.get(k);
+    if (!e) { map.set(k, { ...r }); continue; }
+    e.spend = money(e.spend + r.spend);
+    e.impressions += r.impressions;
+    e.clicks += r.clicks;
+    e.conversions += r.conversions;
+    e.revenue = money(e.revenue + r.revenue);
+  }
+  return [...map.values()];
+}
+
+function mergeConversions(rows) {
+  const map = new Map();
+  for (const r of rows) {
+    const k = `${r.date}|${r.campaign}|${r.action_name}`;
+    const e = map.get(k);
+    if (!e) { map.set(k, { ...r }); continue; }
+    e.conversions += r.conversions;
+  }
+  return [...map.values()];
+}
+
+const STATUS_RANK = { ENABLED: 3, PAUSED: 2, REMOVED: 1, UNKNOWN: 0 };
+function dedupeCampaigns(rows) {
+  const map = new Map();
+  for (const r of rows) {
+    const e = map.get(r.campaign);
+    if (!e || (STATUS_RANK[r.status] ?? 0) > (STATUS_RANK[e.status] ?? 0)) map.set(r.campaign, r);
+  }
+  return [...map.values()];
+}
+
 const normStatus = (s) => {
   const v = String(s || "").toUpperCase();
   if (v === "ACTIVE") return "ENABLED";
@@ -150,9 +187,11 @@ async function syncAccount(acc) {
     updated_at: STARTED_AT,
   }));
 
-  const m = await upsert("ad_metrics", metricRows, "client_id,account_external_id,date,platform,campaign");
-  const cv = await upsert("ad_conversion_actions", conversionRows, "client_id,account_external_id,date,campaign,action_name");
-  const cp = await upsert("ad_campaigns", campaignRows, "client_id,account_external_id,platform,campaign");
+  // Campanhas homonimas (mesmo nome, ids diferentes) colidem na chave de upsert.
+  // Metricas/conversoes: somar por chave. Campanhas: 1 linha, status mais ativo.
+  const m = await upsert("ad_metrics", mergeMetrics(metricRows), "client_id,account_external_id,date,platform,campaign");
+  const cv = await upsert("ad_conversion_actions", mergeConversions(conversionRows), "client_id,account_external_id,date,campaign,action_name");
+  const cp = await upsert("ad_campaigns", dedupeCampaigns(campaignRows), "client_id,account_external_id,platform,campaign");
 
   await sb("PATCH", "integration_accounts", {
     params: { id: `eq.${acc.id}` },
