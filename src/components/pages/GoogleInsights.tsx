@@ -1,19 +1,31 @@
-import { Globe, KeyRound, MapPin, MousePointerClick, Search } from "lucide-react";
+import {
+  Globe,
+  KeyRound,
+  Layers,
+  MapPin,
+  MousePointerClick,
+  Search,
+  SearchCheck,
+} from "lucide-react";
 import { Card, CardHeader } from "@/components/ui/Card";
 import type { ConversionSource } from "@/lib/types";
 import {
   getAdClickTypes,
   getAdConversionActions,
   getAdGeo,
+  getAdGroups,
   getAdKeywords,
+  getAdSearchTerms,
   getClients,
   resolveClient,
 } from "@/lib/metrics/queries";
 import {
+  byAdGroup,
   byClickType,
   byConversionActionGrouped,
   byKeyword,
   byRegion,
+  bySearchTerm,
 } from "@/lib/metrics/aggregate";
 import { rangeFromSearch } from "@/lib/range";
 import {
@@ -93,12 +105,15 @@ export async function GoogleInsights({ searchParams }: { searchParams: SP }) {
   const clients = await getClients();
   const client = resolveClient(clients, searchParams.client);
 
-  const [keywordsRaw, geoRaw, clickTypesRaw, actionsRaw] = await Promise.all([
-    getAdKeywords(range, client?.id),
-    getAdGeo(range, client?.id),
-    getAdClickTypes(range, client?.id),
-    getAdConversionActions(range, client?.id),
-  ]);
+  const [keywordsRaw, geoRaw, clickTypesRaw, actionsRaw, searchTermsRaw, groupsRaw] =
+    await Promise.all([
+      getAdKeywords(range, client?.id),
+      getAdGeo(range, client?.id),
+      getAdClickTypes(range, client?.id),
+      getAdConversionActions(range, client?.id),
+      getAdSearchTerms(range, client?.id),
+      getAdGroups(range, client?.id),
+    ]);
 
   // Respeita o filtro de campanha da página (mesma regra do ChannelPage:
   // campanha desconhecida = sem filtro).
@@ -120,12 +135,16 @@ export async function GoogleInsights({ searchParams }: { searchParams: SP }) {
   const regions = byRegion(only(geoRaw)).slice(0, 10);
   const clickTypes = byClickType(only(clickTypesRaw));
   const actionGroups = byConversionActionGrouped(only(actionsRaw));
+  const searchTerms = bySearchTerm(only(searchTermsRaw)).slice(0, 15);
+  const adGroups = byAdGroup(only(groupsRaw));
 
   if (
     !keywords.length &&
     !regions.length &&
     !clickTypes.length &&
-    !actionGroups.length
+    !actionGroups.length &&
+    !searchTerms.length &&
+    !adGroups.length
   ) {
     return null;
   }
@@ -198,6 +217,66 @@ export async function GoogleInsights({ searchParams }: { searchParams: SP }) {
         </Card>
       )}
 
+      {/* Grupos de anúncios */}
+      {adGroups.length > 0 && (
+        <Card>
+          <CardHeader
+            title="Grupos de anúncios"
+            subtitle="Desempenho de cada grupo dentro das campanhas"
+            action={
+              <span className="grid h-9 w-9 place-items-center rounded-xl bg-brand-soft text-brand">
+                <Layers size={17} />
+              </span>
+            }
+          />
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[720px] text-sm">
+              <thead>
+                <tr className="border-b border-line bg-surface-2 text-left text-xs font-semibold uppercase tracking-wide text-faint">
+                  <th className="px-5 py-3">Grupo</th>
+                  <th className="px-3 py-3 text-right">Impressões</th>
+                  <th className="px-3 py-3 text-right">Cliques</th>
+                  <th className="px-3 py-3 text-right">CTR</th>
+                  <th className="px-3 py-3 text-right">CPC</th>
+                  <th className="px-3 py-3 text-right">Investido</th>
+                  <th className="px-5 py-3 text-right">Conversões</th>
+                </tr>
+              </thead>
+              <tbody>
+                {adGroups.map((g) => (
+                  <tr
+                    key={g.adGroup}
+                    className="border-b border-line last:border-0 transition-colors hover:bg-surface-2"
+                  >
+                    <td className="px-5 py-3 font-semibold text-ink">
+                      {g.adGroup}
+                    </td>
+                    <td className="px-3 py-3 text-right text-muted">
+                      {fmtCompact(g.impressions)}
+                    </td>
+                    <td className="px-3 py-3 text-right font-semibold text-ink">
+                      {fmtInt(g.clicks)}
+                    </td>
+                    <td className="px-3 py-3 text-right text-muted">
+                      {fmtPercent(g.ctr)}
+                    </td>
+                    <td className="px-3 py-3 text-right text-muted">
+                      {fmtCurrencyCents(g.cpc)}
+                    </td>
+                    <td className="px-3 py-3 text-right text-muted">
+                      {fmtCurrency(g.spend)}
+                    </td>
+                    <td className="px-5 py-3 text-right font-semibold text-ink">
+                      {fmtInt(g.conversions)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </Card>
+      )}
+
       {/* Palavras-chave que performam */}
       {keywords.length > 0 && (
         <Card>
@@ -249,6 +328,58 @@ export async function GoogleInsights({ searchParams }: { searchParams: SP }) {
                     </td>
                     <td className="px-5 py-3 text-right font-semibold text-ink">
                       {fmtInt(k.conversions)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </Card>
+      )}
+
+      {/* Termos de pesquisa (o que as pessoas realmente digitaram) */}
+      {searchTerms.length > 0 && (
+        <Card>
+          <CardHeader
+            title="Termos de pesquisa"
+            subtitle="O que as pessoas realmente digitaram no Google (top 15 por cliques)"
+            action={
+              <span className="grid h-9 w-9 place-items-center rounded-xl bg-brand-soft text-brand">
+                <SearchCheck size={17} />
+              </span>
+            }
+          />
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[640px] text-sm">
+              <thead>
+                <tr className="border-b border-line bg-surface-2 text-left text-xs font-semibold uppercase tracking-wide text-faint">
+                  <th className="px-5 py-3">O que pesquisaram</th>
+                  <th className="px-3 py-3 text-right">Impressões</th>
+                  <th className="px-3 py-3 text-right">Cliques</th>
+                  <th className="px-3 py-3 text-right">CTR</th>
+                  <th className="px-5 py-3 text-right">Conversões</th>
+                </tr>
+              </thead>
+              <tbody>
+                {searchTerms.map((s) => (
+                  <tr
+                    key={s.searchTerm}
+                    className="border-b border-line last:border-0 transition-colors hover:bg-surface-2"
+                  >
+                    <td className="px-5 py-3 font-semibold text-ink">
+                      {s.searchTerm}
+                    </td>
+                    <td className="px-3 py-3 text-right text-muted">
+                      {fmtCompact(s.impressions)}
+                    </td>
+                    <td className="px-3 py-3 text-right font-semibold text-ink">
+                      {fmtInt(s.clicks)}
+                    </td>
+                    <td className="px-3 py-3 text-right text-muted">
+                      {fmtPercent(s.ctr)}
+                    </td>
+                    <td className="px-5 py-3 text-right font-semibold text-ink">
+                      {fmtInt(s.conversions)}
                     </td>
                   </tr>
                 ))}

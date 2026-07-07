@@ -2,8 +2,10 @@ import type {
   AdClickTypeMetric,
   AdConversionActionMetric,
   AdGeoMetric,
+  AdGroupMetric,
   AdKeywordMetric,
   AdMetric,
+  AdSearchTermMetric,
   ConversionSource,
   Platform,
   WebMetric,
@@ -283,6 +285,77 @@ export function byKeyword(rows: AdKeywordMetric[]): KeywordRow[] {
     k.cpl = k.conversions ? k.spend / k.conversions : 0;
   });
   return out.sort((a, b) => b.clicks - a.clicks);
+}
+
+export type SearchTermRow = {
+  searchTerm: string;
+  impressions: number;
+  clicks: number;
+  spend: number;
+  conversions: number;
+  ctr: number;
+};
+
+export function bySearchTerm(rows: AdSearchTermMetric[]): SearchTermRow[] {
+  const map = new Map<string, SearchTermRow>();
+  for (const r of rows) {
+    const s =
+      map.get(r.searchTerm) ??
+      {
+        searchTerm: r.searchTerm,
+        impressions: 0,
+        clicks: 0,
+        spend: 0,
+        conversions: 0,
+        ctr: 0,
+      };
+    s.impressions += r.impressions;
+    s.clicks += r.clicks;
+    s.spend += r.spend;
+    s.conversions += r.conversions;
+    map.set(r.searchTerm, s);
+  }
+  const out = [...map.values()];
+  out.forEach((s) => (s.ctr = s.impressions ? s.clicks / s.impressions : 0));
+  return out.sort((a, b) => b.clicks - a.clicks);
+}
+
+export type AdGroupRow = {
+  adGroup: string;
+  impressions: number;
+  clicks: number;
+  spend: number;
+  conversions: number;
+  ctr: number;
+  cpc: number;
+};
+
+export function byAdGroup(rows: AdGroupMetric[]): AdGroupRow[] {
+  const map = new Map<string, AdGroupRow>();
+  for (const r of rows) {
+    const g =
+      map.get(r.adGroup) ??
+      {
+        adGroup: r.adGroup,
+        impressions: 0,
+        clicks: 0,
+        spend: 0,
+        conversions: 0,
+        ctr: 0,
+        cpc: 0,
+      };
+    g.impressions += r.impressions;
+    g.clicks += r.clicks;
+    g.spend += r.spend;
+    g.conversions += r.conversions;
+    map.set(r.adGroup, g);
+  }
+  const out = [...map.values()];
+  out.forEach((g) => {
+    g.ctr = g.impressions ? g.clicks / g.impressions : 0;
+    g.cpc = g.clicks ? g.spend / g.clicks : 0;
+  });
+  return out.sort((a, b) => b.spend - a.spend);
 }
 
 export type GeoRow = {

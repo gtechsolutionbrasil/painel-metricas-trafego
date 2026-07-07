@@ -1,16 +1,16 @@
 # Graph Report - painel-metricas-trafego  (2026-07-07)
 
 ## Corpus Check
-- 58 files · ~37,135 words
+- 59 files · ~38,151 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 329 nodes · 643 edges · 29 communities (11 shown, 18 thin omitted)
+- 337 nodes · 665 edges · 29 communities (11 shown, 18 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `a938745b`
+- Built from commit: `c458c3e7`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -45,12 +45,12 @@
 - [[_COMMUNITY_Community 29|Community 29]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `ChannelPage()` - 16 edges
-2. `compilerOptions` - 16 edges
-3. `getClients()` - 15 edges
-4. `OverviewPage()` - 14 edges
-5. `rangeFromSearch()` - 14 edges
-6. `GoogleInsights()` - 13 edges
+1. `GoogleInsights()` - 17 edges
+2. `ChannelPage()` - 16 edges
+3. `compilerOptions` - 16 edges
+4. `getClients()` - 15 edges
+5. `OverviewPage()` - 14 edges
+6. `rangeFromSearch()` - 14 edges
 7. `SitePage()` - 12 edges
 8. `formatValue()` - 12 edges
 9. `fmtInt()` - 11 edges
@@ -79,12 +79,12 @@
 ## Communities (29 total, 18 thin omitted)
 
 ### Community 0 - "Dependências (package.json)"
-Cohesion: 0.13
-Nodes (26): AdMetricRow, BreakdownRow, filterAdMetrics(), WebMetricRow, CAMPAigns, CLIENT_SCALE, dayFactor(), eachDate() (+18 more)
+Cohesion: 0.08
+Nodes (43): AdDayPoint, AdGroupRow, CampaignRow, ClickTypeRow, ConversionActionGroup, ConversionActionRow, GeoRow, KeywordRow (+35 more)
 
 ### Community 1 - "Login, Layout & ESLint"
 Cohesion: 0.08
-Nodes (52): SP, OverviewPage(), platformDetail(), SP, cap(), friendlyOrigin(), SitePage(), SP (+44 more)
+Nodes (54): SP, OverviewPage(), platformDetail(), SP, cap(), friendlyOrigin(), SitePage(), SP (+46 more)
 
 ### Community 2 - "Topbar & Camada de dados"
 Cohesion: 0.33
@@ -111,15 +111,15 @@ Cohesion: 0.08
 Nodes (22): `ad_metrics` — Meta Ads + Google Ads, Cadastro no painel x credenciais no n8n, Como gravar (Supabase REST / upsert), Ingestão de dados via n8n, Princípios, `sync_runs` — log (opcional, recomendado), Tabelas e chaves de upsert, `web_metrics` — GA4 (+14 more)
 
 ### Community 28 - "Community 28"
-Cohesion: 0.07
-Nodes (36): SP, ACTION_NAME_LABEL, CATEGORY_LABEL, categoryLabel(), CLICK_TYPE_LABEL, clickTypeLabel(), GoogleInsights(), MATCH_LABEL (+28 more)
+Cohesion: 0.11
+Nodes (25): SP, ACTION_NAME_LABEL, CATEGORY_LABEL, categoryLabel(), CLICK_TYPE_LABEL, clickTypeLabel(), GoogleInsights(), MATCH_LABEL (+17 more)
 
 ### Community 29 - "Community 29"
 Cohesion: 0.08
 Nodes (26): eslintConfig, AccountInput, buildAccounts(), clientSchema, createClientWithAccounts(), deleteClient(), FIELD_LABELS, normalizeSlug() (+18 more)
 
 ## Knowledge Gaps
-- **130 isolated node(s):** `eslintConfig`, `nextConfig`, `name`, `version`, `private` (+125 more)
+- **132 isolated node(s):** `eslintConfig`, `nextConfig`, `name`, `version`, `private` (+127 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **18 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -133,10 +133,10 @@ _Questions this graph is uniquely positioned to answer:_
 - **Why does `rangeFromSearch()` connect `Topbar & Camada de dados` to `Login, Layout & ESLint`, `Community 28`?**
   _High betweenness centrality (0.011) - this node is a cross-community bridge._
 - **What connects `eslintConfig`, `nextConfig`, `name` to the rest of the system?**
-  _130 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _132 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Dependências (package.json)` be split into smaller, more focused modules?**
-  _Cohesion score 0.13333333333333333 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.07801418439716312 - nodes in this community are weakly interconnected._
 - **Should `Login, Layout & ESLint` be split into smaller, more focused modules?**
-  _Cohesion score 0.07847082494969819 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.07572298325722983 - nodes in this community are weakly interconnected._
 - **Should `Gráficos (Recharts)` be split into smaller, more focused modules?**
   _Cohesion score 0.1 - nodes in this community are weakly interconnected._

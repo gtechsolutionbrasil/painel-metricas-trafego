@@ -10,8 +10,10 @@ import type {
   AdClickTypeMetric,
   AdConversionActionMetric,
   AdGeoMetric,
+  AdGroupMetric,
   AdKeywordMetric,
   AdMetric,
+  AdSearchTermMetric,
   Client,
   DateRange,
   IntegrationAccount,
@@ -267,6 +269,50 @@ export async function getAdClickTypes(
     campaign: String(r.campaign),
     clickType: String(r.click_type),
     clicks: Number(r.clicks),
+  }));
+}
+
+export async function getAdSearchTerms(
+  range: DateRange,
+  clientId?: string,
+): Promise<AdSearchTermMetric[]> {
+  const rows = await getBreakdown(
+    "ad_search_terms",
+    "client_id, date, campaign, search_term, impressions, clicks, spend, conversions",
+    range,
+    clientId,
+  );
+  return rows.map((r) => ({
+    clientId: String(r.client_id),
+    date: String(r.date),
+    campaign: String(r.campaign),
+    searchTerm: String(r.search_term),
+    impressions: Number(r.impressions),
+    clicks: Number(r.clicks),
+    spend: Number(r.spend),
+    conversions: Number(r.conversions),
+  }));
+}
+
+export async function getAdGroups(
+  range: DateRange,
+  clientId?: string,
+): Promise<AdGroupMetric[]> {
+  const rows = await getBreakdown(
+    "ad_groups",
+    "client_id, date, campaign, ad_group, impressions, clicks, spend, conversions",
+    range,
+    clientId,
+  );
+  return rows.map((r) => ({
+    clientId: String(r.client_id),
+    date: String(r.date),
+    campaign: String(r.campaign),
+    adGroup: String(r.ad_group),
+    impressions: Number(r.impressions),
+    clicks: Number(r.clicks),
+    spend: Number(r.spend),
+    conversions: Number(r.conversions),
   }));
 }
 

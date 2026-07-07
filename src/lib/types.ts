@@ -73,6 +73,28 @@ export type AdClickTypeMetric = {
   clicks: number;
 };
 
+export type AdSearchTermMetric = {
+  clientId: string;
+  date: string;
+  campaign: string;
+  searchTerm: string;
+  impressions: number;
+  clicks: number;
+  spend: number;
+  conversions: number;
+};
+
+export type AdGroupMetric = {
+  clientId: string;
+  date: string;
+  campaign: string;
+  adGroup: string;
+  impressions: number;
+  clicks: number;
+  spend: number;
+  conversions: number;
+};
+
 export type AdConversionActionMetric = {
   clientId: string;
   date: string;
