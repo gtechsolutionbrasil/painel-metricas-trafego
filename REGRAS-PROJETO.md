@@ -83,6 +83,61 @@ adicionar manualmente; (2) `googleAds:search` NÃO aceita `pageSize` no body
 (fixo 10.000); (3) `cost_micros` ÷ 1.000.000; (4) `login-customer-id` = MCC sem
 hífens.
 
+## >>> HANDOFF 2026-07-07 (Claude → Codex): onde parou o Meta Ads
+
+**Objetivo em curso:** ligar a ingestão do **Meta Ads** (workflow n8n Meta →
+Supabase, análogo ao Google Ads id `Ui5tKcvG1aRmWptS`). Falta só o **token**.
+
+**Estado do token (parou aqui):** no Meta Business Settings da BM
+**madeireiraadriana** (business_id `765350283972003`) → Usuários do sistema, o
+System User **"Conversions API System User"** (ID `61586340577589`) JÁ tem
+acesso total à conta **MADEIREIRA ADS** (`act_1176296527286706`) e ao app
+**"Conversions API Application"**. Ao clicar **Gerar token** → Selecionar app →
+Definir expiração → **Atribuir permissões**, aparece **"Nenhuma permissão
+disponível — Atribua uma função do app ao usuário do sistema ou selecione outro
+app"**.
+  - **CAUSA:** o System User não tem *função (role)* no app selecionado, então
+    não há scopes (ex.: `ads_read`) pra conceder.
+  - **FIX:** Configurações → **Apps** → "Conversions API Application" →
+    adicionar o System User (61586340577589) como usuário do app com função
+    (Admin/Desenvolvedor). Depois voltar em Gerar token → o app → marcar
+    **`ads_read`** (e `read_insights` se aparecer) → expiração "Nunca" → Gerar.
+    Alternativa: selecionar outro app onde o system user já tenha função.
+
+**Depois de ter o token (próximos passos do Codex):**
+1. Criar credencial no n8n (NÃO colar token em chat): tipo HTTP Header Auth ou
+   Facebook Graph API, com o access token. Anotar o id da credencial.
+2. Montar workflow n8n "Meta Ads → Supabase" (espelhar o do Google): Schedule →
+   buscar `integration_accounts` provider=`meta_ads` → Graph API
+   `GET /v21.0/act_<id>/insights` (fields: spend, impressions, clicks, reach,
+   actions, cost_per_action_type; level=campaign; time_increment=1;
+   date_preset=last_30d) → Code mapeia → upsert `ad_metrics` (platform='meta').
+   Meta TEM **reach/alcance** (Google não tem) e conversões de **mensagem/
+   conversa** (WhatsApp/Direct) via `actions`.
+3. Cadastrar a conta Meta em `integration_accounts` (provider `meta_ads`,
+   external_id `act_1176296527286706`, client Madeireira `b304d378-...`).
+4. Testar E2E (webhook temp), validar no banco, ativar schedule.
+5. UI: página `/meta` já existe (usa `ChannelPage platform="meta"`) — quando
+   houver dado real de meta em `ad_metrics`, aparece sozinha.
+
+**IDs úteis:** BM madeireiraadriana `765350283972003`; System User
+`61586340577589`; conta MADEIREIRA ADS `act_1176296527286706`; cliente
+Madeireira no Supabase `b304d378-ca60-42df-bdb3-57a77c025e5f`. O Gabriel tem 4
+BMs (madeireiraadriana, Dra Claudineia Tomasi, GTech Solution, BM Clínica) —
+1 System User por BM (ou centralizar na BM da agência depois).
+
+**O que JÁ está pronto nesta sessão (Google Ads 100%, não mexer sem pedir):**
+backfill 30d (números batem c/ Google Ads), ROAS fora da UI, cidade no lugar de
+estado, ícones de marca, conversões site×Google, termos de pesquisa, grupos de
+anúncios, período estilo Meta (`PeriodPicker`), filtro de campanha multi c/
+status (`CampaignFilter` + `ad_campaigns`). Migrations até **0009**. Workflow
+Google Ads = 30 nós, coleta **LAST_30_DAYS**. Último commit `1a3d4d1`.
+
+**Deploy (#7) ainda pendente do usuário:** `painelmetricas.gtech...` está numa
+conta Vercel fora do CLI (team `gtech-solution1` só tem `digax-crm`); o projeto
+não tem git integration → push não atualiza. Usuário deve conectar o repo no
+dashboard Vercel + Redeploy. O dev local (localhost:3000) reflete tudo.
+
 ## Pendências / próximos passos
 
 - [x] ~~Aplicar migrations 0003/0004/0005~~ (aplicadas em 2026-07-03 via
