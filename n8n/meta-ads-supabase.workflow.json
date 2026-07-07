@@ -3,7 +3,7 @@
   "nodes": [
     {
       "parameters": {},
-      "id": "b8b98f2e-65b6-4e36-b8ff-56105b06c46a",
+      "id": "trigger-manual",
       "name": "Executar manualmente",
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
@@ -23,77 +23,315 @@
           ]
         }
       },
-      "id": "bc3b3ec1-712f-4d6d-8f4e-25c0becda4f7",
+      "id": "trigger-cron",
       "name": "Agendar 07:00",
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
       "position": [
         0,
-        180
+        200
       ]
     },
     {
       "parameters": {
-        "assignments": {
-          "assignments": [
+        "method": "GET",
+        "url": "https://oqsjdhrwpmpdrihgbgtx.supabase.co/rest/v1/integration_accounts",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
             {
-              "id": "51f3d8e9-d5e2-46fe-a8d5-9dd982af1bf7",
-              "name": "SUPABASE_URL",
-              "value": "COLE_AQUI_SUPABASE_URL",
-              "type": "string"
+              "name": "select",
+              "value": "client_id,external_id,account_name"
             },
             {
-              "id": "f6a2e117-23d2-43a2-b314-45c5282dbdad",
-              "name": "SUPABASE_SERVICE_ROLE_KEY",
-              "value": "COLE_AQUI_SUPABASE_SERVICE_ROLE_KEY",
-              "type": "string"
+              "name": "provider",
+              "value": "eq.meta_ads"
             },
             {
-              "id": "354144ab-2d8f-467c-9a69-d9c6c064dfb3",
-              "name": "META_ACCESS_TOKEN",
-              "value": "COLE_AQUI_META_ACCESS_TOKEN",
-              "type": "string"
-            },
-            {
-              "id": "74b52ab8-0f09-4a7e-9d25-02982f57d605",
-              "name": "META_GRAPH_API_VERSION",
-              "value": "v21.0",
-              "type": "string"
-            },
-            {
-              "id": "af1d6e96-bf05-41ce-8f46-c9f1052ecec5",
-              "name": "META_DATE_PRESET",
-              "value": "last_30d",
-              "type": "string"
+              "name": "status",
+              "value": "neq.paused"
             }
           ]
         },
         "options": {}
       },
-      "id": "d98a6efa-3967-4a93-9aa6-8d88fc5d04618",
-      "name": "Configurar segredos",
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
+      "id": "buscar-contas",
+      "name": "Buscar contas Meta",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
       "position": [
-        280,
-        80
+        240,
+        100
       ],
-      "notes": "Cole aqui os valores reais antes de testar. Este plano do n8n nao tem Variables liberado."
+      "credentials": {
+        "supabaseApi": {
+          "id": "sfp0d2ZkWr7zz5wM",
+          "name": "Supabase - Painel Métricas (service role)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "=https://graph.facebook.com/v21.0/{{ $json.external_id }}/insights",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "fields",
+              "value": "campaign_id,campaign_name,date_start,date_stop,spend,impressions,clicks,reach,actions,action_values"
+            },
+            {
+              "name": "level",
+              "value": "campaign"
+            },
+            {
+              "name": "time_increment",
+              "value": "1"
+            },
+            {
+              "name": "date_preset",
+              "value": "last_30d"
+            },
+            {
+              "name": "limit",
+              "value": "500"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "meta-insights",
+      "name": "Meta Insights",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        680,
+        -60
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "HOIxAoGnU2fpRgXE",
+          "name": "Meta Graph API - Painel (system user)"
+        }
+      }
     },
     {
       "parameters": {
         "mode": "runOnceForAllItems",
-        "jsCode": "/* global $helpers, $vars, $input */\n\nconst SUPABASE_URL = requiredConfig(\"SUPABASE_URL\").replace(/\\/+$/, \"\");\nconst SUPABASE_SERVICE_ROLE_KEY = requiredConfig(\"SUPABASE_SERVICE_ROLE_KEY\");\nconst META_ACCESS_TOKEN = requiredConfig(\"META_ACCESS_TOKEN\");\nconst META_GRAPH_API_VERSION = configValue(\"META_GRAPH_API_VERSION\", \"v21.0\").replace(/^\\/+/, \"\");\nconst META_DATE_PRESET = configValue(\"META_DATE_PRESET\", \"last_30d\");\nconst STARTED_AT = new Date().toISOString();\n\nconst SUPABASE_BATCH_SIZE = 500;\n\nfunction inputConfig() {\n  return $input.first()?.json || {};\n}\n\nfunction configValue(name, fallback = \"\") {\n  const fromInput = inputConfig()[name];\n  const fromVars = $vars?.[name];\n  const value = fromInput ?? fromVars;\n  const text = value == null ? \"\" : String(value).trim();\n\n  return text || fallback;\n}\n\nfunction requiredConfig(name) {\n  const value = configValue(name);\n  if (!value || value.startsWith(\"COLE_AQUI_\")) {\n    throw new Error(`Configure o campo ${name} no node \"Configurar segredos\".`);\n  }\n  return value;\n}\n\nfunction numeric(value) {\n  const number = Number(value ?? 0);\n  return Number.isFinite(number) ? number : 0;\n}\n\nfunction integer(value) {\n  return Math.round(numeric(value));\n}\n\nfunction money(value) {\n  return Math.round(numeric(value) * 100) / 100;\n}\n\nfunction buildUrl(base, params = {}) {\n  const query = Object.entries(params)\n    .filter(([, value]) => value != null && value !== \"\")\n    .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(String(value))}`)\n    .join(\"&\");\n\n  if (!query) return base;\n\n  return `${base}${base.includes(\"?\") ? \"&\" : \"?\"}${query}`;\n}\n\nfunction supabaseHeaders(extra = {}) {\n  return {\n    apikey: SUPABASE_SERVICE_ROLE_KEY,\n    Authorization: `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,\n    \"Content-Type\": \"application/json\",\n    ...extra,\n  };\n}\n\nasync function requestJson(method, url, { headers = {}, params = {}, body } = {}) {\n  const fullUrl = buildUrl(url, params);\n  try {\n    return await $helpers.httpRequest({\n      method,\n      url: fullUrl,\n      headers,\n      body,\n      json: true,\n    });\n  } catch (error) {\n    const message = error?.message || String(error);\n    throw new Error(`${method} ${fullUrl} falhou: ${message}`);\n  }\n}\n\nasync function supabaseRequest(method, path, { params = {}, body, headers = {} } = {}) {\n  const url = `${SUPABASE_URL}/rest/v1/${path.replace(/^\\/+/, \"\")}`;\n  return requestJson(method, url, {\n    params,\n    body,\n    headers: supabaseHeaders(headers),\n  });\n}\n\nasync function upsert(table, rows, onConflict) {\n  if (rows.length === 0) return 0;\n\n  let count = 0;\n  for (let i = 0; i < rows.length; i += SUPABASE_BATCH_SIZE) {\n    const chunk = rows.slice(i, i + SUPABASE_BATCH_SIZE);\n    await supabaseRequest(\"POST\", table, {\n      params: { on_conflict: onConflict },\n      body: chunk,\n      headers: { Prefer: \"resolution=merge-duplicates,return=minimal\" },\n    });\n    count += chunk.length;\n  }\n  return count;\n}\n\nasync function patchIntegrationAccount(id, fields) {\n  await supabaseRequest(\"PATCH\", \"integration_accounts\", {\n    params: { id: `eq.${id}` },\n    body: fields,\n    headers: { Prefer: \"return=minimal\" },\n  });\n}\n\nasync function insertSyncRun(row) {\n  await supabaseRequest(\"POST\", \"sync_runs\", {\n    body: [row],\n    headers: { Prefer: \"return=minimal\" },\n  });\n}\n\nasync function fetchMetaAccounts() {\n  return supabaseRequest(\"GET\", \"integration_accounts\", {\n    params: {\n      select: \"id,client_id,account_name,external_id,status\",\n      provider: \"eq.meta_ads\",\n      status: \"in.(pending,connected,error)\",\n    },\n  });\n}\n\nfunction metaHeaders() {\n  return {\n    Authorization: `Bearer ${META_ACCESS_TOKEN}`,\n  };\n}\n\nasync function metaGet(path, params = {}) {\n  const endpoint = `https://graph.facebook.com/${META_GRAPH_API_VERSION}/${path.replace(/^\\/+/, \"\")}`;\n  return requestJson(\"GET\", endpoint, {\n    headers: metaHeaders(),\n    params,\n  });\n}\n\nasync function metaGetAll(path, params = {}) {\n  let response = await metaGet(path, params);\n  const rows = [];\n\n  while (response) {\n    if (Array.isArray(response.data)) {\n      rows.push(...response.data);\n    }\n\n    const next = response.paging?.next;\n    if (!next) break;\n\n    response = await requestJson(\"GET\", next, { headers: metaHeaders() });\n  }\n\n  return rows;\n}\n\n// Allowlist canonica de acoes que contam como CONVERSAO no Meta.\n// Evita dupla contagem: para campanhas de mensagem, a conversao e\n// \"conversas iniciadas\" (messaging_conversation_started_7d), NAO a soma de\n// total_messaging_connection + first_reply + replied etc (todas subconjuntos).\nconst CONVERSION_ACTION_TYPES = new Set([\n  \"onsite_conversion.messaging_conversation_started_7d\",\n  \"onsite_conversion.lead_grouped\",\n  \"lead\",\n  \"leadgen_grouped\",\n  \"offsite_conversion.fb_pixel_lead\",\n  \"offsite_conversion.fb_pixel_complete_registration\",\n  \"onsite_conversion.purchase\",\n  \"offsite_conversion.fb_pixel_purchase\",\n  \"omni_purchase\",\n  \"purchase\",\n]);\n\nfunction isConversionAction(actionType) {\n  return CONVERSION_ACTION_TYPES.has(String(actionType || \"\").toLowerCase());\n}\n\nfunction isRevenueAction(actionType) {\n  return /purchase|omni_purchase|fb_pixel_purchase/.test(String(actionType || \"\").toLowerCase());\n}\n\nfunction actionOrigin(actionType) {\n  const value = String(actionType || \"\").toLowerCase();\n  if (value.includes(\"fb_pixel\") || value.includes(\"offsite_conversion\")) {\n    return \"WEBSITE\";\n  }\n  if (value.includes(\"messag\") || value.includes(\"whatsapp\") || value.includes(\"leadgen\")) {\n    return \"META\";\n  }\n  return \"UNKNOWN\";\n}\n\nfunction conversionTotal(actions = []) {\n  return actions\n    .filter((action) => isConversionAction(action.action_type))\n    .reduce((sum, action) => sum + numeric(action.value), 0);\n}\n\nfunction revenueTotal(actionValues = []) {\n  return actionValues\n    .filter((action) => isRevenueAction(action.action_type))\n    .reduce((sum, action) => sum + numeric(action.value), 0);\n}\n\n// Campanhas homonimas (mesmo nome do Meta, ids diferentes) colidem na chave de\n// upsert. Metricas/conversoes: somar por chave. Campanhas: 1 linha, mais ativa.\nfunction mergeMetrics(rows) {\n  const map = new Map();\n  for (const r of rows) {\n    const k = `${r.date}|${r.campaign}`;\n    const e = map.get(k);\n    if (!e) { map.set(k, { ...r }); continue; }\n    e.spend = money(e.spend + r.spend);\n    e.impressions += r.impressions;\n    e.clicks += r.clicks;\n    e.conversions += r.conversions;\n    e.revenue = money(e.revenue + r.revenue);\n  }\n  return [...map.values()];\n}\n\nfunction mergeConversions(rows) {\n  const map = new Map();\n  for (const r of rows) {\n    const k = `${r.date}|${r.campaign}|${r.action_name}`;\n    const e = map.get(k);\n    if (!e) { map.set(k, { ...r }); continue; }\n    e.conversions += r.conversions;\n  }\n  return [...map.values()];\n}\n\nconst STATUS_RANK = { ENABLED: 3, PAUSED: 2, REMOVED: 1, UNKNOWN: 0 };\nfunction dedupeCampaigns(rows) {\n  const map = new Map();\n  for (const r of rows) {\n    const e = map.get(r.campaign);\n    if (!e || (STATUS_RANK[r.status] ?? 0) > (STATUS_RANK[e.status] ?? 0)) map.set(r.campaign, r);\n  }\n  return [...map.values()];\n}\n\nfunction normalizeStatus(status) {\n  const value = String(status || \"\").toUpperCase();\n  if (value === \"ACTIVE\") return \"ENABLED\";\n  if (value === \"PAUSED\") return \"PAUSED\";\n  if (value === \"DELETED\" || value === \"ARCHIVED\") return \"REMOVED\";\n  return value || \"UNKNOWN\";\n}\n\nfunction campaignName(row) {\n  return String(row.campaign_name || row.campaign_id || \"Sem campanha\");\n}\n\nfunction mapMetric(account, row) {\n  return {\n    client_id: account.client_id,\n    account_external_id: account.external_id,\n    date: row.date_start,\n    platform: \"meta\",\n    campaign: campaignName(row),\n    spend: money(row.spend),\n    impressions: integer(row.impressions),\n    clicks: integer(row.clicks),\n    conversions: integer(conversionTotal(row.actions || [])),\n    revenue: money(revenueTotal(row.action_values || [])),\n    search_impression_share: null,\n  };\n}\n\nfunction mapConversionActions(account, row) {\n  return (row.actions || [])\n    .filter((action) => isConversionAction(action.action_type) && numeric(action.value) > 0)\n    .map((action) => ({\n      client_id: account.client_id,\n      account_external_id: account.external_id,\n      platform: \"meta\",\n      date: row.date_start,\n      campaign: campaignName(row),\n      action_name: String(action.action_type),\n      action_category: String(action.action_type),\n      origin: actionOrigin(action.action_type),\n      conversions: numeric(action.value),\n    }));\n}\n\nfunction mapCampaign(account, row) {\n  return {\n    client_id: account.client_id,\n    account_external_id: account.external_id,\n    platform: \"meta\",\n    campaign: String(row.name || row.id || \"Sem campanha\"),\n    status: normalizeStatus(row.effective_status || row.status),\n    updated_at: STARTED_AT,\n  };\n}\n\nasync function collectAccount(account) {\n  const insights = await metaGetAll(`${account.external_id}/insights`, {\n    fields:\n      \"campaign_id,campaign_name,date_start,date_stop,spend,impressions,clicks,reach,actions,action_values\",\n    level: \"campaign\",\n    time_increment: 1,\n    date_preset: META_DATE_PRESET,\n    limit: 500,\n  });\n\n  const campaigns = await metaGetAll(`${account.external_id}/campaigns`, {\n    fields: \"id,name,status,effective_status\",\n    limit: 500,\n  });\n\n  const metricRows = insights.filter((row) => row.date_start).map((row) => mapMetric(account, row));\n  const conversionRows = insights\n    .filter((row) => row.date_start)\n    .flatMap((row) => mapConversionActions(account, row));\n  const campaignRows = campaigns.map((row) => mapCampaign(account, row));\n\n  return { metricRows, conversionRows, campaignRows };\n}\n\nasync function syncAccount(account) {\n  try {\n    const { metricRows, conversionRows, campaignRows } = await collectAccount(account);\n\n    const metrics = await upsert(\n      \"ad_metrics\",\n      mergeMetrics(metricRows),\n      \"client_id,account_external_id,date,platform,campaign\",\n    );\n    const conversions = await upsert(\n      \"ad_conversion_actions\",\n      mergeConversions(conversionRows),\n      \"client_id,account_external_id,date,campaign,action_name\",\n    );\n    const campaigns = await upsert(\n      \"ad_campaigns\",\n      dedupeCampaigns(campaignRows),\n      \"client_id,account_external_id,platform,campaign\",\n    );\n\n    await patchIntegrationAccount(account.id, {\n      status: \"connected\",\n      last_sync_at: STARTED_AT,\n    });\n\n    await insertSyncRun({\n      platform: \"meta\",\n      client_id: account.client_id,\n      status: \"success\",\n      rows: metrics,\n      message: `Meta Ads OK: ${metrics} metricas, ${campaigns} campanhas, ${conversions} conversoes.`,\n      ran_at: STARTED_AT,\n    });\n\n    return {\n      account: account.account_name,\n      externalId: account.external_id,\n      status: \"success\",\n      metrics,\n      campaigns,\n      conversions,\n    };\n  } catch (error) {\n    const message = error?.message || String(error);\n\n    await patchIntegrationAccount(account.id, {\n      status: \"error\",\n      last_sync_at: STARTED_AT,\n    });\n\n    await insertSyncRun({\n      platform: \"meta\",\n      client_id: account.client_id,\n      status: \"error\",\n      rows: 0,\n      message: `Meta Ads erro em ${account.external_id}: ${message}`.slice(0, 500),\n      ran_at: STARTED_AT,\n    });\n\n    return {\n      account: account.account_name,\n      externalId: account.external_id,\n      status: \"error\",\n      message,\n    };\n  }\n}\n\nconst accounts = await fetchMetaAccounts();\n\nif (!Array.isArray(accounts) || accounts.length === 0) {\n  return [\n    {\n      json: {\n        status: \"skipped\",\n        message: \"Nenhuma integration_accounts provider=meta_ads status pending/connected/error encontrada.\",\n        ranAt: STARTED_AT,\n      },\n    },\n  ];\n}\n\nconst summaries = [];\nfor (const account of accounts) {\n  summaries.push(await syncAccount(account));\n}\n\nreturn summaries.map((summary) => ({\n  json: {\n    ...summary,\n    ranAt: STARTED_AT,\n    datePreset: META_DATE_PRESET,\n    graphApiVersion: META_GRAPH_API_VERSION,\n  },\n}));\n"
+        "jsCode": "// 1 item de entrada = resposta /insights de UMA conta. Saida: 1 item {rows}.\nconst CONV = new Set([\n    \"onsite_conversion.messaging_conversation_started_7d\",\n    \"onsite_conversion.lead_grouped\",\n    \"lead\",\n    \"leadgen_grouped\",\n    \"offsite_conversion.fb_pixel_lead\",\n    \"offsite_conversion.fb_pixel_complete_registration\",\n    \"onsite_conversion.purchase\",\n    \"offsite_conversion.fb_pixel_purchase\",\n    \"omni_purchase\",\n    \"purchase\",\n  ]);\nconst num = (v) => (Number.isFinite(Number(v)) ? Number(v) : 0);\nconst money = (v) => Math.round(num(v) * 100) / 100;\nconst sumA = (arr, pred) => (arr || []).filter((x) => pred(x.action_type)).reduce((s, x) => s + num(x.value), 0);\nconst isConv = (t) => CONV.has(String(t || \"\").toLowerCase());\nconst isRev = (t) => /purchase/.test(String(t || \"\").toLowerCase());\n\nconst raw = [];\nfor (let i = 0; i < items.length; i++) {\n  const resp = items[i].json;\n  const conta = $('Buscar contas Meta').itemMatching(i).json;\n  for (const r of resp.data ?? []) {\n    if (!r.date_start) continue;\n    raw.push({\n      client_id: conta.client_id,\n      account_external_id: String(conta.external_id),\n      date: r.date_start,\n      platform: \"meta\",\n      campaign: r.campaign_name ?? r.campaign_id ?? \"Sem campanha\",\n      spend: money(r.spend),\n      impressions: Math.round(num(r.impressions)),\n      clicks: Math.round(num(r.clicks)),\n      conversions: Math.round(sumA(r.actions, isConv)),\n      revenue: money(sumA(r.action_values, isRev)),\n      search_impression_share: null,\n    });\n  }\n}\n// merge de campanhas homonimas (mesmo nome, ids diferentes) por chave de upsert\nconst map = new Map();\nfor (const r of raw) {\n  const k = r.date + \"|\" + r.account_external_id + \"|\" + r.campaign;\n  const e = map.get(k);\n  if (!e) { map.set(k, { ...r }); continue; }\n  e.spend = money(e.spend + r.spend);\n  e.impressions += r.impressions;\n  e.clicks += r.clicks;\n  e.conversions += r.conversions;\n  e.revenue = money(e.revenue + r.revenue);\n}\nconst rows = [...map.values()];\nif (!rows.length) return [];\nreturn [{ json: { rows, total: rows.length } }];"
       },
-      "id": "a49d9ec7-a045-4c46-975f-57d8c66dd821",
-      "name": "Sincronizar Meta Ads",
+      "id": "code-metrics",
+      "name": "Montar ad_metrics",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        560,
-        80
+        920,
+        -160
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://oqsjdhrwpmpdrihgbgtx.supabase.co/rest/v1/ad_metrics",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "on_conflict",
+              "value": "client_id,account_external_id,date,platform,campaign"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "resolution=merge-duplicates,return=minimal"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.rows) }}",
+        "options": {}
+      },
+      "id": "up-metrics",
+      "name": "Upsert ad_metrics",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1160,
+        -160
       ],
-      "notes": "Le integration_accounts provider=meta_ads, consulta Meta Marketing API e faz upsert em ad_metrics, ad_campaigns e ad_conversion_actions."
+      "onError": "continueRegularOutput",
+      "credentials": {
+        "supabaseApi": {
+          "id": "sfp0d2ZkWr7zz5wM",
+          "name": "Supabase - Painel Métricas (service role)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// Conversoes por acao (breakdown). 1 item = resposta /insights de UMA conta.\nconst CONV = new Set([\n    \"onsite_conversion.messaging_conversation_started_7d\",\n    \"onsite_conversion.lead_grouped\",\n    \"lead\",\n    \"leadgen_grouped\",\n    \"offsite_conversion.fb_pixel_lead\",\n    \"offsite_conversion.fb_pixel_complete_registration\",\n    \"onsite_conversion.purchase\",\n    \"offsite_conversion.fb_pixel_purchase\",\n    \"omni_purchase\",\n    \"purchase\",\n  ]);\nconst num = (v) => (Number.isFinite(Number(v)) ? Number(v) : 0);\nconst origin = (t) => {\n  const v = String(t || \"\").toLowerCase();\n  if (v.includes(\"fb_pixel\") || v.includes(\"offsite_conversion\")) return \"WEBSITE\";\n  if (v.includes(\"messag\") || v.includes(\"lead\")) return \"META\";\n  return \"UNKNOWN\";\n};\nconst raw = [];\nfor (let i = 0; i < items.length; i++) {\n  const resp = items[i].json;\n  const conta = $('Buscar contas Meta').itemMatching(i).json;\n  for (const r of resp.data ?? []) {\n    if (!r.date_start) continue;\n    for (const a of r.actions ?? []) {\n      if (!CONV.has(String(a.action_type).toLowerCase()) || num(a.value) <= 0) continue;\n      raw.push({\n        client_id: conta.client_id,\n        account_external_id: String(conta.external_id),\n        platform: \"meta\",\n        date: r.date_start,\n        campaign: r.campaign_name ?? r.campaign_id ?? \"Sem campanha\",\n        action_name: String(a.action_type),\n        action_category: String(a.action_type),\n        origin: origin(a.action_type),\n        conversions: num(a.value),\n      });\n    }\n  }\n}\nconst map = new Map();\nfor (const r of raw) {\n  const k = r.date + \"|\" + r.account_external_id + \"|\" + r.campaign + \"|\" + r.action_name;\n  const e = map.get(k);\n  if (!e) { map.set(k, { ...r }); continue; }\n  e.conversions += r.conversions;\n}\nconst rows = [...map.values()];\nif (!rows.length) return [];\nreturn [{ json: { rows, total: rows.length } }];"
+      },
+      "id": "code-conv",
+      "name": "Montar ad_conversion_actions",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        920,
+        20
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://oqsjdhrwpmpdrihgbgtx.supabase.co/rest/v1/ad_conversion_actions",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "on_conflict",
+              "value": "client_id,account_external_id,date,campaign,action_name"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "resolution=merge-duplicates,return=minimal"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.rows) }}",
+        "options": {}
+      },
+      "id": "up-conv",
+      "name": "Upsert ad_conversion_actions",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1160,
+        20
+      ],
+      "onError": "continueRegularOutput",
+      "credentials": {
+        "supabaseApi": {
+          "id": "sfp0d2ZkWr7zz5wM",
+          "name": "Supabase - Painel Métricas (service role)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "=https://graph.facebook.com/v21.0/{{ $json.external_id }}/campaigns",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "fields",
+              "value": "id,name,status,effective_status"
+            },
+            {
+              "name": "limit",
+              "value": "500"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "meta-campaigns",
+      "name": "Meta Campaigns",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        680,
+        240
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "HOIxAoGnU2fpRgXE",
+          "name": "Meta Graph API - Painel (system user)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// Status das campanhas. 1 item = resposta /campaigns de UMA conta.\nconst RANK = { ENABLED: 3, PAUSED: 2, REMOVED: 1, UNKNOWN: 0 };\nconst norm = (s) => {\n  const v = String(s || \"\").toUpperCase();\n  if (v === \"ACTIVE\") return \"ENABLED\";\n  if (v === \"PAUSED\") return \"PAUSED\";\n  if (v === \"DELETED\" || v === \"ARCHIVED\") return \"REMOVED\";\n  return v || \"UNKNOWN\";\n};\nconst map = new Map();\nfor (let i = 0; i < items.length; i++) {\n  const resp = items[i].json;\n  const conta = $('Buscar contas Meta').itemMatching(i).json;\n  for (const c of resp.data ?? []) {\n    const row = {\n      client_id: conta.client_id,\n      account_external_id: String(conta.external_id),\n      platform: \"meta\",\n      campaign: String(c.name ?? c.id ?? \"Sem campanha\"),\n      status: norm(c.effective_status ?? c.status),\n      updated_at: new Date().toISOString(),\n    };\n    const k = row.account_external_id + \"|\" + row.campaign;\n    const e = map.get(k);\n    if (!e || (RANK[row.status] ?? 0) > (RANK[e.status] ?? 0)) map.set(k, row);\n  }\n}\nconst rows = [...map.values()];\nif (!rows.length) return [];\nreturn [{ json: { rows, total: rows.length } }];"
+      },
+      "id": "code-camp",
+      "name": "Montar ad_campaigns",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        920,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://oqsjdhrwpmpdrihgbgtx.supabase.co/rest/v1/ad_campaigns",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "on_conflict",
+              "value": "client_id,account_external_id,platform,campaign"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "resolution=merge-duplicates,return=minimal"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.rows) }}",
+        "options": {}
+      },
+      "id": "up-camp",
+      "name": "Upsert ad_campaigns",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1160,
+        240
+      ],
+      "onError": "continueRegularOutput",
+      "credentials": {
+        "supabaseApi": {
+          "id": "sfp0d2ZkWr7zz5wM",
+          "name": "Supabase - Painel Métricas (service role)"
+        }
+      }
     }
   ],
   "connections": {
@@ -101,7 +339,7 @@
       "main": [
         [
           {
-            "node": "Configurar segredos",
+            "node": "Buscar contas Meta",
             "type": "main",
             "index": 0
           }
@@ -112,18 +350,83 @@
       "main": [
         [
           {
-            "node": "Configurar segredos",
+            "node": "Buscar contas Meta",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Configurar segredos": {
+    "Buscar contas Meta": {
       "main": [
         [
           {
-            "node": "Sincronizar Meta Ads",
+            "node": "Meta Insights",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Meta Campaigns",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Meta Insights": {
+      "main": [
+        [
+          {
+            "node": "Montar ad_metrics",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Montar ad_conversion_actions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Montar ad_metrics": {
+      "main": [
+        [
+          {
+            "node": "Upsert ad_metrics",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Montar ad_conversion_actions": {
+      "main": [
+        [
+          {
+            "node": "Upsert ad_conversion_actions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Meta Campaigns": {
+      "main": [
+        [
+          {
+            "node": "Montar ad_campaigns",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Montar ad_campaigns": {
+      "main": [
+        [
+          {
+            "node": "Upsert ad_campaigns",
             "type": "main",
             "index": 0
           }
@@ -131,13 +434,7 @@
       ]
     }
   },
-  "pinData": {},
   "settings": {
     "executionOrder": "v1"
-  },
-  "staticData": null,
-  "tags": [],
-  "triggerCount": 0,
-  "updatedAt": "2026-07-07T19:46:35.216Z",
-  "versionId": "8b61768f-3a3a-42d4-92f8-495eb470ff65"
+  }
 }
