@@ -68,8 +68,10 @@ sessão via Supabase Admin API; role admin preservada).
   (`n8n/meta-ads-supabase.workflow.json`, gerado de
   `n8n/meta-ads-sync-code.js`). Conta Madeireira
   `act_1176296527286706` cadastrada em `integration_accounts` com status
-  `pending`. Falta gerar o token System User, criar as variáveis no n8n,
-  importar/ativar o workflow e testar E2E.
+  `pending`. Como o n8n atual não tem Variables no plano, o workflow traz o
+  node **Configurar segredos** para preencher `SUPABASE_URL`,
+  `SUPABASE_SERVICE_ROLE_KEY` e `META_ACCESS_TOKEN`. Falta importar/ativar o
+  workflow e testar E2E.
 - Credenciais n8n: `Supabase - Painel Métricas` (sfp0d2ZkWr7zz5wM),
   `Google Analytics account` (I8evqpJf7UDmKsGB),
   `Google Ads account` (tcBb8A3FKBjc2nOt). OAuth client reaproveitado
@@ -113,9 +115,10 @@ app"**.
     Alternativa: selecionar outro app onde o system user já tenha função.
 
 **Depois de ter o token (próximos passos):**
-1. Criar variáveis no n8n (NÃO colar token em chat): `SUPABASE_URL`,
-   `SUPABASE_SERVICE_ROLE_KEY`, `META_ACCESS_TOKEN`; opcionais
-   `META_GRAPH_API_VERSION` e `META_DATE_PRESET`.
+1. Importar o workflow e preencher o node **Configurar segredos** com
+   `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `META_ACCESS_TOKEN`;
+   opcionais `META_GRAPH_API_VERSION` e `META_DATE_PRESET`. O Code node tambem
+   aceita `$vars` se o plano do n8n liberar Variables no futuro.
 2. Importar o workflow `n8n/meta-ads-supabase.workflow.json`: Schedule →
    buscar `integration_accounts` provider=`meta_ads` → Graph API
    `GET /v21.0/act_<id>/insights` (fields: spend, impressions, clicks, reach,
@@ -401,8 +404,16 @@ dashboard Vercel + Redeploy. O dev local (localhost:3000) reflete tudo.
   `scripts/build-n8n-meta-workflow.mjs`, `n8n/meta-ads-supabase.workflow.json`
   e `n8n/README.md`. Documentado em `docs/ingestao-n8n.md`; comando
   `npm run build:n8n:meta`. Validações: `npm run lint` e `npm run build`
-  verdes. Pendente: corrigir role do System User no app Meta, gerar token,
-  criar variáveis no n8n, importar/ativar workflow e testar E2E.
+  verdes. Pendente: gerar/guardar token, preencher o node **Configurar
+  segredos**, importar/ativar workflow e testar E2E.
+- **2026-07-07 (n8n Meta sem Variables)** — O plano atual do n8n mostrou
+  **Environments/Variables** como recurso Enterprise. Ajustado o workflow Meta
+  para não depender de `$vars`: o JSON importável agora inclui o node
+  **Configurar segredos** antes do Code node, e `n8n/meta-ads-sync-code.js`
+  lê `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `META_ACCESS_TOKEN`,
+  `META_GRAPH_API_VERSION` e `META_DATE_PRESET` primeiro do input e depois de
+  `$vars` como fallback. Atualizados `n8n/README.md` e
+  `docs/ingestao-n8n.md`.
 - **2026-07-07 (guia de cadastro de integrações)** — Página Integrações
   (`/clientes`) ganhou checklist operacional para cliente novo: Google Ads
   (vínculo MCC → Customer ID), Meta Ads (Business/conta compartilhada →

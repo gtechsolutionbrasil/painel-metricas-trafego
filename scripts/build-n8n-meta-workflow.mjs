@@ -35,6 +35,52 @@ const workflow = {
     },
     {
       parameters: {
+        assignments: {
+          assignments: [
+            {
+              id: "51f3d8e9-d5e2-46fe-a8d5-9dd982af1bf7",
+              name: "SUPABASE_URL",
+              value: "COLE_AQUI_SUPABASE_URL",
+              type: "string",
+            },
+            {
+              id: "f6a2e117-23d2-43a2-b314-45c5282dbdad",
+              name: "SUPABASE_SERVICE_ROLE_KEY",
+              value: "COLE_AQUI_SUPABASE_SERVICE_ROLE_KEY",
+              type: "string",
+            },
+            {
+              id: "354144ab-2d8f-467c-9a69-d9c6c064dfb3",
+              name: "META_ACCESS_TOKEN",
+              value: "COLE_AQUI_META_ACCESS_TOKEN",
+              type: "string",
+            },
+            {
+              id: "74b52ab8-0f09-4a7e-9d25-02982f57d605",
+              name: "META_GRAPH_API_VERSION",
+              value: "v21.0",
+              type: "string",
+            },
+            {
+              id: "af1d6e96-bf05-41ce-8f46-c9f1052ecec5",
+              name: "META_DATE_PRESET",
+              value: "last_30d",
+              type: "string",
+            },
+          ],
+        },
+        options: {},
+      },
+      id: "d98a6efa-3967-4a93-9aa6-8d88fc5d04618",
+      name: "Configurar segredos",
+      type: "n8n-nodes-base.set",
+      typeVersion: 3.4,
+      position: [280, 80],
+      notes:
+        "Cole aqui os valores reais antes de testar. Este plano do n8n nao tem Variables liberado.",
+    },
+    {
+      parameters: {
         mode: "runOnceForAllItems",
         jsCode: code,
       },
@@ -42,7 +88,7 @@ const workflow = {
       name: "Sincronizar Meta Ads",
       type: "n8n-nodes-base.code",
       typeVersion: 2,
-      position: [280, 80],
+      position: [560, 80],
       notes:
         "Le integration_accounts provider=meta_ads, consulta Meta Marketing API e faz upsert em ad_metrics, ad_campaigns e ad_conversion_actions.",
     },
@@ -52,7 +98,7 @@ const workflow = {
       main: [
         [
           {
-            node: "Sincronizar Meta Ads",
+            node: "Configurar segredos",
             type: "main",
             index: 0,
           },
@@ -60,6 +106,17 @@ const workflow = {
       ],
     },
     "Agendar 07:00": {
+      main: [
+        [
+          {
+            node: "Configurar segredos",
+            type: "main",
+            index: 0,
+          },
+        ],
+      ],
+    },
+    "Configurar segredos": {
       main: [
         [
           {

@@ -4,13 +4,18 @@
 
 Arquivo importavel: `n8n/meta-ads-supabase.workflow.json`.
 
-Antes de ativar o workflow, crie estas variaveis no n8n:
+Depois de importar o workflow, abra o node **Configurar segredos** e substitua
+os placeholders pelos valores reais:
 
 - `SUPABASE_URL`: URL do projeto Supabase.
 - `SUPABASE_SERVICE_ROLE_KEY`: service role do Supabase.
 - `META_ACCESS_TOKEN`: token de System User da Meta com `ads_read`.
 - `META_GRAPH_API_VERSION`: opcional; padrao `v21.0`.
 - `META_DATE_PRESET`: opcional; padrao `last_30d`.
+
+O Code node tambem aceita as mesmas chaves em `$vars` se o plano do n8n tiver
+Variables liberado. No n8n atual do projeto, o caminho pratico e preencher o
+node **Configurar segredos**.
 
 O workflow:
 
@@ -31,7 +36,7 @@ npm run build:n8n:meta
 
 Notas:
 
-- Nenhum token deve ser colado no chat ou commitado. Os valores ficam nas
-  variaveis do n8n.
+- Nenhum token deve ser commitado. No plano atual do n8n, os valores ficam no
+  node **Configurar segredos** do workflow importado.
 - O filtro de campanhas do painel considera campanha Meta `ACTIVE` como
   `ENABLED`, para reaproveitar a UI de ativas/pausadas.

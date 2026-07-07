@@ -195,13 +195,13 @@
     "semantic_hash": ""
   },
   "REGRAS-PROJETO.md": {
-    "mtime": 1783440208.4843974,
-    "ast_hash": "5aa5a09b05d958e51dd428a8ffb3a22b",
+    "mtime": 1783445200.0351236,
+    "ast_hash": "423c82fb1eaf21afebc7011ea66cfa94",
     "semantic_hash": ""
   },
   "docs/ingestao-n8n.md": {
-    "mtime": 1783439490.531341,
-    "ast_hash": "ed2c783969d393ef6977178fdd16b94c",
+    "mtime": 1783445145.6238716,
+    "ast_hash": "5cda70a8c304ffee315eb3f36b59a8ed",
     "semantic_hash": ""
   },
   "public/brand/favicon.png": {
@@ -375,23 +375,23 @@
     "semantic_hash": ""
   },
   "n8n/meta-ads-supabase.workflow.json": {
-    "mtime": 1783439561.9131947,
-    "ast_hash": "53abd7c9913eedd5226386da7849ba32",
+    "mtime": 1783445215.415512,
+    "ast_hash": "0e49447b06bf5d09772752bff20775f3",
     "semantic_hash": ""
   },
   "n8n/meta-ads-sync-code.js": {
-    "mtime": 1783439554.6079073,
-    "ast_hash": "54d0f47c57168e7e6379eece6d88bdec",
+    "mtime": 1783445067.912421,
+    "ast_hash": "fcb9279dd7e3fd38be29543072cf7992",
     "semantic_hash": ""
   },
   "scripts/build-n8n-meta-workflow.mjs": {
-    "mtime": 1783439482.9655592,
-    "ast_hash": "88661a4bbc5878b5bd8a939247863632",
+    "mtime": 1783445093.943542,
+    "ast_hash": "07c833b538682dcfa92560bd11000fba",
     "semantic_hash": ""
   },
   "n8n/README.md": {
-    "mtime": 1783439554.6086836,
-    "ast_hash": "1c4549d3b3c3d8219d1ad7d0703631c1",
+    "mtime": 1783445131.6117349,
+    "ast_hash": "9f37bfa80eaf4ceaef53465d6118537b",
     "semantic_hash": ""
   }
 }

@@ -1,23 +1,31 @@
-/* global $helpers, $vars */
+/* global $helpers, $vars, $input */
 
-const SUPABASE_URL = requiredVar("SUPABASE_URL").replace(/\/+$/, "");
-const SUPABASE_SERVICE_ROLE_KEY = requiredVar("SUPABASE_SERVICE_ROLE_KEY");
-const META_ACCESS_TOKEN = requiredVar("META_ACCESS_TOKEN");
-const META_GRAPH_API_VERSION = varValue("META_GRAPH_API_VERSION", "v21.0").replace(/^\/+/, "");
-const META_DATE_PRESET = varValue("META_DATE_PRESET", "last_30d");
+const SUPABASE_URL = requiredConfig("SUPABASE_URL").replace(/\/+$/, "");
+const SUPABASE_SERVICE_ROLE_KEY = requiredConfig("SUPABASE_SERVICE_ROLE_KEY");
+const META_ACCESS_TOKEN = requiredConfig("META_ACCESS_TOKEN");
+const META_GRAPH_API_VERSION = configValue("META_GRAPH_API_VERSION", "v21.0").replace(/^\/+/, "");
+const META_DATE_PRESET = configValue("META_DATE_PRESET", "last_30d");
 const STARTED_AT = new Date().toISOString();
 
 const SUPABASE_BATCH_SIZE = 500;
 
-function varValue(name, fallback = "") {
-  const value = $vars?.[name];
-  return value == null || value === "" ? fallback : String(value);
+function inputConfig() {
+  return $input.first()?.json || {};
 }
 
-function requiredVar(name) {
-  const value = varValue(name).trim();
-  if (!value) {
-    throw new Error(`Variavel n8n obrigatoria ausente: ${name}`);
+function configValue(name, fallback = "") {
+  const fromInput = inputConfig()[name];
+  const fromVars = $vars?.[name];
+  const value = fromInput ?? fromVars;
+  const text = value == null ? "" : String(value).trim();
+
+  return text || fallback;
+}
+
+function requiredConfig(name) {
+  const value = configValue(name);
+  if (!value || value.startsWith("COLE_AQUI_")) {
+    throw new Error(`Configure o campo ${name} no node "Configurar segredos".`);
   }
   return value;
 }
