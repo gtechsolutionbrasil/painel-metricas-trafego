@@ -161,24 +161,25 @@ async function metaGetAll(path, params = {}) {
   return rows;
 }
 
+// Allowlist canonica de acoes que contam como CONVERSAO no Meta.
+// Evita dupla contagem: para campanhas de mensagem, a conversao e
+// "conversas iniciadas" (messaging_conversation_started_7d), NAO a soma de
+// total_messaging_connection + first_reply + replied etc (todas subconjuntos).
+const CONVERSION_ACTION_TYPES = new Set([
+  "onsite_conversion.messaging_conversation_started_7d",
+  "onsite_conversion.lead_grouped",
+  "lead",
+  "leadgen_grouped",
+  "offsite_conversion.fb_pixel_lead",
+  "offsite_conversion.fb_pixel_complete_registration",
+  "onsite_conversion.purchase",
+  "offsite_conversion.fb_pixel_purchase",
+  "omni_purchase",
+  "purchase",
+]);
+
 function isConversionAction(actionType) {
-  const value = String(actionType || "").toLowerCase();
-  if (!value) return false;
-
-  const ignored = [
-    "link_click",
-    "landing_page_view",
-    "page_engagement",
-    "post_engagement",
-    "post_reaction",
-    "video_view",
-    "comment",
-  ];
-  if (ignored.includes(value)) return false;
-
-  return /lead|contact|messag|conversation|whatsapp|submit|schedule|appointment|form|purchase|complete_registration|phone_call|call/.test(
-    value,
-  );
+  return CONVERSION_ACTION_TYPES.has(String(actionType || "").toLowerCase());
 }
 
 function isRevenueAction(actionType) {
@@ -206,6 +207,44 @@ function revenueTotal(actionValues = []) {
   return actionValues
     .filter((action) => isRevenueAction(action.action_type))
     .reduce((sum, action) => sum + numeric(action.value), 0);
+}
+
+// Campanhas homonimas (mesmo nome do Meta, ids diferentes) colidem na chave de
+// upsert. Metricas/conversoes: somar por chave. Campanhas: 1 linha, mais ativa.
+function mergeMetrics(rows) {
+  const map = new Map();
+  for (const r of rows) {
+    const k = `${r.date}|${r.campaign}`;
+    const e = map.get(k);
+    if (!e) { map.set(k, { ...r }); continue; }
+    e.spend = money(e.spend + r.spend);
+    e.impressions += r.impressions;
+    e.clicks += r.clicks;
+    e.conversions += r.conversions;
+    e.revenue = money(e.revenue + r.revenue);
+  }
+  return [...map.values()];
+}
+
+function mergeConversions(rows) {
+  const map = new Map();
+  for (const r of rows) {
+    const k = `${r.date}|${r.campaign}|${r.action_name}`;
+    const e = map.get(k);
+    if (!e) { map.set(k, { ...r }); continue; }
+    e.conversions += r.conversions;
+  }
+  return [...map.values()];
+}
+
+const STATUS_RANK = { ENABLED: 3, PAUSED: 2, REMOVED: 1, UNKNOWN: 0 };
+function dedupeCampaigns(rows) {
+  const map = new Map();
+  for (const r of rows) {
+    const e = map.get(r.campaign);
+    if (!e || (STATUS_RANK[r.status] ?? 0) > (STATUS_RANK[e.status] ?? 0)) map.set(r.campaign, r);
+  }
+  return [...map.values()];
 }
 
 function normalizeStatus(status) {
@@ -293,17 +332,17 @@ async function syncAccount(account) {
 
     const metrics = await upsert(
       "ad_metrics",
-      metricRows,
+      mergeMetrics(metricRows),
       "client_id,account_external_id,date,platform,campaign",
     );
     const conversions = await upsert(
       "ad_conversion_actions",
-      conversionRows,
+      mergeConversions(conversionRows),
       "client_id,account_external_id,date,campaign,action_name",
     );
     const campaigns = await upsert(
       "ad_campaigns",
-      campaignRows,
+      dedupeCampaigns(campaignRows),
       "client_id,account_external_id,platform,campaign",
     );
 

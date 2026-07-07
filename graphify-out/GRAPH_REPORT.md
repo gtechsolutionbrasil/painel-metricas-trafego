@@ -1,16 +1,16 @@
 # Graph Report - painel-metricas-trafego  (2026-07-07)
 
 ## Corpus Check
-- 66 files · ~43,571 words
+- 67 files · ~44,842 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 401 nodes · 770 edges · 31 communities (12 shown, 19 thin omitted)
+- 422 nodes · 800 edges · 33 communities (14 shown, 19 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `1e72e26c`
+- Built from commit: `d4bc2b56`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -20,6 +20,7 @@
 - [[_COMMUNITY_Topbar & Camada de dados|Topbar & Camada de dados]]
 - [[_COMMUNITY_Gráficos (Recharts)|Gráficos (Recharts)]]
 - [[_COMMUNITY_TypeScript config|TypeScript config]]
+- [[_COMMUNITY_Community 5|Community 5]]
 - [[_COMMUNITY_Community 6|Community 6]]
 - [[_COMMUNITY_Agregação de métricas|Agregação de métricas]]
 - [[_COMMUNITY_Analytics web & métricas web|Analytics web & métricas web]]
@@ -45,6 +46,7 @@
 - [[_COMMUNITY_Community 29|Community 29]]
 - [[_COMMUNITY_Community 30|Community 30]]
 - [[_COMMUNITY_Community 31|Community 31]]
+- [[_COMMUNITY_Community 32|Community 32]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `ChannelPage()` - 18 edges
@@ -63,11 +65,11 @@
   src/app/(dash)/layout.tsx → src/lib/metrics/queries.ts
 - `SourceHeader()` --calls--> `fmtInt()`  [EXTRACTED]
   src/components/pages/GoogleInsights.tsx → src/lib/format.ts
-- `createClientWithAccounts()` --calls--> `createSupabaseServerClient()`  [EXTRACTED]
-  src/app/(dash)/clientes/actions.ts → src/lib/supabase/server.ts
-- `deleteClient()` --calls--> `createSupabaseServerClient()`  [EXTRACTED]
-  src/app/(dash)/clientes/actions.ts → src/lib/supabase/server.ts
+- `ClientesPage()` --calls--> `getClients()`  [EXTRACTED]
+  src/app/(dash)/clientes/page.tsx → src/lib/metrics/queries.ts
 - `OverviewPage()` --calls--> `previousRange()`  [EXTRACTED]
+  src/app/(dash)/page.tsx → src/lib/range.ts
+- `OverviewPage()` --calls--> `rangeFromSearch()`  [EXTRACTED]
   src/app/(dash)/page.tsx → src/lib/range.ts
 
 ## Import Cycles
@@ -78,19 +80,19 @@
 - **Data Ingestion Flow** — n8n_workflow, google_ads_api, meta_marketing_api, ga4_data_api, supabase_migrations_0001_init [EXTRACTED 1.00]
 - **Dashboard Pages** — src_app_dash_page, src_app_dash_trafego_pago, src_app_dash_analytics, src_app_dash_clientes [EXTRACTED 1.00]
 
-## Communities (31 total, 19 thin omitted)
+## Communities (33 total, 19 thin omitted)
 
 ### Community 0 - "Dependências (package.json)"
-Cohesion: 0.10
-Nodes (31): CampaignFilter(), AdMetricRow, BreakdownRow, filterAdMetrics(), filterWebMetrics(), WebMetricRow, CAMPAigns, CLIENT_SCALE (+23 more)
+Cohesion: 0.11
+Nodes (30): CampaignFilter(), AdMetricRow, BreakdownRow, filterAdMetrics(), WebMetricRow, CAMPAigns, CLIENT_SCALE, dayFactor() (+22 more)
 
 ### Community 1 - "Login, Layout & ESLint"
 Cohesion: 0.07
-Nodes (60): ClientesPage(), SP, OverviewPage(), platformDetail(), SP, cap(), friendlyOrigin(), SitePage() (+52 more)
+Nodes (58): SP, OverviewPage(), platformDetail(), SP, cap(), friendlyOrigin(), SitePage(), SP (+50 more)
 
 ### Community 2 - "Topbar & Camada de dados"
-Cohesion: 0.09
-Nodes (26): DashLayout(), GoogleAdsIcon(), IconProps, MetaAdsIcon(), buildMonth(), fmtBR(), iso(), MONTHS (+18 more)
+Cohesion: 0.19
+Nodes (17): buildMonth(), fmtBR(), iso(), MONTHS, parse(), PeriodPicker(), WEEK, defaultRange() (+9 more)
 
 ### Community 3 - "Gráficos (Recharts)"
 Cohesion: 0.10
@@ -100,9 +102,13 @@ Nodes (19): compilerOptions, allowJs, esModuleInterop, incremental, isolatedModu
 Cohesion: 0.07
 Nodes (28): dependencies, date-fns, lucide-react, next, react, react-dom, recharts, @supabase/ssr (+20 more)
 
+### Community 5 - "Community 5"
+Cohesion: 0.09
+Nodes (18): eslintConfig, LoginForm(), safeNextPath(), DashLayout(), GoogleAdsIcon(), IconProps, MetaAdsIcon(), Logo() (+10 more)
+
 ### Community 7 - "Agregação de métricas"
-Cohesion: 0.20
-Nodes (9): Acesso (dev), Convenções técnicas, Estado atual, >>> HANDOFF 2026-07-07 (Claude → Codex): onde parou o Meta Ads, Histórico de iterações, O que é, Pendências / próximos passos, REGRAS-PROJETO — Painel de Métricas de Tráfego (GTech Solution) (+1 more)
+Cohesion: 0.18
+Nodes (10): Acesso (dev), Convenções técnicas, Estado atual, Handoff original (contexto histórico, já resolvido), Histórico de iterações, O que é, Pendências / próximos passos, REGRAS-PROJETO — Painel de Métricas de Tráfego (GTech Solution) (+2 more)
 
 ### Community 11 - "Community 11"
 Cohesion: 0.09
@@ -117,32 +123,36 @@ Cohesion: 0.07
 Nodes (40): SP, ACTION_NAME_LABEL, CATEGORY_LABEL, categoryLabel(), CLICK_TYPE_LABEL, clickTypeLabel(), GoogleInsights(), MATCH_LABEL (+32 more)
 
 ### Community 29 - "Community 29"
-Cohesion: 0.07
-Nodes (25): eslintConfig, LoginForm(), safeNextPath(), AccountInput, buildAccounts(), clientSchema, createClientWithAccounts(), deleteClient() (+17 more)
+Cohesion: 0.10
+Nodes (19): AccountInput, buildAccounts(), clientSchema, createClientWithAccounts(), deleteClient(), FIELD_LABELS, normalizeMetaAdAccountId(), normalizeSlug() (+11 more)
 
 ### Community 30 - "Community 30"
 Cohesion: 0.50
 Nodes (3): code, root, workflow
 
+### Community 32 - "Community 32"
+Cohesion: 0.15
+Nodes (14): CONVERSION_ACTION_TYPES, dedupeCampaigns(), int(), mergeConversions(), mergeMetrics(), metaGetAll(), money(), num() (+6 more)
+
 ## Knowledge Gaps
-- **150 isolated node(s):** `eslintConfig`, `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `META_ACCESS_TOKEN`, `META_GRAPH_API_VERSION` (+145 more)
+- **154 isolated node(s):** `eslintConfig`, `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `META_ACCESS_TOKEN`, `META_GRAPH_API_VERSION` (+149 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **19 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `getClients()` connect `Login, Layout & ESLint` to `Dependências (package.json)`, `Topbar & Camada de dados`, `Community 28`, `Community 29`?**
-  _High betweenness centrality (0.022) - this node is a cross-community bridge._
+- **Why does `getClients()` connect `Login, Layout & ESLint` to `Dependências (package.json)`, `Community 5`, `Community 28`, `Community 29`?**
+  _High betweenness centrality (0.020) - this node is a cross-community bridge._
 - **Why does `rangeFromSearch()` connect `Topbar & Camada de dados` to `Login, Layout & ESLint`, `Community 28`?**
-  _High betweenness centrality (0.014) - this node is a cross-community bridge._
-- **Why does `isSupabaseConfigured` connect `Community 29` to `Dependências (package.json)`, `Topbar & Camada de dados`?**
   _High betweenness centrality (0.012) - this node is a cross-community bridge._
+- **Why does `isSupabaseConfigured` connect `Community 5` to `Dependências (package.json)`, `Community 29`?**
+  _High betweenness centrality (0.011) - this node is a cross-community bridge._
 - **What connects `eslintConfig`, `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` to the rest of the system?**
-  _150 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _154 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Dependências (package.json)` be split into smaller, more focused modules?**
-  _Cohesion score 0.1036036036036036 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.10793650793650794 - nodes in this community are weakly interconnected._
 - **Should `Login, Layout & ESLint` be split into smaller, more focused modules?**
-  _Cohesion score 0.07140538786108407 - nodes in this community are weakly interconnected._
-- **Should `Topbar & Camada de dados` be split into smaller, more focused modules?**
-  _Cohesion score 0.09411764705882353 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.07279562542720437 - nodes in this community are weakly interconnected._
+- **Should `Gráficos (Recharts)` be split into smaller, more focused modules?**
+  _Cohesion score 0.1 - nodes in this community are weakly interconnected._

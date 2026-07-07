@@ -213,7 +213,7 @@
       "label": "supabaseHeaders()",
       "file_type": "code",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L55",
+      "source_location": "L57",
       "_origin": "ast",
       "id": "n8n_meta_ads_sync_code_supabaseheaders",
       "community": 11,
@@ -223,7 +223,7 @@
       "label": "requestJson()",
       "file_type": "code",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L64",
+      "source_location": "L66",
       "_origin": "ast",
       "id": "n8n_meta_ads_sync_code_requestjson",
       "community": 11,
@@ -233,7 +233,7 @@
       "label": "supabaseRequest()",
       "file_type": "code",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L80",
+      "source_location": "L82",
       "_origin": "ast",
       "id": "n8n_meta_ads_sync_code_supabaserequest",
       "community": 11,
@@ -243,7 +243,7 @@
       "label": "upsert()",
       "file_type": "code",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L89",
+      "source_location": "L91",
       "_origin": "ast",
       "id": "n8n_meta_ads_sync_code_upsert",
       "community": 11,
@@ -253,7 +253,7 @@
       "label": "patchIntegrationAccount()",
       "file_type": "code",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L105",
+      "source_location": "L107",
       "_origin": "ast",
       "id": "n8n_meta_ads_sync_code_patchintegrationaccount",
       "community": 11,
@@ -263,7 +263,7 @@
       "label": "insertSyncRun()",
       "file_type": "code",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L113",
+      "source_location": "L115",
       "_origin": "ast",
       "id": "n8n_meta_ads_sync_code_insertsyncrun",
       "community": 11,
@@ -273,7 +273,7 @@
       "label": "fetchMetaAccounts()",
       "file_type": "code",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L120",
+      "source_location": "L122",
       "_origin": "ast",
       "id": "n8n_meta_ads_sync_code_fetchmetaaccounts",
       "community": 11,
@@ -283,7 +283,7 @@
       "label": "metaHeaders()",
       "file_type": "code",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L130",
+      "source_location": "L132",
       "_origin": "ast",
       "id": "n8n_meta_ads_sync_code_metaheaders",
       "community": 11,
@@ -293,7 +293,7 @@
       "label": "metaGet()",
       "file_type": "code",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L136",
+      "source_location": "L138",
       "_origin": "ast",
       "id": "n8n_meta_ads_sync_code_metaget",
       "community": 11,
@@ -303,7 +303,7 @@
       "label": "metaGetAll()",
       "file_type": "code",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L144",
+      "source_location": "L146",
       "_origin": "ast",
       "id": "n8n_meta_ads_sync_code_metagetall",
       "community": 11,
@@ -313,7 +313,7 @@
       "label": "isConversionAction()",
       "file_type": "code",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L162",
+      "source_location": "L164",
       "_origin": "ast",
       "id": "n8n_meta_ads_sync_code_isconversionaction",
       "community": 11,
@@ -323,7 +323,7 @@
       "label": "isRevenueAction()",
       "file_type": "code",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L182",
+      "source_location": "L184",
       "_origin": "ast",
       "id": "n8n_meta_ads_sync_code_isrevenueaction",
       "community": 11,
@@ -333,7 +333,7 @@
       "label": "actionOrigin()",
       "file_type": "code",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L186",
+      "source_location": "L188",
       "_origin": "ast",
       "id": "n8n_meta_ads_sync_code_actionorigin",
       "community": 11,
@@ -343,7 +343,7 @@
       "label": "conversionTotal()",
       "file_type": "code",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L197",
+      "source_location": "L199",
       "_origin": "ast",
       "id": "n8n_meta_ads_sync_code_conversiontotal",
       "community": 11,
@@ -353,7 +353,7 @@
       "label": "revenueTotal()",
       "file_type": "code",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L203",
+      "source_location": "L205",
       "_origin": "ast",
       "id": "n8n_meta_ads_sync_code_revenuetotal",
       "community": 11,
@@ -363,7 +363,7 @@
       "label": "normalizeStatus()",
       "file_type": "code",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L209",
+      "source_location": "L211",
       "_origin": "ast",
       "id": "n8n_meta_ads_sync_code_normalizestatus",
       "community": 11,
@@ -373,7 +373,7 @@
       "label": "campaignName()",
       "file_type": "code",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L217",
+      "source_location": "L219",
       "_origin": "ast",
       "id": "n8n_meta_ads_sync_code_campaignname",
       "community": 11,
@@ -383,7 +383,7 @@
       "label": "mapMetric()",
       "file_type": "code",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L221",
+      "source_location": "L223",
       "_origin": "ast",
       "id": "n8n_meta_ads_sync_code_mapmetric",
       "community": 11,
@@ -393,7 +393,7 @@
       "label": "mapConversionActions()",
       "file_type": "code",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L237",
+      "source_location": "L239",
       "_origin": "ast",
       "id": "n8n_meta_ads_sync_code_mapconversionactions",
       "community": 11,
@@ -403,7 +403,7 @@
       "label": "mapCampaign()",
       "file_type": "code",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L253",
+      "source_location": "L255",
       "_origin": "ast",
       "id": "n8n_meta_ads_sync_code_mapcampaign",
       "community": 11,
@@ -413,7 +413,7 @@
       "label": "collectAccount()",
       "file_type": "code",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L264",
+      "source_location": "L266",
       "_origin": "ast",
       "id": "n8n_meta_ads_sync_code_collectaccount",
       "community": 11,
@@ -423,7 +423,7 @@
       "label": "syncAccount()",
       "file_type": "code",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L288",
+      "source_location": "L290",
       "_origin": "ast",
       "id": "n8n_meta_ads_sync_code_syncaccount",
       "community": 11,
@@ -433,7 +433,7 @@
       "label": "summaries",
       "file_type": "code",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L370",
+      "source_location": "L372",
       "_origin": "ast",
       "id": "n8n_meta_ads_sync_code_summaries",
       "community": 11,
@@ -810,6 +810,166 @@
       "norm_label": "workflow"
     },
     {
+      "label": "meta-sync.mjs",
+      "file_type": "code",
+      "source_file": "scripts/meta-sync.mjs",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "scripts_meta_sync",
+      "community": 32,
+      "norm_label": "meta-sync.mjs"
+    },
+    {
+      "label": "SUPABASE_URL",
+      "file_type": "code",
+      "source_file": "scripts/meta-sync.mjs",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "scripts_meta_sync_supabase_url",
+      "community": 32,
+      "norm_label": "supabase_url"
+    },
+    {
+      "label": "STARTED_AT",
+      "file_type": "code",
+      "source_file": "scripts/meta-sync.mjs",
+      "source_location": "L12",
+      "_origin": "ast",
+      "id": "scripts_meta_sync_started_at",
+      "community": 32,
+      "norm_label": "started_at"
+    },
+    {
+      "label": "CONVERSION_ACTION_TYPES",
+      "file_type": "code",
+      "source_file": "scripts/meta-sync.mjs",
+      "source_location": "L20",
+      "_origin": "ast",
+      "id": "scripts_meta_sync_conversion_action_types",
+      "community": 32,
+      "norm_label": "conversion_action_types"
+    },
+    {
+      "label": "num()",
+      "file_type": "code",
+      "source_file": "scripts/meta-sync.mjs",
+      "source_location": "L33",
+      "_origin": "ast",
+      "id": "scripts_meta_sync_num",
+      "community": 32,
+      "norm_label": "num()"
+    },
+    {
+      "label": "int()",
+      "file_type": "code",
+      "source_file": "scripts/meta-sync.mjs",
+      "source_location": "L34",
+      "_origin": "ast",
+      "id": "scripts_meta_sync_int",
+      "community": 32,
+      "norm_label": "int()"
+    },
+    {
+      "label": "money()",
+      "file_type": "code",
+      "source_file": "scripts/meta-sync.mjs",
+      "source_location": "L35",
+      "_origin": "ast",
+      "id": "scripts_meta_sync_money",
+      "community": 32,
+      "norm_label": "money()"
+    },
+    {
+      "label": "isConversion()",
+      "file_type": "code",
+      "source_file": "scripts/meta-sync.mjs",
+      "source_location": "L36",
+      "_origin": "ast",
+      "id": "scripts_meta_sync_isconversion",
+      "community": 32,
+      "norm_label": "isconversion()"
+    },
+    {
+      "label": "isRevenue()",
+      "file_type": "code",
+      "source_file": "scripts/meta-sync.mjs",
+      "source_location": "L37",
+      "_origin": "ast",
+      "id": "scripts_meta_sync_isrevenue",
+      "community": 32,
+      "norm_label": "isrevenue()"
+    },
+    {
+      "label": "actionOrigin()",
+      "file_type": "code",
+      "source_file": "scripts/meta-sync.mjs",
+      "source_location": "L39",
+      "_origin": "ast",
+      "id": "scripts_meta_sync_actionorigin",
+      "community": 32,
+      "norm_label": "actionorigin()"
+    },
+    {
+      "label": "sumActions()",
+      "file_type": "code",
+      "source_file": "scripts/meta-sync.mjs",
+      "source_location": "L46",
+      "_origin": "ast",
+      "id": "scripts_meta_sync_sumactions",
+      "community": 32,
+      "norm_label": "sumactions()"
+    },
+    {
+      "label": "sb()",
+      "file_type": "code",
+      "source_file": "scripts/meta-sync.mjs",
+      "source_location": "L50",
+      "_origin": "ast",
+      "id": "scripts_meta_sync_sb",
+      "community": 32,
+      "norm_label": "sb()"
+    },
+    {
+      "label": "upsert()",
+      "file_type": "code",
+      "source_file": "scripts/meta-sync.mjs",
+      "source_location": "L68",
+      "_origin": "ast",
+      "id": "scripts_meta_sync_upsert",
+      "community": 32,
+      "norm_label": "upsert()"
+    },
+    {
+      "label": "metaGetAll()",
+      "file_type": "code",
+      "source_file": "scripts/meta-sync.mjs",
+      "source_location": "L80",
+      "_origin": "ast",
+      "id": "scripts_meta_sync_metagetall",
+      "community": 32,
+      "norm_label": "metagetall()"
+    },
+    {
+      "label": "normStatus()",
+      "file_type": "code",
+      "source_file": "scripts/meta-sync.mjs",
+      "source_location": "L94",
+      "_origin": "ast",
+      "id": "scripts_meta_sync_normstatus",
+      "community": 32,
+      "norm_label": "normstatus()"
+    },
+    {
+      "label": "syncAccount()",
+      "file_type": "code",
+      "source_file": "scripts/meta-sync.mjs",
+      "source_location": "L102",
+      "_origin": "ast",
+      "id": "scripts_meta_sync_syncaccount",
+      "community": 32,
+      "norm_label": "syncaccount()"
+    },
+    {
       "label": "page.tsx",
       "file_type": "code",
       "source_file": "src/app/(auth)/login/page.tsx",
@@ -1036,7 +1196,7 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "src_app_dash_clientes_page_clientespage",
-      "community": 1,
+      "community": 5,
       "norm_label": "clientespage()"
     },
     {
@@ -1156,7 +1316,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_dash_layout",
-      "community": 2,
+      "community": 5,
       "norm_label": "layout.tsx"
     },
     {
@@ -1166,7 +1326,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_app_dash_layout_dashlayout",
-      "community": 2,
+      "community": 5,
       "norm_label": "dashlayout()"
     },
     {
@@ -1176,7 +1336,7 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "src_app_dash_layout_demobanner",
-      "community": 2,
+      "community": 5,
       "norm_label": "demobanner()"
     },
     {
@@ -1386,7 +1546,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_brand_channelicons",
-      "community": 2,
+      "community": 5,
       "norm_label": "channelicons.tsx"
     },
     {
@@ -1396,7 +1556,7 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "src_components_brand_channelicons_iconprops",
-      "community": 2,
+      "community": 5,
       "norm_label": "iconprops"
     },
     {
@@ -1406,7 +1566,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "src_components_brand_channelicons_googleadsicon",
-      "community": 2,
+      "community": 5,
       "norm_label": "googleadsicon()"
     },
     {
@@ -1416,7 +1576,7 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "src_components_brand_channelicons_metaadsicon",
-      "community": 2,
+      "community": 5,
       "norm_label": "metaadsicon()"
     },
     {
@@ -1676,7 +1836,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_layout_sidebar",
-      "community": 2,
+      "community": 5,
       "norm_label": "sidebar.tsx"
     },
     {
@@ -1686,7 +1846,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "src_components_layout_sidebar_navicon",
-      "community": 2,
+      "community": 5,
       "norm_label": "navicon"
     },
     {
@@ -1696,7 +1856,7 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "src_components_layout_sidebar_navitem",
-      "community": 2,
+      "community": 5,
       "norm_label": "navitem"
     },
     {
@@ -1706,7 +1866,7 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "src_components_layout_sidebar_nav",
-      "community": 2,
+      "community": 5,
       "norm_label": "nav"
     },
     {
@@ -1716,7 +1876,7 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "src_components_layout_sidebar_sidebar",
-      "community": 2,
+      "community": 5,
       "norm_label": "sidebar()"
     },
     {
@@ -1726,7 +1886,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_layout_topbar",
-      "community": 2,
+      "community": 5,
       "norm_label": "topbar.tsx"
     },
     {
@@ -1736,7 +1896,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "src_components_layout_topbar_topbar",
-      "community": 2,
+      "community": 5,
       "norm_label": "topbar()"
     },
     {
@@ -1746,7 +1906,7 @@
       "source_location": "L104",
       "_origin": "ast",
       "id": "src_components_layout_topbar_clientoption",
-      "community": 2,
+      "community": 5,
       "norm_label": "clientoption()"
     },
     {
@@ -2116,7 +2276,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_campaigns",
-      "community": 1,
+      "community": 28,
       "norm_label": "campaigns.ts"
     },
     {
@@ -2126,7 +2286,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_campaigns_sp",
-      "community": 1,
+      "community": 28,
       "norm_label": "sp"
     },
     {
@@ -2136,7 +2296,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "src_lib_campaigns_selectedcampaigns",
-      "community": 1,
+      "community": 28,
       "norm_label": "selectedcampaigns()"
     },
     {
@@ -2316,7 +2476,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate",
-      "community": 28,
+      "community": 0,
       "norm_label": "aggregate.ts"
     },
     {
@@ -2326,7 +2486,7 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_conversionsource",
-      "community": 28,
+      "community": 0,
       "norm_label": "conversionsource()"
     },
     {
@@ -2346,7 +2506,7 @@
       "source_location": "L77",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_addaypoint",
-      "community": 28,
+      "community": 0,
       "norm_label": "addaypoint"
     },
     {
@@ -2366,7 +2526,7 @@
       "source_location": "L100",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_platformbreak",
-      "community": 28,
+      "community": 0,
       "norm_label": "platformbreak"
     },
     {
@@ -2376,7 +2536,7 @@
       "source_location": "L109",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_platform_label",
-      "community": 28,
+      "community": 0,
       "norm_label": "platform_label"
     },
     {
@@ -2396,7 +2556,7 @@
       "source_location": "L137",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_campaignrow",
-      "community": 28,
+      "community": 0,
       "norm_label": "campaignrow"
     },
     {
@@ -2416,7 +2576,7 @@
       "source_location": "L200",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_webkpis",
-      "community": 28,
+      "community": 1,
       "norm_label": "webkpis"
     },
     {
@@ -2426,7 +2586,7 @@
       "source_location": "L223",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_webdaypoint",
-      "community": 28,
+      "community": 0,
       "norm_label": "webdaypoint"
     },
     {
@@ -2446,7 +2606,7 @@
       "source_location": "L236",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_sourcerow",
-      "community": 28,
+      "community": 0,
       "norm_label": "sourcerow"
     },
     {
@@ -2456,7 +2616,7 @@
       "source_location": "L246",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_keywordrow",
-      "community": 28,
+      "community": 0,
       "norm_label": "keywordrow"
     },
     {
@@ -2476,7 +2636,7 @@
       "source_location": "L290",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_searchtermrow",
-      "community": 28,
+      "community": 0,
       "norm_label": "searchtermrow"
     },
     {
@@ -2496,7 +2656,7 @@
       "source_location": "L323",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_adgrouprow",
-      "community": 28,
+      "community": 0,
       "norm_label": "adgrouprow"
     },
     {
@@ -2516,7 +2676,7 @@
       "source_location": "L361",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_georow",
-      "community": 28,
+      "community": 0,
       "norm_label": "georow"
     },
     {
@@ -2536,7 +2696,7 @@
       "source_location": "L384",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_clicktyperow",
-      "community": 28,
+      "community": 0,
       "norm_label": "clicktyperow"
     },
     {
@@ -2556,7 +2716,7 @@
       "source_location": "L401",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_conversionactionrow",
-      "community": 28,
+      "community": 0,
       "norm_label": "conversionactionrow"
     },
     {
@@ -2566,7 +2726,7 @@
       "source_location": "L409",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_conversionactiongroup",
-      "community": 28,
+      "community": 0,
       "norm_label": "conversionactiongroup"
     },
     {
@@ -2576,7 +2736,7 @@
       "source_location": "L417",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_byconversionactiongrouped",
-      "community": 28,
+      "community": 0,
       "norm_label": "byconversionactiongrouped()"
     },
     {
@@ -2626,7 +2786,7 @@
       "source_location": "L57",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_logqueryerror",
-      "community": 1,
+      "community": 5,
       "norm_label": "logqueryerror()"
     },
     {
@@ -2636,7 +2796,7 @@
       "source_location": "L66",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_getclients",
-      "community": 1,
+      "community": 5,
       "norm_label": "getclients()"
     },
     {
@@ -2646,7 +2806,7 @@
       "source_location": "L88",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_getintegrationaccounts",
-      "community": 1,
+      "community": 5,
       "norm_label": "getintegrationaccounts()"
     },
     {
@@ -2656,7 +2816,7 @@
       "source_location": "L125",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_getadmetrics",
-      "community": 1,
+      "community": 5,
       "norm_label": "getadmetrics()"
     },
     {
@@ -2716,7 +2876,7 @@
       "source_location": "L277",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_getadcampaigns",
-      "community": 1,
+      "community": 5,
       "norm_label": "getadcampaigns()"
     },
     {
@@ -2756,7 +2916,7 @@
       "source_location": "L367",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_getwebmetrics",
-      "community": 1,
+      "community": 5,
       "norm_label": "getwebmetrics()"
     },
     {
@@ -2786,7 +2946,7 @@
       "source_location": "L428",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_filteradmetrics",
-      "community": 0,
+      "community": 5,
       "norm_label": "filteradmetrics()"
     },
     {
@@ -2796,7 +2956,7 @@
       "source_location": "L443",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_filterwebmetrics",
-      "community": 0,
+      "community": 5,
       "norm_label": "filterwebmetrics()"
     },
     {
@@ -3106,7 +3266,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "src_lib_supabase_server_createsupabaseserverclient",
-      "community": 1,
+      "community": 5,
       "norm_label": "createsupabaseserverclient()"
     },
     {
@@ -3276,7 +3436,7 @@
       "source_location": "L117",
       "_origin": "ast",
       "id": "src_lib_types_conversionsource",
-      "community": 28,
+      "community": 0,
       "norm_label": "conversionsource"
     },
     {
@@ -3680,20 +3840,30 @@
       "norm_label": "estado atual"
     },
     {
-      "label": ">>> HANDOFF 2026-07-07 (Claude \u2192 Codex): onde parou o Meta Ads",
+      "label": ">>> RESOLVIDO 2026-07-07 (Claude): Meta Ads ligado",
       "file_type": "document",
       "source_file": "REGRAS-PROJETO.md",
       "source_location": "L94",
       "_origin": "ast",
-      "id": "regras_projeto_handoff_2026_07_07_claude_codex_onde_parou_o_meta_ads",
+      "id": "regras_projeto_resolvido_2026_07_07_claude_meta_ads_ligado",
       "community": 7,
-      "norm_label": ">>> handoff 2026-07-07 (claude \u2192 codex): onde parou o meta ads"
+      "norm_label": ">>> resolvido 2026-07-07 (claude): meta ads ligado"
+    },
+    {
+      "label": "Handoff original (contexto hist\u00f3rico, j\u00e1 resolvido)",
+      "file_type": "document",
+      "source_file": "REGRAS-PROJETO.md",
+      "source_location": "L126",
+      "_origin": "ast",
+      "id": "regras_projeto_handoff_original_contexto_hist\u00f3rico_j\u00e1_resolvido",
+      "community": 7,
+      "norm_label": "handoff original (contexto historico, ja resolvido)"
     },
     {
       "label": "Pend\u00eancias / pr\u00f3ximos passos",
       "file_type": "document",
       "source_file": "REGRAS-PROJETO.md",
-      "source_location": "L154",
+      "source_location": "L186",
       "_origin": "ast",
       "id": "regras_projeto_pend\u00eancias_pr\u00f3ximos_passos",
       "community": 7,
@@ -3703,7 +3873,7 @@
       "label": "Acesso (dev)",
       "file_type": "document",
       "source_file": "REGRAS-PROJETO.md",
-      "source_location": "L221",
+      "source_location": "L253",
       "_origin": "ast",
       "id": "regras_projeto_acesso_dev",
       "community": 7,
@@ -3713,7 +3883,7 @@
       "label": "Hist\u00f3rico de itera\u00e7\u00f5es",
       "file_type": "document",
       "source_file": "REGRAS-PROJETO.md",
-      "source_location": "L232",
+      "source_location": "L264",
       "_origin": "ast",
       "id": "regras_projeto_hist\u00f3rico_de_itera\u00e7\u00f5es",
       "community": 7,
@@ -4074,7 +4244,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L186",
+      "source_location": "L188",
       "weight": 1.0,
       "source": "n8n_meta_ads_sync_code",
       "target": "n8n_meta_ads_sync_code_actionorigin",
@@ -4094,7 +4264,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L217",
+      "source_location": "L219",
       "weight": 1.0,
       "source": "n8n_meta_ads_sync_code",
       "target": "n8n_meta_ads_sync_code_campaignname",
@@ -4104,7 +4274,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L264",
+      "source_location": "L266",
       "weight": 1.0,
       "source": "n8n_meta_ads_sync_code",
       "target": "n8n_meta_ads_sync_code_collectaccount",
@@ -4124,7 +4294,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L197",
+      "source_location": "L199",
       "weight": 1.0,
       "source": "n8n_meta_ads_sync_code",
       "target": "n8n_meta_ads_sync_code_conversiontotal",
@@ -4134,7 +4304,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L120",
+      "source_location": "L122",
       "weight": 1.0,
       "source": "n8n_meta_ads_sync_code",
       "target": "n8n_meta_ads_sync_code_fetchmetaaccounts",
@@ -4154,7 +4324,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L113",
+      "source_location": "L115",
       "weight": 1.0,
       "source": "n8n_meta_ads_sync_code",
       "target": "n8n_meta_ads_sync_code_insertsyncrun",
@@ -4174,7 +4344,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L162",
+      "source_location": "L164",
       "weight": 1.0,
       "source": "n8n_meta_ads_sync_code",
       "target": "n8n_meta_ads_sync_code_isconversionaction",
@@ -4184,7 +4354,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L182",
+      "source_location": "L184",
       "weight": 1.0,
       "source": "n8n_meta_ads_sync_code",
       "target": "n8n_meta_ads_sync_code_isrevenueaction",
@@ -4194,7 +4364,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L253",
+      "source_location": "L255",
       "weight": 1.0,
       "source": "n8n_meta_ads_sync_code",
       "target": "n8n_meta_ads_sync_code_mapcampaign",
@@ -4204,7 +4374,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L237",
+      "source_location": "L239",
       "weight": 1.0,
       "source": "n8n_meta_ads_sync_code",
       "target": "n8n_meta_ads_sync_code_mapconversionactions",
@@ -4214,7 +4384,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L221",
+      "source_location": "L223",
       "weight": 1.0,
       "source": "n8n_meta_ads_sync_code",
       "target": "n8n_meta_ads_sync_code_mapmetric",
@@ -4254,7 +4424,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L136",
+      "source_location": "L138",
       "weight": 1.0,
       "source": "n8n_meta_ads_sync_code",
       "target": "n8n_meta_ads_sync_code_metaget",
@@ -4264,7 +4434,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L144",
+      "source_location": "L146",
       "weight": 1.0,
       "source": "n8n_meta_ads_sync_code",
       "target": "n8n_meta_ads_sync_code_metagetall",
@@ -4274,7 +4444,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L130",
+      "source_location": "L132",
       "weight": 1.0,
       "source": "n8n_meta_ads_sync_code",
       "target": "n8n_meta_ads_sync_code_metaheaders",
@@ -4294,7 +4464,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L209",
+      "source_location": "L211",
       "weight": 1.0,
       "source": "n8n_meta_ads_sync_code",
       "target": "n8n_meta_ads_sync_code_normalizestatus",
@@ -4314,7 +4484,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L105",
+      "source_location": "L107",
       "weight": 1.0,
       "source": "n8n_meta_ads_sync_code",
       "target": "n8n_meta_ads_sync_code_patchintegrationaccount",
@@ -4324,7 +4494,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L64",
+      "source_location": "L66",
       "weight": 1.0,
       "source": "n8n_meta_ads_sync_code",
       "target": "n8n_meta_ads_sync_code_requestjson",
@@ -4344,7 +4514,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L203",
+      "source_location": "L205",
       "weight": 1.0,
       "source": "n8n_meta_ads_sync_code",
       "target": "n8n_meta_ads_sync_code_revenuetotal",
@@ -4364,7 +4534,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L370",
+      "source_location": "L372",
       "weight": 1.0,
       "source": "n8n_meta_ads_sync_code",
       "target": "n8n_meta_ads_sync_code_summaries",
@@ -4394,7 +4564,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L55",
+      "source_location": "L57",
       "weight": 1.0,
       "source": "n8n_meta_ads_sync_code",
       "target": "n8n_meta_ads_sync_code_supabaseheaders",
@@ -4404,7 +4574,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L80",
+      "source_location": "L82",
       "weight": 1.0,
       "source": "n8n_meta_ads_sync_code",
       "target": "n8n_meta_ads_sync_code_supabaserequest",
@@ -4414,7 +4584,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L288",
+      "source_location": "L290",
       "weight": 1.0,
       "source": "n8n_meta_ads_sync_code",
       "target": "n8n_meta_ads_sync_code_syncaccount",
@@ -4424,7 +4594,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L89",
+      "source_location": "L91",
       "weight": 1.0,
       "source": "n8n_meta_ads_sync_code",
       "target": "n8n_meta_ads_sync_code_upsert",
@@ -4479,7 +4649,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L229",
+      "source_location": "L231",
       "weight": 1.0,
       "source": "n8n_meta_ads_sync_code_mapmetric",
       "target": "n8n_meta_ads_sync_code_integer",
@@ -4490,7 +4660,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L228",
+      "source_location": "L230",
       "weight": 1.0,
       "source": "n8n_meta_ads_sync_code_mapmetric",
       "target": "n8n_meta_ads_sync_code_money",
@@ -4501,7 +4671,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L65",
+      "source_location": "L67",
       "weight": 1.0,
       "source": "n8n_meta_ads_sync_code_requestjson",
       "target": "n8n_meta_ads_sync_code_buildurl",
@@ -4512,7 +4682,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L85",
+      "source_location": "L87",
       "weight": 1.0,
       "source": "n8n_meta_ads_sync_code_supabaserequest",
       "target": "n8n_meta_ads_sync_code_supabaseheaders",
@@ -4523,7 +4693,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L138",
+      "source_location": "L140",
       "weight": 1.0,
       "source": "n8n_meta_ads_sync_code_metaget",
       "target": "n8n_meta_ads_sync_code_requestjson",
@@ -4534,7 +4704,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L156",
+      "source_location": "L158",
       "weight": 1.0,
       "source": "n8n_meta_ads_sync_code_metagetall",
       "target": "n8n_meta_ads_sync_code_requestjson",
@@ -4545,7 +4715,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L82",
+      "source_location": "L84",
       "weight": 1.0,
       "source": "n8n_meta_ads_sync_code_supabaserequest",
       "target": "n8n_meta_ads_sync_code_requestjson",
@@ -4556,7 +4726,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L121",
+      "source_location": "L123",
       "weight": 1.0,
       "source": "n8n_meta_ads_sync_code_fetchmetaaccounts",
       "target": "n8n_meta_ads_sync_code_supabaserequest",
@@ -4567,7 +4737,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L114",
+      "source_location": "L116",
       "weight": 1.0,
       "source": "n8n_meta_ads_sync_code_insertsyncrun",
       "target": "n8n_meta_ads_sync_code_supabaserequest",
@@ -4578,7 +4748,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L106",
+      "source_location": "L108",
       "weight": 1.0,
       "source": "n8n_meta_ads_sync_code_patchintegrationaccount",
       "target": "n8n_meta_ads_sync_code_supabaserequest",
@@ -4589,7 +4759,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L95",
+      "source_location": "L97",
       "weight": 1.0,
       "source": "n8n_meta_ads_sync_code_upsert",
       "target": "n8n_meta_ads_sync_code_supabaserequest",
@@ -4600,7 +4770,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L292",
+      "source_location": "L294",
       "weight": 1.0,
       "source": "n8n_meta_ads_sync_code_syncaccount",
       "target": "n8n_meta_ads_sync_code_upsert",
@@ -4611,7 +4781,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L308",
+      "source_location": "L310",
       "weight": 1.0,
       "source": "n8n_meta_ads_sync_code_syncaccount",
       "target": "n8n_meta_ads_sync_code_patchintegrationaccount",
@@ -4622,7 +4792,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L313",
+      "source_location": "L315",
       "weight": 1.0,
       "source": "n8n_meta_ads_sync_code_syncaccount",
       "target": "n8n_meta_ads_sync_code_insertsyncrun",
@@ -4633,7 +4803,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L139",
+      "source_location": "L141",
       "weight": 1.0,
       "source": "n8n_meta_ads_sync_code_metaget",
       "target": "n8n_meta_ads_sync_code_metaheaders",
@@ -4644,7 +4814,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L156",
+      "source_location": "L158",
       "weight": 1.0,
       "source": "n8n_meta_ads_sync_code_metagetall",
       "target": "n8n_meta_ads_sync_code_metaheaders",
@@ -4655,7 +4825,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L145",
+      "source_location": "L147",
       "weight": 1.0,
       "source": "n8n_meta_ads_sync_code_metagetall",
       "target": "n8n_meta_ads_sync_code_metaget",
@@ -4666,7 +4836,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L265",
+      "source_location": "L267",
       "weight": 1.0,
       "source": "n8n_meta_ads_sync_code_collectaccount",
       "target": "n8n_meta_ads_sync_code_metagetall",
@@ -4677,7 +4847,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L231",
+      "source_location": "L233",
       "weight": 1.0,
       "source": "n8n_meta_ads_sync_code_mapmetric",
       "target": "n8n_meta_ads_sync_code_conversiontotal",
@@ -4688,7 +4858,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L232",
+      "source_location": "L234",
       "weight": 1.0,
       "source": "n8n_meta_ads_sync_code_mapmetric",
       "target": "n8n_meta_ads_sync_code_revenuetotal",
@@ -4699,7 +4869,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L259",
+      "source_location": "L261",
       "weight": 1.0,
       "source": "n8n_meta_ads_sync_code_mapcampaign",
       "target": "n8n_meta_ads_sync_code_normalizestatus",
@@ -4710,7 +4880,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L227",
+      "source_location": "L229",
       "weight": 1.0,
       "source": "n8n_meta_ads_sync_code_mapmetric",
       "target": "n8n_meta_ads_sync_code_campaignname",
@@ -4721,7 +4891,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "n8n/meta-ads-sync-code.js",
-      "source_location": "L290",
+      "source_location": "L292",
       "weight": 1.0,
       "source": "n8n_meta_ads_sync_code_syncaccount",
       "target": "n8n_meta_ads_sync_code_collectaccount",
@@ -5055,6 +5225,222 @@
       "weight": 1.0,
       "source": "scripts_build_n8n_meta_workflow",
       "target": "scripts_build_n8n_meta_workflow_workflow",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/meta-sync.mjs",
+      "source_location": "L39",
+      "weight": 1.0,
+      "source": "scripts_meta_sync",
+      "target": "scripts_meta_sync_actionorigin",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/meta-sync.mjs",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "scripts_meta_sync",
+      "target": "scripts_meta_sync_conversion_action_types",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/meta-sync.mjs",
+      "source_location": "L34",
+      "weight": 1.0,
+      "source": "scripts_meta_sync",
+      "target": "scripts_meta_sync_int",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/meta-sync.mjs",
+      "source_location": "L36",
+      "weight": 1.0,
+      "source": "scripts_meta_sync",
+      "target": "scripts_meta_sync_isconversion",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/meta-sync.mjs",
+      "source_location": "L37",
+      "weight": 1.0,
+      "source": "scripts_meta_sync",
+      "target": "scripts_meta_sync_isrevenue",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/meta-sync.mjs",
+      "source_location": "L80",
+      "weight": 1.0,
+      "source": "scripts_meta_sync",
+      "target": "scripts_meta_sync_metagetall",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/meta-sync.mjs",
+      "source_location": "L35",
+      "weight": 1.0,
+      "source": "scripts_meta_sync",
+      "target": "scripts_meta_sync_money",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/meta-sync.mjs",
+      "source_location": "L94",
+      "weight": 1.0,
+      "source": "scripts_meta_sync",
+      "target": "scripts_meta_sync_normstatus",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/meta-sync.mjs",
+      "source_location": "L33",
+      "weight": 1.0,
+      "source": "scripts_meta_sync",
+      "target": "scripts_meta_sync_num",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/meta-sync.mjs",
+      "source_location": "L50",
+      "weight": 1.0,
+      "source": "scripts_meta_sync",
+      "target": "scripts_meta_sync_sb",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/meta-sync.mjs",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "scripts_meta_sync",
+      "target": "scripts_meta_sync_started_at",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/meta-sync.mjs",
+      "source_location": "L46",
+      "weight": 1.0,
+      "source": "scripts_meta_sync",
+      "target": "scripts_meta_sync_sumactions",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/meta-sync.mjs",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "scripts_meta_sync",
+      "target": "scripts_meta_sync_supabase_url",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/meta-sync.mjs",
+      "source_location": "L102",
+      "weight": 1.0,
+      "source": "scripts_meta_sync",
+      "target": "scripts_meta_sync_syncaccount",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/meta-sync.mjs",
+      "source_location": "L68",
+      "weight": 1.0,
+      "source": "scripts_meta_sync",
+      "target": "scripts_meta_sync_upsert",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/meta-sync.mjs",
+      "source_location": "L34",
+      "weight": 1.0,
+      "source": "scripts_meta_sync_int",
+      "target": "scripts_meta_sync_num",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/meta-sync.mjs",
+      "source_location": "L35",
+      "weight": 1.0,
+      "source": "scripts_meta_sync_money",
+      "target": "scripts_meta_sync_num",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/meta-sync.mjs",
+      "source_location": "L157",
+      "weight": 1.0,
+      "source": "scripts_meta_sync_syncaccount",
+      "target": "scripts_meta_sync_sb",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/meta-sync.mjs",
+      "source_location": "L71",
+      "weight": 1.0,
+      "source": "scripts_meta_sync_upsert",
+      "target": "scripts_meta_sync_sb",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/meta-sync.mjs",
+      "source_location": "L153",
+      "weight": 1.0,
+      "source": "scripts_meta_sync_syncaccount",
+      "target": "scripts_meta_sync_upsert",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/meta-sync.mjs",
+      "source_location": "L104",
+      "weight": 1.0,
+      "source": "scripts_meta_sync_syncaccount",
+      "target": "scripts_meta_sync_metagetall",
       "confidence_score": 1.0
     },
     {
@@ -11908,7 +12294,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "REGRAS-PROJETO.md",
-      "source_location": "L221",
+      "source_location": "L253",
       "weight": 1.0,
       "source": "regras_projeto_regras_projeto_painel_de_m\u00e9tricas_de_tr\u00e1fego_gtech_solution",
       "target": "regras_projeto_acesso_dev",
@@ -11938,17 +12324,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "REGRAS-PROJETO.md",
-      "source_location": "L94",
-      "weight": 1.0,
-      "source": "regras_projeto_regras_projeto_painel_de_m\u00e9tricas_de_tr\u00e1fego_gtech_solution",
-      "target": "regras_projeto_handoff_2026_07_07_claude_codex_onde_parou_o_meta_ads",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "REGRAS-PROJETO.md",
-      "source_location": "L232",
+      "source_location": "L264",
       "weight": 1.0,
       "source": "regras_projeto_regras_projeto_painel_de_m\u00e9tricas_de_tr\u00e1fego_gtech_solution",
       "target": "regras_projeto_hist\u00f3rico_de_itera\u00e7\u00f5es",
@@ -11968,10 +12344,20 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "REGRAS-PROJETO.md",
-      "source_location": "L154",
+      "source_location": "L186",
       "weight": 1.0,
       "source": "regras_projeto_regras_projeto_painel_de_m\u00e9tricas_de_tr\u00e1fego_gtech_solution",
       "target": "regras_projeto_pend\u00eancias_pr\u00f3ximos_passos",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "REGRAS-PROJETO.md",
+      "source_location": "L94",
+      "weight": 1.0,
+      "source": "regras_projeto_regras_projeto_painel_de_m\u00e9tricas_de_tr\u00e1fego_gtech_solution",
+      "target": "regras_projeto_resolvido_2026_07_07_claude_meta_ads_ligado",
       "confidence_score": 1.0
     },
     {
@@ -11982,6 +12368,16 @@
       "weight": 1.0,
       "source": "regras_projeto_regras_projeto_painel_de_m\u00e9tricas_de_tr\u00e1fego_gtech_solution",
       "target": "regras_projeto_stack_e_decis\u00f5es",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "REGRAS-PROJETO.md",
+      "source_location": "L126",
+      "weight": 1.0,
+      "source": "regras_projeto_resolvido_2026_07_07_claude_meta_ads_ligado",
+      "target": "regras_projeto_handoff_original_contexto_hist\u00f3rico_j\u00e1_resolvido",
       "confidence_score": 1.0
     },
     {
@@ -12230,5 +12626,5 @@
       "source_file": "README.md"
     }
   ],
-  "built_at_commit": "39170b6a01d1cefc0443f731a6ceabcc2272ddbe"
+  "built_at_commit": "e8d8f278f306f9978fa5bc49a69e2e7f6129b9f3"
 }
