@@ -1,0 +1,1363 @@
+{
+  "name": "Painel Métricas — Google Ads → Supabase",
+  "nodes": [
+    {
+      "id": "trigger",
+      "name": "Todo dia 06:30",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "30 6 * * *"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "contas",
+      "name": "Buscar contas Google Ads",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        220,
+        0
+      ],
+      "parameters": {
+        "method": "GET",
+        "url": "https://oqsjdhrwpmpdrihgbgtx.supabase.co/rest/v1/integration_accounts",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "select",
+              "value": "client_id,external_id,account_name"
+            },
+            {
+              "name": "provider",
+              "value": "eq.google_ads"
+            },
+            {
+              "name": "status",
+              "value": "neq.paused"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "notes": "Lê o mapa cliente→customer_id cadastrado na página /clientes do painel.",
+      "credentials": {
+        "supabaseApi": {
+          "id": "sfp0d2ZkWr7zz5wM",
+          "name": "Supabase - Painel Métricas (service role)"
+        }
+      }
+    },
+    {
+      "id": "gaql",
+      "name": "Google Ads search (GAQL)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        440,
+        0
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "=https://googleads.googleapis.com/v21/customers/{{ $json.external_id.replace(/-/g, '') }}/googleAds:search",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleAdsOAuth2Api",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "login-customer-id",
+              "value": "2672955792"
+            },
+            {
+              "name": "developer-token",
+              "value": "COLE_AQUI_DEVELOPER_TOKEN"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ query: \"SELECT segments.date, campaign.name, metrics.cost_micros, metrics.impressions, metrics.clicks, metrics.conversions, metrics.conversions_value, metrics.search_impression_share FROM campaign WHERE segments.date DURING LAST_30_DAYS\".replaceAll(\"DURING LAST_30_DAYS\", \"BETWEEN '\" + $now.minus({ days: 30 }).toFormat('yyyy-MM-dd') + \"' AND '\" + $now.toFormat('yyyy-MM-dd') + \"'\") }) }}",
+        "options": {}
+      },
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 5000,
+      "notes": "login-customer-id = MCC 267-295-5792. Se der 404 de versão, subir v21 -> v22+ na URL.",
+      "credentials": {
+        "googleAdsOAuth2Api": {
+          "id": "tcBb8A3FKBjc2nOt",
+          "name": "Google Ads account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "id": "mapear",
+      "name": "Montar linhas ad_metrics",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        660,
+        0
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// 1 item de entrada = resposta googleAds:search de UMA conta (customer_id).\n// Saída: 1 item com o array `rows` pronto pro upsert em ad_metrics.\nconst rows = [];\nfor (let i = 0; i < items.length; i++) {\n  const resp = items[i].json;\n  const conta = $('Buscar contas Google Ads').itemMatching(i).json;\n  for (const r of resp.results ?? []) {\n    const m = r.metrics ?? {};\n    rows.push({\n      client_id: conta.client_id,\n      account_external_id: String(conta.external_id),\n      date: r.segments?.date,\n      platform: 'google',\n      campaign: r.campaign?.name ?? '(sem nome)',\n      // Google Ads devolve custo em MICROS -> dividir por 1e6\n      spend: Number(m.costMicros ?? 0) / 1_000_000,\n      impressions: Number(m.impressions ?? 0),\n      clicks: Number(m.clicks ?? 0),\n      conversions: Math.round(Number(m.conversions ?? 0)),\n      revenue: Number(m.conversionsValue ?? 0),\n      // Parcela de impressões da rede de pesquisa (0..1; null quando não se aplica)\n      search_impression_share: m.searchImpressionShare != null ? Number(m.searchImpressionShare) : null,\n    });\n  }\n}\nif (rows.length === 0) {\n  return []; // nada a gravar -> encerra sem chamar o Supabase\n}\nreturn [{ json: { rows, total: rows.length } }];"
+      }
+    },
+    {
+      "id": "upsert",
+      "name": "Upsert ad_metrics",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        880,
+        0
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://oqsjdhrwpmpdrihgbgtx.supabase.co/rest/v1/ad_metrics",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "on_conflict",
+              "value": "client_id,account_external_id,date,platform,campaign"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "resolution=merge-duplicates,return=minimal"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.rows) }}",
+        "options": {}
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "supabaseApi": {
+          "id": "sfp0d2ZkWr7zz5wM",
+          "name": "Supabase - Painel Métricas (service role)"
+        }
+      }
+    },
+    {
+      "id": "logrun",
+      "name": "Registrar sync_runs",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1100,
+        0
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://oqsjdhrwpmpdrihgbgtx.supabase.co/rest/v1/sync_runs",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=minimal"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify([{ platform: 'google', status: 'success', rows: $('Montar linhas ad_metrics').first().json.total, message: 'upsert ok' }]) }}",
+        "options": {}
+      },
+      "credentials": {
+        "supabaseApi": {
+          "id": "sfp0d2ZkWr7zz5wM",
+          "name": "Supabase - Painel Métricas (service role)"
+        }
+      }
+    },
+    {
+      "id": "2670686d-7628-4071-b6a5-ee7f57114bd7",
+      "name": "GAQL Palavras-chave",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        440,
+        220
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "=https://googleads.googleapis.com/v21/customers/{{ $json.external_id.replace(/-/g, '') }}/googleAds:search",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleAdsOAuth2Api",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "login-customer-id",
+              "value": "2672955792"
+            },
+            {
+              "name": "developer-token",
+              "value": "COLE_AQUI_DEVELOPER_TOKEN"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ query: \"SELECT segments.date, campaign.name, ad_group_criterion.keyword.text, ad_group_criterion.keyword.match_type, metrics.impressions, metrics.clicks, metrics.cost_micros, metrics.conversions FROM keyword_view WHERE segments.date DURING LAST_30_DAYS AND metrics.impressions > 0\".replaceAll(\"DURING LAST_30_DAYS\", \"BETWEEN '\" + $now.minus({ days: 30 }).toFormat('yyyy-MM-dd') + \"' AND '\" + $now.toFormat('yyyy-MM-dd') + \"'\") }) }}",
+        "options": {}
+      },
+      "credentials": {
+        "googleAdsOAuth2Api": {
+          "id": "tcBb8A3FKBjc2nOt",
+          "name": "Google Ads account"
+        }
+      },
+      "notes": "Palavras-chave da rede de pesquisa (keyword_view).",
+      "onError": "continueRegularOutput",
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 5000
+    },
+    {
+      "id": "842e9fa9-b15d-4b1e-bec4-e4bf2940035c",
+      "name": "Montar linhas ad_keywords",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        660,
+        220
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// 1 item = resposta googleAds:search (keyword_view) de UMA conta.\nconst rows = [];\nfor (let i = 0; i < items.length; i++) {\n  const resp = items[i].json;\n  const conta = $('Buscar contas Google Ads').itemMatching(i).json;\n  for (const r of resp.results ?? []) {\n    const m = r.metrics ?? {};\n    const kw = r.adGroupCriterion?.keyword ?? {};\n    rows.push({\n      client_id: conta.client_id,\n      account_external_id: String(conta.external_id),\n      platform: 'google',\n      date: r.segments?.date,\n      campaign: r.campaign?.name ?? '(sem nome)',\n      keyword: kw.text ?? '(desconhecida)',\n      match_type: kw.matchType ?? '',\n      impressions: Number(m.impressions ?? 0),\n      clicks: Number(m.clicks ?? 0),\n      spend: Number(m.costMicros ?? 0) / 1_000_000,\n      conversions: Number(m.conversions ?? 0),\n    });\n  }\n}\nif (rows.length === 0) {\n  return []; // nada a gravar\n}\nreturn [{ json: { rows, total: rows.length } }];"
+      }
+    },
+    {
+      "id": "d0d1a265-f681-4211-b228-95b8e188d6af",
+      "name": "Upsert ad_keywords",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        880,
+        220
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://oqsjdhrwpmpdrihgbgtx.supabase.co/rest/v1/ad_keywords",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "on_conflict",
+              "value": "client_id,account_external_id,date,campaign,keyword,match_type"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "resolution=merge-duplicates,return=minimal"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.rows) }}",
+        "options": {}
+      },
+      "credentials": {
+        "supabaseApi": {
+          "id": "sfp0d2ZkWr7zz5wM",
+          "name": "Supabase - Painel Métricas (service role)"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "id": "7013a2d7-4c9e-44eb-b210-f7dd7dbc62b2",
+      "name": "GAQL Tipos de clique",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        440,
+        420
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "=https://googleads.googleapis.com/v21/customers/{{ $json.external_id.replace(/-/g, '') }}/googleAds:search",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleAdsOAuth2Api",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "login-customer-id",
+              "value": "2672955792"
+            },
+            {
+              "name": "developer-token",
+              "value": "COLE_AQUI_DEVELOPER_TOKEN"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ query: \"SELECT segments.date, campaign.name, segments.click_type, metrics.clicks FROM campaign WHERE segments.date DURING LAST_30_DAYS AND metrics.clicks > 0\".replaceAll(\"DURING LAST_30_DAYS\", \"BETWEEN '\" + $now.minus({ days: 30 }).toFormat('yyyy-MM-dd') + \"' AND '\" + $now.toFormat('yyyy-MM-dd') + \"'\") }) }}",
+        "options": {}
+      },
+      "credentials": {
+        "googleAdsOAuth2Api": {
+          "id": "tcBb8A3FKBjc2nOt",
+          "name": "Google Ads account"
+        }
+      },
+      "notes": "Onde foi cada clique (site, ligação, rota no Maps...).",
+      "onError": "continueRegularOutput",
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 5000
+    },
+    {
+      "id": "d52d512e-a713-4578-9434-e79f5107118b",
+      "name": "Montar linhas ad_click_types",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        660,
+        420
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// 1 item = resposta googleAds:search (segments.click_type) de UMA conta.\nconst rows = [];\nfor (let i = 0; i < items.length; i++) {\n  const resp = items[i].json;\n  const conta = $('Buscar contas Google Ads').itemMatching(i).json;\n  for (const r of resp.results ?? []) {\n    rows.push({\n      client_id: conta.client_id,\n      account_external_id: String(conta.external_id),\n      platform: 'google',\n      date: r.segments?.date,\n      campaign: r.campaign?.name ?? '(sem nome)',\n      click_type: r.segments?.clickType ?? 'UNSPECIFIED',\n      clicks: Number(r.metrics?.clicks ?? 0),\n    });\n  }\n}\nif (rows.length === 0) {\n  return []; // nada a gravar\n}\nreturn [{ json: { rows, total: rows.length } }];"
+      }
+    },
+    {
+      "id": "6b2c028b-46ce-40df-9b10-f3a37a4d73df",
+      "name": "Upsert ad_click_types",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        880,
+        420
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://oqsjdhrwpmpdrihgbgtx.supabase.co/rest/v1/ad_click_types",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "on_conflict",
+              "value": "client_id,account_external_id,date,campaign,click_type"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "resolution=merge-duplicates,return=minimal"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.rows) }}",
+        "options": {}
+      },
+      "credentials": {
+        "supabaseApi": {
+          "id": "sfp0d2ZkWr7zz5wM",
+          "name": "Supabase - Painel Métricas (service role)"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "id": "f6014cce-eb46-4439-b056-a1a0907c13dc",
+      "name": "GAQL Conversões por ação",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        440,
+        620
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "=https://googleads.googleapis.com/v21/customers/{{ $('Buscar contas Google Ads').item.json.external_id.replace(/-/g, '') }}/googleAds:search",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleAdsOAuth2Api",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "login-customer-id",
+              "value": "2672955792"
+            },
+            {
+              "name": "developer-token",
+              "value": "COLE_AQUI_DEVELOPER_TOKEN"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ query: \"SELECT segments.date, campaign.name, segments.conversion_action, segments.conversion_action_name, segments.conversion_action_category, metrics.conversions FROM campaign WHERE segments.date DURING LAST_30_DAYS AND metrics.conversions > 0\".replaceAll(\"DURING LAST_30_DAYS\", \"BETWEEN '\" + $now.minus({ days: 30 }).toFormat('yyyy-MM-dd') + \"' AND '\" + $now.toFormat('yyyy-MM-dd') + \"'\") }) }}",
+        "options": {}
+      },
+      "credentials": {
+        "googleAdsOAuth2Api": {
+          "id": "tcBb8A3FKBjc2nOt",
+          "name": "Google Ads account"
+        }
+      },
+      "notes": "Qual ação gerou cada conversão (WhatsApp, formulário, ligação...).",
+      "onError": "continueRegularOutput",
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 5000
+    },
+    {
+      "id": "9ae01010-afa5-4021-98d6-42069d2f52fa",
+      "name": "Montar linhas ad_conversion_actions",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        660,
+        620
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// 1 item = resposta googleAds:search (segments.conversion_action_*) de UMA conta.\n// Enriquece cada linha com a ORIGEM da ação (site vs Google), cruzando o\n// resource_name da conversão com a metadata de 'GAQL Origem das ações'.\n// Mapa GLOBAL resourceName -> origin (junta todas as contas; resource_name\n// é único global, então não depende da ordem dos items).\nconst originByResource = {};\nfor (const it of $('GAQL Origem das ações').all()) {\n  for (const r of it.json.results ?? []) {\n    const ca = r.conversionAction;\n    if (ca?.resourceName) {\n      originByResource[ca.resourceName] = ca.origin ?? 'UNKNOWN';\n    }\n  }\n}\nconst rows = [];\nfor (let i = 0; i < items.length; i++) {\n  const resp = items[i].json;\n  const conta = $('Buscar contas Google Ads').itemMatching(i).json;\n  for (const r of resp.results ?? []) {\n    const resource = r.segments?.conversionAction;\n    rows.push({\n      client_id: conta.client_id,\n      account_external_id: String(conta.external_id),\n      platform: 'google',\n      date: r.segments?.date,\n      campaign: r.campaign?.name ?? '(sem nome)',\n      action_name: r.segments?.conversionActionName ?? '(sem nome)',\n      action_category: r.segments?.conversionActionCategory ?? '',\n      origin: (resource && originByResource[resource]) || 'UNKNOWN',\n      conversions: Number(r.metrics?.conversions ?? 0),\n    });\n  }\n}\nif (rows.length === 0) {\n  return []; // nada a gravar\n}\nreturn [{ json: { rows, total: rows.length } }];"
+      }
+    },
+    {
+      "id": "22a49cb7-4355-4e90-a76f-00fa9fe49405",
+      "name": "Upsert ad_conversion_actions",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        880,
+        620
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://oqsjdhrwpmpdrihgbgtx.supabase.co/rest/v1/ad_conversion_actions",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "on_conflict",
+              "value": "client_id,account_external_id,date,campaign,action_name"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "resolution=merge-duplicates,return=minimal"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.rows) }}",
+        "options": {}
+      },
+      "credentials": {
+        "supabaseApi": {
+          "id": "sfp0d2ZkWr7zz5wM",
+          "name": "Supabase - Painel Métricas (service role)"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "id": "91d341d4-2377-4ff2-9e34-99700fb8466d",
+      "name": "GAQL Regiões",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        440,
+        820
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "=https://googleads.googleapis.com/v21/customers/{{ $json.external_id.replace(/-/g, '') }}/googleAds:search",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleAdsOAuth2Api",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "login-customer-id",
+              "value": "2672955792"
+            },
+            {
+              "name": "developer-token",
+              "value": "COLE_AQUI_DEVELOPER_TOKEN"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ query: \"SELECT segments.date, campaign.name, segments.geo_target_city, metrics.impressions, metrics.clicks, metrics.cost_micros, metrics.conversions FROM geographic_view WHERE segments.date DURING LAST_30_DAYS AND metrics.impressions > 0\".replaceAll(\"DURING LAST_30_DAYS\", \"BETWEEN '\" + $now.minus({ days: 30 }).toFormat('yyyy-MM-dd') + \"' AND '\" + $now.toFormat('yyyy-MM-dd') + \"'\") }) }}",
+        "options": {}
+      },
+      "credentials": {
+        "googleAdsOAuth2Api": {
+          "id": "tcBb8A3FKBjc2nOt",
+          "name": "Google Ads account"
+        }
+      },
+      "notes": "Desempenho por região (geographic_view). IDs viram nomes no passo seguinte.",
+      "onError": "continueRegularOutput",
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 5000
+    },
+    {
+      "id": "f68166f4-36c2-4f80-89a5-590eecdb43bb",
+      "name": "Preparar consulta de regiões",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        660,
+        820
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// Junta as respostas por conta, guarda as linhas brutas e coleta os IDs\n// únicos de região (geoTargetConstants/NNN) pra traduzir em nome no próximo nó.\nconst raw = [];\nconst ids = new Set();\nlet customer = null;\nfor (let i = 0; i < items.length; i++) {\n  const resp = items[i].json;\n  const conta = $('Buscar contas Google Ads').itemMatching(i).json;\n  if (!customer && conta.external_id) {\n    customer = String(conta.external_id).replace(/-/g, '');\n  }\n  for (const r of resp.results ?? []) {\n    const region = r.segments?.geoTargetCity;\n    if (!region) continue; // linha sem região mapeada\n    ids.add(region);\n    raw.push({\n      client_id: conta.client_id,\n      account_external_id: String(conta.external_id),\n      date: r.segments?.date,\n      campaign: r.campaign?.name ?? '(sem nome)',\n      region_id: region,\n      impressions: Number(r.metrics?.impressions ?? 0),\n      clicks: Number(r.metrics?.clicks ?? 0),\n      spend: Number(r.metrics?.costMicros ?? 0) / 1_000_000,\n      conversions: Number(r.metrics?.conversions ?? 0),\n    });\n  }\n}\nif (raw.length === 0 || !customer) {\n  return []; // nada a gravar\n}\nconst list = [...ids].map((id) => `'${id}'`).join(', ');\nconst query = `SELECT geo_target_constant.resource_name, geo_target_constant.name FROM geo_target_constant WHERE geo_target_constant.resource_name IN (${list})`;\nreturn [{ json: { customer, query, raw } }];"
+      }
+    },
+    {
+      "id": "4fcffead-4830-43f7-a302-56074f0c3b53",
+      "name": "GAQL Nomes de região",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        880,
+        820
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "=https://googleads.googleapis.com/v21/customers/{{ $json.customer }}/googleAds:search",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleAdsOAuth2Api",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "login-customer-id",
+              "value": "2672955792"
+            },
+            {
+              "name": "developer-token",
+              "value": "COLE_AQUI_DEVELOPER_TOKEN"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ query: $json.query }) }}",
+        "options": {}
+      },
+      "credentials": {
+        "googleAdsOAuth2Api": {
+          "id": "tcBb8A3FKBjc2nOt",
+          "name": "Google Ads account"
+        }
+      },
+      "notes": "Traduz geoTargetConstants/NNN em nome legível (ex.: Rio Grande do Sul).",
+      "onError": "continueRegularOutput",
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 5000
+    },
+    {
+      "id": "0bbfdae3-e0c2-41a6-836a-497ab0867a64",
+      "name": "Montar linhas ad_geo",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1100,
+        820
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// Traduz region_id -> nome e agrega por cliente/conta/dia/campanha/região.\nconst prep = $('Preparar consulta de regiões').first().json;\nconst names = {};\nfor (const item of items) {\n  for (const r of item.json.results ?? []) {\n    const g = r.geoTargetConstant ?? {};\n    if (g.resourceName) names[g.resourceName] = g.name ?? g.resourceName;\n  }\n}\nconst map = new Map();\nfor (const row of prep.raw ?? []) {\n  const region = names[row.region_id] ?? String(row.region_id).replace('geoTargetConstants/', 'região ');\n  const key = [row.client_id, row.account_external_id, row.date, row.campaign, region].join('|');\n  const acc = map.get(key) ?? {\n    client_id: row.client_id,\n    account_external_id: row.account_external_id,\n    platform: 'google',\n    date: row.date,\n    campaign: row.campaign,\n    region,\n    impressions: 0,\n    clicks: 0,\n    spend: 0,\n    conversions: 0,\n  };\n  acc.impressions += row.impressions;\n  acc.clicks += row.clicks;\n  acc.spend += row.spend;\n  acc.conversions += row.conversions;\n  map.set(key, acc);\n}\nconst rows = [...map.values()].map((r) => ({\n  ...r,\n  spend: Math.round(r.spend * 100) / 100,\n}));\nif (rows.length === 0) {\n  return []; // nada a gravar\n}\nreturn [{ json: { rows, total: rows.length } }];"
+      }
+    },
+    {
+      "id": "e7d54cfe-021f-4403-8048-8820bad72fe2",
+      "name": "Upsert ad_geo",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1320,
+        820
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://oqsjdhrwpmpdrihgbgtx.supabase.co/rest/v1/ad_geo",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "on_conflict",
+              "value": "client_id,account_external_id,date,campaign,region"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "resolution=merge-duplicates,return=minimal"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.rows) }}",
+        "options": {}
+      },
+      "credentials": {
+        "supabaseApi": {
+          "id": "sfp0d2ZkWr7zz5wM",
+          "name": "Supabase - Painel Métricas (service role)"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "id": "97b08ce6-433a-42aa-a3f3-559b04c86a14",
+      "name": "GAQL Origem das ações",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        440,
+        820
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "=https://googleads.googleapis.com/v21/customers/{{ $json.external_id.replace(/-/g, '') }}/googleAds:search",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleAdsOAuth2Api",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "login-customer-id",
+              "value": "2672955792"
+            },
+            {
+              "name": "developer-token",
+              "value": "COLE_AQUI_DEVELOPER_TOKEN"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\"query\":\"SELECT conversion_action.resource_name, conversion_action.origin, conversion_action.type FROM conversion_action WHERE conversion_action.status != 'REMOVED'\"}",
+        "options": {}
+      },
+      "credentials": {
+        "googleAdsOAuth2Api": {
+          "id": "tcBb8A3FKBjc2nOt",
+          "name": "Google Ads account"
+        }
+      },
+      "notes": "Metadata das ações: origin (WEBSITE = site do cliente; resto = Google). Cruzado por resource_name no Code de conversões.",
+      "onError": "continueRegularOutput",
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 5000
+    },
+    {
+      "id": "79ce890f-4a6e-4c3b-96c5-e8864c96dd9f",
+      "name": "GAQL Termos de pesquisa",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        440,
+        1020
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "=https://googleads.googleapis.com/v21/customers/{{ $json.external_id.replace(/-/g, '') }}/googleAds:search",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleAdsOAuth2Api",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "login-customer-id",
+              "value": "2672955792"
+            },
+            {
+              "name": "developer-token",
+              "value": "COLE_AQUI_DEVELOPER_TOKEN"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ query: \"SELECT segments.date, campaign.name, search_term_view.search_term, metrics.impressions, metrics.clicks, metrics.cost_micros, metrics.conversions FROM search_term_view WHERE segments.date DURING LAST_30_DAYS AND metrics.clicks > 0\".replaceAll(\"DURING LAST_30_DAYS\", \"BETWEEN '\" + $now.minus({ days: 30 }).toFormat('yyyy-MM-dd') + \"' AND '\" + $now.toFormat('yyyy-MM-dd') + \"'\") }) }}",
+        "options": {}
+      },
+      "credentials": {
+        "googleAdsOAuth2Api": {
+          "id": "tcBb8A3FKBjc2nOt",
+          "name": "Google Ads account"
+        }
+      },
+      "notes": "O que as pessoas REALMENTE pesquisaram (search_term_view).",
+      "onError": "continueRegularOutput",
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 5000
+    },
+    {
+      "id": "efd66336-dc3c-44ec-8be1-2eed3af23554",
+      "name": "Montar linhas ad_search_terms",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        660,
+        1020
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const rows = [];\nfor (let i = 0; i < items.length; i++) {\n  const resp = items[i].json;\n  const conta = $('Buscar contas Google Ads').itemMatching(i).json;\n  for (const r of resp.results ?? []) {\n    const m = r.metrics ?? {};\n    rows.push({\n      client_id: conta.client_id,\n      account_external_id: String(conta.external_id),\n      platform: 'google',\n      date: r.segments?.date,\n      campaign: r.campaign?.name ?? '(sem nome)',\n      search_term: r.searchTermView?.searchTerm ?? '(desconhecido)',\n      impressions: Number(m.impressions ?? 0),\n      clicks: Number(m.clicks ?? 0),\n      spend: Number(m.costMicros ?? 0) / 1_000_000,\n      conversions: Number(m.conversions ?? 0),\n    });\n  }\n}\nif (rows.length === 0) return [];\n// Upsert em lotes: search terms geram muitas linhas; um POST unico estoura.\nconst CHUNK = 200;\nconst out = [];\nfor (let j = 0; j < rows.length; j += CHUNK) {\n  out.push({ json: { rows: rows.slice(j, j + CHUNK), total: rows.length } });\n}\nreturn out;"
+      }
+    },
+    {
+      "id": "d66b489e-98ff-4915-95ff-736e50341284",
+      "name": "Upsert ad_search_terms",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        880,
+        1020
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://oqsjdhrwpmpdrihgbgtx.supabase.co/rest/v1/ad_search_terms",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "on_conflict",
+              "value": "client_id,account_external_id,date,campaign,search_term"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "resolution=merge-duplicates,return=minimal"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.rows) }}",
+        "options": {}
+      },
+      "credentials": {
+        "supabaseApi": {
+          "id": "sfp0d2ZkWr7zz5wM",
+          "name": "Supabase - Painel Métricas (service role)"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "id": "3248d211-ed60-4bf5-99b1-98f1c19444ae",
+      "name": "GAQL Grupos de anúncios",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        440,
+        1220
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "=https://googleads.googleapis.com/v21/customers/{{ $json.external_id.replace(/-/g, '') }}/googleAds:search",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleAdsOAuth2Api",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "login-customer-id",
+              "value": "2672955792"
+            },
+            {
+              "name": "developer-token",
+              "value": "COLE_AQUI_DEVELOPER_TOKEN"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ query: \"SELECT segments.date, campaign.name, ad_group.name, metrics.impressions, metrics.clicks, metrics.cost_micros, metrics.conversions FROM ad_group WHERE segments.date DURING LAST_30_DAYS AND metrics.impressions > 0\".replaceAll(\"DURING LAST_30_DAYS\", \"BETWEEN '\" + $now.minus({ days: 30 }).toFormat('yyyy-MM-dd') + \"' AND '\" + $now.toFormat('yyyy-MM-dd') + \"'\") }) }}",
+        "options": {}
+      },
+      "credentials": {
+        "googleAdsOAuth2Api": {
+          "id": "tcBb8A3FKBjc2nOt",
+          "name": "Google Ads account"
+        }
+      },
+      "notes": "Desempenho por grupo de anúncios (ad_group).",
+      "onError": "continueRegularOutput",
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 5000
+    },
+    {
+      "id": "b063890a-d9ff-4ca5-af9d-947f773178c9",
+      "name": "Montar linhas ad_groups",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        660,
+        1220
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const rows = [];\nfor (let i = 0; i < items.length; i++) {\n  const resp = items[i].json;\n  const conta = $('Buscar contas Google Ads').itemMatching(i).json;\n  for (const r of resp.results ?? []) {\n    const m = r.metrics ?? {};\n    rows.push({\n      client_id: conta.client_id,\n      account_external_id: String(conta.external_id),\n      platform: 'google',\n      date: r.segments?.date,\n      campaign: r.campaign?.name ?? '(sem nome)',\n      ad_group: r.adGroup?.name ?? '(sem nome)',\n      impressions: Number(m.impressions ?? 0),\n      clicks: Number(m.clicks ?? 0),\n      spend: Number(m.costMicros ?? 0) / 1_000_000,\n      conversions: Number(m.conversions ?? 0),\n    });\n  }\n}\nif (rows.length === 0) return [];\nreturn [{ json: { rows, total: rows.length } }];"
+      }
+    },
+    {
+      "id": "8977b7bc-bb23-4461-9f19-d7a03d6aced5",
+      "name": "Upsert ad_groups",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        880,
+        1220
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://oqsjdhrwpmpdrihgbgtx.supabase.co/rest/v1/ad_groups",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "on_conflict",
+              "value": "client_id,account_external_id,date,campaign,ad_group"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "resolution=merge-duplicates,return=minimal"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.rows) }}",
+        "options": {}
+      },
+      "credentials": {
+        "supabaseApi": {
+          "id": "sfp0d2ZkWr7zz5wM",
+          "name": "Supabase - Painel Métricas (service role)"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "id": "6eaf5826-96da-48a0-a140-340833294589",
+      "name": "GAQL Status campanhas",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        440,
+        1420
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "=https://googleads.googleapis.com/v21/customers/{{ $json.external_id.replace(/-/g, '') }}/googleAds:search",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleAdsOAuth2Api",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "login-customer-id",
+              "value": "2672955792"
+            },
+            {
+              "name": "developer-token",
+              "value": "COLE_AQUI_DEVELOPER_TOKEN"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\"query\":\"SELECT campaign.name, campaign.status FROM campaign WHERE campaign.status != 'REMOVED'\"}",
+        "options": {}
+      },
+      "credentials": {
+        "googleAdsOAuth2Api": {
+          "id": "tcBb8A3FKBjc2nOt",
+          "name": "Google Ads account"
+        }
+      },
+      "notes": "Status atual de cada campanha (ENABLED/PAUSED) pro filtro do painel.",
+      "onError": "continueRegularOutput",
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 5000
+    },
+    {
+      "id": "dc045b4d-56c8-417a-8f3c-9f2d22173642",
+      "name": "Montar linhas ad_campaigns",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        660,
+        1420
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const rows = [];\nfor (let i = 0; i < items.length; i++) {\n  const resp = items[i].json;\n  const conta = $('Buscar contas Google Ads').itemMatching(i).json;\n  for (const r of resp.results ?? []) {\n    rows.push({\n      client_id: conta.client_id,\n      account_external_id: String(conta.external_id),\n      platform: 'google',\n      campaign: r.campaign?.name ?? '(sem nome)',\n      status: r.campaign?.status ?? 'UNKNOWN',\n      updated_at: new Date().toISOString(),\n    });\n  }\n}\nif (rows.length === 0) return [];\nreturn [{ json: { rows, total: rows.length } }];"
+      }
+    },
+    {
+      "id": "d309488f-b462-4e75-b45f-e22b91a7b48e",
+      "name": "Upsert ad_campaigns",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        880,
+        1420
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://oqsjdhrwpmpdrihgbgtx.supabase.co/rest/v1/ad_campaigns",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "on_conflict",
+              "value": "client_id,account_external_id,platform,campaign"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "resolution=merge-duplicates,return=minimal"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.rows) }}",
+        "options": {}
+      },
+      "credentials": {
+        "supabaseApi": {
+          "id": "sfp0d2ZkWr7zz5wM",
+          "name": "Supabase - Painel Métricas (service role)"
+        }
+      },
+      "onError": "continueRegularOutput",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "id": "webhook-refresh-g",
+      "name": "Webhook atualizar (painel)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        -200
+      ],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "painel-refresh-google-z3x8c1v6",
+        "responseMode": "lastNode"
+      },
+      "webhookId": "c5363012-3bd1-49e8-bbb5-0853f3096ce4"
+    }
+  ],
+  "connections": {
+    "Todo dia 06:30": {
+      "main": [
+        [
+          {
+            "node": "Buscar contas Google Ads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Buscar contas Google Ads": {
+      "main": [
+        [
+          {
+            "node": "Google Ads search (GAQL)",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "GAQL Palavras-chave",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "GAQL Tipos de clique",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "GAQL Regiões",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "GAQL Origem das ações",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "GAQL Termos de pesquisa",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "GAQL Grupos de anúncios",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "GAQL Status campanhas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Ads search (GAQL)": {
+      "main": [
+        [
+          {
+            "node": "Montar linhas ad_metrics",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Montar linhas ad_metrics": {
+      "main": [
+        [
+          {
+            "node": "Upsert ad_metrics",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upsert ad_metrics": {
+      "main": [
+        [
+          {
+            "node": "Registrar sync_runs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GAQL Palavras-chave": {
+      "main": [
+        [
+          {
+            "node": "Montar linhas ad_keywords",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Montar linhas ad_keywords": {
+      "main": [
+        [
+          {
+            "node": "Upsert ad_keywords",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GAQL Tipos de clique": {
+      "main": [
+        [
+          {
+            "node": "Montar linhas ad_click_types",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Montar linhas ad_click_types": {
+      "main": [
+        [
+          {
+            "node": "Upsert ad_click_types",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GAQL Conversões por ação": {
+      "main": [
+        [
+          {
+            "node": "Montar linhas ad_conversion_actions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Montar linhas ad_conversion_actions": {
+      "main": [
+        [
+          {
+            "node": "Upsert ad_conversion_actions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GAQL Regiões": {
+      "main": [
+        [
+          {
+            "node": "Preparar consulta de regiões",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar consulta de regiões": {
+      "main": [
+        [
+          {
+            "node": "GAQL Nomes de região",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GAQL Nomes de região": {
+      "main": [
+        [
+          {
+            "node": "Montar linhas ad_geo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Montar linhas ad_geo": {
+      "main": [
+        [
+          {
+            "node": "Upsert ad_geo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GAQL Origem das ações": {
+      "main": [
+        [
+          {
+            "node": "GAQL Conversões por ação",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GAQL Termos de pesquisa": {
+      "main": [
+        [
+          {
+            "node": "Montar linhas ad_search_terms",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Montar linhas ad_search_terms": {
+      "main": [
+        [
+          {
+            "node": "Upsert ad_search_terms",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GAQL Grupos de anúncios": {
+      "main": [
+        [
+          {
+            "node": "Montar linhas ad_groups",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Montar linhas ad_groups": {
+      "main": [
+        [
+          {
+            "node": "Upsert ad_groups",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GAQL Status campanhas": {
+      "main": [
+        [
+          {
+            "node": "Montar linhas ad_campaigns",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Montar linhas ad_campaigns": {
+      "main": [
+        [
+          {
+            "node": "Upsert ad_campaigns",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook atualizar (painel)": {
+      "main": [
+        [
+          {
+            "node": "Buscar contas Google Ads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "America/Sao_Paulo",
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  }
+}
