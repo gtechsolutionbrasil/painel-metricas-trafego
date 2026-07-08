@@ -115,8 +115,8 @@
     "semantic_hash": "0ddecd5c41ff1345bc502f253ae3e39e"
   },
   "src/lib/metrics/aggregate.ts": {
-    "mtime": 1783519825.5691383,
-    "ast_hash": "1210aab00bde7716601ac998ffde4d90",
+    "mtime": 1783526029.2708583,
+    "ast_hash": "581d1214bd1cd36a190064604d581e07",
     "semantic_hash": ""
   },
   "src/lib/metrics/queries.ts": {
@@ -315,8 +315,8 @@
     "semantic_hash": ""
   },
   "src/components/pages/ChannelPage.tsx": {
-    "mtime": 1783523548.1085567,
-    "ast_hash": "8348148918c1b16f456c9e2eca4a3377",
+    "mtime": 1783526094.0752392,
+    "ast_hash": "62a8e5f45fdc727c487c57df5d231ad5",
     "semantic_hash": ""
   },
   "src/app/(dash)/clientes/DeleteClientButton.tsx": {

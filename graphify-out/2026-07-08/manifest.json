@@ -375,13 +375,13 @@
     "semantic_hash": ""
   },
   "n8n/meta-ads-supabase.workflow.json": {
-    "mtime": 1783519913.849159,
-    "ast_hash": "709a8d780a50e4f1f3638f164f0e18a2",
+    "mtime": 1783524072.8969355,
+    "ast_hash": "93d7a076bd6980864c82298eaaeea839",
     "semantic_hash": ""
   },
   "scripts/build-n8n-meta-workflow.mjs": {
-    "mtime": 1783519894.0632443,
-    "ast_hash": "0c1b737b65b815da874d3b45c0c81d1b",
+    "mtime": 1783524058.6614072,
+    "ast_hash": "0ff8fce18002c8f5611c7f7a7ed0970c",
     "semantic_hash": ""
   },
   "n8n/README.md": {
@@ -390,8 +390,8 @@
     "semantic_hash": ""
   },
   "scripts/meta-sync.mjs": {
-    "mtime": 1783519889.5022132,
-    "ast_hash": "40242cd460f389fd7dec5e7290399ea0",
+    "mtime": 1783524010.3697972,
+    "ast_hash": "14ea54625b9a9ed17b2638383baa7051",
     "semantic_hash": ""
   },
   "src/app/(dash)/actions.ts": {
@@ -407,6 +407,11 @@
   "supabase/migrations/0010_meta_reach.sql": {
     "mtime": 1783468006.9082847,
     "ast_hash": "11855c24e42cdfbd9dce55433994c4d6",
+    "semantic_hash": ""
+  },
+  "n8n/google-ads-supabase.workflow.json": {
+    "mtime": 1783525712.3432283,
+    "ast_hash": "b14cabc2a44bd89566c601624bcdf8a5",
     "semantic_hash": ""
   }
 }
