@@ -85,8 +85,8 @@
     "semantic_hash": ""
   },
   "src/components/layout/Topbar.tsx": {
-    "mtime": 1783437326.2755296,
-    "ast_hash": "cca66fdb3a91ab05e18ddc7be13356e0",
+    "mtime": 1783456053.7737832,
+    "ast_hash": "92cbaa4f166edad6b7c49e96cb62dcd7",
     "semantic_hash": ""
   },
   "src/components/ui/Badge.tsx": {
@@ -100,9 +100,9 @@
     "semantic_hash": "bfe7baffe5b1dcfa3966813a3dd09a7c"
   },
   "src/components/ui/KpiCard.tsx": {
-    "mtime": 1782686790.6528623,
-    "ast_hash": "ec9a682a003c4a2482b5635aa474986f",
-    "semantic_hash": "ec9a682a003c4a2482b5635aa474986f"
+    "mtime": 1783463812.4844651,
+    "ast_hash": "fcc5b3b371640c796bdb57d1e2407425",
+    "semantic_hash": ""
   },
   "src/components/ui/PageHeader.tsx": {
     "mtime": 1782686803.9588752,
@@ -130,8 +130,8 @@
     "semantic_hash": "00a39782fbf372b1b3d713ebf631cb1e"
   },
   "src/lib/range.ts": {
-    "mtime": 1783437141.705199,
-    "ast_hash": "4b0b8b0b0402023d256164720f3d9f42",
+    "mtime": 1783460756.710598,
+    "ast_hash": "005736bcffe495e6a0096104756f7ceb",
     "semantic_hash": ""
   },
   "src/lib/supabase/client.ts": {
@@ -195,8 +195,8 @@
     "semantic_hash": ""
   },
   "REGRAS-PROJETO.md": {
-    "mtime": 1783451971.7715988,
-    "ast_hash": "d770b258f31cd963e946d5af0c2d7aca",
+    "mtime": 1783455005.4741306,
+    "ast_hash": "99c63a4428108a00a8c87537f3886b3d",
     "semantic_hash": ""
   },
   "docs/ingestao-n8n.md": {
@@ -315,8 +315,8 @@
     "semantic_hash": ""
   },
   "src/components/pages/ChannelPage.tsx": {
-    "mtime": 1783437271.1152356,
-    "ast_hash": "591d697094ca774312a89171710c2d30",
+    "mtime": 1783463883.6969836,
+    "ast_hash": "a06daf9420515aba158d84e311460f08",
     "semantic_hash": ""
   },
   "src/app/(dash)/clientes/DeleteClientButton.tsx": {
@@ -392,6 +392,16 @@
   "scripts/meta-sync.mjs": {
     "mtime": 1783452864.841113,
     "ast_hash": "23b0afe7ad82d4e3779a0905413d17a9",
+    "semantic_hash": ""
+  },
+  "src/app/(dash)/actions.ts": {
+    "mtime": 1783456002.9463034,
+    "ast_hash": "81247236df27d019fbef4145db4eac37",
+    "semantic_hash": ""
+  },
+  "src/components/layout/RefreshButton.tsx": {
+    "mtime": 1783456034.5773654,
+    "ast_hash": "0a90a9fc2539dba902e68d056652db07",
     "semantic_hash": ""
   }
 }

@@ -100,6 +100,7 @@ function mergeMetrics(rows) {
     if (!e) { map.set(k, { ...r }); continue; }
     e.spend = money(e.spend + r.spend);
     e.impressions += r.impressions;
+    e.reach += r.reach;
     e.clicks += r.clicks;
     e.conversions += r.conversions;
     e.revenue = money(e.revenue + r.revenue);
@@ -158,6 +159,7 @@ async function syncAccount(acc) {
     campaign: campName(r),
     spend: money(r.spend),
     impressions: int(r.impressions),
+    reach: int(r.reach),
     clicks: int(r.clicks),
     conversions: int(sumActions(r.actions, isConversion)),
     revenue: money(sumActions(r.action_values, isRevenue)),

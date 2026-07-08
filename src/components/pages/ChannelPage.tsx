@@ -6,6 +6,7 @@ import {
   Percent,
   PlugZap,
   Target,
+  Users,
 } from "lucide-react";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { KpiCard } from "@/components/ui/KpiCard";
@@ -145,7 +146,11 @@ export async function ChannelPage({
           </div>
 
           {/* Volume: quanto rodou e o que gerou */}
-          <div className="grid grid-cols-2 gap-4 xl:grid-cols-4">
+          <div
+            className={`grid grid-cols-2 gap-4 ${
+              platform === "meta" ? "xl:grid-cols-5" : "xl:grid-cols-4"
+            }`}
+          >
             <KpiCard
               label="Investimento"
               value={fmtCurrency(k.spend)}
@@ -162,6 +167,16 @@ export async function ChannelPage({
               help="Quantas vezes o anúncio apareceu na tela. A mesma pessoa pode ver várias vezes, e cada exibição conta uma. (Alcance seria o nº de pessoas distintas — sempre menor.)"
               trend={{ value: delta(k.impressions, kPrev.impressions) }}
             />
+            {platform === "meta" && (
+              <KpiCard
+                label="Alcance"
+                value={fmtCompact(k.reach)}
+                icon={Users}
+                hint="pessoas distintas alcançadas"
+                help="Quantas pessoas diferentes viram o anúncio (o Google não informa isso). Diferente de Impressões, que conta cada exibição. Somamos por dia, então tende a ficar um pouco acima do alcance único que o Meta mostra no período."
+                trend={{ value: delta(k.reach, kPrev.reach) }}
+              />
+            )}
             <KpiCard
               label="Cliques"
               value={fmtInt(k.clicks)}

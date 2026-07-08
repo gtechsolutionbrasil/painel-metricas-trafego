@@ -33,6 +33,8 @@ export type AdMetric = {
   campaign: string;
   spend: number;
   impressions: number;
+  // Alcance = pessoas distintas (só Meta; Google não informa, fica 0).
+  reach: number;
   clicks: number;
   conversions: number;
   revenue: number;

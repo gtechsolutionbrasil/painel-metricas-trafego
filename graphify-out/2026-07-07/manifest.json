@@ -85,8 +85,8 @@
     "semantic_hash": ""
   },
   "src/components/layout/Topbar.tsx": {
-    "mtime": 1783437326.2755296,
-    "ast_hash": "cca66fdb3a91ab05e18ddc7be13356e0",
+    "mtime": 1783456053.7737832,
+    "ast_hash": "92cbaa4f166edad6b7c49e96cb62dcd7",
     "semantic_hash": ""
   },
   "src/components/ui/Badge.tsx": {
@@ -130,8 +130,8 @@
     "semantic_hash": "00a39782fbf372b1b3d713ebf631cb1e"
   },
   "src/lib/range.ts": {
-    "mtime": 1783437141.705199,
-    "ast_hash": "4b0b8b0b0402023d256164720f3d9f42",
+    "mtime": 1783460756.710598,
+    "ast_hash": "005736bcffe495e6a0096104756f7ceb",
     "semantic_hash": ""
   },
   "src/lib/supabase/client.ts": {
@@ -195,8 +195,8 @@
     "semantic_hash": ""
   },
   "REGRAS-PROJETO.md": {
-    "mtime": 1783451971.7715988,
-    "ast_hash": "d770b258f31cd963e946d5af0c2d7aca",
+    "mtime": 1783455005.4741306,
+    "ast_hash": "99c63a4428108a00a8c87537f3886b3d",
     "semantic_hash": ""
   },
   "docs/ingestao-n8n.md": {
@@ -375,18 +375,13 @@
     "semantic_hash": ""
   },
   "n8n/meta-ads-supabase.workflow.json": {
-    "mtime": 1783453006.225887,
-    "ast_hash": "3ef7294bff55f4b6b4c1d720220258cc",
-    "semantic_hash": ""
-  },
-  "n8n/meta-ads-sync-code.js": {
-    "mtime": 1783445873.886647,
-    "ast_hash": "02dcf83822d7eb9b1e662a9b55cd6aaf",
+    "mtime": 1783454913.638492,
+    "ast_hash": "58f6d6208957d85d9ebdf242ded8cfb2",
     "semantic_hash": ""
   },
   "scripts/build-n8n-meta-workflow.mjs": {
-    "mtime": 1783445093.943542,
-    "ast_hash": "07c833b538682dcfa92560bd11000fba",
+    "mtime": 1783454898.7625597,
+    "ast_hash": "aa14a4ff6b6ecfe63fbb87a9fe5f8f1f",
     "semantic_hash": ""
   },
   "n8n/README.md": {
@@ -397,6 +392,16 @@
   "scripts/meta-sync.mjs": {
     "mtime": 1783452864.841113,
     "ast_hash": "23b0afe7ad82d4e3779a0905413d17a9",
+    "semantic_hash": ""
+  },
+  "src/app/(dash)/actions.ts": {
+    "mtime": 1783456002.9463034,
+    "ast_hash": "81247236df27d019fbef4145db4eac37",
+    "semantic_hash": ""
+  },
+  "src/components/layout/RefreshButton.tsx": {
+    "mtime": 1783456034.5773654,
+    "ast_hash": "0a90a9fc2539dba902e68d056652db07",
     "semantic_hash": ""
   }
 }

@@ -23,6 +23,7 @@ export function conversionSource(origin: string): ConversionSource {
 export type AdKpis = {
   spend: number;
   impressions: number;
+  reach: number;
   clicks: number;
   conversions: number;
   revenue: number;
@@ -39,6 +40,7 @@ export function adKpis(rows: AdMetric[]): AdKpis {
     (a, r) => {
       a.spend += r.spend;
       a.impressions += r.impressions;
+      a.reach += r.reach;
       a.clicks += r.clicks;
       a.conversions += r.conversions;
       a.revenue += r.revenue;
@@ -51,6 +53,7 @@ export function adKpis(rows: AdMetric[]): AdKpis {
     {
       spend: 0,
       impressions: 0,
+      reach: 0,
       clicks: 0,
       conversions: 0,
       revenue: 0,
@@ -61,6 +64,7 @@ export function adKpis(rows: AdMetric[]): AdKpis {
   return {
     spend: t.spend,
     impressions: t.impressions,
+    reach: t.reach,
     clicks: t.clicks,
     conversions: t.conversions,
     revenue: t.revenue,

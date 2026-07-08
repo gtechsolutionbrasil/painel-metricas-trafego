@@ -57,6 +57,7 @@ for (let i = 0; i < items.length; i++) {
       campaign: r.campaign_name ?? r.campaign_id ?? "Sem campanha",
       spend: money(r.spend),
       impressions: Math.round(num(r.impressions)),
+      reach: Math.round(num(r.reach)),
       clicks: Math.round(num(r.clicks)),
       conversions: Math.round(sumA(r.actions, isConv)),
       revenue: money(sumA(r.action_values, isRev)),
@@ -72,6 +73,7 @@ for (const r of raw) {
   if (!e) { map.set(k, { ...r }); continue; }
   e.spend = money(e.spend + r.spend);
   e.impressions += r.impressions;
+  e.reach += r.reach;
   e.clicks += r.clicks;
   e.conversions += r.conversions;
   e.revenue = money(e.revenue + r.revenue);

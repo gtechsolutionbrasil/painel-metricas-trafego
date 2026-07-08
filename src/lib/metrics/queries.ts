@@ -30,6 +30,7 @@ type AdMetricRow = {
   campaign: string;
   spend: number | string;
   impressions: number | string;
+  reach?: number | string;
   clicks: number | string;
   conversions: number | string;
   revenue: number | string;
@@ -141,7 +142,7 @@ export async function getAdMetrics(
   let q = supabase
     .from("ad_metrics")
     .select(
-      "client_id, account_external_id, date, platform, campaign, spend, impressions, clicks, conversions, revenue, search_impression_share",
+      "client_id, account_external_id, date, platform, campaign, spend, impressions, reach, clicks, conversions, revenue, search_impression_share",
     )
     .gte("date", range.from)
     .lte("date", range.to)
@@ -164,6 +165,7 @@ export async function getAdMetrics(
     campaign: r.campaign,
     spend: Number(r.spend),
     impressions: Number(r.impressions),
+    reach: Number(r.reach ?? 0),
     clicks: Number(r.clicks),
     conversions: Number(r.conversions),
     revenue: Number(r.revenue),

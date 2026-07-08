@@ -147,6 +147,8 @@ export function generateAdMetrics(range: DateRange, clientId?: string): AdMetric
             campaign,
             spend,
             impressions,
+            // Meta informa alcance (pessoas distintas < impressões); Google não.
+            reach: platform === "meta" ? Math.round(impressions / (1.3 + r() * 1.2)) : 0,
             clicks,
             conversions,
             revenue,
