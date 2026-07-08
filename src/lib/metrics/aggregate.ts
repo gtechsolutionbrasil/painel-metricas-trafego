@@ -144,6 +144,7 @@ export type CampaignRow = {
   campaign: string;
   spend: number;
   impressions: number;
+  reach: number;
   clicks: number;
   conversions: number;
   revenue: number;
@@ -165,6 +166,7 @@ export function adByCampaign(rows: AdMetric[]): CampaignRow[] {
         campaign: r.campaign,
         spend: 0,
         impressions: 0,
+        reach: 0,
         clicks: 0,
         conversions: 0,
         revenue: 0,
@@ -175,6 +177,7 @@ export function adByCampaign(rows: AdMetric[]): CampaignRow[] {
       };
     c.spend += r.spend;
     c.impressions += r.impressions;
+    c.reach += r.reach;
     c.clicks += r.clicks;
     c.conversions += r.conversions;
     c.revenue += r.revenue;

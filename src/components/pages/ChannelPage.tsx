@@ -92,6 +92,16 @@ export async function ChannelPage({
   const kPrev = adKpis(adsPrev);
   const byDay = adByDay(ads);
   const campaigns = adByCampaign(ads);
+  // Status por campanha (Ativo/Pausado) pra a tabela ficar no estilo do
+  // Gerenciador do Meta. Ativas primeiro, depois por investimento.
+  const statusByCampaign = new Map(campaignOptions.map((o) => [o.campaign, o.status]));
+  const campaignStatus = (name: string) => statusByCampaign.get(name) ?? "UNKNOWN";
+  const campaignsSorted = [...campaigns].sort((a, b) => {
+    const aw = campaignStatus(a.campaign) === "ENABLED" ? 1 : 0;
+    const bw = campaignStatus(b.campaign) === "ENABLED" ? 1 : 0;
+    if (aw !== bw) return bw - aw;
+    return b.spend - a.spend;
+  });
 
   return (
     <div className="space-y-6">
@@ -124,27 +134,6 @@ export async function ChannelPage({
         />
       ) : (
         <>
-          {/* Como ler: o funil de tráfego em 1 linha */}
-          <div className="card flex flex-wrap items-center gap-x-2.5 gap-y-1 px-4 py-3 text-sm text-faint">
-            <span className="font-bold uppercase tracking-wide text-[11px] text-brand">
-              Como ler
-            </span>
-            <span>
-              o anúncio <b className="font-semibold text-ink">aparece</b> pra pessoas (Impressões)
-            </span>
-            <span className="text-brand">→</span>
-            <span>
-              algumas <b className="font-semibold text-ink">clicam</b> (Cliques)
-            </span>
-            <span className="text-brand">→</span>
-            <span>
-              algumas viram <b className="font-semibold text-ink">contato</b> (Conversões)
-            </span>
-            <span className="w-full text-xs text-faint sm:ml-auto sm:w-auto">
-              passe o mouse no “?” de cada número pra entender · setas = variação vs. período anterior
-            </span>
-          </div>
-
           {/* Volume: quanto rodou e o que gerou */}
           <div
             className={`grid grid-cols-2 gap-4 ${
@@ -287,31 +276,61 @@ export async function ChannelPage({
               subtitle={`${campaigns.length} campanha${campaigns.length === 1 ? "" : "s"} no período`}
             />
             <div className="overflow-x-auto">
-              <table className="w-full min-w-[880px] text-sm">
+              <table className="w-full min-w-[1000px] text-sm">
                 <thead>
                   <tr className="border-b border-line bg-surface-2 text-left text-xs font-semibold uppercase tracking-wide text-faint">
-                    <th className="px-5 py-3">Campanha</th>
+                    <th className="px-5 py-3">Veiculação</th>
+                    <th className="px-3 py-3">Campanha</th>
                     <th className="px-3 py-3 text-right">Investido</th>
+                    {platform === "meta" && (
+                      <th className="px-3 py-3 text-right">Alcance</th>
+                    )}
                     <th className="px-3 py-3 text-right">Impressões</th>
                     <th className="px-3 py-3 text-right">Cliques</th>
                     <th className="px-3 py-3 text-right">CTR</th>
                     <th className="px-3 py-3 text-right">CPC</th>
-                    <th className="px-3 py-3 text-right">Conversões</th>
+                    <th className="px-3 py-3 text-right">
+                      {platform === "meta" ? "Conversas" : "Conversões"}
+                    </th>
                     <th className="px-5 py-3 text-right">Custo/conv.</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {campaigns.map((c) => (
+                  {campaignsSorted.map((c) => {
+                    const st = campaignStatus(c.campaign);
+                    const active = st === "ENABLED";
+                    return (
                     <tr
                       key={`${c.platform}-${c.campaign}`}
                       className="border-b border-line last:border-0 transition-colors hover:bg-surface-2"
                     >
-                      <td className="px-5 py-3 font-semibold text-ink">
+                      <td className="px-5 py-3">
+                        <span className="inline-flex items-center gap-2 whitespace-nowrap">
+                          <span
+                            className={`h-2 w-2 shrink-0 rounded-full ${
+                              active ? "bg-brand" : "bg-faint"
+                            }`}
+                          />
+                          <span
+                            className={`text-xs font-semibold ${
+                              active ? "text-brand-ink" : "text-faint"
+                            }`}
+                          >
+                            {active ? "Ativo" : st === "PAUSED" ? "Pausado" : "—"}
+                          </span>
+                        </span>
+                      </td>
+                      <td className="px-3 py-3 font-semibold text-ink">
                         {c.campaign}
                       </td>
                       <td className="px-3 py-3 text-right font-semibold text-ink">
                         {fmtCurrency(c.spend)}
                       </td>
+                      {platform === "meta" && (
+                        <td className="px-3 py-3 text-right text-muted">
+                          {fmtCompact(c.reach)}
+                        </td>
+                      )}
                       <td className="px-3 py-3 text-right text-muted">
                         {fmtCompact(c.impressions)}
                       </td>
@@ -331,7 +350,8 @@ export async function ChannelPage({
                         {fmtCurrencyCents(c.cpl)}
                       </td>
                     </tr>
-                  ))}
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
