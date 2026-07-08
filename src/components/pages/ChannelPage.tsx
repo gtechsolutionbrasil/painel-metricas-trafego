@@ -169,10 +169,10 @@ export async function ChannelPage({
             />
             {platform === "meta" && (
               <KpiCard
-                label="Alcance"
+                label="Alcance (acumulado)"
                 value={fmtCompact(k.reach)}
                 icon={Users}
-                hint="pessoas distintas alcançadas"
+                hint="pessoas alcançadas, somando os dias"
                 help="Quantas pessoas diferentes viram o anúncio (o Google não informa isso). Diferente de Impressões, que conta cada exibição. Somamos por dia, então tende a ficar um pouco acima do alcance único que o Meta mostra no período."
                 trend={{ value: delta(k.reach, kPrev.reach) }}
               />
