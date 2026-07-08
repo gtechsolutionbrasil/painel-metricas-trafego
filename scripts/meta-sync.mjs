@@ -8,8 +8,13 @@ const SUPABASE_URL = (process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABA
 const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const META_TOKEN = process.env.META_ACCESS_TOKEN;
 const API_VERSION = process.env.META_GRAPH_API_VERSION || "v21.0";
-const DATE_PRESET = process.env.META_DATE_PRESET || "last_30d";
 const STARTED_AT = new Date().toISOString();
+
+// Janela de coleta: últimos 30 dias INCLUINDO hoje (date_preset=last_30d exclui
+// o dia atual, então usamos time_range com until=hoje pra puxar até o momento).
+const DAY_MS = 86_400_000;
+const isoDay = (ms) => new Date(ms).toISOString().slice(0, 10);
+const TIME_RANGE = JSON.stringify({ since: isoDay(Date.now() - 30 * DAY_MS), until: isoDay(Date.now()) });
 
 if (!SUPABASE_URL || !SERVICE_KEY || !META_TOKEN) {
   console.error("Faltam env: SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, META_ACCESS_TOKEN");
@@ -143,7 +148,7 @@ async function syncAccount(acc) {
     fields: "campaign_id,campaign_name,date_start,date_stop,spend,impressions,clicks,reach,actions,action_values",
     level: "campaign",
     time_increment: 1,
-    date_preset: DATE_PRESET,
+    time_range: TIME_RANGE,
     limit: 500,
   });
   const campaigns = await metaGetAll(`${acc.external_id}/campaigns`, {

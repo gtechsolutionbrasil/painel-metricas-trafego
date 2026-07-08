@@ -244,7 +244,8 @@ const workflow = {
       { name: "fields", value: "campaign_id,campaign_name,date_start,date_stop,spend,impressions,clicks,reach,actions,action_values" },
       { name: "level", value: "campaign" },
       { name: "time_increment", value: "1" },
-      { name: "date_preset", value: "last_30d" },
+      // Últimos 30 dias INCLUINDO hoje (last_30d exclui o dia atual).
+      { name: "time_range", value: "={{ JSON.stringify({ since: $now.minus({ days: 30 }).toFormat('yyyy-MM-dd'), until: $now.toFormat('yyyy-MM-dd') }) }}" },
       { name: "limit", value: "500" },
     ]),
     codeNode("Montar ad_metrics", "code-metrics", [920, -160], codeMetrics),

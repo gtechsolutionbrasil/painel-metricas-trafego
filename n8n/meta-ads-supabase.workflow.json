@@ -94,8 +94,8 @@
               "value": "1"
             },
             {
-              "name": "date_preset",
-              "value": "last_30d"
+              "name": "time_range",
+              "value": "={{ JSON.stringify({ since: $now.minus({ days: 30 }).toFormat('yyyy-MM-dd'), until: $now.toFormat('yyyy-MM-dd') }) }}"
             },
             {
               "name": "limit",
