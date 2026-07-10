@@ -25,7 +25,10 @@ const NAV: NavItem[] = [
 export function Sidebar() {
   const pathname = usePathname();
   const search = useSearchParams();
-  const qs = search.toString();
+  // Params efêmeros (feedback de uma ação) não devem "viajar" entre páginas.
+  const params = new URLSearchParams(search.toString());
+  params.delete("deleted");
+  const qs = params.toString();
   const suffix = qs ? `?${qs}` : "";
 
   return (

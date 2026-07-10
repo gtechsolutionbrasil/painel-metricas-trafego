@@ -19,6 +19,9 @@ export function KpiCard({
   help?: string;
   trend?: Trend;
 }) {
+  // Uma explicação só, sob demanda: o "?" mostra help (ou o hint, se for o que
+  // houver). O texto fixo embaixo do valor saiu — poluía e duplicava o tooltip.
+  const tip = help ?? hint;
   return (
     <div className="card p-5">
       <div className="flex items-start justify-between">
@@ -29,12 +32,11 @@ export function KpiCard({
       </div>
       <p className="eyebrow mt-4 flex items-center gap-1.5">
         {label}
-        {help && <HelpTip text={help} />}
+        {tip && <HelpTip text={tip} />}
       </p>
       <p className="mt-1 text-[26px] font-extrabold tracking-tight text-ink">
         {value}
       </p>
-      {hint && <p className="mt-0.5 text-xs text-faint">{hint}</p>}
     </div>
   );
 }

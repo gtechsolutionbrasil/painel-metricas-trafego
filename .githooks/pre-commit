@@ -1,0 +1,29 @@
+#!/bin/sh
+# Guard de segredos — o repo é PÚBLICO: bloqueia commits com cara de credencial.
+# Ative com: git config core.hooksPath .githooks
+# Padrões: token Meta (EAA...), JWT (eyJ...), chave privada, service_role,
+# secret do Supabase e arquivos .env (exceto .env.example).
+
+staged_files=$(git diff --cached --name-only --diff-filter=ACM)
+[ -z "$staged_files" ] && exit 0
+
+for f in $staged_files; do
+  case "$f" in
+    .env.example) continue ;;
+    .env*|*/.env*)
+      echo "BLOQUEADO: tentando commitar arquivo de env '$f' (repo é público)." >&2
+      exit 1 ;;
+  esac
+done
+
+pattern='EAA[A-Za-z0-9]{40,}|eyJhbGciOi[A-Za-z0-9_-]{20,}\.[A-Za-z0-9_-]{20,}\.[A-Za-z0-9_-]{10,}|-----BEGIN (RSA |EC )?PRIVATE KEY|sb_secret_|service_role[\"'"'"']?\s*[:=]\s*[\"'"'"']?eyJ'
+# Ignora o próprio hook (os padrões acima casariam com eles mesmos).
+hits=$(git diff --cached -U0 -- . ':(exclude).githooks' | grep -E "^\+" | grep -EI "$pattern" | head -5)
+if [ -n "$hits" ]; then
+  echo "BLOQUEADO: o diff staged contém algo com cara de SEGREDO (repo é público):" >&2
+  echo "$hits" | cut -c1-120 >&2
+  echo "" >&2
+  echo "Se for falso positivo, commit com: git commit --no-verify" >&2
+  exit 1
+fi
+exit 0

@@ -19,11 +19,15 @@ export async function refreshData(): Promise<{ ok: boolean; error?: string }> {
     return { ok: false, error: "Nenhum webhook configurado (defina N8N_REFRESH_*_URL)." };
   }
 
+  // Header secreto validado pelo n8n (os paths dos webhooks constam no repo
+  // público — sem isso qualquer um poderia disparar a coleta).
+  const secret = process.env.N8N_REFRESH_SECRET;
   const results = await Promise.allSettled(
     targets.map((w) =>
       fetch(w.url as string, {
         method: "POST",
         cache: "no-store",
+        headers: secret ? { "X-Refresh-Key": secret } : undefined,
         signal: AbortSignal.timeout(TIMEOUT_MS),
       }).then((r) => {
         if (!r.ok) throw new Error(`${w.name}: HTTP ${r.status}`);

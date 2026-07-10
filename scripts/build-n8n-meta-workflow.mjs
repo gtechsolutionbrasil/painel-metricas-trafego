@@ -258,6 +258,49 @@ const workflow = {
     ]),
     codeNode("Montar ad_campaigns", "code-camp", [920, 240], codeCampaigns),
     supaUpsert("Upsert ad_campaigns", "up-camp", [1160, 240], "ad_campaigns", "client_id,account_external_id,platform,campaign"),
+    // Tracking do sync: marca contas como connected/last_sync_at e registra a
+    // execução em sync_runs (a página Integrações lê esses dois).
+    {
+      parameters: {
+        method: "PATCH",
+        url: `${SUPABASE_URL}/rest/v1/integration_accounts`,
+        authentication: "predefinedCredentialType",
+        nodeCredentialType: "supabaseApi",
+        sendQuery: true,
+        queryParameters: { parameters: [
+          { name: "provider", value: "eq.meta_ads" },
+          { name: "status", value: "neq.paused" },
+        ] },
+        sendHeaders: true,
+        headerParameters: { parameters: [{ name: "Prefer", value: "return=minimal" }] },
+        sendBody: true,
+        specifyBody: "json",
+        jsonBody: "={{ JSON.stringify({ status: 'connected', last_sync_at: $now.toISO() }) }}",
+        options: {},
+      },
+      id: "mark-synced", name: "Marcar contas sincronizadas",
+      type: "n8n-nodes-base.httpRequest", typeVersion: 4.2, position: [1400, -160],
+      onError: "continueRegularOutput",
+      credentials: { supabaseApi: SUPABASE_CRED },
+    },
+    {
+      parameters: {
+        method: "POST",
+        url: `${SUPABASE_URL}/rest/v1/sync_runs`,
+        authentication: "predefinedCredentialType",
+        nodeCredentialType: "supabaseApi",
+        sendHeaders: true,
+        headerParameters: { parameters: [{ name: "Prefer", value: "return=minimal" }] },
+        sendBody: true,
+        specifyBody: "json",
+        jsonBody: "={{ JSON.stringify([{ platform: 'meta', status: 'success', rows: $('Montar ad_metrics').first().json.total, message: 'Meta OK: ' + $('Montar ad_metrics').first().json.total + ' metricas (upsert)' }]) }}",
+        options: {},
+      },
+      id: "log-sync-run", name: "Registrar sync_runs",
+      type: "n8n-nodes-base.httpRequest", typeVersion: 4.2, position: [1640, -160],
+      onError: "continueRegularOutput",
+      credentials: { supabaseApi: SUPABASE_CRED },
+    },
   ],
   connections: {
     "Executar manualmente": { main: [[{ node: "Buscar contas Meta", type: "main", index: 0 }]] },
@@ -278,8 +321,11 @@ const workflow = {
     "Montar ad_conversion_actions": { main: [[{ node: "Upsert ad_conversion_actions", type: "main", index: 0 }]] },
     "Meta Campaigns": { main: [[{ node: "Montar ad_campaigns", type: "main", index: 0 }]] },
     "Montar ad_campaigns": { main: [[{ node: "Upsert ad_campaigns", type: "main", index: 0 }]] },
+    "Upsert ad_metrics": { main: [[{ node: "Marcar contas sincronizadas", type: "main", index: 0 }]] },
+    "Marcar contas sincronizadas": { main: [[{ node: "Registrar sync_runs", type: "main", index: 0 }]] },
   },
-  settings: { executionOrder: "v1" },
+  // Timezone fixa o cron (07:00 BRT de verdade) e o $now das expressões.
+  settings: { executionOrder: "v1", timezone: "America/Sao_Paulo" },
 };
 
 writeFileSync(

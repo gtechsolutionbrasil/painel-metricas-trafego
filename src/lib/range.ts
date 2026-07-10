@@ -12,6 +12,13 @@ const fromIso = (value: string) => {
   return new Date(year, month - 1, day);
 };
 
+// "Hoje" no fuso do Brasil, independente de onde o código roda. Na Vercel o
+// servidor é UTC: sem isso, das 21h à meia-noite (BRT) o "dia" virava antes
+// da hora e os períodos deslocavam 1 dia em relação ao Meta/Google.
+const TZ = "America/Sao_Paulo";
+const todayBR = () =>
+  fromIso(new Intl.DateTimeFormat("en-CA", { timeZone: TZ }).format(new Date()));
+
 const isValidIsoDate = (value: string | undefined): value is string => {
   if (!value || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
   return iso(fromIso(value)) === value;
@@ -36,23 +43,23 @@ const shift = (base: Date, days: number) => {
 };
 
 export const PERIOD_SHORTCUTS: PeriodShortcut[] = [
-  { id: "today", label: "Hoje", range: () => ({ from: iso(new Date()), to: iso(new Date()) }) },
+  { id: "today", label: "Hoje", range: () => ({ from: iso(todayBR()), to: iso(todayBR()) }) },
   {
     id: "yesterday",
     label: "Ontem",
     range: () => {
-      const y = shift(new Date(), -1);
+      const y = shift(todayBR(), -1);
       return { from: iso(y), to: iso(y) };
     },
   },
-  { id: "7d", label: "Últimos 7 dias", range: () => ({ from: iso(shift(new Date(), -7)), to: iso(shift(new Date(), -1)) }) },
-  { id: "14d", label: "Últimos 14 dias", range: () => ({ from: iso(shift(new Date(), -14)), to: iso(shift(new Date(), -1)) }) },
-  { id: "30d", label: "Últimos 30 dias", range: () => ({ from: iso(shift(new Date(), -30)), to: iso(shift(new Date(), -1)) }) },
+  { id: "7d", label: "Últimos 7 dias", range: () => ({ from: iso(shift(todayBR(), -7)), to: iso(shift(todayBR(), -1)) }) },
+  { id: "14d", label: "Últimos 14 dias", range: () => ({ from: iso(shift(todayBR(), -14)), to: iso(shift(todayBR(), -1)) }) },
+  { id: "30d", label: "Últimos 30 dias", range: () => ({ from: iso(shift(todayBR(), -30)), to: iso(shift(todayBR(), -1)) }) },
   {
     id: "this_month",
     label: "Este mês",
     range: () => {
-      const now = new Date();
+      const now = todayBR();
       return { from: iso(new Date(now.getFullYear(), now.getMonth(), 1)), to: iso(now) };
     },
   },
@@ -60,7 +67,7 @@ export const PERIOD_SHORTCUTS: PeriodShortcut[] = [
     id: "last_month",
     label: "Mês passado",
     range: () => {
-      const now = new Date();
+      const now = todayBR();
       const first = new Date(now.getFullYear(), now.getMonth() - 1, 1);
       const last = new Date(now.getFullYear(), now.getMonth(), 0);
       return { from: iso(first), to: iso(last) };
@@ -71,7 +78,7 @@ export const PERIOD_SHORTCUTS: PeriodShortcut[] = [
 export function defaultRange(days = 30): DateRange {
   // Termina ONTEM (dia atual incompleto; Meta/Google não incluem hoje nos
   // "últimos N dias") pra o painel bater com as plataformas.
-  const to = shift(new Date(), -1);
+  const to = shift(todayBR(), -1);
   const from = shift(to, -(days - 1));
   return { from: iso(from), to: iso(to) };
 }

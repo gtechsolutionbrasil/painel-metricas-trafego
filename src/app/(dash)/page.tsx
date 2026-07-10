@@ -15,7 +15,6 @@ import { Card, CardBody, CardHeader } from "@/components/ui/Card";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { Badge } from "@/components/ui/Badge";
 import { TrendAreaChart } from "@/components/charts/TrendAreaChart";
-import { BarsChart } from "@/components/charts/BarsChart";
 import { CHART_COLORS } from "@/components/charts/theme";
 import {
   getAdMetrics,
@@ -23,7 +22,7 @@ import {
   getClients,
   resolveClient,
 } from "@/lib/metrics/queries";
-import { adByDay, adByPlatform, adKpis, webKpis } from "@/lib/metrics/aggregate";
+import { adByPlatform, adKpis, webKpis } from "@/lib/metrics/aggregate";
 import { previousRange, rangeFromSearch, delta } from "@/lib/range";
 import { fmtCurrency, fmtCurrencyCents, fmtInt } from "@/lib/format";
 
@@ -55,10 +54,32 @@ export default async function OverviewPage({
   const w = webKpis(web);
   const wPrev = webKpis(webPrev);
 
-  const byDay = adByDay(ads);
   const platforms = adByPlatform(ads);
   const google = platforms.find((p) => p.platform === "google");
   const meta = platforms.find((p) => p.platform === "meta");
+
+  // Série diária POR CANAL (Google × Meta lado a lado). A Visão geral compara
+  // canais — o detalhe de cada um vive em /google e /meta, sem repetir gráfico.
+  const byDayPlatform = (() => {
+    const map = new Map<
+      string,
+      { date: string; google: number; meta: number; googleConv: number; metaConv: number }
+    >();
+    for (const r of ads) {
+      const p =
+        map.get(r.date) ??
+        { date: r.date, google: 0, meta: 0, googleConv: 0, metaConv: 0 };
+      if (r.platform === "google") {
+        p.google += r.spend;
+        p.googleConv += r.conversions;
+      } else {
+        p.meta += r.spend;
+        p.metaConv += r.conversions;
+      }
+      map.set(r.date, p);
+    }
+    return [...map.values()].sort((a, b) => a.date.localeCompare(b.date));
+  })();
 
   return (
     <div className="space-y-6">
@@ -155,18 +176,24 @@ export default async function OverviewPage({
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
           <Card>
             <CardHeader
-              title="Investimento por dia"
-              subtitle="Todos os canais somados"
+              title="Investimento por canal"
+              subtitle="Google × Meta, dia a dia — onde o dinheiro está indo"
             />
             <CardBody>
               <TrendAreaChart
-                data={byDay}
+                data={byDayPlatform}
                 yFormat="compact"
                 series={[
                   {
-                    key: "spend",
-                    label: "Investimento",
-                    color: CHART_COLORS.brand,
+                    key: "google",
+                    label: "Google Ads",
+                    color: CHART_COLORS.sky,
+                    format: "currency",
+                  },
+                  {
+                    key: "meta",
+                    label: "Meta Ads",
+                    color: CHART_COLORS.indigo,
                     format: "currency",
                   },
                 ]}
@@ -176,17 +203,27 @@ export default async function OverviewPage({
 
           <Card>
             <CardHeader
-              title="Conversões por dia"
-              subtitle="Leads, WhatsApp e formulários gerados"
+              title="Conversões por canal"
+              subtitle="Google × Meta, dia a dia — qual canal gera mais contato"
             />
             <CardBody>
-              <BarsChart
-                data={byDay}
-                dataKey="conversions"
-                name="Conversões"
-                color={CHART_COLORS.teal}
-                format="int"
+              <TrendAreaChart
+                data={byDayPlatform}
                 yFormat="compact"
+                series={[
+                  {
+                    key: "googleConv",
+                    label: "Google Ads",
+                    color: CHART_COLORS.sky,
+                    format: "int",
+                  },
+                  {
+                    key: "metaConv",
+                    label: "Meta Ads",
+                    color: CHART_COLORS.indigo,
+                    format: "int",
+                  },
+                ]}
               />
             </CardBody>
           </Card>
@@ -223,7 +260,8 @@ function ChannelSummary({
 }) {
   const qs = new URLSearchParams();
   for (const [key, value] of Object.entries(sp)) {
-    if (typeof value === "string") qs.set(key, value);
+    // "deleted" é feedback efêmero da exclusão de cliente — não propagar.
+    if (typeof value === "string" && key !== "deleted") qs.set(key, value);
   }
   const suffix = qs.size ? `?${qs}` : "";
 

@@ -1,12 +1,10 @@
 import {
   DollarSign,
-  Eye,
-  Gauge,
+  HelpCircle,
   MousePointerClick,
   Percent,
   PlugZap,
   Target,
-  Users,
 } from "lucide-react";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { KpiCard } from "@/components/ui/KpiCard";
@@ -92,6 +90,9 @@ export async function ChannelPage({
   const kPrev = adKpis(adsPrev);
   const byDay = adByDay(ads);
   const campaigns = adByCampaign(ads);
+  // No Meta a conversão é "conversa iniciada" (termo do Gerenciador); no
+  // Google, "conversão". Um nome só por canal, em card, gráfico e tabela.
+  const convLabel = platform === "meta" ? "Conversas" : "Conversões";
   // Status por campanha (Ativo/Pausado) pra a tabela ficar no estilo do
   // Gerenciador do Meta. Ativas primeiro, depois por investimento.
   const statusByCampaign = new Map(campaignOptions.map((o) => [o.campaign, o.status]));
@@ -134,97 +135,72 @@ export async function ChannelPage({
         />
       ) : (
         <>
-          {/* Volume: quanto rodou e o que gerou */}
-          <div
-            className={`grid grid-cols-2 gap-4 ${
-              platform === "meta" ? "xl:grid-cols-5" : "xl:grid-cols-4"
-            }`}
-          >
+          {/* Os 4 números que decidem: quanto gastou, o que gerou, a que custo,
+              e se o anúncio chama atenção. O resto vai na faixa compacta. */}
+          <div className="grid grid-cols-2 gap-4 xl:grid-cols-4">
             <KpiCard
               label="Investimento"
               value={fmtCurrency(k.spend)}
               icon={DollarSign}
-              hint="custo total no período"
               help="Quanto você gastou em anúncios nesse período. É o dinheiro que saiu — não o resultado."
               trend={{ value: delta(k.spend, kPrev.spend) }}
             />
             <KpiCard
-              label="Impressões"
-              value={fmtCompact(k.impressions)}
-              icon={Eye}
-              hint="vezes que o anúncio foi exibido"
-              help="Quantas vezes o anúncio apareceu na tela. A mesma pessoa pode ver várias vezes, e cada exibição conta uma. (Alcance seria o nº de pessoas distintas — sempre menor.)"
-              trend={{ value: delta(k.impressions, kPrev.impressions) }}
-            />
-            {platform === "meta" && (
-              <KpiCard
-                label="Alcance (acumulado)"
-                value={fmtCompact(k.reach)}
-                icon={Users}
-                hint="pessoas alcançadas, somando os dias"
-                help="Quantas pessoas diferentes viram o anúncio (o Google não informa isso). Diferente de Impressões, que conta cada exibição. Somamos por dia, então tende a ficar um pouco acima do alcance único que o Meta mostra no período."
-                trend={{ value: delta(k.reach, kPrev.reach) }}
-              />
-            )}
-            <KpiCard
-              label="Cliques"
-              value={fmtInt(k.clicks)}
-              icon={MousePointerClick}
-              hint="cliques no anúncio"
-              help="Quantas vezes clicaram no anúncio pra ir ao site ou WhatsApp. Mostra interesse — mas ainda não é um contato."
-              trend={{ value: delta(k.clicks, kPrev.clicks) }}
-            />
-            <KpiCard
-              label="Conversões"
+              label={convLabel}
               value={fmtInt(k.conversions)}
               icon={Target}
-              hint="contatos: lead, WhatsApp, formulário"
-              help="O resultado que importa: contatos gerados (conversa no WhatsApp, lead, formulário, ligação). É o que o anúncio produziu de concreto."
+              help={
+                platform === "meta"
+                  ? "Conversas iniciadas no WhatsApp/Direct a partir do anúncio — o resultado concreto da campanha (mesmo número do Gerenciador)."
+                  : "O resultado que importa: contatos gerados (WhatsApp, formulário, ligação, rota no Maps)."
+              }
               trend={{ value: delta(k.conversions, kPrev.conversions) }}
             />
-          </div>
-
-          {/* Eficiência: quanto custa cada resultado */}
-          <div
-            className={`grid grid-cols-2 gap-4 ${
-              platform === "google" ? "xl:grid-cols-4" : "xl:grid-cols-3"
-            }`}
-          >
+            <KpiCard
+              label={platform === "meta" ? "Custo por conversa" : "Custo por conversão"}
+              value={fmtCurrencyCents(k.cpl)}
+              icon={MousePointerClick}
+              help="Investimento ÷ resultados. Quanto MENOR, melhor — é o preço de cada contato gerado."
+              trend={{ value: delta(k.cpl, kPrev.cpl), positiveIsGood: false }}
+            />
             <KpiCard
               label="CTR"
               value={fmtPercent(k.ctr)}
               icon={Percent}
-              hint="cliques ÷ impressões"
-              help="De cada 100 pessoas que viram o anúncio, quantas clicaram. Mede o quanto ele chama atenção. Acima de ~2% costuma ser bom."
+              help="De cada 100 pessoas que viram o anúncio, quantas clicaram (cliques ÷ impressões). Mede o quanto ele chama atenção. Acima de ~2% costuma ser bom."
               trend={{ value: delta(k.ctr, kPrev.ctr) }}
             />
-            <KpiCard
+          </div>
+
+          {/* Métricas de apoio, numa faixa só (sem competir com as principais) */}
+          <div className="card flex flex-wrap items-center gap-x-8 gap-y-3 px-5 py-4">
+            <MiniStat
+              label="Impressões"
+              value={fmtCompact(k.impressions)}
+              tip="Quantas vezes o anúncio apareceu na tela (a mesma pessoa pode contar várias vezes)."
+            />
+            {platform === "meta" && (
+              <MiniStat
+                label="Alcance (acumulado)"
+                value={fmtCompact(k.reach)}
+                tip="Pessoas diferentes que viram o anúncio, somando os dias — fica um pouco acima do alcance único do Gerenciador."
+              />
+            )}
+            <MiniStat
+              label="Cliques"
+              value={fmtInt(k.clicks)}
+              tip="Quantas vezes clicaram no anúncio. Interesse — ainda não é contato."
+            />
+            <MiniStat
               label="Custo por clique"
               value={fmtCurrencyCents(k.cpc)}
-              icon={MousePointerClick}
-              hint="investimento ÷ cliques"
-              help="Quanto você paga, em média, cada vez que alguém clica no anúncio."
-              trend={{ value: delta(k.cpc, kPrev.cpc), positiveIsGood: false }}
-            />
-            <KpiCard
-              label="Custo por conversão"
-              value={fmtCurrencyCents(k.cpl)}
-              icon={Target}
-              hint="investimento ÷ conversões"
-              help="Quanto custa, em média, gerar um contato. Quanto MENOR, melhor — é o preço de cada resultado."
-              trend={{ value: delta(k.cpl, kPrev.cpl), positiveIsGood: false }}
+              tip="Investimento ÷ cliques."
             />
             {platform === "google" && (
-              <KpiCard
+              <MiniStat
                 label="Parcela de impressões"
-                value={
-                  k.impressionShare != null
-                    ? fmtPercent(k.impressionShare)
-                    : "—"
-                }
-                icon={Gauge}
-                hint="% das buscas em que o anúncio apareceu"
-              help="De todas as buscas em que seu anúncio PODERIA ter aparecido, em quantas % ele apareceu. Baixo = perdendo espaço por orçamento ou lance baixo."
+                value={k.impressionShare != null ? fmtPercent(k.impressionShare) : "—"}
+                tip="% das buscas em que o anúncio apareceu, de todas em que PODERIA aparecer. Baixo = perdendo espaço por orçamento/lance."
               />
             )}
           </div>
@@ -253,14 +229,18 @@ export async function ChannelPage({
             </Card>
             <Card>
               <CardHeader
-                title="Conversões por dia"
-                subtitle="Leads, WhatsApp e formulários gerados"
+                title={`${convLabel} por dia`}
+                subtitle={
+                  platform === "meta"
+                    ? "Conversas no WhatsApp/Direct iniciadas pelo anúncio"
+                    : "Leads, WhatsApp e formulários gerados"
+                }
               />
               <CardBody>
                 <BarsChart
                   data={byDay}
                   dataKey="conversions"
-                  name="Conversões"
+                  name={convLabel}
                   color={CHART_COLORS.teal}
                   format="int"
                   yFormat="compact"
@@ -289,9 +269,7 @@ export async function ChannelPage({
                     <th className="px-3 py-3 text-right">Cliques</th>
                     <th className="px-3 py-3 text-right">CTR</th>
                     <th className="px-3 py-3 text-right">CPC</th>
-                    <th className="px-3 py-3 text-right">
-                      {platform === "meta" ? "Conversas" : "Conversões"}
-                    </th>
+                    <th className="px-3 py-3 text-right">{convLabel}</th>
                     <th className="px-5 py-3 text-right">Custo/conv.</th>
                   </tr>
                 </thead>
@@ -361,6 +339,33 @@ export async function ChannelPage({
           {extra}
         </>
       )}
+    </div>
+  );
+}
+
+// Métrica de apoio: label + valor numa faixa compacta, com "?" explicativo.
+function MiniStat({ label, value, tip }: { label: string; value: string; tip?: string }) {
+  return (
+    <div className="flex min-w-0 items-baseline gap-2">
+      <span className="eyebrow flex items-center gap-1">
+        {label}
+        {tip && (
+          <span className="group relative inline-flex" tabIndex={0}>
+            <HelpCircle
+              size={12}
+              strokeWidth={2.2}
+              className="cursor-help text-faint/60 transition-colors group-hover:text-brand"
+            />
+            <span
+              role="tooltip"
+              className="pointer-events-none absolute left-1/2 top-[calc(100%+8px)] z-50 w-60 -translate-x-1/2 rounded-lg border border-line bg-surface px-3 py-2 text-[11px] font-normal normal-case leading-snug tracking-normal text-ink opacity-0 shadow-[var(--shadow-pop)] transition-opacity duration-150 group-hover:opacity-100 group-focus:opacity-100"
+            >
+              {tip}
+            </span>
+          </span>
+        )}
+      </span>
+      <span className="text-base font-bold text-ink">{value}</span>
     </div>
   );
 }
