@@ -447,3 +447,46 @@ function filterWebMetrics(rows: WebMetric[], accountExternalId?: string) {
   if (!accountId) return rows;
   return rows.filter((r) => r.accountExternalId === accountId);
 }
+
+// ------------------------- Páginas do site (GA4) ---------------------------
+// kind='landing' = por onde o visitante ENTROU; kind='view' = o que ele VIU.
+
+export type WebPageMetric = {
+  kind: "landing" | "view";
+  page: string;
+  sessions: number;
+  views: number;
+};
+
+export async function getWebPages(
+  range: DateRange,
+  clientId?: string,
+  accountExternalId?: string,
+): Promise<WebPageMetric[]> {
+  if (!isSupabaseConfigured) return [];
+
+  const supabase = await createSupabaseServerClient();
+  const accountId = accountExternalId === "all" ? undefined : accountExternalId;
+  let q = supabase
+    .from("web_pages")
+    .select("kind, page, sessions, views")
+    .gte("date", range.from)
+    .lte("date", range.to)
+    .range(0, MAX_METRIC_ROWS - 1);
+  if (clientId) q = q.eq("client_id", clientId);
+  if (accountId) q = q.eq("account_external_id", accountId);
+
+  const { data, error } = await q;
+  if (error || !data) {
+    logQueryError("getWebPages", error);
+    return [];
+  }
+  return (data as Array<{ kind: "landing" | "view"; page: string; sessions: number | string; views: number | string }>).map(
+    (r) => ({
+      kind: r.kind,
+      page: r.page,
+      sessions: Number(r.sessions),
+      views: Number(r.views),
+    }),
+  );
+}

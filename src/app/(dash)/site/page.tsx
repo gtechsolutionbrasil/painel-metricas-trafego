@@ -7,7 +7,7 @@ import { EmptyState } from "@/components/ui/EmptyState";
 import { TrendAreaChart } from "@/components/charts/TrendAreaChart";
 import { DonutChart } from "@/components/charts/DonutChart";
 import { CHART_COLORS } from "@/components/charts/theme";
-import { getWebMetrics, getClients, resolveClient } from "@/lib/metrics/queries";
+import { getWebMetrics, getWebPages, getClients, resolveClient } from "@/lib/metrics/queries";
 import { webByDay, webBySource, webKpis } from "@/lib/metrics/aggregate";
 import { rangeFromSearch } from "@/lib/range";
 import { fmtCompact, fmtDuration, fmtInt, fmtPercent, fmtDecimal } from "@/lib/format";
@@ -36,10 +36,30 @@ export default async function SitePage({
   const client = resolveClient(clients, sp.client);
   const accountExternalId = Array.isArray(sp.account) ? sp.account[0] : sp.account;
 
-  const web = await getWebMetrics(range, client?.id, accountExternalId);
+  const [web, pages] = await Promise.all([
+    getWebMetrics(range, client?.id, accountExternalId),
+    getWebPages(range, client?.id, accountExternalId),
+  ]);
   const w = webKpis(web);
   const byDay = webByDay(web);
   const sources = webBySource(web);
+
+  // Trajeto (agregado): por onde ENTRARAM (landing) e o que mais VIRAM (views).
+  const topPages = (kind: "landing" | "view") => {
+    const map = new Map<string, number>();
+    for (const p of pages) {
+      if (p.kind !== kind) continue;
+      const v = kind === "landing" ? p.sessions : p.views;
+      map.set(p.page, (map.get(p.page) ?? 0) + v);
+    }
+    const rows = [...map.entries()]
+      .map(([page, value]) => ({ page, value }))
+      .sort((a, b) => b.value - a.value);
+    const total = rows.reduce((s, r) => s + r.value, 0);
+    return { rows: rows.slice(0, 8), total };
+  };
+  const landing = topPages("landing");
+  const viewed = topPages("view");
   const donut = sources
     .slice(0, 6)
     .map((s) => ({ label: friendlyOrigin(s.source, s.medium), value: s.sessions }));
@@ -155,6 +175,26 @@ export default async function SitePage({
         </Card>
       </div>
 
+      {/* Trajeto do visitante (agregado): porta de entrada → o que viu */}
+      {(landing.rows.length > 0 || viewed.rows.length > 0) && (
+        <Card>
+          <CardHeader
+            title="Trajeto no site"
+            subtitle="Esquerda: a PORTA DE ENTRADA (primeira página da visita). Direita: o que mais VIRAM depois. Junte com “De onde vêm as visitas” e o caminho fecha: origem → entrada → páginas."
+          />
+          <div className="grid grid-cols-1 gap-px bg-line md:grid-cols-2">
+            <div className="bg-surface p-4">
+              <p className="eyebrow mb-3">Por onde entraram</p>
+              <PageList rows={landing.rows} total={landing.total} unit="visitas" />
+            </div>
+            <div className="bg-surface p-4">
+              <p className="eyebrow mb-3">Páginas mais vistas</p>
+              <PageList rows={viewed.rows} total={viewed.total} unit="views" />
+            </div>
+          </div>
+        </Card>
+      )}
+
       {/* Tabela de origens em linguagem simples */}
       <Card>
         <CardHeader
@@ -211,5 +251,50 @@ export default async function SitePage({
         </div>
       </Card>
     </div>
+  );
+}
+
+// Lista de páginas com barra de participação (top N + share do total).
+function PageList({
+  rows,
+  total,
+  unit,
+}: {
+  rows: Array<{ page: string; value: number }>;
+  total: number;
+  unit: string;
+}) {
+  if (rows.length === 0) {
+    return (
+      <p className="px-2 py-6 text-center text-xs text-faint">
+        Sem dados no período (coleta diária às 06:00).
+      </p>
+    );
+  }
+  return (
+    <ul className="space-y-3">
+      {rows.map((r) => {
+        const share = total ? r.value / total : 0;
+        return (
+          <li key={r.page}>
+            <div className="flex items-baseline justify-between gap-3">
+              <span className="min-w-0 truncate font-mono text-xs text-ink" title={r.page}>
+                {r.page}
+              </span>
+              <span className="shrink-0 text-xs text-muted">
+                <b className="text-ink">{r.value.toLocaleString("pt-BR")}</b> {unit} ·{" "}
+                {(share * 100).toFixed(1).replace(".", ",")}%
+              </span>
+            </div>
+            <div className="mt-1 h-1.5 rounded-full bg-surface-2">
+              <div
+                className="h-1.5 rounded-full bg-brand"
+                style={{ width: `${Math.max(share * 100, 2)}%` }}
+              />
+            </div>
+          </li>
+        );
+      })}
+    </ul>
   );
 }

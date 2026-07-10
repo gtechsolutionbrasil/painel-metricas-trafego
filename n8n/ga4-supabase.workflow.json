@@ -1,0 +1,292 @@
+{
+  "name": "Painel Métricas — GA4 → Supabase",
+  "nodes": [
+    {
+      "id": "trigger",
+      "name": "Todo dia 06:00",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [0, 0],
+      "parameters": {
+        "rule": { "interval": [{ "field": "cronExpression", "expression": "0 6 * * *" }] }
+      }
+    },
+    {
+      "id": "contas",
+      "name": "Buscar contas GA4",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [220, 0],
+      "parameters": {
+        "method": "GET",
+        "url": "https://oqsjdhrwpmpdrihgbgtx.supabase.co/rest/v1/integration_accounts",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            { "name": "select", "value": "client_id,external_id,account_name" },
+            { "name": "provider", "value": "eq.ga4" },
+            { "name": "status", "value": "neq.paused" }
+          ]
+        },
+        "options": {}
+      },
+      "notes": "Lê o mapa cliente→property GA4 cadastrado na página /clientes do painel.",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "supabaseApi": { "id": "sfp0d2ZkWr7zz5wM", "name": "Supabase - Painel Métricas (service role)" }
+      }
+    },
+    {
+      "id": "report",
+      "name": "GA4 runReport",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [440, 0],
+      "parameters": {
+        "method": "POST",
+        "url": "=https://analyticsdata.googleapis.com/v1beta/properties/{{ $json.external_id }}:runReport",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleAnalyticsOAuth2",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\"dateRanges\":[{\"startDate\":\"7daysAgo\",\"endDate\":\"today\"}],\"dimensions\":[{\"name\":\"date\"},{\"name\":\"sessionSource\"},{\"name\":\"sessionMedium\"}],\"metrics\":[{\"name\":\"sessions\"},{\"name\":\"totalUsers\"},{\"name\":\"screenPageViews\"},{\"name\":\"bounceRate\"},{\"name\":\"averageSessionDuration\"}],\"limit\":\"100000\"}",
+        "options": {}
+      },
+      "notes": "Janela de 7 dias reprocessada a cada execução (upsert absorve ajustes retroativos).",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "googleAnalyticsOAuth2": { "id": "I8evqpJf7UDmKsGB", "name": "Google Analytics account" }
+      }
+    },
+    {
+      "id": "mapear",
+      "name": "Montar linhas web_metrics",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [660, 0],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// 1 item de entrada = resposta do runReport de UMA property GA4.\n// Saída: 1 item com o array `rows` pronto pro upsert em web_metrics.\nconst rows = [];\nfor (let i = 0; i < items.length; i++) {\n  const resp = items[i].json;\n  const conta = $('Buscar contas GA4').itemMatching(i).json;\n  for (const r of resp.rows ?? []) {\n    const d = (r.dimensionValues ?? []).map((v) => v.value);\n    const m = (r.metricValues ?? []).map((v) => Number(v.value) || 0);\n    rows.push({\n      client_id: conta.client_id,\n      account_external_id: String(conta.external_id),\n      // GA4 devolve YYYYMMDD -> YYYY-MM-DD\n      date: `${d[0].slice(0, 4)}-${d[0].slice(4, 6)}-${d[0].slice(6, 8)}`,\n      source: d[1] || '(not set)',\n      medium: d[2] || '(not set)',\n      sessions: Math.round(m[0]),\n      users: Math.round(m[1]),\n      pageviews: Math.round(m[2]),\n      bounce_rate: m[3],\n      avg_duration: m[4],\n    });\n  }\n}\nif (rows.length === 0) {\n  return []; // nada a gravar -> encerra sem chamar o Supabase\n}\nreturn [{ json: { rows, total: rows.length } }];"
+      }
+    },
+    {
+      "id": "upsert",
+      "name": "Upsert web_metrics",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [880, 0],
+      "parameters": {
+        "method": "POST",
+        "url": "https://oqsjdhrwpmpdrihgbgtx.supabase.co/rest/v1/web_metrics",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            { "name": "on_conflict", "value": "client_id,account_external_id,date,source,medium" }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [{ "name": "Prefer", "value": "resolution=merge-duplicates,return=minimal" }]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.rows) }}",
+        "options": {}
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "supabaseApi": { "id": "sfp0d2ZkWr7zz5wM", "name": "Supabase - Painel Métricas (service role)" }
+      }
+    },
+    {
+      "id": "logrun",
+      "name": "Registrar sync_runs",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1100, 0],
+      "parameters": {
+        "method": "POST",
+        "url": "https://oqsjdhrwpmpdrihgbgtx.supabase.co/rest/v1/sync_runs",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [{ "name": "Prefer", "value": "return=minimal" }]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify([{ platform: 'ga4', status: 'success', rows: $('Montar linhas web_metrics').first().json.total, message: 'upsert ok' }]) }}",
+        "options": {}
+      },
+      "credentials": {
+        "supabaseApi": { "id": "sfp0d2ZkWr7zz5wM", "name": "Supabase - Painel Métricas (service role)" }
+      }
+    },
+    {
+      "id": "report-landing",
+      "name": "GA4 Paginas de entrada",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [440, 200],
+      "parameters": {
+        "method": "POST",
+        "url": "=https://analyticsdata.googleapis.com/v1beta/properties/{{ $json.external_id }}:runReport",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleAnalyticsOAuth2",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\"dateRanges\":[{\"startDate\":\"7daysAgo\",\"endDate\":\"today\"}],\"dimensions\":[{\"name\":\"date\"},{\"name\":\"landingPage\"}],\"metrics\":[{\"name\":\"sessions\"}],\"limit\":\"100000\"}",
+        "options": {}
+      },
+      "notes": "Por onde o visitante ENTROU (landing page), por dia.",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "googleAnalyticsOAuth2": { "id": "I8evqpJf7UDmKsGB", "name": "Google Analytics account" }
+      }
+    },
+    {
+      "id": "map-landing",
+      "name": "Montar web_pages entrada",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [660, 200],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// 1 item = resposta runReport (landing pages) de UMA property GA4.\nconst rows = [];\nfor (let i = 0; i < items.length; i++) {\n  const resp = items[i].json;\n  const conta = $('Buscar contas GA4').itemMatching(i).json;\n  for (const r of resp.rows ?? []) {\n    const d = (r.dimensionValues ?? []).map((v) => v.value);\n    const m = (r.metricValues ?? []).map((v) => Number(v.value) || 0);\n    rows.push({\n      client_id: conta.client_id,\n      account_external_id: String(conta.external_id),\n      date: `${d[0].slice(0, 4)}-${d[0].slice(4, 6)}-${d[0].slice(6, 8)}`,\n      kind: 'landing',\n      page: d[1] || '(not set)',\n      sessions: Math.round(m[0]),\n      views: 0,\n    });\n  }\n}\nif (rows.length === 0) return [];\nreturn [{ json: { rows, total: rows.length } }];"
+      }
+    },
+    {
+      "id": "up-landing",
+      "name": "Upsert web_pages entrada",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [880, 200],
+      "onError": "continueRegularOutput",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "parameters": {
+        "method": "POST",
+        "url": "https://oqsjdhrwpmpdrihgbgtx.supabase.co/rest/v1/web_pages",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            { "name": "on_conflict", "value": "client_id,account_external_id,date,kind,page" }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [{ "name": "Prefer", "value": "resolution=merge-duplicates,return=minimal" }]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.rows) }}",
+        "options": {}
+      },
+      "credentials": {
+        "supabaseApi": { "id": "sfp0d2ZkWr7zz5wM", "name": "Supabase - Painel Métricas (service role)" }
+      }
+    },
+    {
+      "id": "report-views",
+      "name": "GA4 Paginas vistas",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [440, 400],
+      "parameters": {
+        "method": "POST",
+        "url": "=https://analyticsdata.googleapis.com/v1beta/properties/{{ $json.external_id }}:runReport",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleAnalyticsOAuth2",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\"dateRanges\":[{\"startDate\":\"7daysAgo\",\"endDate\":\"today\"}],\"dimensions\":[{\"name\":\"date\"},{\"name\":\"pagePath\"}],\"metrics\":[{\"name\":\"screenPageViews\"}],\"limit\":\"100000\"}",
+        "options": {}
+      },
+      "notes": "O que o visitante VIU (views por página), por dia.",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "googleAnalyticsOAuth2": { "id": "I8evqpJf7UDmKsGB", "name": "Google Analytics account" }
+      }
+    },
+    {
+      "id": "map-views",
+      "name": "Montar web_pages vistas",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [660, 400],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// 1 item = resposta runReport (pagePath) de UMA property GA4.\nconst rows = [];\nfor (let i = 0; i < items.length; i++) {\n  const resp = items[i].json;\n  const conta = $('Buscar contas GA4').itemMatching(i).json;\n  for (const r of resp.rows ?? []) {\n    const d = (r.dimensionValues ?? []).map((v) => v.value);\n    const m = (r.metricValues ?? []).map((v) => Number(v.value) || 0);\n    rows.push({\n      client_id: conta.client_id,\n      account_external_id: String(conta.external_id),\n      date: `${d[0].slice(0, 4)}-${d[0].slice(4, 6)}-${d[0].slice(6, 8)}`,\n      kind: 'view',\n      page: d[1] || '(not set)',\n      sessions: 0,\n      views: Math.round(m[0]),\n    });\n  }\n}\nif (rows.length === 0) return [];\nreturn [{ json: { rows, total: rows.length } }];"
+      }
+    },
+    {
+      "id": "up-views",
+      "name": "Upsert web_pages vistas",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [880, 400],
+      "onError": "continueRegularOutput",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "parameters": {
+        "method": "POST",
+        "url": "https://oqsjdhrwpmpdrihgbgtx.supabase.co/rest/v1/web_pages",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            { "name": "on_conflict", "value": "client_id,account_external_id,date,kind,page" }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [{ "name": "Prefer", "value": "resolution=merge-duplicates,return=minimal" }]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.rows) }}",
+        "options": {}
+      },
+      "credentials": {
+        "supabaseApi": { "id": "sfp0d2ZkWr7zz5wM", "name": "Supabase - Painel Métricas (service role)" }
+      }
+    }
+  ],
+  "connections": {
+    "Todo dia 06:00": { "main": [[{ "node": "Buscar contas GA4", "type": "main", "index": 0 }]] },
+    "Buscar contas GA4": {
+      "main": [[
+        { "node": "GA4 runReport", "type": "main", "index": 0 },
+        { "node": "GA4 Paginas de entrada", "type": "main", "index": 0 },
+        { "node": "GA4 Paginas vistas", "type": "main", "index": 0 }
+      ]]
+    },
+    "GA4 runReport": { "main": [[{ "node": "Montar linhas web_metrics", "type": "main", "index": 0 }]] },
+    "Montar linhas web_metrics": { "main": [[{ "node": "Upsert web_metrics", "type": "main", "index": 0 }]] },
+    "Upsert web_metrics": { "main": [[{ "node": "Registrar sync_runs", "type": "main", "index": 0 }]] },
+    "GA4 Paginas de entrada": { "main": [[{ "node": "Montar web_pages entrada", "type": "main", "index": 0 }]] },
+    "Montar web_pages entrada": { "main": [[{ "node": "Upsert web_pages entrada", "type": "main", "index": 0 }]] },
+    "GA4 Paginas vistas": { "main": [[{ "node": "Montar web_pages vistas", "type": "main", "index": 0 }]] },
+    "Montar web_pages vistas": { "main": [[{ "node": "Upsert web_pages vistas", "type": "main", "index": 0 }]] }
+  },
+  "settings": { "executionOrder": "v1", "timezone": "America/Sao_Paulo" }
+}

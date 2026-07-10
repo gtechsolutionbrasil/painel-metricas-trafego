@@ -40,15 +40,17 @@ import {
 type SP = Record<string, string | string[] | undefined>;
 
 // Traduções dos enums do Google Ads pra linguagem do painel.
+// Nomeia a AÇÃO DA PESSOA (verbo) pra não confundir com as conversões, que
+// usam o mesmo vocabulário ("rota", "ligação") em outra lente.
 const CLICK_TYPE_LABEL: Record<string, string> = {
-  HEADLINE: "Anúncio → site",
-  URL_CLICKS: "Link do anúncio → site",
-  SITELINKS: "Link extra do anúncio",
-  CALLS: "Ligação pelo anúncio",
-  MOBILE_CALL_TRACKING: "Ligação (celular)",
-  GET_DIRECTIONS: "Rota traçada no Maps",
-  LOCATION_EXPANSION: "Local no Maps",
-  CROSS_NETWORK: "Rede Google (PMax)",
+  HEADLINE: "Clicou no anúncio → site",
+  URL_CLICKS: "Clicou no link → site",
+  SITELINKS: "Clicou num link extra do anúncio",
+  CALLS: "Tocou pra ligar",
+  MOBILE_CALL_TRACKING: "Tocou pra ligar (celular)",
+  GET_DIRECTIONS: "Pediu rota no Maps",
+  LOCATION_EXPANSION: "Abriu o local no Maps",
+  CROSS_NETWORK: "Anúncio na Rede Google (PMax)",
   PRODUCT_LISTING_AD_CLICKS: "Anúncio de produto",
   OTHER: "Outros",
   UNSPECIFIED: "Outros",
@@ -73,15 +75,17 @@ const MATCH_LABEL: Record<string, string> = {
 };
 
 // Nomes das ações de conversão que o Google entrega em inglês → PT.
+// Também em formato de AÇÃO, e distintos entre si ("chamada completada" ≠
+// "tocou no botão"): eram quase iguais e confundiam a leitura.
 const ACTION_NAME_LABEL: Record<string, string> = {
-  "Local actions - Directions": "Rota no Maps",
-  "Local actions - Other engagements": "Outras ações no Maps",
-  "Local actions - Website visits": "Visita ao site (via Maps)",
-  "Local actions - Calls": "Ligação (perfil do Maps)",
-  "Calls from ads": "Ligações pelo anúncio",
-  "Chamadas a partir de anúncios": "Ligações pelo anúncio",
-  "Clicks to call": "Cliques pra ligar",
-  "Store visits": "Visitas à loja",
+  "Local actions - Directions": "Pediu rota até a loja (Maps)",
+  "Local actions - Other engagements": "Interagiu com o perfil (Maps)",
+  "Local actions - Website visits": "Abriu o site pelo perfil (Maps)",
+  "Local actions - Calls": "Ligou pelo perfil da empresa (Maps)",
+  "Calls from ads": "Ligou pelo anúncio (chamada feita)",
+  "Chamadas a partir de anúncios": "Ligou pelo anúncio (chamada feita)",
+  "Clicks to call": "Tocou no botão de ligar",
+  "Store visits": "Visitou a loja",
 };
 const actionNameLabel = (n: string) => ACTION_NAME_LABEL[n] ?? n;
 
@@ -157,8 +161,8 @@ export async function GoogleInsights({ searchParams }: { searchParams: SP }) {
       {actionGroups.length > 0 && (
         <Card>
           <CardHeader
-            title="Conversões por tipo de contato"
-            subtitle="No seu site (WhatsApp, formulário) x direto no Google (rota no Maps, ligação do anúncio)"
+            title="Contatos gerados — o que o lead fez"
+            subtitle="Só o que conta como conversão. Esquerda: aconteceu no SITE do cliente. Direita: aconteceu DENTRO do Google (perfil da empresa, Maps, ligação do anúncio), sem passar pelo site."
           />
           <div className="grid grid-cols-1 gap-px bg-line md:grid-cols-2">
             {(["site", "google"] as const).map((source) => {
@@ -175,12 +179,18 @@ export async function GoogleInsights({ searchParams }: { searchParams: SP }) {
                           <Search size={15} />
                         )
                       }
-                      rows={g.rows.map((a) => ({
-                        label: actionNameLabel(a.actionName),
-                        sublabel: categoryLabel(a.actionCategory) || null,
-                        value: a.conversions,
-                        share: a.share,
-                      }))}
+                      rows={g.rows.map((a) => {
+                        // Categoria só aparece se acrescentar algo (evita
+                        // "Rota no Maps · Rota no Maps" duplicado).
+                        const label = actionNameLabel(a.actionName);
+                        const cat = categoryLabel(a.actionCategory);
+                        return {
+                          label,
+                          sublabel: cat && !label.toLowerCase().includes(cat.toLowerCase()) ? cat : null,
+                          value: a.conversions,
+                          share: a.share,
+                        };
+                      })}
                       valueLabel="conversões"
                     />
                   ) : (
@@ -201,8 +211,8 @@ export async function GoogleInsights({ searchParams }: { searchParams: SP }) {
       {clickTypes.length > 0 && (
         <Card>
           <CardHeader
-            title="Onde foram os cliques"
-            subtitle="Pra onde cada clique no anúncio levou (site, ligação, Maps...)"
+            title="Pra onde foram os cliques"
+            subtitle="TODOS os cliques no anúncio, por destino — é o topo do funil. Nem todo clique vira contato: os contatos de verdade estão no card acima."
           />
           <ShareList
             icon={<MousePointerClick size={15} />}
