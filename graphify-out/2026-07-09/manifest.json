@@ -35,8 +35,8 @@
     "semantic_hash": ""
   },
   "src/app/(dash)/page.tsx": {
-    "mtime": 1783372928.9449496,
-    "ast_hash": "f08ab610109f6fa6215eaadf7acb5df6",
+    "mtime": 1783646861.1661873,
+    "ast_hash": "422bca64ecf13aa629ca226512e6bb9e",
     "semantic_hash": ""
   },
   "src/app/(dash)/trafego-pago/page.tsx": {
@@ -80,8 +80,8 @@
     "semantic_hash": "31a15f7a3f84c9a7cac2a48458505b3a"
   },
   "src/components/layout/Sidebar.tsx": {
-    "mtime": 1783382224.1234002,
-    "ast_hash": "249b991d00de3cc7f18957db9c31433e",
+    "mtime": 1783646639.7787213,
+    "ast_hash": "00065544769846b7bd4c60bc26be6855",
     "semantic_hash": ""
   },
   "src/components/layout/Topbar.tsx": {
@@ -100,8 +100,8 @@
     "semantic_hash": "bfe7baffe5b1dcfa3966813a3dd09a7c"
   },
   "src/components/ui/KpiCard.tsx": {
-    "mtime": 1783463812.4844651,
-    "ast_hash": "fcc5b3b371640c796bdb57d1e2407425",
+    "mtime": 1783646665.344462,
+    "ast_hash": "39a34a3fb6cc5ec42f3109b1b39c98a1",
     "semantic_hash": ""
   },
   "src/components/ui/PageHeader.tsx": {
@@ -130,8 +130,8 @@
     "semantic_hash": ""
   },
   "src/lib/range.ts": {
-    "mtime": 1783460756.710598,
-    "ast_hash": "005736bcffe495e6a0096104756f7ceb",
+    "mtime": 1783646611.014183,
+    "ast_hash": "c6d5f53c4195396cd711f4a28021f0da",
     "semantic_hash": ""
   },
   "src/lib/supabase/client.ts": {
@@ -315,8 +315,8 @@
     "semantic_hash": ""
   },
   "src/components/pages/ChannelPage.tsx": {
-    "mtime": 1783526094.0752392,
-    "ast_hash": "62a8e5f45fdc727c487c57df5d231ad5",
+    "mtime": 1783646798.004253,
+    "ast_hash": "b0253038a766a04765be8e57bf3cb7de",
     "semantic_hash": ""
   },
   "src/app/(dash)/clientes/DeleteClientButton.tsx": {
@@ -375,13 +375,13 @@
     "semantic_hash": ""
   },
   "n8n/meta-ads-supabase.workflow.json": {
-    "mtime": 1783524072.8969355,
-    "ast_hash": "93d7a076bd6980864c82298eaaeea839",
+    "mtime": 1783646994.4173086,
+    "ast_hash": "522f0952fa275af2602955797b0a8c6e",
     "semantic_hash": ""
   },
   "scripts/build-n8n-meta-workflow.mjs": {
-    "mtime": 1783524058.6614072,
-    "ast_hash": "0ff8fce18002c8f5611c7f7a7ed0970c",
+    "mtime": 1783646980.7800455,
+    "ast_hash": "dddd63ebb28396a79ab93ce486fc8dfb",
     "semantic_hash": ""
   },
   "n8n/README.md": {
@@ -395,8 +395,8 @@
     "semantic_hash": ""
   },
   "src/app/(dash)/actions.ts": {
-    "mtime": 1783456002.9463034,
-    "ast_hash": "81247236df27d019fbef4145db4eac37",
+    "mtime": 1783647075.8311434,
+    "ast_hash": "f3f18e2ea54bfc9df73d55438ab1e8b9",
     "semantic_hash": ""
   },
   "src/components/layout/RefreshButton.tsx": {
@@ -412,6 +412,11 @@
   "n8n/google-ads-supabase.workflow.json": {
     "mtime": 1783525712.3432283,
     "ast_hash": "b14cabc2a44bd89566c601624bcdf8a5",
+    "semantic_hash": ""
+  },
+  ".githooks/pre-commit": {
+    "mtime": 1783647128.9229248,
+    "ast_hash": "5e2068668e2033d250199db6a568df2f",
     "semantic_hash": ""
   }
 }

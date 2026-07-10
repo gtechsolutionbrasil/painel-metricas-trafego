@@ -966,7 +966,7 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "src_app_dash_clientes_page_clientespage",
-      "community": 0,
+      "community": 1,
       "norm_label": "clientespage()"
     },
     {
@@ -1238,6 +1238,16 @@
       "id": "src_app_dash_site_page_sitepage",
       "community": 1,
       "norm_label": "sitepage()"
+    },
+    {
+      "label": "PageList()",
+      "file_type": "code",
+      "source_file": "src/app/(dash)/site/page.tsx",
+      "source_location": "L258",
+      "_origin": "ast",
+      "id": "src_app_dash_site_page_pagelist",
+      "community": 1,
+      "norm_label": "pagelist()"
     },
     {
       "label": "page.tsx",
@@ -1793,7 +1803,7 @@
       "label": "CLICK_TYPE_LABEL",
       "file_type": "code",
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L43",
+      "source_location": "L45",
       "_origin": "ast",
       "id": "src_components_pages_googleinsights_click_type_label",
       "community": 28,
@@ -1803,7 +1813,7 @@
       "label": "CATEGORY_LABEL",
       "file_type": "code",
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L57",
+      "source_location": "L59",
       "_origin": "ast",
       "id": "src_components_pages_googleinsights_category_label",
       "community": 28,
@@ -1813,7 +1823,7 @@
       "label": "MATCH_LABEL",
       "file_type": "code",
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L69",
+      "source_location": "L71",
       "_origin": "ast",
       "id": "src_components_pages_googleinsights_match_label",
       "community": 28,
@@ -1823,7 +1833,7 @@
       "label": "ACTION_NAME_LABEL",
       "file_type": "code",
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L76",
+      "source_location": "L80",
       "_origin": "ast",
       "id": "src_components_pages_googleinsights_action_name_label",
       "community": 28,
@@ -1833,7 +1843,7 @@
       "label": "actionNameLabel()",
       "file_type": "code",
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L86",
+      "source_location": "L90",
       "_origin": "ast",
       "id": "src_components_pages_googleinsights_actionnamelabel",
       "community": 28,
@@ -1843,7 +1853,7 @@
       "label": "prettyEnum()",
       "file_type": "code",
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L89",
+      "source_location": "L93",
       "_origin": "ast",
       "id": "src_components_pages_googleinsights_prettyenum",
       "community": 28,
@@ -1853,7 +1863,7 @@
       "label": "clickTypeLabel()",
       "file_type": "code",
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L94",
+      "source_location": "L98",
       "_origin": "ast",
       "id": "src_components_pages_googleinsights_clicktypelabel",
       "community": 28,
@@ -1863,7 +1873,7 @@
       "label": "categoryLabel()",
       "file_type": "code",
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L95",
+      "source_location": "L99",
       "_origin": "ast",
       "id": "src_components_pages_googleinsights_categorylabel",
       "community": 28,
@@ -1873,7 +1883,7 @@
       "label": "regionLabel()",
       "file_type": "code",
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L98",
+      "source_location": "L102",
       "_origin": "ast",
       "id": "src_components_pages_googleinsights_regionlabel",
       "community": 28,
@@ -1883,7 +1893,7 @@
       "label": "GoogleInsights()",
       "file_type": "code",
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L104",
+      "source_location": "L108",
       "_origin": "ast",
       "id": "src_components_pages_googleinsights_googleinsights",
       "community": 28,
@@ -1893,17 +1903,17 @@
       "label": "SourceHeader()",
       "file_type": "code",
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L448",
+      "source_location": "L458",
       "_origin": "ast",
       "id": "src_components_pages_googleinsights_sourceheader",
-      "community": 28,
+      "community": 1,
       "norm_label": "sourceheader()"
     },
     {
       "label": "ShareList()",
       "file_type": "code",
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L487",
+      "source_location": "L497",
       "_origin": "ast",
       "id": "src_components_pages_googleinsights_sharelist",
       "community": 28,
@@ -2086,7 +2096,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_campaigns",
-      "community": 1,
+      "community": 28,
       "norm_label": "campaigns.ts"
     },
     {
@@ -2096,7 +2106,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_campaigns_sp",
-      "community": 1,
+      "community": 28,
       "norm_label": "sp"
     },
     {
@@ -2106,7 +2116,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "src_lib_campaigns_selectedcampaigns",
-      "community": 1,
+      "community": 28,
       "norm_label": "selectedcampaigns()"
     },
     {
@@ -2296,7 +2306,7 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_conversionsource",
-      "community": 0,
+      "community": 28,
       "norm_label": "conversionsource()"
     },
     {
@@ -2326,7 +2336,7 @@
       "source_location": "L89",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_adbyday",
-      "community": 0,
+      "community": 1,
       "norm_label": "adbyday()"
     },
     {
@@ -2376,7 +2386,7 @@
       "source_location": "L157",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_adbycampaign",
-      "community": 0,
+      "community": 1,
       "norm_label": "adbycampaign()"
     },
     {
@@ -2386,7 +2396,7 @@
       "source_location": "L207",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_webkpis",
-      "community": 1,
+      "community": 0,
       "norm_label": "webkpis"
     },
     {
@@ -2546,7 +2556,7 @@
       "source_location": "L424",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_byconversionactiongrouped",
-      "community": 0,
+      "community": 28,
       "norm_label": "byconversionactiongrouped()"
     },
     {
@@ -2596,7 +2606,7 @@
       "source_location": "L58",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_logqueryerror",
-      "community": 0,
+      "community": 1,
       "norm_label": "logqueryerror()"
     },
     {
@@ -2606,7 +2616,7 @@
       "source_location": "L67",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_getclients",
-      "community": 0,
+      "community": 1,
       "norm_label": "getclients()"
     },
     {
@@ -2616,7 +2626,7 @@
       "source_location": "L89",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_getintegrationaccounts",
-      "community": 0,
+      "community": 1,
       "norm_label": "getintegrationaccounts()"
     },
     {
@@ -2626,7 +2636,7 @@
       "source_location": "L126",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_getadmetrics",
-      "community": 0,
+      "community": 1,
       "norm_label": "getadmetrics()"
     },
     {
@@ -2686,7 +2696,7 @@
       "source_location": "L279",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_getadcampaigns",
-      "community": 0,
+      "community": 1,
       "norm_label": "getadcampaigns()"
     },
     {
@@ -2726,7 +2736,7 @@
       "source_location": "L369",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_getwebmetrics",
-      "community": 0,
+      "community": 1,
       "norm_label": "getwebmetrics()"
     },
     {
@@ -2768,6 +2778,26 @@
       "id": "src_lib_metrics_queries_filterwebmetrics",
       "community": 0,
       "norm_label": "filterwebmetrics()"
+    },
+    {
+      "label": "WebPageMetric",
+      "file_type": "code",
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L454",
+      "_origin": "ast",
+      "id": "src_lib_metrics_queries_webpagemetric",
+      "community": 0,
+      "norm_label": "webpagemetric"
+    },
+    {
+      "label": "getWebPages()",
+      "file_type": "code",
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L461",
+      "_origin": "ast",
+      "id": "src_lib_metrics_queries_getwebpages",
+      "community": 1,
+      "norm_label": "getwebpages()"
     },
     {
       "label": "data.ts",
@@ -3086,7 +3116,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "src_lib_supabase_server_createsupabaseserverclient",
-      "community": 0,
+      "community": 1,
       "norm_label": "createsupabaseserverclient()"
     },
     {
@@ -3156,7 +3186,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_lib_types_client",
-      "community": 5,
+      "community": 0,
       "norm_label": "client"
     },
     {
@@ -3256,7 +3286,7 @@
       "source_location": "L119",
       "_origin": "ast",
       "id": "src_lib_types_conversionsource",
-      "community": 0,
+      "community": 28,
       "norm_label": "conversionsource"
     },
     {
@@ -6363,6 +6393,16 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/app/(dash)/site/page.tsx",
+      "source_location": "L258",
+      "weight": 1.0,
+      "source": "src_app_dash_site_page",
+      "target": "src_app_dash_site_page_pagelist",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/site/page.tsx",
       "source_location": "L28",
       "weight": 1.0,
       "source": "src_app_dash_site_page",
@@ -6706,6 +6746,17 @@
       "source_location": "L10",
       "weight": 1.0,
       "source": "src_app_dash_site_page",
+      "target": "src_lib_metrics_queries_getwebpages",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/(dash)/site/page.tsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "src_app_dash_site_page",
       "target": "src_lib_metrics_queries_resolveclient",
       "confidence_score": 1.0
     },
@@ -6748,7 +6799,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/app/(dash)/site/page.tsx",
-      "source_location": "L97",
+      "source_location": "L117",
       "weight": 1.0,
       "source": "src_app_dash_site_page_sitepage",
       "target": "src_lib_format_fmtcompact"
@@ -6759,7 +6810,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/app/(dash)/site/page.tsx",
-      "source_location": "L102",
+      "source_location": "L122",
       "weight": 1.0,
       "source": "src_app_dash_site_page_sitepage",
       "target": "src_lib_format_fmtdecimal"
@@ -6770,7 +6821,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/app/(dash)/site/page.tsx",
-      "source_location": "L113",
+      "source_location": "L133",
       "weight": 1.0,
       "source": "src_app_dash_site_page_sitepage",
       "target": "src_lib_format_fmtduration"
@@ -6781,7 +6832,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/app/(dash)/site/page.tsx",
-      "source_location": "L85",
+      "source_location": "L105",
       "weight": 1.0,
       "source": "src_app_dash_site_page_sitepage",
       "target": "src_lib_format_fmtint"
@@ -6792,7 +6843,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/app/(dash)/site/page.tsx",
-      "source_location": "L107",
+      "source_location": "L127",
       "weight": 1.0,
       "source": "src_app_dash_site_page_sitepage",
       "target": "src_lib_format_fmtpercent"
@@ -6803,7 +6854,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/app/(dash)/site/page.tsx",
-      "source_location": "L41",
+      "source_location": "L44",
       "weight": 1.0,
       "source": "src_app_dash_site_page_sitepage",
       "target": "src_lib_metrics_aggregate_webbyday"
@@ -6814,7 +6865,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/app/(dash)/site/page.tsx",
-      "source_location": "L42",
+      "source_location": "L45",
       "weight": 1.0,
       "source": "src_app_dash_site_page_sitepage",
       "target": "src_lib_metrics_aggregate_webbysource"
@@ -6836,10 +6887,21 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/app/(dash)/site/page.tsx",
-      "source_location": "L39",
+      "source_location": "L40",
       "weight": 1.0,
       "source": "src_app_dash_site_page_sitepage",
       "target": "src_lib_metrics_queries_getwebmetrics"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/(dash)/site/page.tsx",
+      "source_location": "L41",
+      "weight": 1.0,
+      "source": "src_app_dash_site_page_sitepage",
+      "target": "src_lib_metrics_queries_getwebpages"
     },
     {
       "relation": "calls",
@@ -8347,7 +8409,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L76",
+      "source_location": "L80",
       "weight": 1.0,
       "source": "src_components_pages_googleinsights",
       "target": "src_components_pages_googleinsights_action_name_label",
@@ -8357,7 +8419,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L86",
+      "source_location": "L90",
       "weight": 1.0,
       "source": "src_components_pages_googleinsights",
       "target": "src_components_pages_googleinsights_actionnamelabel",
@@ -8367,7 +8429,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L57",
+      "source_location": "L59",
       "weight": 1.0,
       "source": "src_components_pages_googleinsights",
       "target": "src_components_pages_googleinsights_category_label",
@@ -8377,7 +8439,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L95",
+      "source_location": "L99",
       "weight": 1.0,
       "source": "src_components_pages_googleinsights",
       "target": "src_components_pages_googleinsights_categorylabel",
@@ -8387,7 +8449,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L43",
+      "source_location": "L45",
       "weight": 1.0,
       "source": "src_components_pages_googleinsights",
       "target": "src_components_pages_googleinsights_click_type_label",
@@ -8397,7 +8459,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L94",
+      "source_location": "L98",
       "weight": 1.0,
       "source": "src_components_pages_googleinsights",
       "target": "src_components_pages_googleinsights_clicktypelabel",
@@ -8407,7 +8469,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L104",
+      "source_location": "L108",
       "weight": 1.0,
       "source": "src_components_pages_googleinsights",
       "target": "src_components_pages_googleinsights_googleinsights",
@@ -8417,7 +8479,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L69",
+      "source_location": "L71",
       "weight": 1.0,
       "source": "src_components_pages_googleinsights",
       "target": "src_components_pages_googleinsights_match_label",
@@ -8427,7 +8489,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L89",
+      "source_location": "L93",
       "weight": 1.0,
       "source": "src_components_pages_googleinsights",
       "target": "src_components_pages_googleinsights_prettyenum",
@@ -8437,7 +8499,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L98",
+      "source_location": "L102",
       "weight": 1.0,
       "source": "src_components_pages_googleinsights",
       "target": "src_components_pages_googleinsights_regionlabel",
@@ -8447,7 +8509,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L487",
+      "source_location": "L497",
       "weight": 1.0,
       "source": "src_components_pages_googleinsights",
       "target": "src_components_pages_googleinsights_sharelist",
@@ -8457,7 +8519,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L448",
+      "source_location": "L458",
       "weight": 1.0,
       "source": "src_components_pages_googleinsights",
       "target": "src_components_pages_googleinsights_sourceheader",
@@ -8819,7 +8881,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L96",
+      "source_location": "L100",
       "weight": 1.0,
       "source": "src_components_pages_googleinsights_categorylabel",
       "target": "src_components_pages_googleinsights_prettyenum",
@@ -8830,7 +8892,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L94",
+      "source_location": "L98",
       "weight": 1.0,
       "source": "src_components_pages_googleinsights_clicktypelabel",
       "target": "src_components_pages_googleinsights_prettyenum",
@@ -8842,7 +8904,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L130",
+      "source_location": "L134",
       "weight": 1.0,
       "source": "src_components_pages_googleinsights_googleinsights",
       "target": "src_lib_campaigns_selectedcampaigns"
@@ -8853,7 +8915,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L139",
+      "source_location": "L143",
       "weight": 1.0,
       "source": "src_components_pages_googleinsights_googleinsights",
       "target": "src_lib_metrics_aggregate_byadgroup"
@@ -8864,7 +8926,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L136",
+      "source_location": "L140",
       "weight": 1.0,
       "source": "src_components_pages_googleinsights_googleinsights",
       "target": "src_lib_metrics_aggregate_byclicktype"
@@ -8875,7 +8937,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L137",
+      "source_location": "L141",
       "weight": 1.0,
       "source": "src_components_pages_googleinsights_googleinsights",
       "target": "src_lib_metrics_aggregate_byconversionactiongrouped"
@@ -8886,7 +8948,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L134",
+      "source_location": "L138",
       "weight": 1.0,
       "source": "src_components_pages_googleinsights_googleinsights",
       "target": "src_lib_metrics_aggregate_bykeyword"
@@ -8897,7 +8959,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L135",
+      "source_location": "L139",
       "weight": 1.0,
       "source": "src_components_pages_googleinsights_googleinsights",
       "target": "src_lib_metrics_aggregate_byregion"
@@ -8908,7 +8970,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L138",
+      "source_location": "L142",
       "weight": 1.0,
       "source": "src_components_pages_googleinsights_googleinsights",
       "target": "src_lib_metrics_aggregate_bysearchterm"
@@ -8919,7 +8981,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L113",
+      "source_location": "L117",
       "weight": 1.0,
       "source": "src_components_pages_googleinsights_googleinsights",
       "target": "src_lib_metrics_queries_getadclicktypes"
@@ -8930,7 +8992,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L114",
+      "source_location": "L118",
       "weight": 1.0,
       "source": "src_components_pages_googleinsights_googleinsights",
       "target": "src_lib_metrics_queries_getadconversionactions"
@@ -8941,7 +9003,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L112",
+      "source_location": "L116",
       "weight": 1.0,
       "source": "src_components_pages_googleinsights_googleinsights",
       "target": "src_lib_metrics_queries_getadgeo"
@@ -8952,7 +9014,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L116",
+      "source_location": "L120",
       "weight": 1.0,
       "source": "src_components_pages_googleinsights_googleinsights",
       "target": "src_lib_metrics_queries_getadgroups"
@@ -8963,7 +9025,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L111",
+      "source_location": "L115",
       "weight": 1.0,
       "source": "src_components_pages_googleinsights_googleinsights",
       "target": "src_lib_metrics_queries_getadkeywords"
@@ -8974,7 +9036,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L115",
+      "source_location": "L119",
       "weight": 1.0,
       "source": "src_components_pages_googleinsights_googleinsights",
       "target": "src_lib_metrics_queries_getadsearchterms"
@@ -8985,7 +9047,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L106",
+      "source_location": "L110",
       "weight": 1.0,
       "source": "src_components_pages_googleinsights_googleinsights",
       "target": "src_lib_metrics_queries_getclients"
@@ -8996,7 +9058,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L107",
+      "source_location": "L111",
       "weight": 1.0,
       "source": "src_components_pages_googleinsights_googleinsights",
       "target": "src_lib_metrics_queries_resolveclient"
@@ -9007,7 +9069,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L105",
+      "source_location": "L109",
       "weight": 1.0,
       "source": "src_components_pages_googleinsights_googleinsights",
       "target": "src_lib_range_rangefromsearch"
@@ -9018,7 +9080,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/pages/GoogleInsights.tsx",
-      "source_location": "L480",
+      "source_location": "L490",
       "weight": 1.0,
       "source": "src_components_pages_googleinsights_sourceheader",
       "target": "src_lib_format_fmtint"
@@ -10010,6 +10072,16 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L461",
+      "weight": 1.0,
+      "source": "src_lib_metrics_queries",
+      "target": "src_lib_metrics_queries_getwebpages",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/metrics/queries.ts",
       "source_location": "L58",
       "weight": 1.0,
       "source": "src_lib_metrics_queries",
@@ -10044,6 +10116,16 @@
       "weight": 1.0,
       "source": "src_lib_metrics_queries",
       "target": "src_lib_metrics_queries_webmetricrow",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L454",
+      "weight": 1.0,
+      "source": "src_lib_metrics_queries",
+      "target": "src_lib_metrics_queries_webpagemetric",
       "confidence_score": 1.0
     },
     {
@@ -10369,6 +10451,17 @@
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L481",
+      "weight": 1.0,
+      "source": "src_lib_metrics_queries_getwebpages",
+      "target": "src_lib_metrics_queries_logqueryerror",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/metrics/queries.ts",
       "source_location": "L70",
@@ -10539,6 +10632,17 @@
       "source_location": "L378",
       "weight": 1.0,
       "source": "src_lib_metrics_queries_getwebmetrics",
+      "target": "src_lib_supabase_server_createsupabaseserverclient"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/metrics/queries.ts",
+      "source_location": "L468",
+      "weight": 1.0,
+      "source": "src_lib_metrics_queries_getwebpages",
       "target": "src_lib_supabase_server_createsupabaseserverclient"
     },
     {
@@ -12036,5 +12140,5 @@
       "source_file": "README.md"
     }
   ],
-  "built_at_commit": "a873f36e28d76997cdda232023db21b38a3b3651"
+  "built_at_commit": "7764c93002902707ab6a0e785e6cd247c3a3dc52"
 }

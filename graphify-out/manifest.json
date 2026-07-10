@@ -120,8 +120,8 @@
     "semantic_hash": ""
   },
   "src/lib/metrics/queries.ts": {
-    "mtime": 1783519786.0474637,
-    "ast_hash": "f18ad18bfa061fe8e0a7944063a8dbf5",
+    "mtime": 1783649473.069229,
+    "ast_hash": "6dd9d735aefa615da5bba26128bcd019",
     "semantic_hash": ""
   },
   "src/lib/mock/data.ts": {
@@ -310,8 +310,8 @@
     "semantic_hash": ""
   },
   "src/app/(dash)/site/page.tsx": {
-    "mtime": 1783366480.0994503,
-    "ast_hash": "5c6c18df58f59261225d6df9359c500b",
+    "mtime": 1783649529.3975217,
+    "ast_hash": "9ca40d26c69b354a71043bea1cf7520f",
     "semantic_hash": ""
   },
   "src/components/pages/ChannelPage.tsx": {
@@ -335,8 +335,8 @@
     "semantic_hash": ""
   },
   "src/components/pages/GoogleInsights.tsx": {
-    "mtime": 1783437301.965944,
-    "ast_hash": "689e1322d059d4184132882f1ece30ca",
+    "mtime": 1783649281.4745002,
+    "ast_hash": "5b55f0738aa6f3f7eab82183d2156b84",
     "semantic_hash": ""
   },
   "supabase/migrations/0006_google_ads_breakdowns.sql": {
@@ -415,8 +415,18 @@
     "semantic_hash": ""
   },
   ".githooks/pre-commit": {
-    "mtime": 1783647128.9229248,
-    "ast_hash": "5e2068668e2033d250199db6a568df2f",
+    "mtime": 1783647209.0319157,
+    "ast_hash": "a807d8dc5d459eb9db2ed26f533d073c",
+    "semantic_hash": ""
+  },
+  "n8n/ga4-supabase.workflow.json": {
+    "mtime": 1783649617.2216122,
+    "ast_hash": "7fe432b2f9d0635869d872bf193abf70",
+    "semantic_hash": ""
+  },
+  "supabase/migrations/0011_web_pages.sql": {
+    "mtime": 1783649300.0737066,
+    "ast_hash": "efe4d70d85e0953e1ab6ec05b7842b15",
     "semantic_hash": ""
   }
 }
