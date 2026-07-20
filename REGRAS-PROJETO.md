@@ -461,7 +461,13 @@ dashboard Vercel + Redeploy. O dev local (localhost:3000) reflete tudo.
   (independe do período do topo) + estimativa "dura ~N dias no ritmo atual".
   **Migration 0012 APLICADA em produção** (`integration_accounts.
   balance_recharge` numeric + `balance_recharge_date` date). tsc/eslint/build
-  verdes. `.gitignore` ganhou `.mcp.json`.
+  verdes. `.gitignore` ganhou `.mcp.json`. Também removidos os subtítulos dos
+  cards "Contatos gerados" e "Pra onde foram os cliques" (pedido do usuário).
+  **ATENÇÃO deploy:** pushes de 2026-07-20 NÃO dispararam deploy na Vercel
+  (último deployment registrado no GitHub = `bb9fb99` de 10/07; repo segue
+  público; commit vazio também não disparou) — integração Git da Vercel
+  (conta `guedesints-projects`, fora do CLI) precisa ser verificada no
+  dashboard / Redeploy manual.
 - **2026-07-07 (guia de cadastro de integrações)** — Página Integrações
   (`/clientes`) ganhou checklist operacional para cliente novo: Google Ads
   (vínculo MCC → Customer ID), Meta Ads (Business/conta compartilhada →

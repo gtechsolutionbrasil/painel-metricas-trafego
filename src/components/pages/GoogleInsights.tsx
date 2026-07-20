@@ -173,10 +173,7 @@ export async function GoogleInsights({ searchParams }: { searchParams: SP }) {
           o contraste entre o que vem do site e o que vem do Google. */}
       {actionGroups.length > 0 && (
         <Card>
-          <CardHeader
-            title="Contatos gerados — o que o lead fez"
-            subtitle="Só o que conta como conversão. Esquerda: aconteceu no SITE do cliente. Direita: aconteceu DENTRO do Google (perfil da empresa, Maps, ligação do anúncio), sem passar pelo site."
-          />
+          <CardHeader title="Contatos gerados — o que o lead fez" />
           <div className="grid grid-cols-1 gap-px bg-line md:grid-cols-2">
             {(["site", "google"] as const).map((source) => {
               const g = actionGroups.find((x) => x.source === source);
@@ -223,10 +220,7 @@ export async function GoogleInsights({ searchParams }: { searchParams: SP }) {
       {/* Onde foram os cliques */}
       {clickTypes.length > 0 && (
         <Card>
-          <CardHeader
-            title="Pra onde foram os cliques"
-            subtitle="TODOS os cliques no anúncio, por destino — é o topo do funil. Nem todo clique vira contato: os contatos de verdade estão no card acima."
-          />
+          <CardHeader title="Pra onde foram os cliques" />
           <ShareList
             icon={<MousePointerClick size={15} />}
             rows={clickTypes.map((c) => ({

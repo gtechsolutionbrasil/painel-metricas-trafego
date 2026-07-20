@@ -195,8 +195,8 @@
     "semantic_hash": ""
   },
   "REGRAS-PROJETO.md": {
-    "mtime": 1784546926.943585,
-    "ast_hash": "c70111b590dbaae89bff26b23b7a8453",
+    "mtime": 1784547519.2990477,
+    "ast_hash": "725558edfceb6c4e49bbe5e94f37cd51",
     "semantic_hash": ""
   },
   "docs/ingestao-n8n.md": {
@@ -335,8 +335,8 @@
     "semantic_hash": ""
   },
   "src/components/pages/GoogleInsights.tsx": {
-    "mtime": 1784546545.4971256,
-    "ast_hash": "b6b8f01efc6e4708eb79312069f05e08",
+    "mtime": 1784547383.37531,
+    "ast_hash": "574a758aa7005a2cdfc8f77dc8ce1759",
     "semantic_hash": ""
   },
   "supabase/migrations/0006_google_ads_breakdowns.sql": {
