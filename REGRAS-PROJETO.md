@@ -465,11 +465,12 @@ dashboard Vercel + Redeploy. O dev local (localhost:3000) reflete tudo.
   cards "Contatos gerados" e "Pra onde foram os cliques", e a coluna
   "Conversões" das tabelas "Grupos de anúncios" e "Palavras-chave"
   (pedidos do usuário).
-  **ATENÇÃO deploy:** pushes de 2026-07-20 NÃO dispararam deploy na Vercel
-  (último deployment registrado no GitHub = `bb9fb99` de 10/07; repo segue
-  público; commit vazio também não disparou) — integração Git da Vercel
-  (conta `guedesints-projects`, fora do CLI) precisa ser verificada no
-  dashboard / Redeploy manual.
+  **Deploy RESOLVIDO no mesmo dia:** os pushes não deployavam porque o
+  projeto na Vercel estava **sem repo Git conectado** (desconectou sozinho
+  após 10/07; Overview mostrava botão "Connect Git"). Usuário reconectou em
+  Settings → Git → Connect no repo; commit vazio disparou o build e o deploy
+  `614b947` saiu com **success**. Se voltar a acontecer: conferir o botão
+  "Connect Git" no Overview do projeto (conta `guedesints-projects`).
 - **2026-07-07 (guia de cadastro de integrações)** — Página Integrações
   (`/clientes`) ganhou checklist operacional para cliente novo: Google Ads
   (vínculo MCC → Customer ID), Meta Ads (Business/conta compartilhada →
