@@ -120,8 +120,8 @@
     "semantic_hash": ""
   },
   "src/lib/metrics/queries.ts": {
-    "mtime": 1784546600.134021,
-    "ast_hash": "ebe8068a0a6d2f79b59374d3f878dfaf",
+    "mtime": 1783649473.069229,
+    "ast_hash": "6dd9d735aefa615da5bba26128bcd019",
     "semantic_hash": ""
   },
   "src/lib/mock/data.ts": {
@@ -130,8 +130,8 @@
     "semantic_hash": ""
   },
   "src/lib/range.ts": {
-    "mtime": 1784546608.3898249,
-    "ast_hash": "629ab26b6bc8ff917e37bb2d3982cdb4",
+    "mtime": 1783646611.014183,
+    "ast_hash": "c6d5f53c4195396cd711f4a28021f0da",
     "semantic_hash": ""
   },
   "src/lib/supabase/client.ts": {
@@ -155,8 +155,8 @@
     "semantic_hash": "e120c87497fabf3af25d474aa240d5a1"
   },
   "src/lib/types.ts": {
-    "mtime": 1784546592.2553585,
-    "ast_hash": "e6798f2b736b29926c0f52d336a75e6b",
+    "mtime": 1783519807.4733531,
+    "ast_hash": "91dccd1da8339060f80ebf3a6bda25e1",
     "semantic_hash": ""
   },
   "src/proxy.ts": {
@@ -195,8 +195,8 @@
     "semantic_hash": ""
   },
   "REGRAS-PROJETO.md": {
-    "mtime": 1784546926.943585,
-    "ast_hash": "c70111b590dbaae89bff26b23b7a8453",
+    "mtime": 1783455005.4741306,
+    "ast_hash": "99c63a4428108a00a8c87537f3886b3d",
     "semantic_hash": ""
   },
   "docs/ingestao-n8n.md": {
@@ -270,13 +270,13 @@
     "semantic_hash": ""
   },
   "src/app/(dash)/clientes/actions.ts": {
-    "mtime": 1784546762.7614698,
-    "ast_hash": "3b0726e13a6501baade38b2ea13f6f4b",
+    "mtime": 1783440121.1053774,
+    "ast_hash": "aa82f599f43850c4c70e64f374c6c6a3",
     "semantic_hash": ""
   },
   "src/app/(dash)/clientes/page.tsx": {
-    "mtime": 1784546810.1745706,
-    "ast_hash": "034883223a209f8071c1417aa76a3c42",
+    "mtime": 1783440121.1042802,
+    "ast_hash": "153da1026dd5faf54be0deb1b3030044",
     "semantic_hash": ""
   },
   "supabase/migrations/0004_client_integration_accounts.sql": {
@@ -315,8 +315,8 @@
     "semantic_hash": ""
   },
   "src/components/pages/ChannelPage.tsx": {
-    "mtime": 1784546864.5164087,
-    "ast_hash": "fa98a95e6b10e56d93b358cb43bacecd",
+    "mtime": 1783646798.004253,
+    "ast_hash": "b0253038a766a04765be8e57bf3cb7de",
     "semantic_hash": ""
   },
   "src/app/(dash)/clientes/DeleteClientButton.tsx": {
@@ -335,8 +335,8 @@
     "semantic_hash": ""
   },
   "src/components/pages/GoogleInsights.tsx": {
-    "mtime": 1784546545.4971256,
-    "ast_hash": "b6b8f01efc6e4708eb79312069f05e08",
+    "mtime": 1783649281.4745002,
+    "ast_hash": "5b55f0738aa6f3f7eab82183d2156b84",
     "semantic_hash": ""
   },
   "supabase/migrations/0006_google_ads_breakdowns.sql": {
@@ -427,11 +427,6 @@
   "supabase/migrations/0011_web_pages.sql": {
     "mtime": 1783649300.0737066,
     "ast_hash": "efe4d70d85e0953e1ab6ec05b7842b15",
-    "semantic_hash": ""
-  },
-  "supabase/migrations/0012_account_balance.sql": {
-    "mtime": 1784546555.6518493,
-    "ast_hash": "3bfcceb7420061fb785f2b68d0944004",
     "semantic_hash": ""
   }
 }

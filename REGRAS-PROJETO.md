@@ -448,6 +448,20 @@ dashboard Vercel + Redeploy. O dev local (localhost:3000) reflete tudo.
   `META_GRAPH_API_VERSION` e `META_DATE_PRESET` primeiro do input e depois de
   `$vars` como fallback. Atualizados `n8n/README.md` e
   `docs/ingestao-n8n.md`.
+- **2026-07-20 (linhas ocultas + saldo pré-pago)** — Pedido do usuário: (1)
+  ocultar "por enquanto" 3 linhas do painel Google Ads — "WhatsApp - Clique"
+  (site), "Ligou pelo anúncio (chamada feita)" (Calls from ads) e "Pediu rota
+  no Maps" (GET_DIRECTIONS) — via `HIDDEN_ACTION_NAMES`/`HIDDEN_CLICK_TYPES`
+  no `GoogleInsights.tsx`, filtradas ANTES da agregação (totais e % recalculam;
+  pra reexibir é só tirar do Set). (2) **Card "Saldo disponível na conta"**:
+  a API do Google Ads não expõe saldo de conta pré-paga (boleto/pix), então o
+  admin registra a recarga (valor + data) na coluna nova "Recarga (saldo)" da
+  tabela de Integrações (`setAccountRecharge`, só admin); o `ChannelPage`
+  (Google e Meta) mostra saldo = recarga − gasto do `ad_metrics` desde a data
+  (independe do período do topo) + estimativa "dura ~N dias no ritmo atual".
+  **Migration 0012 APLICADA em produção** (`integration_accounts.
+  balance_recharge` numeric + `balance_recharge_date` date). tsc/eslint/build
+  verdes. `.gitignore` ganhou `.mcp.json`.
 - **2026-07-07 (guia de cadastro de integrações)** — Página Integrações
   (`/clientes`) ganhou checklist operacional para cliente novo: Google Ads
   (vínculo MCC → Customer ID), Meta Ads (Business/conta compartilhada →

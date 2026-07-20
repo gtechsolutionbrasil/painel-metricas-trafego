@@ -14,7 +14,7 @@ import { PageHeader } from "@/components/ui/PageHeader";
 import { getClients, getIntegrationAccounts } from "@/lib/metrics/queries";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
 import type { Client, IntegrationAccount, IntegrationProvider } from "@/lib/types";
-import { createClientWithAccounts } from "./actions";
+import { createClientWithAccounts, setAccountRecharge } from "./actions";
 import { DeleteClientButton } from "./DeleteClientButton";
 
 type SP = Promise<Record<string, string | string[] | undefined>>;
@@ -38,6 +38,7 @@ export default async function ClientesPage({
   ]);
   const created = Array.isArray(sp.created) ? sp.created[0] : sp.created;
   const deleted = Array.isArray(sp.deleted) ? sp.deleted[0] : sp.deleted;
+  const recharge = Array.isArray(sp.recharge) ? sp.recharge[0] : sp.recharge;
   const errorMsg = Array.isArray(sp.error) ? sp.error[0] : sp.error;
 
   return (
@@ -58,6 +59,15 @@ export default async function ClientesPage({
         <div className="flex items-center gap-2 rounded-lg border border-brand-border bg-brand-soft px-4 py-3 text-sm font-semibold text-brand-ink">
           <CheckCircle2 size={17} />
           Cliente excluído: {deleted}
+        </div>
+      )}
+
+      {recharge && (
+        <div className="flex items-center gap-2 rounded-lg border border-brand-border bg-brand-soft px-4 py-3 text-sm font-semibold text-brand-ink">
+          <CheckCircle2 size={17} />
+          {recharge === "cleared"
+            ? "Recarga removida — o card de saldo sai do painel."
+            : "Recarga registrada — o saldo aparece na página do canal."}
         </div>
       )}
 
@@ -387,7 +397,7 @@ function ClientList({
         subtitle={`${clients.length} clientes · ${accounts.length} integrações`}
       />
       <div className="overflow-x-auto">
-        <table className="w-full min-w-[760px] text-sm">
+        <table className="w-full min-w-[1020px] text-sm">
           <thead>
             <tr className="border-b border-line bg-surface-2 text-left text-xs font-semibold uppercase tracking-wide text-faint">
               <th className="px-5 py-3">Cliente</th>
@@ -395,6 +405,7 @@ function ClientList({
               <th className="px-3 py-3">Origem</th>
               <th className="px-3 py-3">ID externo</th>
               <th className="px-3 py-3">Status</th>
+              <th className="px-3 py-3">Recarga (saldo)</th>
               <th className="px-5 py-3 text-right">Ações</th>
             </tr>
           </thead>
@@ -409,7 +420,7 @@ function ClientList({
                     <td className="px-5 py-3 font-semibold text-ink">
                       {client.name}
                     </td>
-                    <td className="px-3 py-3 text-muted" colSpan={3}>
+                    <td className="px-3 py-3 text-muted" colSpan={4}>
                       Nenhuma integração cadastrada
                     </td>
                     <td className="px-3 py-3">
@@ -460,6 +471,9 @@ function ClientList({
                       {statusLabel(account.status)}
                     </Badge>
                   </td>
+                  <td className="px-3 py-3">
+                    <RechargeCell account={account} />
+                  </td>
                   <td className="px-5 py-3">
                     {index === 0 && (
                       <div className="flex justify-end">
@@ -477,6 +491,41 @@ function ClientList({
         </table>
       </div>
     </Card>
+  );
+}
+
+// Recarga manual da conta pré-paga (só faz sentido em conta de anúncio).
+// Valor vazio + salvar = limpa a recarga e tira o card de saldo do painel.
+function RechargeCell({ account }: { account: IntegrationAccount }) {
+  const isAds =
+    account.provider === "google_ads" || account.provider === "meta_ads";
+  if (!isAds) return <span className="text-xs text-faint">—</span>;
+
+  return (
+    <form action={setAccountRecharge} className="flex items-center gap-1.5">
+      <input type="hidden" name="accountId" value={account.id} />
+      <input
+        name="recharge"
+        defaultValue={
+          account.balanceRecharge != null
+            ? account.balanceRecharge.toFixed(2).replace(".", ",")
+            : ""
+        }
+        placeholder="R$ 0,00"
+        className="input h-8 w-24 px-2 text-xs"
+        aria-label="Valor da recarga"
+      />
+      <input
+        type="date"
+        name="rechargeDate"
+        defaultValue={account.balanceRechargeDate ?? ""}
+        className="input h-8 w-[8.5rem] px-2 text-xs"
+        aria-label="Data da recarga"
+      />
+      <button type="submit" className="btn btn-primary h-8 px-2.5 text-xs">
+        Salvar
+      </button>
+    </form>
   );
 }
 

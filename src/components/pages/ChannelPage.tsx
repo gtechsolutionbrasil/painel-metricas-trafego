@@ -5,6 +5,7 @@ import {
   Percent,
   PlugZap,
   Target,
+  Wallet,
 } from "lucide-react";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { KpiCard } from "@/components/ui/KpiCard";
@@ -18,15 +19,23 @@ import {
   getAdCampaigns,
   getAdMetrics,
   getClients,
+  getIntegrationAccounts,
   resolveClient,
 } from "@/lib/metrics/queries";
 import { adByCampaign, adByDay, adKpis } from "@/lib/metrics/aggregate";
 import { selectedCampaigns } from "@/lib/campaigns";
-import { delta, previousRange, rangeFromSearch } from "@/lib/range";
+import {
+  delta,
+  previousRange,
+  rangeDays,
+  rangeFromSearch,
+  rangeSince,
+} from "@/lib/range";
 import {
   fmtCompact,
   fmtCurrency,
   fmtCurrencyCents,
+  fmtDateLong,
   fmtInt,
   fmtPercent,
 } from "@/lib/format";
@@ -62,11 +71,97 @@ export async function ChannelPage({
     ? searchParams.account[0]
     : searchParams.account;
 
-  const [adsAll, adsPrevAll, campaignList] = await Promise.all([
-    getAdMetrics(range, client?.id, [platform], accountExternalId),
-    getAdMetrics(prev, client?.id, [platform], accountExternalId),
-    getAdCampaigns(client?.id, platform),
-  ]);
+  const [adsAll, adsPrevAll, campaignList, integrationAccounts] =
+    await Promise.all([
+      getAdMetrics(range, client?.id, [platform], accountExternalId),
+      getAdMetrics(prev, client?.id, [platform], accountExternalId),
+      getAdCampaigns(client?.id, platform),
+      getIntegrationAccounts(client?.id),
+    ]);
+
+  // Saldo pré-pago: recarga informada em Integrações − gasto desde a data da
+  // recarga (independe do período selecionado no topo — saldo é "agora").
+  const provider = platform === "meta" ? "meta_ads" : "google_ads";
+  const balances = await Promise.all(
+    integrationAccounts
+      .filter(
+        (a) =>
+          a.provider === provider &&
+          a.balanceRecharge != null &&
+          a.balanceRechargeDate != null,
+      )
+      .map(async (a) => {
+        const recharge = a.balanceRecharge as number;
+        const rechargeDate = a.balanceRechargeDate as string;
+        const since = rangeSince(rechargeDate);
+        const rows = await getAdMetrics(since, a.clientId, [platform]);
+        const spent = rows.reduce((s, r) => s + r.spend, 0);
+        const balance = recharge - spent;
+        const dailyAvg = spent / Math.max(1, rangeDays(since));
+        return {
+          id: a.id,
+          accountName: a.accountName,
+          recharge,
+          rechargeDate,
+          spent,
+          balance,
+          daysLeft:
+            balance > 0 && dailyAvg > 0
+              ? Math.floor(balance / dailyAvg)
+              : null,
+        };
+      }),
+  );
+
+  const balanceCard =
+    balances.length > 0 ? (
+      <Card>
+        <CardHeader
+          title="Saldo disponível na conta"
+          subtitle="Recarga informada em Integrações − gasto desde a data da recarga. O gasto atualiza no sync diário."
+          action={
+            <span className="grid h-9 w-9 place-items-center rounded-xl bg-brand-soft text-brand">
+              <Wallet size={17} />
+            </span>
+          }
+        />
+        <div className="divide-y divide-line">
+          {balances.map((b) => (
+            <div
+              key={b.id}
+              className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 px-5 py-4"
+            >
+              <div className="min-w-0">
+                <p className="truncate text-sm font-bold text-ink">
+                  {b.accountName}
+                </p>
+                <p className="text-xs text-faint">
+                  Recarga de {fmtCurrencyCents(b.recharge)} em{" "}
+                  {fmtDateLong(b.rechargeDate)} · gasto desde então{" "}
+                  {fmtCurrencyCents(b.spent)}
+                </p>
+              </div>
+              <div className="text-right">
+                <p
+                  className={`text-2xl font-extrabold ${
+                    b.balance > 0 ? "text-ink" : "text-[#b91c1c]"
+                  }`}
+                >
+                  {fmtCurrencyCents(Math.max(0, b.balance))}
+                </p>
+                <p className="text-xs text-faint">
+                  {b.balance <= 0
+                    ? "recarga esgotada — hora de recarregar"
+                    : b.daysLeft != null
+                      ? `dura ~${fmtInt(b.daysLeft)} dia${b.daysLeft === 1 ? "" : "s"} no ritmo atual`
+                      : "sem gasto desde a recarga"}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </Card>
+    ) : null;
 
   // Lista de campanhas pro filtro: usa o status coletado; se não houver, cai
   // pros nomes que aparecem nas métricas (status desconhecido).
@@ -117,6 +212,7 @@ export async function ChannelPage({
       />
 
       {adsAll.length === 0 ? (
+        <>
         <EmptyState
           icon={PlugZap}
           title={`Ainda não há dados de ${title} neste período`}
@@ -133,6 +229,8 @@ export async function ChannelPage({
             </>
           }
         />
+        {balanceCard}
+        </>
       ) : (
         <>
           {/* Os 4 números que decidem: quanto gastou, o que gerou, a que custo,
@@ -171,6 +269,8 @@ export async function ChannelPage({
               trend={{ value: delta(k.ctr, kPrev.ctr) }}
             />
           </div>
+
+          {balanceCard}
 
           {/* Métricas de apoio, numa faixa só (sem competir com as principais) */}
           <div className="card flex flex-wrap items-center gap-x-8 gap-y-3 px-5 py-4">

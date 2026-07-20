@@ -177,6 +177,73 @@ export async function deleteClient(formData: FormData) {
   redirect(`/clientes?deleted=${encodeURIComponent(clientName)}`);
 }
 
+// Registra (ou limpa) a recarga manual de uma conta de anúncio pré-paga.
+// O painel usa isso pra calcular o saldo: recarga − gasto desde a data.
+export async function setAccountRecharge(formData: FormData) {
+  if (!isSupabaseConfigured) {
+    redirectWithError("Configure o Supabase para registrar recargas.");
+  }
+
+  const accountId = String(formData.get("accountId") ?? "");
+  const rawValue = String(formData.get("recharge") ?? "").trim();
+  const rawDate = String(formData.get("rechargeDate") ?? "").trim();
+  if (!accountId) redirectWithError("Conta inválida.");
+
+  const supabase = await createSupabaseServerClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) redirectWithError("Você precisa estar logado.");
+
+  const { data: profile, error: profileError } = await supabase
+    .from("profiles")
+    .select("role")
+    .eq("id", user.id)
+    .single();
+  if (profileError || profile?.role !== "admin") {
+    redirectWithError("Apenas administradores podem registrar recargas.");
+  }
+
+  let update: {
+    balance_recharge: number | null;
+    balance_recharge_date: string | null;
+  };
+  if (!rawValue) {
+    // Campo de valor vazio = limpar a recarga (o card de saldo some).
+    update = { balance_recharge: null, balance_recharge_date: null };
+  } else {
+    const value = parseCurrencyBR(rawValue);
+    if (!Number.isFinite(value) || value <= 0) {
+      redirectWithError("Valor de recarga inválido. Use algo como 300 ou 300,50.");
+    }
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(rawDate)) {
+      redirectWithError("Informe a data da recarga.");
+    }
+    update = { balance_recharge: value, balance_recharge_date: rawDate };
+  }
+
+  const { error } = await supabase
+    .from("integration_accounts")
+    .update(update)
+    .eq("id", accountId);
+  if (error) redirectWithError(error.message);
+
+  revalidatePath("/clientes");
+  revalidatePath("/google");
+  revalidatePath("/meta");
+  redirect(
+    `/clientes?recharge=${update.balance_recharge == null ? "cleared" : "ok"}`,
+  );
+}
+
+// "R$ 1.234,56" | "300,50" | "300.50" | "300" → número. Com vírgula, pontos
+// são separador de milhar; sem vírgula, ponto é decimal.
+function parseCurrencyBR(raw: string): number {
+  const s = raw.replace(/[R$\s]/g, "");
+  if (s.includes(",")) return Number(s.replace(/\./g, "").replace(",", "."));
+  return Number(s);
+}
+
 function normalizeSlug(value: string) {
   return (
     value

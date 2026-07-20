@@ -99,7 +99,7 @@ export async function getIntegrationAccounts(
   let q = supabase
     .from("integration_accounts")
     .select(
-      "id, client_id, provider, account_name, external_id, status, website_url, last_sync_at",
+      "id, client_id, provider, account_name, external_id, status, website_url, last_sync_at, balance_recharge, balance_recharge_date",
     )
     .order("provider")
     .order("account_name");
@@ -120,6 +120,9 @@ export async function getIntegrationAccounts(
     status: a.status,
     websiteUrl: a.website_url,
     lastSyncAt: a.last_sync_at,
+    balanceRecharge:
+      a.balance_recharge == null ? null : Number(a.balance_recharge),
+    balanceRechargeDate: a.balance_recharge_date,
   }));
 }
 

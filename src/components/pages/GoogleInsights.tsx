@@ -89,6 +89,15 @@ const ACTION_NAME_LABEL: Record<string, string> = {
 };
 const actionNameLabel = (n: string) => ACTION_NAME_LABEL[n] ?? n;
 
+// Linhas ocultas do painel a pedido do usuário (2026-07-20, "por enquanto").
+// Filtradas ANTES da agregação pra totais e participações recalcularem.
+const HIDDEN_ACTION_NAMES = new Set([
+  "WhatsApp - Clique",
+  "Calls from ads",
+  "Chamadas a partir de anúncios",
+]);
+const HIDDEN_CLICK_TYPES = new Set(["GET_DIRECTIONS"]);
+
 // Fallback legível pra enums não mapeados: "SOME_ENUM" -> "Some enum".
 function prettyEnum(value: string) {
   const s = value.replace(/_/g, " ").toLowerCase();
@@ -137,8 +146,12 @@ export async function GoogleInsights({ searchParams }: { searchParams: SP }) {
 
   const keywords = byKeyword(only(keywordsRaw)).slice(0, 15);
   const regions = byRegion(only(geoRaw)).slice(0, 10);
-  const clickTypes = byClickType(only(clickTypesRaw));
-  const actionGroups = byConversionActionGrouped(only(actionsRaw));
+  const clickTypes = byClickType(
+    only(clickTypesRaw).filter((r) => !HIDDEN_CLICK_TYPES.has(r.clickType)),
+  );
+  const actionGroups = byConversionActionGrouped(
+    only(actionsRaw).filter((r) => !HIDDEN_ACTION_NAMES.has(r.actionName)),
+  );
   const searchTerms = bySearchTerm(only(searchTermsRaw)).slice(0, 15);
   const adGroups = byAdGroup(only(groupsRaw));
 

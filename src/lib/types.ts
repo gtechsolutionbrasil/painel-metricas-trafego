@@ -23,6 +23,10 @@ export type IntegrationAccount = {
   status: IntegrationStatus;
   websiteUrl?: string | null;
   lastSyncAt?: string | null;
+  // Recarga manual (conta pré-paga): a API não expõe o saldo, então o valor
+  // entra na página Integrações. Saldo = recarga − gasto desde a data.
+  balanceRecharge?: number | null;
+  balanceRechargeDate?: string | null; // YYYY-MM-DD
 };
 
 export type AdMetric = {

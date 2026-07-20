@@ -1,109 +1,110 @@
-# Graph Report - painel-metricas-trafego  (2026-07-09)
+# Graph Report - painel-metricas-trafego  (2026-07-20)
 
 ## Corpus Check
-- 73 files · ~53,061 words
+- 74 files · ~54,171 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 403 nodes · 760 edges · 32 communities (13 shown, 19 thin omitted)
-- Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
+- 439 nodes · 843 edges · 34 communities (13 shown, 21 thin omitted)
+- Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 2 edges (avg confidence: 0.5)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `7764c930`
+- Built from commit: `bb9fb997`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
-- [[_COMMUNITY_Dependências (package.json)|Dependências (package.json)]]
-- [[_COMMUNITY_Login, Layout & ESLint|Login, Layout & ESLint]]
-- [[_COMMUNITY_Topbar & Camada de dados|Topbar & Camada de dados]]
-- [[_COMMUNITY_Gráficos (Recharts)|Gráficos (Recharts)]]
-- [[_COMMUNITY_TypeScript config|TypeScript config]]
-- [[_COMMUNITY_Community 5|Community 5]]
-- [[_COMMUNITY_Community 6|Community 6]]
-- [[_COMMUNITY_Agregação de métricas|Agregação de métricas]]
-- [[_COMMUNITY_Analytics web & métricas web|Analytics web & métricas web]]
-- [[_COMMUNITY_Root layout (fontes)|Root layout (fontes)]]
-- [[_COMMUNITY_Componente Badge|Componente Badge]]
-- [[_COMMUNITY_Acesso Supabase (queries)|Acesso Supabase (queries)]]
-- [[_COMMUNITY_Next config|Next config]]
-- [[_COMMUNITY_PostCSSTailwind config|PostCSS/Tailwind config]]
-- [[_COMMUNITY_Community 15|Community 15]]
-- [[_COMMUNITY_Community 16|Community 16]]
-- [[_COMMUNITY_Community 17|Community 17]]
-- [[_COMMUNITY_Community 18|Community 18]]
-- [[_COMMUNITY_Community 19|Community 19]]
-- [[_COMMUNITY_Community 21|Community 21]]
-- [[_COMMUNITY_Community 22|Community 22]]
-- [[_COMMUNITY_Community 23|Community 23]]
-- [[_COMMUNITY_Community 24|Community 24]]
-- [[_COMMUNITY_Community 25|Community 25]]
-- [[_COMMUNITY_Community 26|Community 26]]
-- [[_COMMUNITY_Community 27|Community 27]]
-- [[_COMMUNITY_Community 28|Community 28]]
-- [[_COMMUNITY_Community 29|Community 29]]
-- [[_COMMUNITY_Community 30|Community 30]]
-- [[_COMMUNITY_Community 31|Community 31]]
-- [[_COMMUNITY_Community 32|Community 32]]
+- Dependências (package.json)
+- Login, Layout & ESLint
+- Topbar & Camada de dados
+- Gráficos (Recharts)
+- TypeScript config
+- Community 5
+- Community 6
+- Agregação de métricas
+- Analytics web & métricas web
+- Root layout (fontes)
+- Componente Badge
+- eslint.config.mjs
+- Acesso Supabase (queries)
+- Next config
+- PostCSS/Tailwind config
+- Community 15
+- Community 16
+- Community 17
+- Community 18
+- Community 19
+- Community 21
+- Community 22
+- Community 23
+- Community 24
+- Community 25
+- Community 26
+- Community 27
+- Community 28
+- Community 29
+- Community 30
+- Community 31
+- Community 32
+- pre-commit
 
 ## God Nodes (most connected - your core abstractions)
-1. `ChannelPage()` - 18 edges
-2. `GoogleInsights()` - 18 edges
+1. `GoogleInsights()` - 30 edges
+2. `ChannelPage()` - 23 edges
 3. `compilerOptions` - 16 edges
-4. `getClients()` - 15 edges
-5. `rangeFromSearch()` - 14 edges
-6. `OverviewPage()` - 13 edges
-7. `SitePage()` - 13 edges
-8. `formatValue()` - 12 edges
-9. `createSupabaseServerClient()` - 12 edges
-10. `fmtInt()` - 11 edges
+4. `OverviewPage()` - 15 edges
+5. `SitePage()` - 15 edges
+6. `formatValue()` - 15 edges
+7. `getClients()` - 15 edges
+8. `syncAccount()` - 14 edges
+9. `rangeFromSearch()` - 14 edges
+10. `fmtInt()` - 13 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `DashLayout()` --calls--> `getClients()`  [EXTRACTED]
   src/app/(dash)/layout.tsx → src/lib/metrics/queries.ts
-- `createClientWithAccounts()` --calls--> `createSupabaseServerClient()`  [EXTRACTED]
-  src/app/(dash)/clientes/actions.ts → src/lib/supabase/server.ts
-- `deleteClient()` --calls--> `createSupabaseServerClient()`  [EXTRACTED]
-  src/app/(dash)/clientes/actions.ts → src/lib/supabase/server.ts
-- `OverviewPage()` --calls--> `previousRange()`  [EXTRACTED]
-  src/app/(dash)/page.tsx → src/lib/range.ts
-- `OverviewPage()` --calls--> `rangeFromSearch()`  [EXTRACTED]
-  src/app/(dash)/page.tsx → src/lib/range.ts
+- `OverviewPage()` --calls--> `fmtCurrency()`  [EXTRACTED]
+  src/app/(dash)/page.tsx → src/lib/format.ts
+- `OverviewPage()` --calls--> `fmtInt()`  [EXTRACTED]
+  src/app/(dash)/page.tsx → src/lib/format.ts
+- `OverviewPage()` --calls--> `getClients()`  [EXTRACTED]
+  src/app/(dash)/page.tsx → src/lib/metrics/queries.ts
+- `OverviewPage()` --calls--> `resolveClient()`  [EXTRACTED]
+  src/app/(dash)/page.tsx → src/lib/metrics/queries.ts
 
 ## Import Cycles
 - None detected.
 
 ## Hyperedges (group relationships)
-- **Data Ingestion Pipeline** — n8n_workflow, supabase_db, src_app_clientes, docs_ingestao_n8n [EXTRACTED 0.95]
 - **Data Ingestion Flow** — n8n_workflow, google_ads_api, meta_marketing_api, ga4_data_api, supabase_migrations_0001_init [EXTRACTED 1.00]
 - **Dashboard Pages** — src_app_dash_page, src_app_dash_trafego_pago, src_app_dash_analytics, src_app_dash_clientes [EXTRACTED 1.00]
 
-## Communities (32 total, 19 thin omitted)
+## Communities (34 total, 21 thin omitted)
 
 ### Community 0 - "Dependências (package.json)"
 Cohesion: 0.07
-Nodes (46): CampaignFilter(), AdDayPoint, AdGroupRow, CampaignRow, ClickTypeRow, ConversionActionGroup, ConversionActionRow, GeoRow (+38 more)
+Nodes (46): CampaignFilter(), AdDayPoint, AdGroupRow, byConversionActionGrouped(), CampaignRow, ClickTypeRow, ConversionActionGroup, ConversionActionRow (+38 more)
 
 ### Community 1 - "Login, Layout & ESLint"
 Cohesion: 0.07
-Nodes (60): ClientesPage(), SP, OverviewPage(), platformDetail(), SP, cap(), friendlyOrigin(), SitePage() (+52 more)
+Nodes (49): OverviewPage(), platformDetail(), SP, cap(), friendlyOrigin(), SitePage(), SP, BarsChart() (+41 more)
 
 ### Community 2 - "Topbar & Camada de dados"
-Cohesion: 0.19
-Nodes (19): buildMonth(), fmtBR(), iso(), MONTHS, parse(), PeriodPicker(), WEEK, defaultRange() (+11 more)
+Cohesion: 0.14
+Nodes (23): refreshData(), WEBHOOKS, buildMonth(), fmtBR(), iso(), MONTHS, parse(), PeriodPicker() (+15 more)
 
 ### Community 3 - "Gráficos (Recharts)"
-Cohesion: 0.10
-Nodes (19): compilerOptions, allowJs, esModuleInterop, incremental, isolatedModules, jsx, lib, module (+11 more)
+Cohesion: 0.06
+Nodes (30): dom, dom.iterable, esnext, **/*.mts, .next/dev/types/**/*.ts, next-env.d.ts, .next/types/**/*.ts, node_modules (+22 more)
 
 ### Community 4 - "TypeScript config"
 Cohesion: 0.07
-Nodes (28): dependencies, date-fns, lucide-react, next, react, react-dom, recharts, @supabase/ssr (+20 more)
+Nodes (26): eslint, eslint-config-next, devDependencies, eslint, eslint-config-next, tailwindcss, @tailwindcss/postcss, @types/node (+18 more)
 
 ### Community 5 - "Community 5"
-Cohesion: 0.10
-Nodes (16): LoginForm(), safeNextPath(), refreshData(), WEBHOOKS, DashLayout(), GoogleAdsIcon(), IconProps, MetaAdsIcon() (+8 more)
+Cohesion: 0.11
+Nodes (19): date-fns, lucide-react, next, dependencies, date-fns, lucide-react, next, react (+11 more)
 
 ### Community 7 - "Agregação de métricas"
 Cohesion: 0.18
@@ -114,40 +115,40 @@ Cohesion: 0.08
 Nodes (22): `ad_metrics` — Meta Ads + Google Ads, Cadastro no painel x credenciais no n8n, Como gravar (Supabase REST / upsert), Ingestão de dados via n8n, Princípios, `sync_runs` — log (opcional, recomendado), Tabelas e chaves de upsert, `web_metrics` — GA4 (+14 more)
 
 ### Community 28 - "Community 28"
-Cohesion: 0.10
-Nodes (27): SP, ACTION_NAME_LABEL, CATEGORY_LABEL, categoryLabel(), CLICK_TYPE_LABEL, clickTypeLabel(), GoogleInsights(), MATCH_LABEL (+19 more)
+Cohesion: 0.09
+Nodes (37): SP, SP, ChannelPage(), ACTION_NAME_LABEL, actionNameLabel(), CATEGORY_LABEL, categoryLabel(), CLICK_TYPE_LABEL (+29 more)
 
 ### Community 29 - "Community 29"
-Cohesion: 0.08
-Nodes (21): eslintConfig, AccountInput, buildAccounts(), clientSchema, createClientWithAccounts(), deleteClient(), FIELD_LABELS, normalizeMetaAdAccountId() (+13 more)
+Cohesion: 0.05
+Nodes (45): LoginForm(), safeNextPath(), AccountInput, buildAccounts(), clientSchema, createClientWithAccounts(), deleteClient(), FIELD_LABELS (+37 more)
 
 ### Community 30 - "Community 30"
 Cohesion: 0.22
 Nodes (4): META_CRED, root, SUPABASE_CRED, workflow
 
 ### Community 32 - "Community 32"
-Cohesion: 0.13
-Nodes (15): CONVERSION_ACTION_TYPES, dedupeCampaigns(), int(), mergeConversions(), mergeMetrics(), metaGetAll(), money(), num() (+7 more)
+Cohesion: 0.17
+Nodes (20): actionOrigin(), CONVERSION_ACTION_TYPES, dedupeCampaigns(), int(), isConversion(), isRevenue(), mergeConversions(), mergeMetrics() (+12 more)
 
 ## Knowledge Gaps
-- **151 isolated node(s):** `eslintConfig`, `nextConfig`, `name`, `version`, `private` (+146 more)
+- **157 isolated node(s):** `eslintConfig`, `nextConfig`, `name`, `version`, `private` (+152 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **19 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **21 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `getClients()` connect `Login, Layout & ESLint` to `Dependências (package.json)`, `Community 5`, `Community 28`, `Community 29`?**
-  _High betweenness centrality (0.022) - this node is a cross-community bridge._
-- **Why does `rangeFromSearch()` connect `Topbar & Camada de dados` to `Login, Layout & ESLint`, `Community 28`?**
+- **Why does `getClients()` connect `Community 29` to `Dependências (package.json)`, `Login, Layout & ESLint`, `Community 28`?**
+  _High betweenness centrality (0.020) - this node is a cross-community bridge._
+- **Why does `isSupabaseConfigured` connect `Community 29` to `Dependências (package.json)`?**
   _High betweenness centrality (0.015) - this node is a cross-community bridge._
-- **Why does `isSupabaseConfigured` connect `Community 29` to `Dependências (package.json)`, `Community 5`?**
+- **Why does `rangeFromSearch()` connect `Topbar & Camada de dados` to `Login, Layout & ESLint`, `Community 28`?**
   _High betweenness centrality (0.012) - this node is a cross-community bridge._
 - **What connects `eslintConfig`, `nextConfig`, `name` to the rest of the system?**
-  _151 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _157 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Dependências (package.json)` be split into smaller, more focused modules?**
-  _Cohesion score 0.06821480406386067 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.06966618287373004 - nodes in this community are weakly interconnected._
 - **Should `Login, Layout & ESLint` be split into smaller, more focused modules?**
-  _Cohesion score 0.06759259259259259 - nodes in this community are weakly interconnected._
-- **Should `Gráficos (Recharts)` be split into smaller, more focused modules?**
-  _Cohesion score 0.1 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.07462686567164178 - nodes in this community are weakly interconnected._
+- **Should `Topbar & Camada de dados` be split into smaller, more focused modules?**
+  _Cohesion score 0.1354679802955665 - nodes in this community are weakly interconnected._
