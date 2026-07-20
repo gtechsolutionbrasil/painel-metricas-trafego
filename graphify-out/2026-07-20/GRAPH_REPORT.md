@@ -1,7 +1,7 @@
 # Graph Report - painel-metricas-trafego  (2026-07-20)
 
 ## Corpus Check
-- 74 files · ~54,171 words
+- 74 files · ~54,179 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `bb9fb997`
+- Built from commit: `3ade90d3`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 

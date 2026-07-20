@@ -255,8 +255,7 @@ export async function GoogleInsights({ searchParams }: { searchParams: SP }) {
                   <th className="px-3 py-3 text-right">Cliques</th>
                   <th className="px-3 py-3 text-right">CTR</th>
                   <th className="px-3 py-3 text-right">CPC</th>
-                  <th className="px-3 py-3 text-right">Investido</th>
-                  <th className="px-5 py-3 text-right">Conversões</th>
+                  <th className="px-5 py-3 text-right">Investido</th>
                 </tr>
               </thead>
               <tbody>
@@ -280,11 +279,8 @@ export async function GoogleInsights({ searchParams }: { searchParams: SP }) {
                     <td className="px-3 py-3 text-right text-muted">
                       {fmtCurrencyCents(g.cpc)}
                     </td>
-                    <td className="px-3 py-3 text-right text-muted">
+                    <td className="px-5 py-3 text-right text-muted">
                       {fmtCurrency(g.spend)}
-                    </td>
-                    <td className="px-5 py-3 text-right font-semibold text-ink">
-                      {fmtInt(g.conversions)}
                     </td>
                   </tr>
                 ))}
@@ -315,8 +311,7 @@ export async function GoogleInsights({ searchParams }: { searchParams: SP }) {
                   <th className="px-3 py-3 text-right">Impressões</th>
                   <th className="px-3 py-3 text-right">Cliques</th>
                   <th className="px-3 py-3 text-right">CTR</th>
-                  <th className="px-3 py-3 text-right">Investido</th>
-                  <th className="px-5 py-3 text-right">Conversões</th>
+                  <th className="px-5 py-3 text-right">Investido</th>
                 </tr>
               </thead>
               <tbody>
@@ -340,11 +335,8 @@ export async function GoogleInsights({ searchParams }: { searchParams: SP }) {
                     <td className="px-3 py-3 text-right text-muted">
                       {fmtPercent(k.ctr)}
                     </td>
-                    <td className="px-3 py-3 text-right text-muted">
+                    <td className="px-5 py-3 text-right text-muted">
                       {fmtCurrencyCents(k.spend)}
-                    </td>
-                    <td className="px-5 py-3 text-right font-semibold text-ink">
-                      {fmtInt(k.conversions)}
                     </td>
                   </tr>
                 ))}
