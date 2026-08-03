@@ -1,8 +1,13 @@
 import Link from "next/link";
 import "./report.css";
-import { PrintButton } from "./PrintButton";
+import { RelatorioControles } from "./RelatorioControles";
 import { getClients, resolveClient } from "@/lib/metrics/queries";
 import { getReportData, type ReportBar } from "@/lib/report/data";
+import {
+  availableSections,
+  parseHidden,
+  STORAGE_PREFIX,
+} from "@/lib/report/sections";
 import { rangeFromSearch } from "@/lib/range";
 import {
   fmtCurrencyCents,
@@ -61,8 +66,33 @@ export default async function RelatorioPage({
   const maxWeek = Math.max(1, ...data.weeks.map((w) => w.total));
   const totalContatos = data.contactRows.reduce((s, r) => s + r.total, 0);
 
+  // O servidor renderiza tudo que TEM DADO; o que o gestor desligou some por
+  // CSS (data-off), sem recarregar a página a cada clique.
+  const disponiveis = availableSections(data);
+  const mostrar = (id: Parameters<typeof disponiveis.has>[0]) =>
+    disponiveis.has(id);
+  const ocultasIniciais = parseHidden(sp.ocultar);
+  const clienteKey = client?.id ?? "todos";
+
   return (
-    <div className="rel">
+    <div
+      className="rel"
+      data-off={
+        ocultasIniciais.size > 0 ? [...ocultasIniciais].join(" ") : undefined
+      }
+    >
+      {/* Aplica a preferência salva antes do primeiro paint, senão as seções
+          desligadas piscam até a hidratação. Só quando a URL não mandou nada. */}
+      {sp.ocultar === undefined && (
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{var v=localStorage.getItem(${JSON.stringify(
+              `${STORAGE_PREFIX}${clienteKey}`,
+            )});if(v)document.currentScript.parentElement.dataset.off=v.split(",").join(" ")}catch(e){}`,
+          }}
+        />
+      )}
+
       <div className="rel-acoes">
         <span>
           Relatório de <b>{data.clientName}</b> · {fmtDateLong(range.from)} a{" "}
@@ -72,7 +102,12 @@ export default async function RelatorioPage({
           <Link href={voltar} className="rel-btn">
             Voltar ao painel
           </Link>
-          <PrintButton />
+          <RelatorioControles
+            disponiveis={[...disponiveis]}
+            ocultasIniciais={[...ocultasIniciais]}
+            temParamNaUrl={sp.ocultar !== undefined}
+            clienteKey={clienteKey}
+          />
         </span>
       </div>
 
@@ -111,7 +146,7 @@ export default async function RelatorioPage({
           </div>
         ) : (
           <>
-            <div className="rel-titular">
+            <div className="rel-titular" data-secao="destaques">
               <div className="rel-cifra">
                 <span className="rotulo">Total investido</span>
                 <span className="valor">
@@ -146,8 +181,8 @@ export default async function RelatorioPage({
               )}
             </div>
 
-            {data.platforms.length > 1 && (
-              <section className="rel-secao">
+            {mostrar("divisao") && (
+              <section className="rel-secao" data-secao="divisao">
                 <div className="rel-cabeca">
                   <h2>
                     Como o dinheiro foi dividido entre as duas plataformas
@@ -195,8 +230,11 @@ export default async function RelatorioPage({
               </section>
             )}
 
-            {data.weeks.length > 1 && (
-              <section className="rel-secao rel-quebra-antes">
+            {mostrar("semanas") && (
+              <section
+                className="rel-secao rel-quebra-antes"
+                data-secao="semanas"
+              >
                 <div className="rel-cabeca">
                   <h2>Semana a semana</h2>
                   <p>
@@ -252,8 +290,8 @@ export default async function RelatorioPage({
               </section>
             )}
 
-            {google && data.googleCampaigns.length > 0 && (
-              <section className="rel-secao">
+            {mostrar("google") && (
+              <section className="rel-secao" data-secao="google">
                 <div className="rel-cabeca">
                   <h2>Dentro do Google</h2>
                   <p>
@@ -276,8 +314,8 @@ export default async function RelatorioPage({
               </section>
             )}
 
-            {meta && data.metaCampaigns.length > 0 && (
-              <section className="rel-secao">
+            {mostrar("meta") && (
+              <section className="rel-secao" data-secao="meta">
                 <div className="rel-cabeca">
                   <h2>Dentro do Instagram e Facebook</h2>
                   <p>Em que frentes o investimento do Meta foi aplicado.</p>
@@ -289,7 +327,7 @@ export default async function RelatorioPage({
               </section>
             )}
 
-            <section className="rel-secao rel-quebra-antes">
+            <section className="rel-secao rel-quebra-antes" data-secao="caminho">
               <div className="rel-cabeca">
                 <h2>O caminho que a pessoa percorre</h2>
                 <p>
@@ -393,13 +431,15 @@ export default async function RelatorioPage({
               </div>
             </section>
 
-            <section className="rel-secao">
+            <section className="rel-secao" data-grupo="placar contatos">
               <div className="rel-cabeca">
                 <h2>O que esse investimento gerou</h2>
-                <p>Os números do caminho acima, lado a lado.</p>
+                {/* Texto sem referência a outra seção: o gestor pode desligar
+                    o caminho, e a frase não pode passar a mentir. */}
+                <p>Os números do período, lado a lado.</p>
               </div>
 
-              <div className="rel-placar">
+              <div className="rel-placar" data-secao="placar">
                 <div className="celula">
                   <span className="num">{fmtInt(data.totals.impressions)}</span>
                   <span className="desc">
@@ -452,8 +492,8 @@ export default async function RelatorioPage({
                 )}
               </div>
 
-              {data.contactRows.length > 0 && (
-                <div className="rel-tabela-wrap">
+              {mostrar("contatos") && (
+                <div className="rel-tabela-wrap" data-secao="contatos">
                   <table>
                     <caption>Detalhamento dos contatos</caption>
                     <thead>
@@ -500,8 +540,8 @@ export default async function RelatorioPage({
               )}
             </section>
 
-            {data.balances.length > 0 && (
-              <section className="rel-secao">
+            {mostrar("fundos") && (
+              <section className="rel-secao" data-secao="fundos">
                 <div className="rel-cabeca">
                   <h2>Fundos disponíveis nas contas</h2>
                   <p>

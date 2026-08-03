@@ -265,6 +265,22 @@ dashboard Vercel + Redeploy. O dev local (localhost:3000) reflete tudo.
 
 ## Histórico de iterações
 
+- **2026-08-03** — **Escolher o que sai no relatório.** Botão "Seções (n de m)"
+  na barra do `/relatorio` abre a lista de caixas; o que for desmarcado some da
+  tela e do PDF. Decisões que valem lembrar: (1) o servidor renderiza TUDO que
+  tem dado e a ocultação é só CSS (`data-off` na raiz `.rel` + regras
+  `[data-off~="id"] [data-secao="id"]`, fora de qualquer `@media`, para tela e
+  papel baterem) — a primeira versão usava `router.replace` e cada clique
+  re-executava as 5 queries do relatório; (2) guarda-se o que foi **desligado**
+  (`?ocultar=meta,fundos`), nunca o que está ligado, senão uma seção sem dado
+  hoje nasceria desmarcada quando o dado aparecesse; (3) a escolha persiste em
+  `localStorage` por cliente (`relatorio:ocultas:<clientId>`), lida por
+  `useSyncExternalStore` e com um script inline aplicando antes do primeiro
+  paint — a URL sempre vence o navegador; (4) a quebra de página do PDF migra
+  por JS para a próxima seção visível, senão desligar "Semana a semana" levava
+  a quebra junto; (5) `placar` e `contatos` dividem a mesma `<section>`, marcada
+  com `data-grupo`, que só some quando as duas saem. Nada no Supabase.
+
 - **2026-08-03** — **Exportar relatório do cliente pelo painel.** Botão
   "Relatório" na topbar (`ExportReportButton`) abre `/relatorio` em nova aba
   levando o cliente e o período selecionados; lá um botão "Baixar PDF" chama

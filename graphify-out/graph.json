@@ -1535,8 +1535,8 @@
       "source_location": "L244",
       "_origin": "ast",
       "id": "src_app_dash_page_channelsummary",
-      "community": 1,
-      "community_name": "Login, Layout & ESLint",
+      "community": 5,
+      "community_name": "Community 5",
       "norm_label": "channelsummary()"
     },
     {
@@ -1546,8 +1546,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_dash_site_page",
-      "community": 1,
-      "community_name": "Login, Layout & ESLint",
+      "community": 34,
+      "community_name": "getClients",
       "norm_label": "page.tsx"
     },
     {
@@ -1557,8 +1557,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "src_app_dash_site_page_sp",
-      "community": 1,
-      "community_name": "Login, Layout & ESLint",
+      "community": 34,
+      "community_name": "getClients",
       "norm_label": "sp"
     },
     {
@@ -1568,8 +1568,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "src_app_dash_site_page_friendlyorigin",
-      "community": 1,
-      "community_name": "Login, Layout & ESLint",
+      "community": 34,
+      "community_name": "getClients",
       "norm_label": "friendlyorigin()"
     },
     {
@@ -1579,8 +1579,8 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "src_app_dash_site_page_cap",
-      "community": 1,
-      "community_name": "Login, Layout & ESLint",
+      "community": 34,
+      "community_name": "getClients",
       "norm_label": "cap()"
     },
     {
@@ -1590,8 +1590,8 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "src_app_dash_site_page_sitepage",
-      "community": 1,
-      "community_name": "Login, Layout & ESLint",
+      "community": 34,
+      "community_name": "getClients",
       "norm_label": "sitepage()"
     },
     {
@@ -1601,8 +1601,8 @@
       "source_location": "L258",
       "_origin": "ast",
       "id": "src_app_dash_site_page_pagelist",
-      "community": 1,
-      "community_name": "Login, Layout & ESLint",
+      "community": 34,
+      "community_name": "getClients",
       "norm_label": "pagelist()"
     },
     {
@@ -1689,8 +1689,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_relatorio_printbutton",
-      "community": 5,
-      "community_name": "Community 5",
+      "community": 35,
+      "community_name": "page.tsx",
       "norm_label": "printbutton.tsx"
     },
     {
@@ -1700,9 +1700,42 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "src_app_relatorio_printbutton_printbutton",
-      "community": 5,
-      "community_name": "Community 5",
+      "community": 35,
+      "community_name": "page.tsx",
       "norm_label": "printbutton()"
+    },
+    {
+      "label": "RelatorioControles.tsx",
+      "file_type": "code",
+      "source_file": "src/app/relatorio/RelatorioControles.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_app_relatorio_relatoriocontroles",
+      "community": 35,
+      "community_name": "page.tsx",
+      "norm_label": "relatoriocontroles.tsx"
+    },
+    {
+      "label": "subscribeStorage()",
+      "file_type": "code",
+      "source_file": "src/app/relatorio/RelatorioControles.tsx",
+      "source_location": "L23",
+      "_origin": "ast",
+      "id": "src_app_relatorio_relatoriocontroles_subscribestorage",
+      "community": 35,
+      "community_name": "page.tsx",
+      "norm_label": "subscribestorage()"
+    },
+    {
+      "label": "RelatorioControles()",
+      "file_type": "code",
+      "source_file": "src/app/relatorio/RelatorioControles.tsx",
+      "source_location": "L39",
+      "_origin": "ast",
+      "id": "src_app_relatorio_relatoriocontroles_relatoriocontroles",
+      "community": 35,
+      "community_name": "page.tsx",
+      "norm_label": "relatoriocontroles()"
     },
     {
       "label": "page.tsx",
@@ -1711,85 +1744,85 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_relatorio_page",
-      "community": 5,
-      "community_name": "Community 5",
+      "community": 35,
+      "community_name": "page.tsx",
       "norm_label": "page.tsx"
     },
     {
       "label": "metadata",
       "file_type": "code",
       "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L11",
+      "source_location": "L21",
       "_origin": "ast",
       "id": "src_app_relatorio_page_metadata",
-      "community": 5,
-      "community_name": "Community 5",
+      "community": 35,
+      "community_name": "page.tsx",
       "norm_label": "metadata"
     },
     {
       "label": "SP",
       "file_type": "code",
       "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L15",
+      "source_location": "L25",
       "_origin": "ast",
       "id": "src_app_relatorio_page_sp",
-      "community": 5,
-      "community_name": "Community 5",
+      "community": 35,
+      "community_name": "page.tsx",
       "norm_label": "sp"
     },
     {
       "label": "moneyPlain",
       "file_type": "code",
       "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L19",
+      "source_location": "L29",
       "_origin": "ast",
       "id": "src_app_relatorio_page_moneyplain",
-      "community": 5,
-      "community_name": "Community 5",
+      "community": 35,
+      "community_name": "page.tsx",
       "norm_label": "moneyplain"
     },
     {
       "label": "fmtMoneyPlain()",
       "file_type": "code",
       "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L23",
+      "source_location": "L33",
       "_origin": "ast",
       "id": "src_app_relatorio_page_fmtmoneyplain",
-      "community": 1,
-      "community_name": "Login, Layout & ESLint",
+      "community": 35,
+      "community_name": "page.tsx",
       "norm_label": "fmtmoneyplain()"
     },
     {
       "label": "RelatorioPage()",
       "file_type": "code",
       "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L31",
+      "source_location": "L41",
       "_origin": "ast",
       "id": "src_app_relatorio_page_relatoriopage",
-      "community": 1,
-      "community_name": "Login, Layout & ESLint",
+      "community": 35,
+      "community_name": "page.tsx",
       "norm_label": "relatoriopage()"
     },
     {
       "label": "Barras()",
       "file_type": "code",
       "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L520",
+      "source_location": "L603",
       "_origin": "ast",
       "id": "src_app_relatorio_page_barras",
-      "community": 1,
-      "community_name": "Login, Layout & ESLint",
+      "community": 35,
+      "community_name": "page.tsx",
       "norm_label": "barras()"
     },
     {
       "label": "Etapa()",
       "file_type": "code",
       "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L555",
+      "source_location": "L638",
       "_origin": "ast",
       "id": "src_app_relatorio_page_etapa",
-      "community": 5,
-      "community_name": "Community 5",
+      "community": 35,
+      "community_name": "page.tsx",
       "norm_label": "etapa()"
     },
     {
@@ -1997,8 +2030,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "src_components_charts_theme_chart_colors",
-      "community": 1,
-      "community_name": "Login, Layout & ESLint",
+      "community": 34,
+      "community_name": "getClients",
       "norm_label": "chart_colors"
     },
     {
@@ -2481,8 +2514,8 @@
       "source_location": "L457",
       "_origin": "ast",
       "id": "src_components_pages_googleinsights_sourceheader",
-      "community": 1,
-      "community_name": "Login, Layout & ESLint",
+      "community": 35,
+      "community_name": "page.tsx",
       "norm_label": "sourceheader()"
     },
     {
@@ -2492,8 +2525,8 @@
       "source_location": "L496",
       "_origin": "ast",
       "id": "src_components_pages_googleinsights_sharelist",
-      "community": 1,
-      "community_name": "Login, Layout & ESLint",
+      "community": 35,
+      "community_name": "page.tsx",
       "norm_label": "sharelist()"
     },
     {
@@ -2778,8 +2811,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "src_lib_format_fmtcurrency",
-      "community": 28,
-      "community_name": "Community 28",
+      "community": 1,
+      "community_name": "Login, Layout & ESLint",
       "norm_label": "fmtcurrency()"
     },
     {
@@ -2800,8 +2833,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "src_lib_format_fmtint",
-      "community": 1,
-      "community_name": "Login, Layout & ESLint",
+      "community": 35,
+      "community_name": "page.tsx",
       "norm_label": "fmtint()"
     },
     {
@@ -2811,8 +2844,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "src_lib_format_fmtdecimal",
-      "community": 1,
-      "community_name": "Login, Layout & ESLint",
+      "community": 34,
+      "community_name": "getClients",
       "norm_label": "fmtdecimal()"
     },
     {
@@ -2822,8 +2855,8 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "src_lib_format_fmtpercent",
-      "community": 1,
-      "community_name": "Login, Layout & ESLint",
+      "community": 35,
+      "community_name": "page.tsx",
       "norm_label": "fmtpercent()"
     },
     {
@@ -2844,8 +2877,8 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "src_lib_format_fmtcompact",
-      "community": 1,
-      "community_name": "Login, Layout & ESLint",
+      "community": 34,
+      "community_name": "getClients",
       "norm_label": "fmtcompact()"
     },
     {
@@ -2866,8 +2899,8 @@
       "source_location": "L50",
       "_origin": "ast",
       "id": "src_lib_format_fmtdatelong",
-      "community": 1,
-      "community_name": "Login, Layout & ESLint",
+      "community": 35,
+      "community_name": "page.tsx",
       "norm_label": "fmtdatelong()"
     },
     {
@@ -2877,8 +2910,8 @@
       "source_location": "L59",
       "_origin": "ast",
       "id": "src_lib_format_fmtduration",
-      "community": 1,
-      "community_name": "Login, Layout & ESLint",
+      "community": 34,
+      "community_name": "getClients",
       "norm_label": "fmtduration()"
     },
     {
@@ -2910,8 +2943,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate",
-      "community": 28,
-      "community_name": "Community 28",
+      "community": 0,
+      "community_name": "Depend\u00eancias (package.json)",
       "norm_label": "aggregate.ts"
     },
     {
@@ -2921,8 +2954,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_conversionsource",
-      "community": 28,
-      "community_name": "Community 28",
+      "community": 0,
+      "community_name": "Depend\u00eancias (package.json)",
       "norm_label": "conversionsource()"
     },
     {
@@ -2943,8 +2976,8 @@
       "source_location": "L81",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_addaypoint",
-      "community": 28,
-      "community_name": "Community 28",
+      "community": 0,
+      "community_name": "Depend\u00eancias (package.json)",
       "norm_label": "addaypoint"
     },
     {
@@ -2954,8 +2987,8 @@
       "source_location": "L89",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_adbyday",
-      "community": 28,
-      "community_name": "Community 28",
+      "community": 0,
+      "community_name": "Depend\u00eancias (package.json)",
       "norm_label": "adbyday()"
     },
     {
@@ -2965,8 +2998,8 @@
       "source_location": "L104",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_platformbreak",
-      "community": 28,
-      "community_name": "Community 28",
+      "community": 0,
+      "community_name": "Depend\u00eancias (package.json)",
       "norm_label": "platformbreak"
     },
     {
@@ -2976,8 +3009,8 @@
       "source_location": "L113",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_platform_label",
-      "community": 28,
-      "community_name": "Community 28",
+      "community": 0,
+      "community_name": "Depend\u00eancias (package.json)",
       "norm_label": "platform_label"
     },
     {
@@ -2998,8 +3031,8 @@
       "source_location": "L141",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_campaignrow",
-      "community": 28,
-      "community_name": "Community 28",
+      "community": 0,
+      "community_name": "Depend\u00eancias (package.json)",
       "norm_label": "campaignrow"
     },
     {
@@ -3009,8 +3042,8 @@
       "source_location": "L157",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_adbycampaign",
-      "community": 28,
-      "community_name": "Community 28",
+      "community": 0,
+      "community_name": "Depend\u00eancias (package.json)",
       "norm_label": "adbycampaign()"
     },
     {
@@ -3020,8 +3053,8 @@
       "source_location": "L207",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_webkpis",
-      "community": 1,
-      "community_name": "Login, Layout & ESLint",
+      "community": 34,
+      "community_name": "getClients",
       "norm_label": "webkpis"
     },
     {
@@ -3031,8 +3064,8 @@
       "source_location": "L230",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_webdaypoint",
-      "community": 28,
-      "community_name": "Community 28",
+      "community": 0,
+      "community_name": "Depend\u00eancias (package.json)",
       "norm_label": "webdaypoint"
     },
     {
@@ -3042,8 +3075,8 @@
       "source_location": "L232",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_webbyday",
-      "community": 1,
-      "community_name": "Login, Layout & ESLint",
+      "community": 34,
+      "community_name": "getClients",
       "norm_label": "webbyday()"
     },
     {
@@ -3053,8 +3086,8 @@
       "source_location": "L243",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_sourcerow",
-      "community": 28,
-      "community_name": "Community 28",
+      "community": 0,
+      "community_name": "Depend\u00eancias (package.json)",
       "norm_label": "sourcerow"
     },
     {
@@ -3064,8 +3097,8 @@
       "source_location": "L253",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_keywordrow",
-      "community": 28,
-      "community_name": "Community 28",
+      "community": 0,
+      "community_name": "Depend\u00eancias (package.json)",
       "norm_label": "keywordrow"
     },
     {
@@ -3086,8 +3119,8 @@
       "source_location": "L297",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_searchtermrow",
-      "community": 28,
-      "community_name": "Community 28",
+      "community": 0,
+      "community_name": "Depend\u00eancias (package.json)",
       "norm_label": "searchtermrow"
     },
     {
@@ -3108,8 +3141,8 @@
       "source_location": "L330",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_adgrouprow",
-      "community": 28,
-      "community_name": "Community 28",
+      "community": 0,
+      "community_name": "Depend\u00eancias (package.json)",
       "norm_label": "adgrouprow"
     },
     {
@@ -3130,8 +3163,8 @@
       "source_location": "L368",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_georow",
-      "community": 28,
-      "community_name": "Community 28",
+      "community": 0,
+      "community_name": "Depend\u00eancias (package.json)",
       "norm_label": "georow"
     },
     {
@@ -3152,8 +3185,8 @@
       "source_location": "L391",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_clicktyperow",
-      "community": 28,
-      "community_name": "Community 28",
+      "community": 0,
+      "community_name": "Depend\u00eancias (package.json)",
       "norm_label": "clicktyperow"
     },
     {
@@ -3174,8 +3207,8 @@
       "source_location": "L408",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_conversionactionrow",
-      "community": 28,
-      "community_name": "Community 28",
+      "community": 0,
+      "community_name": "Depend\u00eancias (package.json)",
       "norm_label": "conversionactionrow"
     },
     {
@@ -3185,8 +3218,8 @@
       "source_location": "L416",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_conversionactiongroup",
-      "community": 28,
-      "community_name": "Community 28",
+      "community": 0,
+      "community_name": "Depend\u00eancias (package.json)",
       "norm_label": "conversionactiongroup"
     },
     {
@@ -3196,8 +3229,8 @@
       "source_location": "L424",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_byconversionactiongrouped",
-      "community": 28,
-      "community_name": "Community 28",
+      "community": 0,
+      "community_name": "Depend\u00eancias (package.json)",
       "norm_label": "byconversionactiongrouped()"
     },
     {
@@ -3207,8 +3240,8 @@
       "source_location": "L458",
       "_origin": "ast",
       "id": "src_lib_metrics_aggregate_webbysource",
-      "community": 1,
-      "community_name": "Login, Layout & ESLint",
+      "community": 34,
+      "community_name": "getClients",
       "norm_label": "webbysource()"
     },
     {
@@ -3251,8 +3284,8 @@
       "source_location": "L58",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_logqueryerror",
-      "community": 1,
-      "community_name": "Login, Layout & ESLint",
+      "community": 29,
+      "community_name": "Community 29",
       "norm_label": "logqueryerror()"
     },
     {
@@ -3273,8 +3306,8 @@
       "source_location": "L89",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_getintegrationaccounts",
-      "community": 1,
-      "community_name": "Login, Layout & ESLint",
+      "community": 29,
+      "community_name": "Community 29",
       "norm_label": "getintegrationaccounts()"
     },
     {
@@ -3284,8 +3317,8 @@
       "source_location": "L134",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_getadmetrics",
-      "community": 0,
-      "community_name": "Depend\u00eancias (package.json)",
+      "community": 1,
+      "community_name": "Login, Layout & ESLint",
       "norm_label": "getadmetrics()"
     },
     {
@@ -3306,8 +3339,8 @@
       "source_location": "L192",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_getbreakdown",
-      "community": 5,
-      "community_name": "Community 5",
+      "community": 28,
+      "community_name": "Community 28",
       "norm_label": "getbreakdown()"
     },
     {
@@ -3339,8 +3372,8 @@
       "source_location": "L267",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_getadclicktypes",
-      "community": 5,
-      "community_name": "Community 5",
+      "community": 28,
+      "community_name": "Community 28",
       "norm_label": "getadclicktypes()"
     },
     {
@@ -3350,8 +3383,8 @@
       "source_location": "L287",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_getadcampaigns",
-      "community": 1,
-      "community_name": "Login, Layout & ESLint",
+      "community": 29,
+      "community_name": "Community 29",
       "norm_label": "getadcampaigns()"
     },
     {
@@ -3372,8 +3405,8 @@
       "source_location": "L334",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_getadgroups",
-      "community": 5,
-      "community_name": "Community 5",
+      "community": 28,
+      "community_name": "Community 28",
       "norm_label": "getadgroups()"
     },
     {
@@ -3383,8 +3416,8 @@
       "source_location": "L356",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_getadconversionactions",
-      "community": 5,
-      "community_name": "Community 5",
+      "community": 28,
+      "community_name": "Community 28",
       "norm_label": "getadconversionactions()"
     },
     {
@@ -3394,8 +3427,8 @@
       "source_location": "L385",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_getwebmetrics",
-      "community": 1,
-      "community_name": "Login, Layout & ESLint",
+      "community": 29,
+      "community_name": "Community 29",
       "norm_label": "getwebmetrics()"
     },
     {
@@ -3438,8 +3471,8 @@
       "source_location": "L461",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_filterwebmetrics",
-      "community": 1,
-      "community_name": "Login, Layout & ESLint",
+      "community": 29,
+      "community_name": "Community 29",
       "norm_label": "filterwebmetrics()"
     },
     {
@@ -3460,8 +3493,8 @@
       "source_location": "L477",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_getwebpages",
-      "community": 1,
-      "community_name": "Login, Layout & ESLint",
+      "community": 29,
+      "community_name": "Community 29",
       "norm_label": "getwebpages()"
     },
     {
@@ -4103,6 +4136,94 @@
       "norm_label": "clicktypenote()"
     },
     {
+      "label": "sections.ts",
+      "file_type": "code",
+      "source_file": "src/lib/report/sections.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_lib_report_sections",
+      "community": 35,
+      "community_name": "page.tsx",
+      "norm_label": "sections.ts"
+    },
+    {
+      "label": "REPORT_SECTIONS",
+      "file_type": "code",
+      "source_file": "src/lib/report/sections.ts",
+      "source_location": "L13",
+      "_origin": "ast",
+      "id": "src_lib_report_sections_report_sections",
+      "community": 35,
+      "community_name": "page.tsx",
+      "norm_label": "report_sections"
+    },
+    {
+      "label": "SectionId",
+      "file_type": "code",
+      "source_file": "src/lib/report/sections.ts",
+      "source_location": "L70",
+      "_origin": "ast",
+      "id": "src_lib_report_sections_sectionid",
+      "community": 35,
+      "community_name": "page.tsx",
+      "norm_label": "sectionid"
+    },
+    {
+      "label": "ALL_SECTION_IDS",
+      "file_type": "code",
+      "source_file": "src/lib/report/sections.ts",
+      "source_location": "L72",
+      "_origin": "ast",
+      "id": "src_lib_report_sections_all_section_ids",
+      "community": 35,
+      "community_name": "page.tsx",
+      "norm_label": "all_section_ids"
+    },
+    {
+      "label": "VALID",
+      "file_type": "code",
+      "source_file": "src/lib/report/sections.ts",
+      "source_location": "L74",
+      "_origin": "ast",
+      "id": "src_lib_report_sections_valid",
+      "community": 35,
+      "community_name": "page.tsx",
+      "norm_label": "valid"
+    },
+    {
+      "label": "availableSections()",
+      "file_type": "code",
+      "source_file": "src/lib/report/sections.ts",
+      "source_location": "L78",
+      "_origin": "ast",
+      "id": "src_lib_report_sections_availablesections",
+      "community": 35,
+      "community_name": "page.tsx",
+      "norm_label": "availablesections()"
+    },
+    {
+      "label": "parseHidden()",
+      "file_type": "code",
+      "source_file": "src/lib/report/sections.ts",
+      "source_location": "L97",
+      "_origin": "ast",
+      "id": "src_lib_report_sections_parsehidden",
+      "community": 35,
+      "community_name": "page.tsx",
+      "norm_label": "parsehidden()"
+    },
+    {
+      "label": "serializeHidden()",
+      "file_type": "code",
+      "source_file": "src/lib/report/sections.ts",
+      "source_location": "L112",
+      "_origin": "ast",
+      "id": "src_lib_report_sections_serializehidden",
+      "community": 35,
+      "community_name": "page.tsx",
+      "norm_label": "serializehidden()"
+    },
+    {
       "label": "client.ts",
       "file_type": "code",
       "source_file": "src/lib/supabase/client.ts",
@@ -4164,8 +4285,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "src_lib_supabase_server_createsupabaseserverclient",
-      "community": 1,
-      "community_name": "Login, Layout & ESLint",
+      "community": 29,
+      "community_name": "Community 29",
       "norm_label": "createsupabaseserverclient()"
     },
     {
@@ -4351,8 +4472,8 @@
       "source_location": "L135",
       "_origin": "ast",
       "id": "src_lib_types_conversionsource",
-      "community": 28,
-      "community_name": "Community 28",
+      "community": 0,
+      "community_name": "Depend\u00eancias (package.json)",
       "norm_label": "conversionsource"
     },
     {
@@ -8666,17 +8787,6 @@
       "confidence_score": 1.0
     },
     {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L3",
-      "weight": 1.0,
-      "source": "src_app_relatorio_page",
-      "target": "src_app_relatorio_printbutton",
-      "confidence_score": 1.0
-    },
-    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/app/relatorio/PrintButton.tsx",
@@ -8687,6 +8797,125 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/relatorio/RelatorioControles.tsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "src_app_relatorio_relatoriocontroles",
+      "target": "src_app_relatorio_printbutton",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/relatorio/RelatorioControles.tsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "src_app_relatorio_relatoriocontroles",
+      "target": "src_app_relatorio_printbutton_printbutton",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/relatorio/page.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_app_relatorio_page",
+      "target": "src_app_relatorio_relatoriocontroles",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/relatorio/RelatorioControles.tsx",
+      "source_location": "L39",
+      "weight": 1.0,
+      "source": "src_app_relatorio_relatoriocontroles",
+      "target": "src_app_relatorio_relatoriocontroles_relatoriocontroles",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/relatorio/RelatorioControles.tsx",
+      "source_location": "L23",
+      "weight": 1.0,
+      "source": "src_app_relatorio_relatoriocontroles",
+      "target": "src_app_relatorio_relatoriocontroles_subscribestorage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/relatorio/RelatorioControles.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "src_app_relatorio_relatoriocontroles",
+      "target": "src_lib_report_sections",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/relatorio/RelatorioControles.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "src_app_relatorio_relatoriocontroles",
+      "target": "src_lib_report_sections_parsehidden",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/relatorio/RelatorioControles.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "src_app_relatorio_relatoriocontroles",
+      "target": "src_lib_report_sections_report_sections",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/relatorio/RelatorioControles.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "src_app_relatorio_relatoriocontroles",
+      "target": "src_lib_report_sections_sectionid",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/relatorio/RelatorioControles.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "src_app_relatorio_relatoriocontroles",
+      "target": "src_lib_report_sections_serializehidden",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "indirect_call",
+      "context": "argument",
+      "confidence": "INFERRED",
+      "source_file": "src/app/relatorio/RelatorioControles.tsx",
+      "source_location": "L59",
+      "weight": 1.0,
+      "source": "src_app_relatorio_relatoriocontroles_relatoriocontroles",
+      "target": "src_app_relatorio_relatoriocontroles_subscribestorage",
+      "confidence_score": 0.5
+    },
+    {
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -8694,14 +8923,36 @@
       "source_location": "L3",
       "weight": 1.0,
       "source": "src_app_relatorio_page",
-      "target": "src_app_relatorio_printbutton_printbutton",
+      "target": "src_app_relatorio_relatoriocontroles_relatoriocontroles",
       "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/relatorio/RelatorioControles.tsx",
+      "source_location": "L78",
+      "weight": 1.0,
+      "source": "src_app_relatorio_relatoriocontroles_relatoriocontroles",
+      "target": "src_lib_report_sections_parsehidden"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/relatorio/RelatorioControles.tsx",
+      "source_location": "L133",
+      "weight": 1.0,
+      "source": "src_app_relatorio_relatoriocontroles_relatoriocontroles",
+      "target": "src_lib_report_sections_serializehidden"
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L520",
+      "source_location": "L603",
       "weight": 1.0,
       "source": "src_app_relatorio_page",
       "target": "src_app_relatorio_page_barras",
@@ -8711,7 +8962,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L555",
+      "source_location": "L638",
       "weight": 1.0,
       "source": "src_app_relatorio_page",
       "target": "src_app_relatorio_page_etapa",
@@ -8721,7 +8972,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L23",
+      "source_location": "L33",
       "weight": 1.0,
       "source": "src_app_relatorio_page",
       "target": "src_app_relatorio_page_fmtmoneyplain",
@@ -8731,7 +8982,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L11",
+      "source_location": "L21",
       "weight": 1.0,
       "source": "src_app_relatorio_page",
       "target": "src_app_relatorio_page_metadata",
@@ -8741,7 +8992,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L19",
+      "source_location": "L29",
       "weight": 1.0,
       "source": "src_app_relatorio_page",
       "target": "src_app_relatorio_page_moneyplain",
@@ -8751,7 +9002,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L31",
+      "source_location": "L41",
       "weight": 1.0,
       "source": "src_app_relatorio_page",
       "target": "src_app_relatorio_page_relatoriopage",
@@ -8761,7 +9012,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L15",
+      "source_location": "L25",
       "weight": 1.0,
       "source": "src_app_relatorio_page",
       "target": "src_app_relatorio_page_sp",
@@ -8772,7 +9023,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L7",
+      "source_location": "L12",
       "weight": 1.0,
       "source": "src_app_relatorio_page",
       "target": "src_lib_format",
@@ -8783,7 +9034,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L7",
+      "source_location": "L12",
       "weight": 1.0,
       "source": "src_app_relatorio_page",
       "target": "src_lib_format_fmtcurrencycents",
@@ -8794,7 +9045,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L7",
+      "source_location": "L12",
       "weight": 1.0,
       "source": "src_app_relatorio_page",
       "target": "src_lib_format_fmtdatelong",
@@ -8805,7 +9056,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L7",
+      "source_location": "L12",
       "weight": 1.0,
       "source": "src_app_relatorio_page",
       "target": "src_lib_format_fmtint",
@@ -8816,7 +9067,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L7",
+      "source_location": "L12",
       "weight": 1.0,
       "source": "src_app_relatorio_page",
       "target": "src_lib_format_fmtpercent",
@@ -8860,7 +9111,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L6",
+      "source_location": "L11",
       "weight": 1.0,
       "source": "src_app_relatorio_page",
       "target": "src_lib_range",
@@ -8871,7 +9122,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L6",
+      "source_location": "L11",
       "weight": 1.0,
       "source": "src_app_relatorio_page",
       "target": "src_lib_range_rangefromsearch",
@@ -8911,11 +9162,44 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/relatorio/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_app_relatorio_page",
+      "target": "src_lib_report_sections",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/relatorio/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_app_relatorio_page",
+      "target": "src_lib_report_sections_availablesections",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/relatorio/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_app_relatorio_page",
+      "target": "src_lib_report_sections_parsehidden",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L199",
+      "source_location": "L255",
       "weight": 1.0,
       "source": "src_app_relatorio_page_relatoriopage",
       "target": "src_app_relatorio_page_fmtmoneyplain",
@@ -8927,7 +9211,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L107",
+      "source_location": "L153",
       "weight": 1.0,
       "source": "src_app_relatorio_page_relatoriopage",
       "target": "src_lib_format_fmtcurrencycents"
@@ -8938,7 +9222,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L59",
+      "source_location": "L98",
       "weight": 1.0,
       "source": "src_app_relatorio_page_relatoriopage",
       "target": "src_lib_format_fmtdatelong"
@@ -8949,7 +9233,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L89",
+      "source_location": "L134",
       "weight": 1.0,
       "source": "src_app_relatorio_page_relatoriopage",
       "target": "src_lib_format_fmtint"
@@ -8960,7 +9244,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L152",
+      "source_location": "L205",
       "weight": 1.0,
       "source": "src_app_relatorio_page_relatoriopage",
       "target": "src_lib_format_fmtpercent"
@@ -8971,7 +9255,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L38",
+      "source_location": "L48",
       "weight": 1.0,
       "source": "src_app_relatorio_page_relatoriopage",
       "target": "src_lib_metrics_queries_getclients"
@@ -8982,7 +9266,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L39",
+      "source_location": "L49",
       "weight": 1.0,
       "source": "src_app_relatorio_page_relatoriopage",
       "target": "src_lib_metrics_queries_resolveclient"
@@ -8993,7 +9277,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L37",
+      "source_location": "L47",
       "weight": 1.0,
       "source": "src_app_relatorio_page_relatoriopage",
       "target": "src_lib_range_rangefromsearch"
@@ -9004,7 +9288,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L40",
+      "source_location": "L50",
       "weight": 1.0,
       "source": "src_app_relatorio_page_relatoriopage",
       "target": "src_lib_report_data_getreportdata"
@@ -9015,7 +9299,29 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L539",
+      "source_location": "L71",
+      "weight": 1.0,
+      "source": "src_app_relatorio_page_relatoriopage",
+      "target": "src_lib_report_sections_availablesections"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/relatorio/page.tsx",
+      "source_location": "L74",
+      "weight": 1.0,
+      "source": "src_app_relatorio_page_relatoriopage",
+      "target": "src_lib_report_sections_parsehidden"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/relatorio/page.tsx",
+      "source_location": "L622",
       "weight": 1.0,
       "source": "src_app_relatorio_page_barras",
       "target": "src_lib_format_fmtcurrencycents"
@@ -9026,7 +9332,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L539",
+      "source_location": "L622",
       "weight": 1.0,
       "source": "src_app_relatorio_page_barras",
       "target": "src_lib_format_fmtint"
@@ -9037,7 +9343,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L540",
+      "source_location": "L623",
       "weight": 1.0,
       "source": "src_app_relatorio_page_barras",
       "target": "src_lib_format_fmtpercent"
@@ -14180,6 +14486,28 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/report/sections.ts",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "src_lib_report_sections",
+      "target": "src_lib_report_data",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/report/sections.ts",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "src_lib_report_sections",
+      "target": "src_lib_report_data_reportdata",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
@@ -14524,6 +14852,87 @@
       "source": "src_lib_report_labels_adgroupnote",
       "target": "src_lib_report_labels_key",
       "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/report/sections.ts",
+      "source_location": "L72",
+      "weight": 1.0,
+      "source": "src_lib_report_sections",
+      "target": "src_lib_report_sections_all_section_ids",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/report/sections.ts",
+      "source_location": "L78",
+      "weight": 1.0,
+      "source": "src_lib_report_sections",
+      "target": "src_lib_report_sections_availablesections",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/report/sections.ts",
+      "source_location": "L97",
+      "weight": 1.0,
+      "source": "src_lib_report_sections",
+      "target": "src_lib_report_sections_parsehidden",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/report/sections.ts",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "src_lib_report_sections",
+      "target": "src_lib_report_sections_report_sections",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/report/sections.ts",
+      "source_location": "L70",
+      "weight": 1.0,
+      "source": "src_lib_report_sections",
+      "target": "src_lib_report_sections_sectionid",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/report/sections.ts",
+      "source_location": "L112",
+      "weight": 1.0,
+      "source": "src_lib_report_sections",
+      "target": "src_lib_report_sections_serializehidden",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/report/sections.ts",
+      "source_location": "L74",
+      "weight": 1.0,
+      "source": "src_lib_report_sections",
+      "target": "src_lib_report_sections_valid",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/report/sections.ts",
+      "source_location": "L106",
+      "weight": 1.0,
+      "source": "src_lib_report_sections_parsehidden",
+      "target": "src_lib_report_sections_valid"
     },
     {
       "relation": "contains",
@@ -15535,5 +15944,5 @@
       "source_file": "README.md"
     }
   ],
-  "built_at_commit": "ed8c476364d134fe339902a690c795848ae8fbca"
+  "built_at_commit": "9a4ad9fe9ef74aad00a24222fe1adb94192de242"
 }

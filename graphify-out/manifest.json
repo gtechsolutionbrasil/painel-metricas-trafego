@@ -195,8 +195,8 @@
     "semantic_hash": ""
   },
   "REGRAS-PROJETO.md": {
-    "mtime": 1785773818.0642753,
-    "ast_hash": "eab88ebce7237534072760de83cf2f14",
+    "mtime": 1785775849.4471033,
+    "ast_hash": "5b660782b6c1d6f627b21020d64e1a6a",
     "semantic_hash": ""
   },
   "docs/ingestao-n8n.md": {
@@ -440,13 +440,13 @@
     "semantic_hash": ""
   },
   "src/app/relatorio/PrintButton.tsx": {
-    "mtime": 1785773246.8922067,
-    "ast_hash": "cd512f7c3a244ac14186a5f2b259f46e",
+    "mtime": 1785775208.580489,
+    "ast_hash": "a41bdfb5f2b83893b4404279b309d7d8",
     "semantic_hash": ""
   },
   "src/app/relatorio/page.tsx": {
-    "mtime": 1785773779.7188132,
-    "ast_hash": "25bc90b1e07aa1164a267a3d0f9d1fe1",
+    "mtime": 1785775277.8541415,
+    "ast_hash": "eab3923eafc9ae970e5cc8cb080a7089",
     "semantic_hash": ""
   },
   "src/components/layout/ExportReportButton.tsx": {
@@ -462,6 +462,16 @@
   "src/lib/report/labels.ts": {
     "mtime": 1785773395.5101726,
     "ast_hash": "7a8f5b9c673819511d23ace0cdab554f",
+    "semantic_hash": ""
+  },
+  "src/app/relatorio/RelatorioControles.tsx": {
+    "mtime": 1785775406.6754816,
+    "ast_hash": "1acd1f38b0b9d520e259d693429c57f5",
+    "semantic_hash": ""
+  },
+  "src/lib/report/sections.ts": {
+    "mtime": 1785775108.1442783,
+    "ast_hash": "2b99ef4da29956988390aba819ff99e0",
     "semantic_hash": ""
   }
 }
