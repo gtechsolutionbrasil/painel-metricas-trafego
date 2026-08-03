@@ -4,7 +4,12 @@ import { PrintButton } from "./PrintButton";
 import { getClients, resolveClient } from "@/lib/metrics/queries";
 import { getReportData, type ReportBar } from "@/lib/report/data";
 import { rangeFromSearch } from "@/lib/range";
-import { fmtCurrencyCents, fmtDateLong, fmtInt, fmtPercent } from "@/lib/format";
+import {
+  fmtCurrencyCents,
+  fmtDateLong,
+  fmtInt,
+  fmtPercent,
+} from "@/lib/format";
 
 export const dynamic = "force-dynamic";
 
@@ -37,7 +42,11 @@ export default async function RelatorioPage({
   const { range } = rangeFromSearch(sp);
   const clients = await getClients();
   const client = resolveClient(clients, sp.client);
-  const data = await getReportData(range, client?.id, client?.name ?? "Todos os clientes");
+  const data = await getReportData(
+    range,
+    client?.id,
+    client?.name ?? "Todos os clientes",
+  );
 
   // Volta pro painel com o mesmo cliente e período que geraram o relatório.
   const voltarParams = new URLSearchParams();
@@ -83,7 +92,8 @@ export default async function RelatorioPage({
           </p>
           <div className="rel-periodo">
             <span>
-              <b>Período:</b> {fmtDateLong(range.from)} a {fmtDateLong(range.to)}
+              <b>Período:</b> {fmtDateLong(range.from)} a{" "}
+              {fmtDateLong(range.to)}
             </span>
             <span>
               <b>{fmtInt(data.days)} dias</b>
@@ -104,7 +114,9 @@ export default async function RelatorioPage({
             <div className="rel-titular">
               <div className="rel-cifra">
                 <span className="rotulo">Total investido</span>
-                <span className="valor">{fmtCurrencyCents(data.totals.spend)}</span>
+                <span className="valor">
+                  {fmtCurrencyCents(data.totals.spend)}
+                </span>
                 <span className="nota">
                   Valor pago às plataformas pelos anúncios no período.
                 </span>
@@ -112,17 +124,21 @@ export default async function RelatorioPage({
               {data.totals.contacts > 0 && (
                 <div className="rel-cifra">
                   <span className="rotulo">Contatos diretos</span>
-                  <span className="valor verde">{fmtInt(data.totals.contacts)}</span>
+                  <span className="valor verde">
+                    {fmtInt(data.totals.contacts)}
+                  </span>
                   <span className="nota">
-                    Pessoas que chamaram no WhatsApp ou ligaram para a loja vindas
-                    dos anúncios.
+                    Pessoas que chamaram no WhatsApp ou ligaram para a loja
+                    vindas dos anúncios.
                   </span>
                 </div>
               )}
               {data.totals.directions > 0 && (
                 <div className="rel-cifra">
                   <span className="rotulo">Quiseram ir até a loja</span>
-                  <span className="valor">{fmtInt(data.totals.directions)}</span>
+                  <span className="valor">
+                    {fmtInt(data.totals.directions)}
+                  </span>
                   <span className="nota">
                     Pessoas que pediram a rota até o endereço.
                   </span>
@@ -133,12 +149,14 @@ export default async function RelatorioPage({
             {data.platforms.length > 1 && (
               <section className="rel-secao">
                 <div className="rel-cabeca">
-                  <h2>Como o dinheiro foi dividido entre as duas plataformas</h2>
+                  <h2>
+                    Como o dinheiro foi dividido entre as duas plataformas
+                  </h2>
                   <p>
                     O Google alcança quem <em>já está procurando</em> agora. O
                     Instagram e o Facebook alcançam quem{" "}
-                    <em>ainda não estava procurando</em>, mas mora na região. São
-                    dois momentos diferentes do mesmo cliente.
+                    <em>ainda não estava procurando</em>, mas mora na região.
+                    São dois momentos diferentes do mesmo cliente.
                   </p>
                 </div>
 
@@ -204,13 +222,17 @@ export default async function RelatorioPage({
                           {w.google > 0 && (
                             <div
                               className="seg-google"
-                              style={{ height: `${(w.google / (w.total || 1)) * 100}%` }}
+                              style={{
+                                height: `${(w.google / (w.total || 1)) * 100}%`,
+                              }}
                             />
                           )}
                           {w.meta > 0 && (
                             <div
                               className="seg-meta"
-                              style={{ height: `${(w.meta / (w.total || 1)) * 100}%` }}
+                              style={{
+                                height: `${(w.meta / (w.total || 1)) * 100}%`,
+                              }}
                             />
                           )}
                         </div>
@@ -239,7 +261,9 @@ export default async function RelatorioPage({
                     as pessoas procuravam.
                   </p>
                 </div>
-                <h3 className="rel-subtitulo">Divisão do investimento no Google</h3>
+                <h3 className="rel-subtitulo">
+                  Divisão do investimento no Google
+                </h3>
                 <Barras itens={data.googleCampaigns} moeda />
                 {data.googleAdGroups.length > 1 && (
                   <>
@@ -258,7 +282,9 @@ export default async function RelatorioPage({
                   <h2>Dentro do Instagram e Facebook</h2>
                   <p>Em que frentes o investimento do Meta foi aplicado.</p>
                 </div>
-                <h3 className="rel-subtitulo meta">Divisão do investimento no Meta</h3>
+                <h3 className="rel-subtitulo meta">
+                  Divisão do investimento no Meta
+                </h3>
                 <Barras itens={data.metaCampaigns} moeda meta />
               </section>
             )}
@@ -268,8 +294,8 @@ export default async function RelatorioPage({
                 <h2>O caminho que a pessoa percorre</h2>
                 <p>
                   Do momento em que o anúncio aparece até a pessoa procurar o
-                  caminho da loja, cada passo é medido. Este é o caminho completo
-                  no período.
+                  caminho da loja, cada passo é medido. Este é o caminho
+                  completo no período.
                 </p>
               </div>
 
@@ -299,8 +325,8 @@ export default async function RelatorioPage({
                   {data.platforms.length > 1 && google && meta && (
                     <p>
                       {fmtInt(google.clicks)} cliques vieram do Google e{" "}
-                      {fmtInt(meta.clicks)} do Instagram e Facebook. No Google dá
-                      para saber exatamente em que parte do anúncio a pessoa
+                      {fmtInt(meta.clicks)} do Instagram e Facebook. No Google
+                      dá para saber exatamente em que parte do anúncio a pessoa
                       tocou:
                     </p>
                   )}
@@ -314,7 +340,11 @@ export default async function RelatorioPage({
                           </span>
                           <span className="num">{fmtInt(c.value)}</span>
                           <span className="mini">
-                            <div style={{ width: `${(c.share * 100).toFixed(1)}%` }} />
+                            <div
+                              style={{
+                                width: `${(c.share * 100).toFixed(1)}%`,
+                              }}
+                            />
                           </span>
                         </div>
                       ))}
@@ -331,7 +361,9 @@ export default async function RelatorioPage({
                     <p>
                       É aqui que o anúncio vira gente falando com a loja:{" "}
                       {data.contactRows
-                        .map((r) => `${fmtInt(r.total)} ${r.label.toLowerCase()}`)
+                        .map(
+                          (r) => `${fmtInt(r.total)} ${r.label.toLowerCase()}`,
+                        )
                         .join(", ")}
                       .
                     </p>
@@ -396,7 +428,9 @@ export default async function RelatorioPage({
                 </div>
                 {data.totals.contacts > 0 && (
                   <div className="celula">
-                    <span className="num destaque">{fmtInt(data.totals.contacts)}</span>
+                    <span className="num destaque">
+                      {fmtInt(data.totals.contacts)}
+                    </span>
                     <span className="desc">
                       Contatos diretos
                       <br />
@@ -406,7 +440,9 @@ export default async function RelatorioPage({
                 )}
                 {data.totals.directions > 0 && (
                   <div className="celula">
-                    <span className="num">{fmtInt(data.totals.directions)}</span>
+                    <span className="num">
+                      {fmtInt(data.totals.directions)}
+                    </span>
                     <span className="desc">
                       Rotas traçadas
                       <br />
@@ -441,12 +477,19 @@ export default async function RelatorioPage({
                         <td>Total de contatos diretos</td>
                         {google && (
                           <td className="n">
-                            {fmtInt(data.contactRows.reduce((s, r) => s + r.google, 0))}
+                            {fmtInt(
+                              data.contactRows.reduce(
+                                (s, r) => s + r.google,
+                                0,
+                              ),
+                            )}
                           </td>
                         )}
                         {meta && (
                           <td className="n">
-                            {fmtInt(data.contactRows.reduce((s, r) => s + r.meta, 0))}
+                            {fmtInt(
+                              data.contactRows.reduce((s, r) => s + r.meta, 0),
+                            )}
                           </td>
                         )}
                         <td className="n">{fmtInt(totalContatos)}</td>
