@@ -116,6 +116,7 @@ export type AdGroupMetric = {
 export type AdConversionActionMetric = {
   clientId: string;
   date: string;
+  platform: Platform;
   campaign: string;
   actionName: string;
   actionCategory: string; // PHONE_CALL_LEAD | SUBMIT_LEAD_FORM | ...

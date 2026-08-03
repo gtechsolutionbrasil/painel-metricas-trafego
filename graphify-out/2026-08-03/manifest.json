@@ -120,8 +120,8 @@
     "semantic_hash": ""
   },
   "src/lib/metrics/queries.ts": {
-    "mtime": 1784546600.134021,
-    "ast_hash": "ebe8068a0a6d2f79b59374d3f878dfaf",
+    "mtime": 1785771016.808326,
+    "ast_hash": "de2d74578a53fa1bbacf31d330e82ef5",
     "semantic_hash": ""
   },
   "src/lib/mock/data.ts": {
@@ -130,8 +130,8 @@
     "semantic_hash": ""
   },
   "src/lib/range.ts": {
-    "mtime": 1784546608.3898249,
-    "ast_hash": "629ab26b6bc8ff917e37bb2d3982cdb4",
+    "mtime": 1785771069.9021401,
+    "ast_hash": "7fdd7efd29557991f7b4100a44e8a010",
     "semantic_hash": ""
   },
   "src/lib/supabase/client.ts": {
@@ -155,8 +155,8 @@
     "semantic_hash": "e120c87497fabf3af25d474aa240d5a1"
   },
   "src/lib/types.ts": {
-    "mtime": 1784546592.2553585,
-    "ast_hash": "e6798f2b736b29926c0f52d336a75e6b",
+    "mtime": 1785771004.8901782,
+    "ast_hash": "af2e96d2261752c40e7b47593055c3a6",
     "semantic_hash": ""
   },
   "src/proxy.ts": {
@@ -195,8 +195,8 @@
     "semantic_hash": ""
   },
   "REGRAS-PROJETO.md": {
-    "mtime": 1784548980.0165894,
-    "ast_hash": "c23b0ab8dcc919fb56880aa316762eac",
+    "mtime": 1785771267.7921426,
+    "ast_hash": "5104287fc0157cf0167602b884b764c3",
     "semantic_hash": ""
   },
   "docs/ingestao-n8n.md": {
@@ -315,8 +315,8 @@
     "semantic_hash": ""
   },
   "src/components/pages/ChannelPage.tsx": {
-    "mtime": 1784546864.5164087,
-    "ast_hash": "fa98a95e6b10e56d93b358cb43bacecd",
+    "mtime": 1785771076.388202,
+    "ast_hash": "ab0afc983c377a885f067592e05fcb43",
     "semantic_hash": ""
   },
   "src/app/(dash)/clientes/DeleteClientButton.tsx": {
@@ -375,13 +375,13 @@
     "semantic_hash": ""
   },
   "n8n/meta-ads-supabase.workflow.json": {
-    "mtime": 1783646994.4173086,
-    "ast_hash": "522f0952fa275af2602955797b0a8c6e",
+    "mtime": 1785771166.1725695,
+    "ast_hash": "e6a40d634d502080955db68d4990a89b",
     "semantic_hash": ""
   },
   "scripts/build-n8n-meta-workflow.mjs": {
-    "mtime": 1783646980.7800455,
-    "ast_hash": "dddd63ebb28396a79ab93ce486fc8dfb",
+    "mtime": 1785771155.8282652,
+    "ast_hash": "97f7e749c956c18caac33303ab009dd6",
     "semantic_hash": ""
   },
   "n8n/README.md": {
@@ -432,6 +432,11 @@
   "supabase/migrations/0012_account_balance.sql": {
     "mtime": 1784546555.6518493,
     "ast_hash": "3bfcceb7420061fb785f2b68d0944004",
+    "semantic_hash": ""
+  },
+  "supabase/migrations/0013_all_conversions_and_api_balance.sql": {
+    "mtime": 1785770719.760382,
+    "ast_hash": "92c60657651c7ce730f35c48640b9f75",
     "semantic_hash": ""
   }
 }

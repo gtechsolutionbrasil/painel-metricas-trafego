@@ -265,6 +265,24 @@ dashboard Vercel + Redeploy. O dev local (localhost:3000) reflete tudo.
 
 ## Histórico de iterações
 
+- **2026-08-03** — **Exportar relatório do cliente pelo painel.** Botão
+  "Relatório" na topbar (`ExportReportButton`) abre `/relatorio` em nova aba
+  levando o cliente e o período selecionados; lá um botão "Baixar PDF" chama
+  `window.print()`. Escolhido no lugar de gerar PDF no servidor: Chromium
+  serverless pesa ~50 MB e arrisca timeout na Vercel Hobby, com resultado
+  igual. A rota fica FORA do grupo `(dash)` (sem sidebar/topbar) mas continua
+  protegida pelo `proxy.ts`, que roda em tudo. `src/lib/report/labels.ts`
+  traduz campanha, grupo, ação e tipo de clique para linguagem de cliente por
+  padrão de nome (funciona para qualquer cliente, não só a Madeireira);
+  `src/lib/report/data.ts` monta as seções; `src/app/relatorio/report.css`
+  tem o visual do documento e o `@media print` (A4, sem quebrar bloco no meio,
+  barra de ações escondida). Seções: capa, investido/contatos/rotas, divisão
+  entre plataformas, semana a semana, campanhas de cada canal, caminho do
+  cliente em etapas, placar, detalhamento de contatos e fundos disponíveis —
+  cada uma some sozinha quando não há dado. Sem custo por clique nem por
+  contato (decisão do usuário). `getAdConversionActions` passou a devolver
+  `platform`, usado para separar as colunas Google/Meta.
+
 - **2026-08-03** — Duas correções de dado, descobertas ao montar um relatório
   de cliente (Madeireira). **(1) Contatos subcontados:** a coleta do Google
   gravava só `metrics.conversions` (metas de lance), deixando de fora ligação

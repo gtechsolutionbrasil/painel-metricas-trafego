@@ -359,7 +359,7 @@ export async function getAdConversionActions(
 ): Promise<AdConversionActionMetric[]> {
   const rows = await getBreakdown(
     "ad_conversion_actions",
-    "client_id, date, campaign, action_name, action_category, origin, conversions, all_conversions",
+    "client_id, date, platform, campaign, action_name, action_category, origin, conversions, all_conversions",
     range,
     clientId,
   );
@@ -369,6 +369,7 @@ export async function getAdConversionActions(
     return {
       clientId: String(r.client_id),
       date: String(r.date),
+      platform: (r.platform === "meta" ? "meta" : "google") as Platform,
       campaign: String(r.campaign),
       actionName: String(r.action_name),
       actionCategory: String(r.action_category ?? ""),

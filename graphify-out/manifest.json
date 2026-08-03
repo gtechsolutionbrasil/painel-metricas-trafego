@@ -85,8 +85,8 @@
     "semantic_hash": ""
   },
   "src/components/layout/Topbar.tsx": {
-    "mtime": 1783456053.7737832,
-    "ast_hash": "92cbaa4f166edad6b7c49e96cb62dcd7",
+    "mtime": 1785773350.2006068,
+    "ast_hash": "447ea369f4a903693f46800292dd2eb9",
     "semantic_hash": ""
   },
   "src/components/ui/Badge.tsx": {
@@ -120,8 +120,8 @@
     "semantic_hash": ""
   },
   "src/lib/metrics/queries.ts": {
-    "mtime": 1785771016.808326,
-    "ast_hash": "de2d74578a53fa1bbacf31d330e82ef5",
+    "mtime": 1785773697.9141848,
+    "ast_hash": "7488f1138f03a397bb5b622816087a80",
     "semantic_hash": ""
   },
   "src/lib/mock/data.ts": {
@@ -155,8 +155,8 @@
     "semantic_hash": "e120c87497fabf3af25d474aa240d5a1"
   },
   "src/lib/types.ts": {
-    "mtime": 1785771004.8901782,
-    "ast_hash": "af2e96d2261752c40e7b47593055c3a6",
+    "mtime": 1785773704.3282893,
+    "ast_hash": "5c87fb4223526b7813d55c4e76706831",
     "semantic_hash": ""
   },
   "src/proxy.ts": {
@@ -195,8 +195,8 @@
     "semantic_hash": ""
   },
   "REGRAS-PROJETO.md": {
-    "mtime": 1785771267.7921426,
-    "ast_hash": "5104287fc0157cf0167602b884b764c3",
+    "mtime": 1785773818.0642753,
+    "ast_hash": "eab88ebce7237534072760de83cf2f14",
     "semantic_hash": ""
   },
   "docs/ingestao-n8n.md": {
@@ -437,6 +437,31 @@
   "supabase/migrations/0013_all_conversions_and_api_balance.sql": {
     "mtime": 1785770719.760382,
     "ast_hash": "92c60657651c7ce730f35c48640b9f75",
+    "semantic_hash": ""
+  },
+  "src/app/relatorio/PrintButton.tsx": {
+    "mtime": 1785773246.8922067,
+    "ast_hash": "cd512f7c3a244ac14186a5f2b259f46e",
+    "semantic_hash": ""
+  },
+  "src/app/relatorio/page.tsx": {
+    "mtime": 1785773779.7188132,
+    "ast_hash": "25bc90b1e07aa1164a267a3d0f9d1fe1",
+    "semantic_hash": ""
+  },
+  "src/components/layout/ExportReportButton.tsx": {
+    "mtime": 1785773336.9677045,
+    "ast_hash": "07b353ac6216260b6705eb78d2a6c46a",
+    "semantic_hash": ""
+  },
+  "src/lib/report/data.ts": {
+    "mtime": 1785773711.0717094,
+    "ast_hash": "5ccda08f6a863be543be5c1635f5d7f6",
+    "semantic_hash": ""
+  },
+  "src/lib/report/labels.ts": {
+    "mtime": 1785773395.5101726,
+    "ast_hash": "7a8f5b9c673819511d23ace0cdab554f",
     "semantic_hash": ""
   }
 }
