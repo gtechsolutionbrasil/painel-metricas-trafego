@@ -23,8 +23,14 @@ export type IntegrationAccount = {
   status: IntegrationStatus;
   websiteUrl?: string | null;
   lastSyncAt?: string | null;
-  // Recarga manual (conta pré-paga): a API não expõe o saldo, então o valor
-  // entra na página Integrações. Saldo = recarga − gasto desde a data.
+  // Saldo lido direto da API no sync (Google: account_budget; Meta:
+  // balance/spend_cap). Quando existe, é o que o painel mostra.
+  balanceAvailable?: number | null;
+  balanceLimit?: number | null;
+  balanceSpent?: number | null;
+  balanceSyncedAt?: string | null;
+  // Recarga manual, usada como fallback para conta cuja API não devolve saldo.
+  // Saldo = recarga − gasto desde a data.
   balanceRecharge?: number | null;
   balanceRechargeDate?: string | null; // YYYY-MM-DD
 };
@@ -116,7 +122,12 @@ export type AdConversionActionMetric = {
   // Origem da ação: WEBSITE (site do cliente, via GTM) vs GOOGLE_HOSTED /
   // CALL_FROM_ADS / STORE / ... (dentro do Google, sem tocar o site).
   origin: string;
+  // Ação total (all_conversions da API). É o que a UI mostra: inclui ações que
+  // não são meta de lance da campanha, como ligação pelo perfil na Busca,
+  // rota, visita à loja e clique no site pelo perfil.
   conversions: number;
+  // Só o que a campanha usa para otimizar (metrics.conversions).
+  bidConversions: number;
 };
 
 // Grupo de origem simplificado pra UI: o que é do site vs do Google.

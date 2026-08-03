@@ -182,7 +182,7 @@
     {
       "parameters": {
         "mode": "runOnceForAllItems",
-        "jsCode": "// Conversoes por acao (breakdown). 1 item = resposta /insights de UMA conta.\nconst CONV = new Set([\n    \"onsite_conversion.messaging_conversation_started_7d\",\n    \"onsite_conversion.lead_grouped\",\n    \"lead\",\n    \"leadgen_grouped\",\n    \"offsite_conversion.fb_pixel_lead\",\n    \"offsite_conversion.fb_pixel_complete_registration\",\n    \"onsite_conversion.purchase\",\n    \"offsite_conversion.fb_pixel_purchase\",\n    \"omni_purchase\",\n    \"purchase\",\n  ]);\nconst num = (v) => (Number.isFinite(Number(v)) ? Number(v) : 0);\nconst origin = (t) => {\n  const v = String(t || \"\").toLowerCase();\n  if (v.includes(\"fb_pixel\") || v.includes(\"offsite_conversion\")) return \"WEBSITE\";\n  if (v.includes(\"messag\") || v.includes(\"lead\")) return \"META\";\n  return \"UNKNOWN\";\n};\nconst raw = [];\nfor (let i = 0; i < items.length; i++) {\n  const resp = items[i].json;\n  const conta = $('Buscar contas Meta').itemMatching(i).json;\n  for (const r of resp.data ?? []) {\n    if (!r.date_start) continue;\n    for (const a of r.actions ?? []) {\n      if (!CONV.has(String(a.action_type).toLowerCase()) || num(a.value) <= 0) continue;\n      raw.push({\n        client_id: conta.client_id,\n        account_external_id: String(conta.external_id),\n        platform: \"meta\",\n        date: r.date_start,\n        campaign: r.campaign_name ?? r.campaign_id ?? \"Sem campanha\",\n        action_name: String(a.action_type),\n        action_category: String(a.action_type),\n        origin: origin(a.action_type),\n        conversions: num(a.value),\n      });\n    }\n  }\n}\nconst map = new Map();\nfor (const r of raw) {\n  const k = r.date + \"|\" + r.account_external_id + \"|\" + r.campaign + \"|\" + r.action_name;\n  const e = map.get(k);\n  if (!e) { map.set(k, { ...r }); continue; }\n  e.conversions += r.conversions;\n}\nconst rows = [...map.values()];\nif (!rows.length) return [];\nreturn [{ json: { rows, total: rows.length } }];"
+        "jsCode": "// Conversoes por acao (breakdown). 1 item = resposta /insights de UMA conta.\nconst CONV = new Set([\n    \"onsite_conversion.messaging_conversation_started_7d\",\n    \"onsite_conversion.lead_grouped\",\n    \"lead\",\n    \"leadgen_grouped\",\n    \"offsite_conversion.fb_pixel_lead\",\n    \"offsite_conversion.fb_pixel_complete_registration\",\n    \"onsite_conversion.purchase\",\n    \"offsite_conversion.fb_pixel_purchase\",\n    \"omni_purchase\",\n    \"purchase\",\n  ]);\nconst num = (v) => (Number.isFinite(Number(v)) ? Number(v) : 0);\nconst origin = (t) => {\n  const v = String(t || \"\").toLowerCase();\n  if (v.includes(\"fb_pixel\") || v.includes(\"offsite_conversion\")) return \"WEBSITE\";\n  if (v.includes(\"messag\") || v.includes(\"lead\")) return \"META\";\n  return \"UNKNOWN\";\n};\nconst raw = [];\nfor (let i = 0; i < items.length; i++) {\n  const resp = items[i].json;\n  const conta = $('Buscar contas Meta').itemMatching(i).json;\n  for (const r of resp.data ?? []) {\n    if (!r.date_start) continue;\n    for (const a of r.actions ?? []) {\n      if (!CONV.has(String(a.action_type).toLowerCase()) || num(a.value) <= 0) continue;\n      raw.push({\n        client_id: conta.client_id,\n        account_external_id: String(conta.external_id),\n        platform: \"meta\",\n        date: r.date_start,\n        campaign: r.campaign_name ?? r.campaign_id ?? \"Sem campanha\",\n        action_name: String(a.action_type),\n        action_category: String(a.action_type),\n        origin: origin(a.action_type),\n        conversions: num(a.value),\n        // No Meta não existe a distinção meta-de-lance x ação total do Google;\n        // espelhamos para o painel ler sempre all_conversions.\n        all_conversions: num(a.value),\n      });\n    }\n  }\n}\nconst map = new Map();\nfor (const r of raw) {\n  const k = r.date + \"|\" + r.account_external_id + \"|\" + r.campaign + \"|\" + r.action_name;\n  const e = map.get(k);\n  if (!e) { map.set(k, { ...r }); continue; }\n  e.conversions += r.conversions;\n  e.all_conversions += r.all_conversions;\n}\nconst rows = [...map.values()];\nif (!rows.length) return [];\nreturn [{ json: { rows, total: rows.length } }];"
       },
       "id": "code-conv",
       "name": "Montar ad_conversion_actions",
@@ -271,6 +271,108 @@
         "httpHeaderAuth": {
           "id": "HOIxAoGnU2fpRgXE",
           "name": "Meta Graph API - Painel (system user)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "=https://graph.facebook.com/v21.0/{{ $json.external_id }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "fields",
+              "value": "balance,amount_spent,spend_cap,currency"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true
+            }
+          }
+        }
+      },
+      "id": "meta-saldo",
+      "name": "Meta Saldo da conta",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        680,
+        440
+      ],
+      "onError": "continueRegularOutput",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "HOIxAoGnU2fpRgXE",
+          "name": "Meta Graph API - Painel (system user)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const cents = (v) => Number(v ?? 0) / 100;\nconst out = [];\nfor (let i = 0; i < items.length; i++) {\n  const conta = $('Buscar contas Meta').itemMatching(i).json;\n  const j = items[i].json ?? {};\n  if (j.error) continue;\n  const cap = cents(j.spend_cap);\n  const gasto = cents(j.amount_spent);\n  const saldo = cap > 0 ? Math.max(0, cap - gasto) : cents(j.balance);\n  out.push({\n    json: {\n      external_id: String(conta.external_id),\n      balance_limit: cap > 0 ? Number(cap.toFixed(2)) : null,\n      balance_spent: Number(gasto.toFixed(2)),\n      balance_available: Number(saldo.toFixed(2)),\n    },\n  });\n}\nreturn out;"
+      },
+      "id": "code-saldo",
+      "name": "Montar saldo da conta",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        920,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "https://oqsjdhrwpmpdrihgbgtx.supabase.co/rest/v1/integration_accounts",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "provider",
+              "value": "eq.meta_ads"
+            },
+            {
+              "name": "external_id",
+              "value": "=eq.{{ $json.external_id }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=minimal"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ balance_limit: $json.balance_limit, balance_spent: $json.balance_spent, balance_available: $json.balance_available, balance_synced_at: $now.toISO() }) }}",
+        "options": {}
+      },
+      "id": "up-saldo",
+      "name": "Atualizar saldo da conta",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1160,
+        440
+      ],
+      "onError": "continueRegularOutput",
+      "credentials": {
+        "supabaseApi": {
+          "id": "sfp0d2ZkWr7zz5wM",
+          "name": "Supabase - Painel Métricas (service role)"
         }
       }
     },
@@ -452,6 +554,33 @@
           },
           {
             "node": "Meta Campaigns",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Meta Saldo da conta",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Meta Saldo da conta": {
+      "main": [
+        [
+          {
+            "node": "Montar saldo da conta",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Montar saldo da conta": {
+      "main": [
+        [
+          {
+            "node": "Atualizar saldo da conta",
             "type": "main",
             "index": 0
           }

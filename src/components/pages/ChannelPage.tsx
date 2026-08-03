@@ -25,6 +25,7 @@ import {
 import { adByCampaign, adByDay, adKpis } from "@/lib/metrics/aggregate";
 import { selectedCampaigns } from "@/lib/campaigns";
 import {
+  daysAgoIso,
   delta,
   previousRange,
   rangeDays,
@@ -79,31 +80,40 @@ export async function ChannelPage({
       getIntegrationAccounts(client?.id),
     ]);
 
-  // Saldo pré-pago: recarga informada em Integrações − gasto desde a data da
-  // recarga (independe do período selecionado no topo — saldo é "agora").
+  // Saldo da conta ("agora", independe do período selecionado no topo). Vem da
+  // API no sync diário; conta cuja API não devolve saldo cai na recarga manual
+  // informada em Integrações.
   const provider = platform === "meta" ? "meta_ads" : "google_ads";
   const balances = await Promise.all(
     integrationAccounts
       .filter(
         (a) =>
           a.provider === provider &&
-          a.balanceRecharge != null &&
-          a.balanceRechargeDate != null,
+          (a.balanceAvailable != null ||
+            (a.balanceRecharge != null && a.balanceRechargeDate != null)),
       )
       .map(async (a) => {
-        const recharge = a.balanceRecharge as number;
-        const rechargeDate = a.balanceRechargeDate as string;
-        const since = rangeSince(rechargeDate);
+        const fromApi = a.balanceAvailable != null;
+        // Ritmo de gasto: desde a recarga (modo manual) ou últimos 14 dias
+        // (modo API, onde não existe "data da recarga").
+        const since = fromApi
+          ? rangeSince(daysAgoIso(14))
+          : rangeSince(a.balanceRechargeDate as string);
         const rows = await getAdMetrics(since, a.clientId, [platform]);
-        const spent = rows.reduce((s, r) => s + r.spend, 0);
-        const balance = recharge - spent;
-        const dailyAvg = spent / Math.max(1, rangeDays(since));
+        const spentInWindow = rows.reduce((s, r) => s + r.spend, 0);
+        const balance = fromApi
+          ? (a.balanceAvailable as number)
+          : (a.balanceRecharge as number) - spentInWindow;
+        const dailyAvg = spentInWindow / Math.max(1, rangeDays(since));
         return {
           id: a.id,
           accountName: a.accountName,
-          recharge,
-          rechargeDate,
-          spent,
+          fromApi,
+          limit: a.balanceLimit ?? null,
+          syncedAt: a.balanceSyncedAt ?? null,
+          recharge: a.balanceRecharge ?? null,
+          rechargeDate: a.balanceRechargeDate ?? null,
+          spent: fromApi ? (a.balanceSpent ?? 0) : spentInWindow,
           balance,
           daysLeft:
             balance > 0 && dailyAvg > 0
@@ -118,7 +128,7 @@ export async function ChannelPage({
       <Card>
         <CardHeader
           title="Saldo disponível na conta"
-          subtitle="Recarga informada em Integrações − gasto desde a data da recarga. O gasto atualiza no sync diário."
+          subtitle="Lido da plataforma no sync diário. Conta sem saldo na API usa a recarga informada em Integrações."
           action={
             <span className="grid h-9 w-9 place-items-center rounded-xl bg-brand-soft text-brand">
               <Wallet size={17} />
@@ -136,9 +146,9 @@ export async function ChannelPage({
                   {b.accountName}
                 </p>
                 <p className="text-xs text-faint">
-                  Recarga de {fmtCurrencyCents(b.recharge)} em{" "}
-                  {fmtDateLong(b.rechargeDate)} · gasto desde então{" "}
-                  {fmtCurrencyCents(b.spent)}
+                  {b.fromApi
+                    ? `${b.limit != null ? `Limite de ${fmtCurrencyCents(b.limit)} · ` : ""}já consumido ${fmtCurrencyCents(b.spent)}`
+                    : `Recarga de ${fmtCurrencyCents(b.recharge ?? 0)} em ${fmtDateLong(b.rechargeDate ?? "")} · gasto desde então ${fmtCurrencyCents(b.spent)}`}
                 </p>
               </div>
               <div className="text-right">
@@ -151,10 +161,10 @@ export async function ChannelPage({
                 </p>
                 <p className="text-xs text-faint">
                   {b.balance <= 0
-                    ? "recarga esgotada — hora de recarregar"
+                    ? "saldo esgotado — hora de recarregar"
                     : b.daysLeft != null
                       ? `dura ~${fmtInt(b.daysLeft)} dia${b.daysLeft === 1 ? "" : "s"} no ritmo atual`
-                      : "sem gasto desde a recarga"}
+                      : "sem gasto recente"}
                 </p>
               </div>
             </div>

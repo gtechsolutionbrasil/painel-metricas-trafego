@@ -105,6 +105,11 @@ export function rangeFromSearch(
 
 // De uma data fixa até HOJE (fuso BR) — usado pro gasto acumulado desde a
 // recarga da conta, que precisa incluir o dia atual (saldo é "agora").
+// Data de N dias atrás (fuso de São Paulo), em YYYY-MM-DD.
+export function daysAgoIso(days: number): string {
+  return iso(shift(todayBR(), -days));
+}
+
 export function rangeSince(from: string): DateRange {
   return { from, to: iso(todayBR()) };
 }

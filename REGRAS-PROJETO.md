@@ -265,6 +265,24 @@ dashboard Vercel + Redeploy. O dev local (localhost:3000) reflete tudo.
 
 ## Histórico de iterações
 
+- **2026-08-03** — Duas correções de dado, descobertas ao montar um relatório
+  de cliente (Madeireira). **(1) Contatos subcontados:** a coleta do Google
+  gravava só `metrics.conversions` (metas de lance), deixando de fora ligação
+  pelo perfil na Busca, rotas da Busca, visitas à loja e cliques no site pelo
+  perfil — 103 contatos no painel contra 204 reais no período 26/06–03/08.
+  Migration **0013** (`ad_conversion_actions.all_conversions`), node "GAQL
+  Conversões por ação" passa a pedir `metrics.all_conversions`, e o painel
+  mostra a ação total (`bidConversions` guarda a meta de lance). O workflow do
+  Meta espelha `all_conversions = conversions`. **(2) Saldo pela API:** ao
+  contrário do que a 0012 supôs, as duas plataformas expõem saldo — Google via
+  GAQL `account_budget`, Meta via `/act_<id>?fields=balance,amount_spent,
+  spend_cap`. Migration 0013 também criou `integration_accounts.balance_
+  available/limit/spent/synced_at`, e os dois workflows ganharam o trio
+  "Saldo da conta → Montar saldo → Atualizar saldo". A recarga manual continua
+  como fallback. Testado E2E pelos webhooks de refresh: Google R$ 323,30
+  disponíveis, Meta Madeireira R$ 0,00 (a conta bateu o `spend_cap`, e foi por
+  isso que parou de veicular em 27/07), Meta Clínica R$ 319,62.
+
 - **2026-06-28** — Setup inicial. Scaffold Next.js 16 + Tailwind v4. Design
   system tema claro GTech (verde #16A34A). Componentes (sidebar, topbar com
   seletor de cliente + período, KPI cards, cards, badges, tabelas) e gráficos

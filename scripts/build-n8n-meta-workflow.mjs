@@ -109,6 +109,9 @@ for (let i = 0; i < items.length; i++) {
         action_category: String(a.action_type),
         origin: origin(a.action_type),
         conversions: num(a.value),
+        // No Meta não existe a distinção meta-de-lance x ação total do Google;
+        // espelhamos para o painel ler sempre all_conversions.
+        all_conversions: num(a.value),
       });
     }
   }
@@ -119,10 +122,33 @@ for (const r of raw) {
   const e = map.get(k);
   if (!e) { map.set(k, { ...r }); continue; }
   e.conversions += r.conversions;
+  e.all_conversions += r.all_conversions;
 }
 const rows = [...map.values()];
 if (!rows.length) return [];
 return [{ json: { rows, total: rows.length } }];`;
+
+// Saldo da conta: com spend_cap definido, o disponível é o que falta para o
+// teto; sem teto, vale o balance devolvido pela API. Valores vêm em centavos.
+const codeBalance = `const cents = (v) => Number(v ?? 0) / 100;
+const out = [];
+for (let i = 0; i < items.length; i++) {
+  const conta = $('Buscar contas Meta').itemMatching(i).json;
+  const j = items[i].json ?? {};
+  if (j.error) continue;
+  const cap = cents(j.spend_cap);
+  const gasto = cents(j.amount_spent);
+  const saldo = cap > 0 ? Math.max(0, cap - gasto) : cents(j.balance);
+  out.push({
+    json: {
+      external_id: String(conta.external_id),
+      balance_limit: cap > 0 ? Number(cap.toFixed(2)) : null,
+      balance_spent: Number(gasto.toFixed(2)),
+      balance_available: Number(saldo.toFixed(2)),
+    },
+  });
+}
+return out;`;
 
 const codeCampaigns = `// Status das campanhas. 1 item = resposta /campaigns de UMA conta.
 const RANK = { ENABLED: 3, PAUSED: 2, REMOVED: 1, UNKNOWN: 0 };
@@ -256,6 +282,48 @@ const workflow = {
       { name: "fields", value: "id,name,status,effective_status" },
       { name: "limit", value: "500" },
     ]),
+    // Saldo da conta lido da própria API (dispensa recarga manual no painel).
+    {
+      parameters: {
+        method: "GET",
+        url: `=https://graph.facebook.com/${META_VERSION}/{{ $json.external_id }}`,
+        authentication: "genericCredentialType",
+        genericAuthType: "httpHeaderAuth",
+        sendQuery: true,
+        queryParameters: { parameters: [
+          { name: "fields", value: "balance,amount_spent,spend_cap,currency" },
+        ] },
+        options: { response: { response: { neverError: true } } },
+      },
+      id: "meta-saldo", name: "Meta Saldo da conta",
+      type: "n8n-nodes-base.httpRequest", typeVersion: 4.2, position: [680, 440],
+      onError: "continueRegularOutput",
+      credentials: { httpHeaderAuth: META_CRED },
+    },
+    codeNode("Montar saldo da conta", "code-saldo", [920, 440], codeBalance),
+    {
+      parameters: {
+        method: "PATCH",
+        url: `${SUPABASE_URL}/rest/v1/integration_accounts`,
+        authentication: "predefinedCredentialType",
+        nodeCredentialType: "supabaseApi",
+        sendQuery: true,
+        queryParameters: { parameters: [
+          { name: "provider", value: "eq.meta_ads" },
+          { name: "external_id", value: "=eq.{{ $json.external_id }}" },
+        ] },
+        sendHeaders: true,
+        headerParameters: { parameters: [{ name: "Prefer", value: "return=minimal" }] },
+        sendBody: true,
+        specifyBody: "json",
+        jsonBody: "={{ JSON.stringify({ balance_limit: $json.balance_limit, balance_spent: $json.balance_spent, balance_available: $json.balance_available, balance_synced_at: $now.toISO() }) }}",
+        options: {},
+      },
+      id: "up-saldo", name: "Atualizar saldo da conta",
+      type: "n8n-nodes-base.httpRequest", typeVersion: 4.2, position: [1160, 440],
+      onError: "continueRegularOutput",
+      credentials: { supabaseApi: SUPABASE_CRED },
+    },
     codeNode("Montar ad_campaigns", "code-camp", [920, 240], codeCampaigns),
     supaUpsert("Upsert ad_campaigns", "up-camp", [1160, 240], "ad_campaigns", "client_id,account_external_id,platform,campaign"),
     // Tracking do sync: marca contas como connected/last_sync_at e registra a
@@ -309,8 +377,11 @@ const workflow = {
       main: [[
         { node: "Meta Insights", type: "main", index: 0 },
         { node: "Meta Campaigns", type: "main", index: 0 },
+        { node: "Meta Saldo da conta", type: "main", index: 0 },
       ]],
     },
+    "Meta Saldo da conta": { main: [[{ node: "Montar saldo da conta", type: "main", index: 0 }]] },
+    "Montar saldo da conta": { main: [[{ node: "Atualizar saldo da conta", type: "main", index: 0 }]] },
     "Meta Insights": {
       main: [[
         { node: "Montar ad_metrics", type: "main", index: 0 },

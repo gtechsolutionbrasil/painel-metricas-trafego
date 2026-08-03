@@ -99,7 +99,7 @@ export async function getIntegrationAccounts(
   let q = supabase
     .from("integration_accounts")
     .select(
-      "id, client_id, provider, account_name, external_id, status, website_url, last_sync_at, balance_recharge, balance_recharge_date",
+      "id, client_id, provider, account_name, external_id, status, website_url, last_sync_at, balance_recharge, balance_recharge_date, balance_available, balance_limit, balance_spent, balance_synced_at",
     )
     .order("provider")
     .order("account_name");
@@ -120,6 +120,11 @@ export async function getIntegrationAccounts(
     status: a.status,
     websiteUrl: a.website_url,
     lastSyncAt: a.last_sync_at,
+    balanceAvailable:
+      a.balance_available == null ? null : Number(a.balance_available),
+    balanceLimit: a.balance_limit == null ? null : Number(a.balance_limit),
+    balanceSpent: a.balance_spent == null ? null : Number(a.balance_spent),
+    balanceSyncedAt: a.balance_synced_at,
     balanceRecharge:
       a.balance_recharge == null ? null : Number(a.balance_recharge),
     balanceRechargeDate: a.balance_recharge_date,
@@ -354,19 +359,26 @@ export async function getAdConversionActions(
 ): Promise<AdConversionActionMetric[]> {
   const rows = await getBreakdown(
     "ad_conversion_actions",
-    "client_id, date, campaign, action_name, action_category, origin, conversions",
+    "client_id, date, campaign, action_name, action_category, origin, conversions, all_conversions",
     range,
     clientId,
   );
-  return rows.map((r) => ({
-    clientId: String(r.client_id),
-    date: String(r.date),
-    campaign: String(r.campaign),
-    actionName: String(r.action_name),
-    actionCategory: String(r.action_category ?? ""),
-    origin: String(r.origin ?? "UNKNOWN"),
-    conversions: Number(r.conversions),
-  }));
+  return rows.map((r) => {
+    const bid = Number(r.conversions);
+    const all = Number(r.all_conversions ?? 0);
+    return {
+      clientId: String(r.client_id),
+      date: String(r.date),
+      campaign: String(r.campaign),
+      actionName: String(r.action_name),
+      actionCategory: String(r.action_category ?? ""),
+      origin: String(r.origin ?? "UNKNOWN"),
+      // all_conversions só existe para o Google (e só a partir da coleta de
+      // 03/08/2026); nos demais casos cai na métrica de lance.
+      conversions: all > 0 ? all : bid,
+      bidConversions: bid,
+    };
+  });
 }
 
 export async function getWebMetrics(
