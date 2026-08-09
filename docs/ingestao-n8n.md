@@ -36,7 +36,7 @@ APIs com as credenciais dele -> n8n grava métricas normalizadas -> painel exibe
   front-end. Guarde-a só nas credenciais do n8n.
 - **Idempotência:** sempre usar **upsert** (não insert puro), para reprocessar
   um dia sem duplicar. As tabelas têm chaves únicas para isso.
-- **Granularidade:** uma linha por **dia × cliente × (campanha | origem)**.
+- **Granularidade:** uma linha por **dia × cliente × (campanha | origem | evento)**.
   Métricas derivadas (CTR, CPC, CPL, ROAS) **não** são gravadas — o painel
   calcula a partir dos números brutos.
 - **Janela:** reprocessar sempre os **últimos 3–7 dias** (as plataformas
@@ -57,8 +57,27 @@ Chave de conflito: `(client_id, account_external_id, date, platform, campaign)`
 | `spend` | numeric | investimento |
 | `impressions` | bigint | impressões |
 | `clicks` | bigint | cliques |
-| `conversions` | bigint | conversões/leads |
+| `conversions` | numeric | métrica bruta da plataforma |
 | `revenue` | numeric | receita (purchase/conversion value) |
+
+`ad_metrics.conversions` não é exibida como um total unificado de leads.
+
+### `ad_conversion_actions` — resultados por ação
+
+Chave de conflito:
+`(client_id, account_external_id, date, campaign, action_name)`
+
+| coluna | função |
+|---|---|
+| `conversions` | no Google, ações incluídas em “Conversões”/otimização |
+| `all_conversions` | total reportado, incluindo ações secundárias/locais |
+| `origin` | `WEBSITE`, `GOOGLE_HOSTED`, `CALL_FROM_ADS`, `META` etc. |
+| `action_name` | nome original; a classificação comercial acontece no painel |
+
+O workflow Google consulta `metrics.conversions` e
+`metrics.all_conversions`. O painel separa contato principal (WhatsApp,
+formulário confirmado e ligação), conversa Meta, intenção local (rota/visita)
+e microconversão (visita ao site e ações intermediárias).
 
 ### `web_metrics` — GA4
 Chave de conflito: `(client_id, account_external_id, date, source, medium)`
@@ -75,6 +94,33 @@ Chave de conflito: `(client_id, account_external_id, date, source, medium)`
 | `pageviews` | bigint | `screenPageViews` |
 | `bounce_rate` | numeric (0..1) | `bounceRate` |
 | `avg_duration` | numeric (segundos) | `averageSessionDuration` |
+
+### `web_events` — eventos do site recebidos no GA4
+
+Chave de conflito:
+`(client_id, account_external_id, date, event_name, source, medium, campaign)`
+
+| coluna | origem (GA4 Data API) |
+|---|---|
+| `event_name` | `eventName` |
+| `source` / `medium` / `campaign` | `sessionSource`, `sessionMedium`, `sessionCampaignName` |
+| `event_count` | `eventCount` |
+| `key_events` | `keyEvents` |
+| `users` | `totalUsers` |
+
+Eventos esperados: `whatsapp_click`, `generate_lead`, `phone_click` e
+`route_click`. O último aparece separadamente como intenção local.
+
+### `tracking_checks` — saúde do tracking
+
+Chave de conflito: `(client_id, provider, check_key)`. O workflow GA4 atualiza
+um check por evento. Evento recebido na janela de sete dias fica `healthy`;
+ausência fica `warning` e orienta testar no Tag Assistant.
+
+### `leads` e `lead_status_history` — mini-CRM
+
+O funil usa `new`, `contacted`, `qualified`, `quote`, `won`, `lost`. Toda
+mudança de status gera histórico automaticamente no banco.
 
 ### `sync_runs` — log (opcional, recomendado)
 Grave 1 linha ao fim de cada execução: `platform`, `client_id` (ou null),
@@ -117,9 +163,15 @@ Body: array de objetos com as colunas acima (envie em lote).
    - Também atualiza `ad_campaigns` para o filtro de campanhas e grava ações
      relevantes em `ad_conversion_actions` (lead, contato, mensagens/WhatsApp,
      compra).
+   - Em `ad_metrics.conversions`, grava exclusivamente
+     `onsite_conversion.messaging_conversation_started_7d`. Leads de Pixel e
+     compras ficam no detalhamento e não entram no KPI “Conversas Meta”.
 2. **Google Ads → Supabase** — idem, `platform='google'`,
-   `account_external_id='<customer_id>'`.
+   `account_external_id='<customer_id>'`. O ramo de ações grava
+   `metrics.conversions` e `metrics.all_conversions` separadamente.
 3. **GA4 → Supabase** — Data API (runReport) por dia/source/medium → upsert em
-   `web_metrics` com `account_external_id` igual ao property ID.
+   `web_metrics`; outro relatório grava os quatro eventos esperados em
+   `web_events` e atualiza `tracking_checks`.
 
-Construir com as skills `n8n-*` quando esta fase for executada.
+Os JSONs locais só devem substituir/ativar workflows depois da aprovação do
+gate em [plano-publicacao-tracking-madeireira.md](plano-publicacao-tracking-madeireira.md).

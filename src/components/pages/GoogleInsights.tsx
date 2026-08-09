@@ -89,13 +89,6 @@ const ACTION_NAME_LABEL: Record<string, string> = {
 };
 const actionNameLabel = (n: string) => ACTION_NAME_LABEL[n] ?? n;
 
-// Linhas ocultas do painel a pedido do usuário (2026-07-20, "por enquanto").
-// Filtradas ANTES da agregação pra totais e participações recalcularem.
-const HIDDEN_ACTION_NAMES = new Set([
-  "WhatsApp - Clique",
-  "Calls from ads",
-  "Chamadas a partir de anúncios",
-]);
 const HIDDEN_CLICK_TYPES = new Set(["GET_DIRECTIONS"]);
 
 // Fallback legível pra enums não mapeados: "SOME_ENUM" -> "Some enum".
@@ -118,15 +111,18 @@ export async function GoogleInsights({ searchParams }: { searchParams: SP }) {
   const { range } = rangeFromSearch(searchParams);
   const clients = await getClients();
   const client = resolveClient(clients, searchParams.client);
+  const accountExternalId = Array.isArray(searchParams.account)
+    ? searchParams.account[0]
+    : searchParams.account;
 
   const [keywordsRaw, geoRaw, clickTypesRaw, actionsRaw, searchTermsRaw, groupsRaw] =
     await Promise.all([
-      getAdKeywords(range, client?.id),
-      getAdGeo(range, client?.id),
-      getAdClickTypes(range, client?.id),
-      getAdConversionActions(range, client?.id),
-      getAdSearchTerms(range, client?.id),
-      getAdGroups(range, client?.id),
+      getAdKeywords(range, client?.id, accountExternalId),
+      getAdGeo(range, client?.id, accountExternalId),
+      getAdClickTypes(range, client?.id, accountExternalId),
+      getAdConversionActions(range, client?.id, accountExternalId),
+      getAdSearchTerms(range, client?.id, accountExternalId),
+      getAdGroups(range, client?.id, accountExternalId),
     ]);
 
   // Respeita o filtro multi de campanha da página (mesmo helper do ChannelPage).
@@ -150,7 +146,7 @@ export async function GoogleInsights({ searchParams }: { searchParams: SP }) {
     only(clickTypesRaw).filter((r) => !HIDDEN_CLICK_TYPES.has(r.clickType)),
   );
   const actionGroups = byConversionActionGrouped(
-    only(actionsRaw).filter((r) => !HIDDEN_ACTION_NAMES.has(r.actionName)),
+    only(actionsRaw),
   );
   const searchTerms = bySearchTerm(only(searchTermsRaw)).slice(0, 15);
   const adGroups = byAdGroup(only(groupsRaw));
@@ -173,7 +169,10 @@ export async function GoogleInsights({ searchParams }: { searchParams: SP }) {
           o contraste entre o que vem do site e o que vem do Google. */}
       {actionGroups.length > 0 && (
         <Card>
-          <CardHeader title="Contatos gerados — o que o lead fez" />
+          <CardHeader
+            title="Ações atribuídas pelo Google"
+            subtitle="WhatsApp, formulário e ligação são contatos; rotas, visitas e demais ações aparecem sem serem confundidas com leads."
+          />
           <div className="grid grid-cols-1 gap-px bg-line md:grid-cols-2">
             {(["site", "google"] as const).map((source) => {
               const g = actionGroups.find((x) => x.source === source);
@@ -201,13 +200,13 @@ export async function GoogleInsights({ searchParams }: { searchParams: SP }) {
                           share: a.share,
                         };
                       })}
-                      valueLabel="conversões"
+                      valueLabel="ações"
                     />
                   ) : (
                     <p className="px-3 py-8 text-center text-xs text-faint">
                       {source === "site"
-                        ? "Ainda sem conversões pelo site no período. Se o rastreamento foi ligado agora, aparece em 24–48h."
-                        : "Sem conversões pelo Google no período."}
+                        ? "Ainda sem ações atribuídas ao site no período."
+                        : "Sem ações atribuídas dentro do Google no período."}
                     </p>
                   )}
                 </div>

@@ -5,15 +5,26 @@ import {
   Link2,
   ListChecks,
   Plus,
+  RadioTower,
   ShieldCheck,
   Workflow,
 } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
 import { Card, CardBody, CardHeader } from "@/components/ui/Card";
 import { PageHeader } from "@/components/ui/PageHeader";
-import { getClients, getIntegrationAccounts } from "@/lib/metrics/queries";
+import {
+  getClients,
+  getIntegrationAccounts,
+  getTrackingChecks,
+} from "@/lib/metrics/queries";
+import { integrationHealth } from "@/lib/metrics/results";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
-import type { Client, IntegrationAccount, IntegrationProvider } from "@/lib/types";
+import type {
+  Client,
+  IntegrationAccount,
+  IntegrationProvider,
+  TrackingCheck,
+} from "@/lib/types";
 import { createClientWithAccounts, setAccountRecharge } from "./actions";
 import { DeleteClientButton } from "./DeleteClientButton";
 
@@ -32,9 +43,10 @@ export default async function ClientesPage({
   searchParams: SP;
 }) {
   const sp = await searchParams;
-  const [clients, accounts] = await Promise.all([
+  const [clients, accounts, checks] = await Promise.all([
     getClients(),
     getIntegrationAccounts(),
+    getTrackingChecks(),
   ]);
   const created = Array.isArray(sp.created) ? sp.created[0] : sp.created;
   const deleted = Array.isArray(sp.deleted) ? sp.deleted[0] : sp.deleted;
@@ -44,27 +56,27 @@ export default async function ClientesPage({
   return (
     <div className="space-y-6">
       <PageHeader
-        title="Clientes e integrações"
-        subtitle="Cliente é a empresa atendida. Integrações são as fontes de dados ligadas a ela."
+        title="Tracking e integrações"
+        subtitle="O que está conectado, quando coletou e onde a medição precisa de atenção."
       />
 
       {created && (
-        <div className="flex items-center gap-2 rounded-lg border border-brand-border bg-brand-soft px-4 py-3 text-sm font-semibold text-brand-ink">
-          <CheckCircle2 size={17} />
+        <div className="flex items-center gap-2 rounded-lg border border-brand-border bg-brand-soft px-4 py-3 text-sm font-semibold text-brand-ink" role="status" aria-live="polite">
+          <CheckCircle2 size={17} aria-hidden="true" />
           Cliente cadastrado: {created}
         </div>
       )}
 
       {deleted && (
-        <div className="flex items-center gap-2 rounded-lg border border-brand-border bg-brand-soft px-4 py-3 text-sm font-semibold text-brand-ink">
-          <CheckCircle2 size={17} />
+        <div className="flex items-center gap-2 rounded-lg border border-brand-border bg-brand-soft px-4 py-3 text-sm font-semibold text-brand-ink" role="status" aria-live="polite">
+          <CheckCircle2 size={17} aria-hidden="true" />
           Cliente excluído: {deleted}
         </div>
       )}
 
       {recharge && (
-        <div className="flex items-center gap-2 rounded-lg border border-brand-border bg-brand-soft px-4 py-3 text-sm font-semibold text-brand-ink">
-          <CheckCircle2 size={17} />
+        <div className="flex items-center gap-2 rounded-lg border border-brand-border bg-brand-soft px-4 py-3 text-sm font-semibold text-brand-ink" role="status" aria-live="polite">
+          <CheckCircle2 size={17} aria-hidden="true" />
           {recharge === "cleared"
             ? "Recarga removida — o card de saldo sai do painel."
             : "Recarga registrada — o saldo aparece na página do canal."}
@@ -72,19 +84,21 @@ export default async function ClientesPage({
       )}
 
       {errorMsg && (
-        <div className="flex items-center gap-2 rounded-lg border border-[#fecaca] bg-[#fef2f2] px-4 py-3 text-sm font-semibold text-[#991b1b]">
-          <CircleAlert size={17} />
+        <div className="flex items-center gap-2 rounded-lg border border-[#fecaca] bg-[#fef2f2] px-4 py-3 text-sm font-semibold text-[#991b1b]" role="alert" aria-live="polite">
+          <CircleAlert size={17} aria-hidden="true" />
           {errorMsg}
         </div>
       )}
 
       {!isSupabaseConfigured && (
         <div className="flex items-center gap-2 rounded-lg border border-[#fde68a] bg-[#fffbeb] px-4 py-3 text-sm font-semibold text-[#92400e]">
-          <CircleAlert size={17} />
+          <CircleAlert size={17} aria-hidden="true" />
           Modo demonstração ativo. Configure o Supabase para salvar novos
           clientes.
         </div>
       )}
+
+      <TrackingStatusBoard clients={clients} accounts={accounts} checks={checks} />
 
       <div className="grid grid-cols-1 gap-6 xl:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
         <ClientForm />
@@ -96,6 +110,159 @@ export default async function ClientesPage({
       </div>
     </div>
   );
+}
+
+const EXPECTED_PROVIDERS: IntegrationProvider[] = [
+  "google_ads",
+  "meta_ads",
+  "ga4",
+  "gtm",
+];
+
+function TrackingStatusBoard({
+  clients,
+  accounts,
+  checks,
+}: {
+  clients: Client[];
+  accounts: IntegrationAccount[];
+  checks: TrackingCheck[];
+}) {
+  const health = accounts.map((account) => integrationHealth(account, checks));
+  const healthy = health.filter((item) => item.status === "healthy").length;
+  const attention = health.filter((item) =>
+    ["warning", "error"].includes(item.status),
+  ).length;
+  const pending = health.filter((item) => item.status === "pending").length;
+  const missing = clients.reduce(
+    (total, client) =>
+      total +
+      EXPECTED_PROVIDERS.filter(
+        (provider) =>
+          !accounts.some(
+            (account) =>
+              account.clientId === client.id && account.provider === provider,
+          ),
+      ).length,
+    0,
+  );
+
+  return (
+    <Card>
+      <CardHeader
+        title="Saúde do tracking"
+        subtitle="Cada cliente deve ter Ads, GA4 e GTM mapeados. Verde só aparece com conexão e coleta recente."
+        action={
+          <span className="grid h-9 w-9 place-items-center rounded-[10px] border border-sky-200 bg-sky-50 text-sky-700">
+            <RadioTower size={17} aria-hidden="true" />
+          </span>
+        }
+      />
+      <CardBody className="space-y-5">
+        <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+          <HealthCount label="Saudáveis" value={healthy} tone="healthy" />
+          <HealthCount label="Com atenção" value={attention} tone="warning" />
+          <HealthCount label="Pendentes" value={pending} tone="pending" />
+          <HealthCount label="Não cadastradas" value={missing} tone="missing" />
+        </div>
+
+        <div className="overflow-x-auto rounded-[10px] border border-line">
+          <table className="w-full min-w-[780px] text-sm">
+            <thead>
+              <tr className="border-b border-line bg-surface-2 text-left text-xs font-semibold uppercase tracking-wide text-faint">
+                <th className="px-4 py-3">Cliente</th>
+                <th className="px-3 py-3">Plataforma</th>
+                <th className="px-3 py-3">Saúde</th>
+                <th className="px-3 py-3">Última coleta</th>
+                <th className="px-4 py-3">Leitura</th>
+              </tr>
+            </thead>
+            <tbody>
+              {clients.flatMap((client) =>
+                EXPECTED_PROVIDERS.map((provider) => {
+                  const account = accounts.find(
+                    (item) =>
+                      item.clientId === client.id && item.provider === provider,
+                  );
+                  const item = account
+                    ? integrationHealth(account, checks)
+                    : null;
+                  return (
+                    <tr
+                      key={`${client.id}-${provider}`}
+                      className="border-b border-line last:border-0 hover:bg-surface-2"
+                    >
+                      <td className="px-4 py-3 font-semibold text-ink">
+                        {client.name}
+                      </td>
+                      <td className="px-3 py-3 text-muted">
+                        {PROVIDER_LABEL[provider]}
+                      </td>
+                      <td className="px-3 py-3">
+                        <Badge
+                          variant={
+                            !item
+                              ? "neutral"
+                              : item.status === "healthy"
+                                ? "brand"
+                                : item.status === "error"
+                                  ? "danger"
+                                  : "warning"
+                          }
+                          dot
+                        >
+                          {item?.label ?? "Não cadastrado"}
+                        </Badge>
+                      </td>
+                      <td className="px-3 py-3 text-xs text-muted">
+                        {account?.lastSyncAt ? formatSync(account.lastSyncAt) : "—"}
+                      </td>
+                      <td className="px-4 py-3 text-xs text-muted">
+                        {item?.detail ?? "Cadastre o ID desta fonte para iniciar a auditoria."}
+                      </td>
+                    </tr>
+                  );
+                }),
+              )}
+            </tbody>
+          </table>
+        </div>
+      </CardBody>
+    </Card>
+  );
+}
+
+function HealthCount({
+  label,
+  value,
+  tone,
+}: {
+  label: string;
+  value: number;
+  tone: "healthy" | "warning" | "pending" | "missing";
+}) {
+  const tones = {
+    healthy: "border-emerald-200 bg-emerald-50 text-emerald-800",
+    warning: "border-rose-200 bg-rose-50 text-rose-800",
+    pending: "border-amber-200 bg-amber-50 text-amber-800",
+    missing: "border-slate-200 bg-slate-50 text-slate-700",
+  };
+  return (
+    <div className={`rounded-[10px] border px-4 py-3 ${tones[tone]}`}>
+      <p className="text-2xl font-extrabold tabular-nums">{value}</p>
+      <p className="text-xs font-semibold">{label}</p>
+    </div>
+  );
+}
+
+function formatSync(value: string) {
+  return new Intl.DateTimeFormat("pt-BR", {
+    day: "2-digit",
+    month: "short",
+    hour: "2-digit",
+    minute: "2-digit",
+    timeZone: "America/Sao_Paulo",
+  }).format(new Date(value));
 }
 
 function ClientForm() {

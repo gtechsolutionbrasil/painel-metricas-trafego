@@ -76,7 +76,7 @@
       ],
       "parameters": {
         "method": "POST",
-        "url": "=https://googleads.googleapis.com/v21/customers/{{ $json.external_id.replace(/-/g, '') }}/googleAds:search",
+        "url": "=https://googleads.googleapis.com/v25/customers/{{ $json.external_id.replace(/-/g, '') }}/googleAds:search",
         "authentication": "predefinedCredentialType",
         "nodeCredentialType": "googleAdsOAuth2Api",
         "sendHeaders": true,
@@ -100,7 +100,7 @@
       "retryOnFail": true,
       "maxTries": 2,
       "waitBetweenTries": 5000,
-      "notes": "login-customer-id = MCC 267-295-5792. Se der 404 de versão, subir v21 -> v22+ na URL.",
+      "notes": "login-customer-id = MCC 267-295-5792. Workflow preparado em v25; validar todas as consultas antes de ativar.",
       "credentials": {
         "googleAdsOAuth2Api": {
           "id": "tcBb8A3FKBjc2nOt",
@@ -216,7 +216,7 @@
       ],
       "parameters": {
         "method": "POST",
-        "url": "=https://googleads.googleapis.com/v21/customers/{{ $json.external_id.replace(/-/g, '') }}/googleAds:search",
+        "url": "=https://googleads.googleapis.com/v25/customers/{{ $json.external_id.replace(/-/g, '') }}/googleAds:search",
         "authentication": "predefinedCredentialType",
         "nodeCredentialType": "googleAdsOAuth2Api",
         "sendHeaders": true,
@@ -321,7 +321,7 @@
       ],
       "parameters": {
         "method": "POST",
-        "url": "=https://googleads.googleapis.com/v21/customers/{{ $json.external_id.replace(/-/g, '') }}/googleAds:search",
+        "url": "=https://googleads.googleapis.com/v25/customers/{{ $json.external_id.replace(/-/g, '') }}/googleAds:search",
         "authentication": "predefinedCredentialType",
         "nodeCredentialType": "googleAdsOAuth2Api",
         "sendHeaders": true,
@@ -426,7 +426,7 @@
       ],
       "parameters": {
         "method": "POST",
-        "url": "=https://googleads.googleapis.com/v21/customers/{{ $('Buscar contas Google Ads').item.json.external_id.replace(/-/g, '') }}/googleAds:search",
+        "url": "=https://googleads.googleapis.com/v25/customers/{{ $('Buscar contas Google Ads').item.json.external_id.replace(/-/g, '') }}/googleAds:search",
         "authentication": "predefinedCredentialType",
         "nodeCredentialType": "googleAdsOAuth2Api",
         "sendHeaders": true,
@@ -444,7 +444,7 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ query: \"SELECT segments.date, campaign.name, segments.conversion_action, segments.conversion_action_name, segments.conversion_action_category, metrics.conversions FROM campaign WHERE segments.date DURING LAST_30_DAYS AND metrics.conversions > 0\".replaceAll(\"DURING LAST_30_DAYS\", \"BETWEEN '\" + $now.minus({ days: 30 }).toFormat('yyyy-MM-dd') + \"' AND '\" + $now.toFormat('yyyy-MM-dd') + \"'\") }) }}",
+        "jsonBody": "={{ JSON.stringify({ query: \"SELECT segments.date, campaign.name, segments.conversion_action, segments.conversion_action_name, segments.conversion_action_category, metrics.conversions, metrics.all_conversions FROM campaign WHERE segments.date DURING LAST_30_DAYS AND metrics.all_conversions > 0\".replaceAll(\"DURING LAST_30_DAYS\", \"BETWEEN '\" + $now.minus({ days: 30 }).toFormat('yyyy-MM-dd') + \"' AND '\" + $now.toFormat('yyyy-MM-dd') + \"'\") }) }}",
         "options": {}
       },
       "credentials": {
@@ -453,7 +453,7 @@
           "name": "Google Ads account"
         }
       },
-      "notes": "Qual ação gerou cada conversão (WhatsApp, formulário, ligação...).",
+      "notes": "Qual ação gerou cada resultado. conversions = meta de lance; all_conversions = total reportado, incluindo ações locais e secundárias.",
       "onError": "continueRegularOutput",
       "retryOnFail": true,
       "maxTries": 2,
@@ -470,7 +470,7 @@
       ],
       "parameters": {
         "mode": "runOnceForAllItems",
-        "jsCode": "// 1 item = resposta googleAds:search (segments.conversion_action_*) de UMA conta.\n// Enriquece cada linha com a ORIGEM da ação (site vs Google), cruzando o\n// resource_name da conversão com a metadata de 'GAQL Origem das ações'.\n// Mapa GLOBAL resourceName -> origin (junta todas as contas; resource_name\n// é único global, então não depende da ordem dos items).\nconst originByResource = {};\nfor (const it of $('GAQL Origem das ações').all()) {\n  for (const r of it.json.results ?? []) {\n    const ca = r.conversionAction;\n    if (ca?.resourceName) {\n      originByResource[ca.resourceName] = ca.origin ?? 'UNKNOWN';\n    }\n  }\n}\nconst rows = [];\nfor (let i = 0; i < items.length; i++) {\n  const resp = items[i].json;\n  const conta = $('Buscar contas Google Ads').itemMatching(i).json;\n  for (const r of resp.results ?? []) {\n    const resource = r.segments?.conversionAction;\n    rows.push({\n      client_id: conta.client_id,\n      account_external_id: String(conta.external_id),\n      platform: 'google',\n      date: r.segments?.date,\n      campaign: r.campaign?.name ?? '(sem nome)',\n      action_name: r.segments?.conversionActionName ?? '(sem nome)',\n      action_category: r.segments?.conversionActionCategory ?? '',\n      origin: (resource && originByResource[resource]) || 'UNKNOWN',\n      conversions: Number(r.metrics?.conversions ?? 0),\n    });\n  }\n}\nif (rows.length === 0) {\n  return []; // nada a gravar\n}\nreturn [{ json: { rows, total: rows.length } }];"
+        "jsCode": "// 1 item = resposta googleAds:search (segments.conversion_action_*) de UMA conta.\n// Enriquece cada linha com a ORIGEM da ação (site vs Google), cruzando o\n// resource_name da conversão com a metadata de 'GAQL Origem das ações'.\n// Mapa GLOBAL resourceName -> origin (junta todas as contas; resource_name\n// é único global, então não depende da ordem dos items).\nconst originByResource = {};\nfor (const it of $('GAQL Origem das ações').all()) {\n  for (const r of it.json.results ?? []) {\n    const ca = r.conversionAction;\n    if (ca?.resourceName) {\n      originByResource[ca.resourceName] = ca.origin ?? 'UNKNOWN';\n    }\n  }\n}\nconst rows = [];\nfor (let i = 0; i < items.length; i++) {\n  const resp = items[i].json;\n  const conta = $('Buscar contas Google Ads').itemMatching(i).json;\n  for (const r of resp.results ?? []) {\n    const resource = r.segments?.conversionAction;\n    rows.push({\n      client_id: conta.client_id,\n      account_external_id: String(conta.external_id),\n      platform: 'google',\n      date: r.segments?.date,\n      campaign: r.campaign?.name ?? '(sem nome)',\n      action_name: r.segments?.conversionActionName ?? '(sem nome)',\n      action_category: r.segments?.conversionActionCategory ?? '',\n      origin: (resource && originByResource[resource]) || 'UNKNOWN',\n      conversions: Number(r.metrics?.conversions ?? 0),\n      all_conversions: Number(r.metrics?.allConversions ?? r.metrics?.conversions ?? 0),\n    });\n  }\n}\nif (rows.length === 0) {\n  return []; // nada a gravar\n}\nreturn [{ json: { rows, total: rows.length } }];"
       }
     },
     {
@@ -531,7 +531,7 @@
       ],
       "parameters": {
         "method": "POST",
-        "url": "=https://googleads.googleapis.com/v21/customers/{{ $json.external_id.replace(/-/g, '') }}/googleAds:search",
+        "url": "=https://googleads.googleapis.com/v25/customers/{{ $json.external_id.replace(/-/g, '') }}/googleAds:search",
         "authentication": "predefinedCredentialType",
         "nodeCredentialType": "googleAdsOAuth2Api",
         "sendHeaders": true,
@@ -589,7 +589,7 @@
       ],
       "parameters": {
         "method": "POST",
-        "url": "=https://googleads.googleapis.com/v21/customers/{{ $json.customer }}/googleAds:search",
+        "url": "=https://googleads.googleapis.com/v25/customers/{{ $json.customer }}/googleAds:search",
         "authentication": "predefinedCredentialType",
         "nodeCredentialType": "googleAdsOAuth2Api",
         "sendHeaders": true,
@@ -694,7 +694,7 @@
       ],
       "parameters": {
         "method": "POST",
-        "url": "=https://googleads.googleapis.com/v21/customers/{{ $json.external_id.replace(/-/g, '') }}/googleAds:search",
+        "url": "=https://googleads.googleapis.com/v25/customers/{{ $json.external_id.replace(/-/g, '') }}/googleAds:search",
         "authentication": "predefinedCredentialType",
         "nodeCredentialType": "googleAdsOAuth2Api",
         "sendHeaders": true,
@@ -738,7 +738,7 @@
       ],
       "parameters": {
         "method": "POST",
-        "url": "=https://googleads.googleapis.com/v21/customers/{{ $json.external_id.replace(/-/g, '') }}/googleAds:search",
+        "url": "=https://googleads.googleapis.com/v25/customers/{{ $json.external_id.replace(/-/g, '') }}/googleAds:search",
         "authentication": "predefinedCredentialType",
         "nodeCredentialType": "googleAdsOAuth2Api",
         "sendHeaders": true,
@@ -844,7 +844,7 @@
       ],
       "parameters": {
         "method": "POST",
-        "url": "=https://googleads.googleapis.com/v21/customers/{{ $json.external_id.replace(/-/g, '') }}/googleAds:search",
+        "url": "=https://googleads.googleapis.com/v25/customers/{{ $json.external_id.replace(/-/g, '') }}/googleAds:search",
         "authentication": "predefinedCredentialType",
         "nodeCredentialType": "googleAdsOAuth2Api",
         "sendHeaders": true,
@@ -950,7 +950,7 @@
       ],
       "parameters": {
         "method": "POST",
-        "url": "=https://googleads.googleapis.com/v21/customers/{{ $json.external_id.replace(/-/g, '') }}/googleAds:search",
+        "url": "=https://googleads.googleapis.com/v25/customers/{{ $json.external_id.replace(/-/g, '') }}/googleAds:search",
         "authentication": "predefinedCredentialType",
         "nodeCredentialType": "googleAdsOAuth2Api",
         "sendHeaders": true,

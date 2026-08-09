@@ -20,7 +20,8 @@ const META_VERSION = "v21.0";
 // Credential httpHeaderAuth com "Authorization: Bearer <system-user-token>".
 const META_CRED = { id: "HOIxAoGnU2fpRgXE", name: "Meta Graph API - Painel (system user)" };
 
-// Allowlist canonica de conversao (conversas iniciadas + leads + compras).
+// Allowlist do detalhamento. O KPI principal usa SOMENTE conversa iniciada;
+// leads/pixel/compras permanecem separados em ad_conversion_actions.
 const CONVERSION_LIST = `[
     "onsite_conversion.messaging_conversation_started_7d",
     "onsite_conversion.lead_grouped",
@@ -36,11 +37,10 @@ const CONVERSION_LIST = `[
 
 // ---- Code nodes (SO transformacao, sem HTTP) -------------------------------
 const codeMetrics = `// 1 item de entrada = resposta /insights de UMA conta. Saida: 1 item {rows}.
-const CONV = new Set(${CONVERSION_LIST});
 const num = (v) => (Number.isFinite(Number(v)) ? Number(v) : 0);
 const money = (v) => Math.round(num(v) * 100) / 100;
 const sumA = (arr, pred) => (arr || []).filter((x) => pred(x.action_type)).reduce((s, x) => s + num(x.value), 0);
-const isConv = (t) => CONV.has(String(t || "").toLowerCase());
+const isConversation = (t) => String(t || "").toLowerCase() === "onsite_conversion.messaging_conversation_started_7d";
 const isRev = (t) => /purchase/.test(String(t || "").toLowerCase());
 
 const raw = [];
@@ -59,7 +59,9 @@ for (let i = 0; i < items.length; i++) {
       impressions: Math.round(num(r.impressions)),
       reach: Math.round(num(r.reach)),
       clicks: Math.round(num(r.clicks)),
-      conversions: Math.round(sumA(r.actions, isConv)),
+      // Métrica canônica do painel Meta: conversa iniciada. Não somar com
+      // lead/pixel/compra, pois os mesmos usuários podem aparecer em várias ações.
+      conversions: Math.round(sumA(r.actions, isConversation)),
       revenue: money(sumA(r.action_values, isRev)),
       search_impression_share: null,
     });

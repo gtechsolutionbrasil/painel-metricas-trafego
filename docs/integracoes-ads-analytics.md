@@ -103,7 +103,8 @@ Para o painel, cada cliente/site precisa mapear:
 - `account_external_id` nas linhas de `web_metrics` usando esse property ID
 - `gtm_container_id` (para auditoria, não para métrica diária)
 - domínio do site
-- eventos considerados conversão: lead, whatsapp, phone, route, purchase etc.
+- eventos esperados e sua classe: WhatsApp/formulário/ligação são contatos;
+  rota é intenção local e não entra no mesmo total.
 
 O GTM entra na página de **Integrações** como status/auditoria de tracking:
 container instalado, eventos publicados e tags disparando. A aba **GA4 / Sites**
@@ -133,19 +134,20 @@ para cada cliente.
    - credencial: OAuth/service account no n8n
    - entrada: integrações `provider = 'ga4'`
    - consulta: GA4 Data API por dia/origem/mídia e eventos
-   - saída: upsert em `web_metrics` com `account_external_id`
+   - saída: upsert em `web_metrics`, `web_events` e `tracking_checks` com
+     `account_external_id`
 
 O GTM entra como fonte de auditoria de tracking. Ele não entrega as métricas
 diárias do painel; ele dispara eventos que depois aparecem em GA4, Google Ads e
 Meta quando as tags estão corretas.
 
-O painel atual já separa tráfego pago por plataforma e GA4/sites por origem.
-A próxima evolução recomendada é adicionar uma camada de integrações e qualidade
-de tracking.
+O painel separa tráfego pago por plataforma e GA4/sites por origem. A camada de
+qualidade de tracking está preparada no código local; migration e workflows
+ainda dependem dos gates de publicação.
 
-## Mudança sugerida para o produto
+## Camada operacional preparada
 
-Criar uma página **Integrações** por cliente com:
+A página **Integrações** por cliente passa a mostrar:
 
 - status Google Ads, Meta Ads, GA4 e GTM;
 - IDs conectados (`customer_id`, `ad_account_id`, `property_id`, container GTM);
@@ -153,7 +155,7 @@ Criar uma página **Integrações** por cliente com:
 - alerta de tracking quebrado, por exemplo evento GA4 sem conversão no Ads;
 - checklist de eventos: WhatsApp, formulário, ligação, rota, compra.
 
-Depois, criar uma página **Conversões do site** mostrando eventos por canal:
+A página **Sites** mostra eventos por canal:
 
 - WhatsApp clicks
 - formulários enviados
@@ -161,8 +163,8 @@ Depois, criar uma página **Conversões do site** mostrando eventos por canal:
 - cliques em rota/como chegar
 - compras ou leads qualificados
 
-Assim o painel deixa de mostrar só "mídia" e passa a mostrar a jornada completa:
-investimento -> clique -> sessão -> evento -> lead/conversão.
+O mini-CRM acrescenta a etapa que a mídia não confirma sozinha:
+investimento -> clique -> sessão -> evento -> lead -> orçamento -> venda.
 
 ## Estado implementado no painel
 
@@ -170,10 +172,16 @@ O painel já possui uma primeira versão operacional:
 
 - barra superior com filtros de cliente, fonte de dados, origem paga
   (Google Ads/Meta Ads) e período;
-- página **GA4 / Sites** para sessões, usuários, origem/mídia e métricas web
-  vindas do GA4;
+- página **Sites** para sessões, origem/mídia, eventos e métricas web vindas do
+  GA4, sem somar usuários agregados como se fossem únicos;
 - página **Clientes e integrações** para cadastrar cliente e IDs de Google Ads,
   Meta Ads, GA4 e GTM, deixando claro que credenciais ficam no n8n;
 - tabela `integration_accounts`;
 - campo `account_external_id` em `ad_metrics` e `web_metrics` para o n8n
-  permitir filtro por fonte.
+  permitir filtro por fonte;
+- visão geral sem um total misturando Meta, Google e GA4;
+- mini-CRM com funil e histórico de status;
+- checks de eventos e última sincronização no quadro de Integrações.
+
+Consulte o [plano de publicação](plano-publicacao-tracking-madeireira.md) e o
+[padrão de UTMs](utm-padrao.md).

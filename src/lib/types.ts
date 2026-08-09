@@ -147,6 +147,78 @@ export type WebMetric = {
   avgDuration: number; // segundos
 };
 
+export type WebEventMetric = {
+  clientId: string;
+  accountExternalId?: string;
+  date: string;
+  eventName: string;
+  source: string;
+  medium: string;
+  campaign: string;
+  eventCount: number;
+  keyEvents: number;
+  users: number;
+};
+
+export type TrackingCheckStatus =
+  | "healthy"
+  | "warning"
+  | "error"
+  | "pending";
+
+export type TrackingCheck = {
+  id: number;
+  clientId: string;
+  provider: IntegrationProvider;
+  checkKey: string;
+  status: TrackingCheckStatus;
+  value?: string | null;
+  message?: string | null;
+  checkedAt: string;
+};
+
+export type LeadStatus =
+  | "new"
+  | "contacted"
+  | "qualified"
+  | "quote"
+  | "won"
+  | "lost";
+
+export type LeadChannel =
+  | "whatsapp"
+  | "meta_conversation"
+  | "form"
+  | "phone_call"
+  | "manual";
+
+export type LeadSource =
+  | "google_ads"
+  | "meta_ads"
+  | "site"
+  | "organic"
+  | "direct"
+  | "referral"
+  | "manual"
+  | "other";
+
+export type Lead = {
+  id: string;
+  clientId: string;
+  occurredAt: string;
+  name?: string | null;
+  phone?: string | null;
+  email?: string | null;
+  channel: LeadChannel;
+  source: LeadSource;
+  status: LeadStatus;
+  campaign?: string | null;
+  value?: number | null;
+  notes?: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
 // Janela de período selecionada no topo do painel.
 export type DateRange = {
   from: string; // YYYY-MM-DD

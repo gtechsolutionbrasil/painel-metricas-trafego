@@ -64,7 +64,6 @@ export default async function RelatorioPage({
   const google = data.platforms.find((p) => p.platform === "google");
   const meta = data.platforms.find((p) => p.platform === "meta");
   const maxWeek = Math.max(1, ...data.weeks.map((w) => w.total));
-  const totalContatos = data.contactRows.reduce((s, r) => s + r.total, 0);
 
   // O servidor renderiza tudo que TEM DADO; o que o gestor desligou some por
   // CSS (data-off), sem recarregar a página a cada clique.
@@ -156,15 +155,25 @@ export default async function RelatorioPage({
                   Valor pago às plataformas pelos anúncios no período.
                 </span>
               </div>
-              {data.totals.contacts > 0 && (
+              {data.totals.googleContacts > 0 && (
                 <div className="rel-cifra">
-                  <span className="rotulo">Contatos diretos</span>
+                  <span className="rotulo">Contatos Google</span>
                   <span className="valor verde">
-                    {fmtInt(data.totals.contacts)}
+                    {fmtInt(data.totals.googleContacts)}
                   </span>
                   <span className="nota">
-                    Pessoas que chamaram no WhatsApp ou ligaram para a loja
-                    vindas dos anúncios.
+                    WhatsApp, formulário e ligações informados pelo Google.
+                  </span>
+                </div>
+              )}
+              {data.totals.metaConversations > 0 && (
+                <div className="rel-cifra">
+                  <span className="rotulo">Conversas Meta</span>
+                  <span className="valor verde">
+                    {fmtInt(data.totals.metaConversations)}
+                  </span>
+                  <span className="nota">
+                    Conversas iniciadas atribuídas ao Instagram e Facebook.
                   </span>
                 </div>
               )}
@@ -390,27 +399,29 @@ export default async function RelatorioPage({
                   )}
                 </Etapa>
 
-                {data.totals.contacts > 0 && (
+                {(data.totals.googleContacts > 0 ||
+                  data.totals.metaConversations > 0) && (
                   <Etapa
                     numero={3}
                     titulo="Ela entra em contato com a loja"
-                    cifra={`${fmtInt(data.totals.contacts)} contatos`}
+                    cifra={`${fmtInt(data.totals.googleContacts)} Google · ${fmtInt(data.totals.metaConversations)} Meta`}
                   >
                     <p>
-                      É aqui que o anúncio vira gente falando com a loja:{" "}
-                      {data.contactRows
-                        .map(
-                          (r) => `${fmtInt(r.total)} ${r.label.toLowerCase()}`,
-                        )
-                        .join(", ")}
-                      .
+                      As plataformas atribuem por métodos diferentes. Os
+                      números aparecem lado a lado e não são somados como se
+                      representassem pessoas únicas.
                     </p>
                   </Etapa>
                 )}
 
                 {data.totals.directions > 0 && (
                   <Etapa
-                    numero={data.totals.contacts > 0 ? 4 : 3}
+                    numero={
+                      data.totals.googleContacts > 0 ||
+                      data.totals.metaConversations > 0
+                        ? 4
+                        : 3
+                    }
                     titulo="Ela procura o caminho até a loja"
                     cifra={`${fmtInt(data.totals.directions)} rotas traçadas`}
                   >
@@ -466,15 +477,27 @@ export default async function RelatorioPage({
                     nos anúncios
                   </span>
                 </div>
-                {data.totals.contacts > 0 && (
+                {data.totals.googleContacts > 0 && (
                   <div className="celula">
                     <span className="num destaque">
-                      {fmtInt(data.totals.contacts)}
+                      {fmtInt(data.totals.googleContacts)}
                     </span>
                     <span className="desc">
-                      Contatos diretos
+                      Contatos Google
                       <br />
-                      (WhatsApp e ligações)
+                      (WhatsApp, formulário e ligações)
+                    </span>
+                  </div>
+                )}
+                {data.totals.metaConversations > 0 && (
+                  <div className="celula">
+                    <span className="num destaque">
+                      {fmtInt(data.totals.metaConversations)}
+                    </span>
+                    <span className="desc">
+                      Conversas Meta
+                      <br />
+                      (Instagram e Facebook)
                     </span>
                   </div>
                 )}
@@ -495,13 +518,12 @@ export default async function RelatorioPage({
               {mostrar("contatos") && (
                 <div className="rel-tabela-wrap" data-secao="contatos">
                   <table>
-                    <caption>Detalhamento dos contatos</caption>
+                    <caption>Resultados de contato por plataforma</caption>
                     <thead>
                       <tr>
                         <th scope="col">Ação da pessoa</th>
                         {google && <th className="n">Google</th>}
                         {meta && <th className="n">Meta</th>}
-                        <th className="n">Total</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -510,11 +532,10 @@ export default async function RelatorioPage({
                           <td>{r.label}</td>
                           {google && <td className="n">{r.google || "—"}</td>}
                           {meta && <td className="n">{r.meta || "—"}</td>}
-                          <td className="n">{fmtInt(r.total)}</td>
                         </tr>
                       ))}
                       <tr className="somatorio">
-                        <td>Total de contatos diretos</td>
+                        <td>Leituras por plataforma (não somar)</td>
                         {google && (
                           <td className="n">
                             {fmtInt(
@@ -532,7 +553,6 @@ export default async function RelatorioPage({
                             )}
                           </td>
                         )}
-                        <td className="n">{fmtInt(totalContatos)}</td>
                       </tr>
                     </tbody>
                   </table>

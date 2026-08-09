@@ -15,6 +15,12 @@ export default async function DashLayout({
 
   return (
     <div className="flex min-h-screen">
+      <a
+        href="#conteudo-principal"
+        className="sr-only z-[100] rounded-md bg-ink px-4 py-2 text-sm font-bold text-white focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
+      >
+        Ir para o conteúdo
+      </a>
       <Suspense fallback={<div className="hidden w-[252px] border-r border-line bg-surface lg:block" />}>
         <Sidebar />
       </Suspense>
@@ -26,7 +32,10 @@ export default async function DashLayout({
 
         {!isSupabaseConfigured && <DemoBanner />}
 
-        <main className="mx-auto w-full max-w-[1400px] flex-1 px-4 py-6 sm:px-6 sm:py-8">
+        <main
+          id="conteudo-principal"
+          className="mx-auto w-full max-w-[1400px] flex-1 px-4 pb-24 pt-6 sm:px-6 sm:pt-8 lg:pb-8"
+        >
           {children}
         </main>
       </div>

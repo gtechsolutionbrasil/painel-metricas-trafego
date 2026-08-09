@@ -55,7 +55,6 @@ export type ReportContactRow = {
   label: string;
   google: number;
   meta: number;
-  total: number;
 };
 
 export type ReportBalance = {
@@ -77,7 +76,8 @@ export type ReportData = {
     impressions: number;
     reach: number;
     clicks: number;
-    contacts: number;
+    googleContacts: number;
+    metaConversations: number;
     directions: number;
     profileViews: number;
     profileEngagements: number;
@@ -203,14 +203,15 @@ export async function getReportData(
     .filter((p) => p.spend > 0);
 
   // Ações: cada linha entra em um dos baldes (contato, rota, site, perfil).
-  const actionTotals = { contact: 0, directions: 0, profileViews: 0, engagements: 0 };
+  const actionTotals = { googleContact: 0, directions: 0, profileViews: 0, engagements: 0 };
   const contactMap = new Map<string, { google: number; meta: number }>();
   for (const a of actions) {
     const kind = actionKind(a.actionName, a.actionCategory);
     if (kind === "ignore") continue;
     const platform = a.platform;
     if (kind === "contact") {
-      actionTotals.contact += a.conversions;
+      if (platform !== "google") continue;
+      actionTotals.googleContact += a.conversions;
       const label = actionLabel(a.actionName);
       const e = contactMap.get(label) ?? { google: 0, meta: 0 };
       e[platform] += a.conversions;
@@ -224,15 +225,24 @@ export async function getReportData(
     }
   }
 
+  // Meta usa a conversa iniciada da linha de campanha como leitura canônica.
+  // Não somamos com Google nem recontamos os vários action_types do Meta.
+  const metaConversations = sum(byPlatform("meta"), (r) => r.conversions);
+  if (metaConversations > 0) {
+    contactMap.set("Conversas iniciadas no Instagram/Facebook", {
+      google: 0,
+      meta: metaConversations,
+    });
+  }
+
   const contactRows: ReportContactRow[] = [...contactMap.entries()]
     .map(([label, v]) => ({
       label,
       google: Math.round(v.google),
       meta: Math.round(v.meta),
-      total: Math.round(v.google + v.meta),
     }))
-    .filter((r) => r.total > 0)
-    .sort((a, b) => b.total - a.total);
+    .filter((r) => r.google > 0 || r.meta > 0)
+    .sort((a, b) => Math.max(b.google, b.meta) - Math.max(a.google, a.meta));
 
   const balances: ReportBalance[] = accounts
     .filter((a) => a.provider !== "ga4" && a.balanceAvailable != null)
@@ -255,7 +265,8 @@ export async function getReportData(
       impressions: sum(ads, (r) => r.impressions),
       reach: sum(ads, (r) => r.reach),
       clicks: sum(ads, (r) => r.clicks),
-      contacts: Math.round(actionTotals.contact),
+      googleContacts: Math.round(actionTotals.googleContact),
+      metaConversations: Math.round(metaConversations),
       directions: Math.round(actionTotals.directions),
       profileViews: Math.round(actionTotals.profileViews),
       profileEngagements: Math.round(actionTotals.engagements),

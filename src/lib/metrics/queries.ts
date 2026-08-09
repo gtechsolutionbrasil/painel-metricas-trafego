@@ -18,7 +18,10 @@ import type {
   Client,
   DateRange,
   IntegrationAccount,
+  Lead,
   Platform,
+  TrackingCheck,
+  WebEventMetric,
   WebMetric,
 } from "../types";
 
@@ -48,6 +51,36 @@ type WebMetricRow = {
   pageviews: number | string;
   bounce_rate: number | string;
   avg_duration: number | string;
+};
+
+type WebEventRow = {
+  client_id: string;
+  account_external_id?: string | null;
+  date: string;
+  event_name: string;
+  source: string;
+  medium: string;
+  campaign: string;
+  event_count: number | string;
+  key_events: number | string;
+  users: number | string;
+};
+
+type LeadRow = {
+  id: string;
+  client_id: string;
+  occurred_at: string;
+  name?: string | null;
+  phone?: string | null;
+  email?: string | null;
+  channel: Lead["channel"];
+  source: Lead["source"];
+  status: Lead["status"];
+  campaign?: string | null;
+  value?: number | string | null;
+  notes?: string | null;
+  created_at: string;
+  updated_at: string;
 };
 
 // ---------------------------------------------------------------------------
@@ -194,6 +227,7 @@ async function getBreakdown(
   columns: string,
   range: DateRange,
   clientId?: string,
+  accountExternalId?: string,
 ): Promise<BreakdownRow[]> {
   if (!isSupabaseConfigured) return [];
 
@@ -206,6 +240,9 @@ async function getBreakdown(
     .lte("date", range.to)
     .range(0, MAX_METRIC_ROWS - 1);
   if (clientId) q = q.eq("client_id", clientId);
+  if (accountExternalId && accountExternalId !== "all") {
+    q = q.eq("account_external_id", accountExternalId);
+  }
 
   const { data, error } = await q;
   if (error || !data) {
@@ -218,12 +255,14 @@ async function getBreakdown(
 export async function getAdKeywords(
   range: DateRange,
   clientId?: string,
+  accountExternalId?: string,
 ): Promise<AdKeywordMetric[]> {
   const rows = await getBreakdown(
     "ad_keywords",
     "client_id, date, campaign, keyword, match_type, impressions, clicks, spend, conversions",
     range,
     clientId,
+    accountExternalId,
   );
   return rows.map((r) => ({
     clientId: String(r.client_id),
@@ -241,12 +280,14 @@ export async function getAdKeywords(
 export async function getAdGeo(
   range: DateRange,
   clientId?: string,
+  accountExternalId?: string,
 ): Promise<AdGeoMetric[]> {
   const rows = await getBreakdown(
     "ad_geo",
     "client_id, date, campaign, region, impressions, clicks, spend, conversions",
     range,
     clientId,
+    accountExternalId,
   );
   return rows
     // Linhas antigas eram por estado ("State of ..."); agora coletamos cidade.
@@ -267,12 +308,14 @@ export async function getAdGeo(
 export async function getAdClickTypes(
   range: DateRange,
   clientId?: string,
+  accountExternalId?: string,
 ): Promise<AdClickTypeMetric[]> {
   const rows = await getBreakdown(
     "ad_click_types",
     "client_id, date, campaign, click_type, clicks",
     range,
     clientId,
+    accountExternalId,
   );
   return rows.map((r) => ({
     clientId: String(r.client_id),
@@ -312,12 +355,14 @@ export async function getAdCampaigns(
 export async function getAdSearchTerms(
   range: DateRange,
   clientId?: string,
+  accountExternalId?: string,
 ): Promise<AdSearchTermMetric[]> {
   const rows = await getBreakdown(
     "ad_search_terms",
     "client_id, date, campaign, search_term, impressions, clicks, spend, conversions",
     range,
     clientId,
+    accountExternalId,
   );
   return rows.map((r) => ({
     clientId: String(r.client_id),
@@ -334,12 +379,14 @@ export async function getAdSearchTerms(
 export async function getAdGroups(
   range: DateRange,
   clientId?: string,
+  accountExternalId?: string,
 ): Promise<AdGroupMetric[]> {
   const rows = await getBreakdown(
     "ad_groups",
     "client_id, date, campaign, ad_group, impressions, clicks, spend, conversions",
     range,
     clientId,
+    accountExternalId,
   );
   return rows.map((r) => ({
     clientId: String(r.client_id),
@@ -356,12 +403,14 @@ export async function getAdGroups(
 export async function getAdConversionActions(
   range: DateRange,
   clientId?: string,
+  accountExternalId?: string,
 ): Promise<AdConversionActionMetric[]> {
   const rows = await getBreakdown(
     "ad_conversion_actions",
     "client_id, date, platform, campaign, action_name, action_category, origin, conversions, all_conversions",
     range,
     clientId,
+    accountExternalId,
   );
   return rows.map((r) => {
     const bid = Number(r.conversions);
@@ -421,6 +470,120 @@ export async function getWebMetrics(
     pageviews: Number(r.pageviews),
     bounceRate: Number(r.bounce_rate),
     avgDuration: Number(r.avg_duration),
+  }));
+}
+
+export async function getWebEvents(
+  range: DateRange,
+  clientId?: string,
+  accountExternalId?: string,
+): Promise<WebEventMetric[]> {
+  if (!isSupabaseConfigured) return [];
+
+  const supabase = await createSupabaseServerClient();
+  const accountId = accountExternalId === "all" ? undefined : accountExternalId;
+  let q = supabase
+    .from("web_events")
+    .select(
+      "client_id, account_external_id, date, event_name, source, medium, campaign, event_count, key_events, users",
+    )
+    .gte("date", range.from)
+    .lte("date", range.to)
+    .range(0, MAX_METRIC_ROWS - 1);
+  if (clientId) q = q.eq("client_id", clientId);
+  if (accountId) q = q.eq("account_external_id", accountId);
+
+  const { data, error } = await q;
+  const rows = data as WebEventRow[] | null;
+  if (error || !rows) {
+    logQueryError("getWebEvents", error);
+    return [];
+  }
+  return rows.map((r) => ({
+    clientId: r.client_id,
+    accountExternalId: r.account_external_id ?? "",
+    date: r.date,
+    eventName: r.event_name,
+    source: r.source,
+    medium: r.medium,
+    campaign: r.campaign,
+    eventCount: Number(r.event_count),
+    keyEvents: Number(r.key_events),
+    users: Number(r.users),
+  }));
+}
+
+export async function getTrackingChecks(
+  clientId?: string,
+): Promise<TrackingCheck[]> {
+  if (!isSupabaseConfigured) return [];
+
+  const supabase = await createSupabaseServerClient();
+  let q = supabase
+    .from("tracking_checks")
+    .select(
+      "id, client_id, provider, check_key, status, value, message, checked_at",
+    )
+    .order("provider")
+    .order("check_key");
+  if (clientId) q = q.eq("client_id", clientId);
+
+  const { data, error } = await q;
+  if (error || !data) {
+    logQueryError("getTrackingChecks", error);
+    return [];
+  }
+  return data.map((r) => ({
+    id: Number(r.id),
+    clientId: String(r.client_id),
+    provider: r.provider,
+    checkKey: String(r.check_key),
+    status: r.status,
+    value: r.value,
+    message: r.message,
+    checkedAt: String(r.checked_at),
+  }));
+}
+
+export async function getLeads(
+  range: DateRange,
+  clientId?: string,
+): Promise<Lead[]> {
+  if (!isSupabaseConfigured) return [];
+
+  const supabase = await createSupabaseServerClient();
+  let q = supabase
+    .from("leads")
+    .select(
+      "id, client_id, occurred_at, name, phone, email, channel, source, status, campaign, value, notes, created_at, updated_at",
+    )
+    .gte("occurred_at", `${range.from}T00:00:00-03:00`)
+    .lte("occurred_at", `${range.to}T23:59:59.999-03:00`)
+    .order("occurred_at", { ascending: false })
+    .limit(5000);
+  if (clientId) q = q.eq("client_id", clientId);
+
+  const { data, error } = await q;
+  const rows = data as LeadRow[] | null;
+  if (error || !rows) {
+    logQueryError("getLeads", error);
+    return [];
+  }
+  return rows.map((r) => ({
+    id: r.id,
+    clientId: r.client_id,
+    occurredAt: r.occurred_at,
+    name: r.name,
+    phone: r.phone,
+    email: r.email,
+    channel: r.channel,
+    source: r.source,
+    status: r.status,
+    campaign: r.campaign,
+    value: r.value == null ? null : Number(r.value),
+    notes: r.notes,
+    createdAt: r.created_at,
+    updatedAt: r.updated_at,
   }));
 }
 

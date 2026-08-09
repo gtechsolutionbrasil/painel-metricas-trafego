@@ -49,6 +49,11 @@ html {
   scroll-behavior: smooth;
 }
 
+:focus-visible {
+  outline: 3px solid var(--color-brand-border);
+  outline-offset: 2px;
+}
+
 body {
   margin: 0;
   min-height: 100vh;
@@ -58,6 +63,16 @@ body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+a,
+button,
+input,
+select,
+textarea {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: rgba(22, 163, 74, 0.14);
 }
 
 h1,
@@ -194,7 +209,7 @@ h4 {
   .input::placeholder {
     color: var(--color-faint);
   }
-  .input:focus {
+  .input:focus-visible {
     outline: none;
     border-color: var(--color-brand);
     box-shadow: 0 0 0 3px var(--color-brand-soft-2);
@@ -220,4 +235,19 @@ h4 {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-faint);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

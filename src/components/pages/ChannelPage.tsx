@@ -17,12 +17,14 @@ import { BarsChart } from "@/components/charts/BarsChart";
 import { CHART_COLORS } from "@/components/charts/theme";
 import {
   getAdCampaigns,
+  getAdConversionActions,
   getAdMetrics,
   getClients,
   getIntegrationAccounts,
   resolveClient,
 } from "@/lib/metrics/queries";
 import { adByCampaign, adByDay, adKpis } from "@/lib/metrics/aggregate";
+import { summarizeAdActions } from "@/lib/metrics/results";
 import { selectedCampaigns } from "@/lib/campaigns";
 import {
   daysAgoIso,
@@ -72,12 +74,25 @@ export async function ChannelPage({
     ? searchParams.account[0]
     : searchParams.account;
 
-  const [adsAll, adsPrevAll, campaignList, integrationAccounts] =
+  const [
+    adsAll,
+    adsPrevAll,
+    campaignList,
+    integrationAccounts,
+    actionRowsAll,
+    actionRowsPrevAll,
+  ] =
     await Promise.all([
       getAdMetrics(range, client?.id, [platform], accountExternalId),
       getAdMetrics(prev, client?.id, [platform], accountExternalId),
       getAdCampaigns(client?.id, platform),
       getIntegrationAccounts(client?.id),
+      platform === "google"
+        ? getAdConversionActions(range, client?.id, accountExternalId)
+        : Promise.resolve([]),
+      platform === "google"
+        ? getAdConversionActions(prev, client?.id, accountExternalId)
+        : Promise.resolve([]),
     ]);
 
   // Saldo da conta ("agora", independe do período selecionado no topo). Vem da
@@ -190,14 +205,36 @@ export async function ChannelPage({
   const adsPrev = filter.size
     ? adsPrevAll.filter((r) => filter.has(r.campaign))
     : adsPrevAll;
+  const actionRows = filter.size
+    ? actionRowsAll.filter((row) => filter.has(row.campaign))
+    : actionRowsAll;
+  const actionRowsPrev = filter.size
+    ? actionRowsPrevAll.filter((row) => filter.has(row.campaign))
+    : actionRowsPrevAll;
 
   const k = adKpis(ads);
   const kPrev = adKpis(adsPrev);
-  const byDay = adByDay(ads);
+  const googleResults = summarizeAdActions(actionRows);
+  const googleResultsPrev = summarizeAdActions(actionRowsPrev);
+  const resultCount = platform === "google" ? googleResults.primary : k.conversions;
+  const resultCountPrev =
+    platform === "google" ? googleResultsPrev.primary : kPrev.conversions;
+  const resultCost = resultCount ? k.spend / resultCount : 0;
+  const resultCostPrev = resultCountPrev ? kPrev.spend / resultCountPrev : 0;
+  const googleByDay = new Map(
+    googleResults.byDay.map((row) => [row.date, row.primary]),
+  );
+  const byDay = adByDay(ads).map((row) => ({
+    ...row,
+    conversions:
+      platform === "google"
+        ? (googleByDay.get(row.date) ?? 0)
+        : row.conversions,
+  }));
   const campaigns = adByCampaign(ads);
   // No Meta a conversão é "conversa iniciada" (termo do Gerenciador); no
   // Google, "conversão". Um nome só por canal, em card, gráfico e tabela.
-  const convLabel = platform === "meta" ? "Conversas" : "Conversões";
+  const convLabel = platform === "meta" ? "Conversas" : "Contatos";
   // Status por campanha (Ativo/Pausado) pra a tabela ficar no estilo do
   // Gerenciador do Meta. Ativas primeiro, depois por investimento.
   const statusByCampaign = new Map(campaignOptions.map((o) => [o.campaign, o.status]));
@@ -255,21 +292,28 @@ export async function ChannelPage({
             />
             <KpiCard
               label={convLabel}
-              value={fmtInt(k.conversions)}
+              value={fmtInt(resultCount)}
               icon={Target}
+              tone={platform === "meta" ? "indigo" : "sky"}
+              caption={
+                platform === "meta"
+                  ? "Conversas atribuídas pela Meta"
+                  : "WhatsApp + formulário + ligação"
+              }
               help={
                 platform === "meta"
                   ? "Conversas iniciadas no WhatsApp/Direct a partir do anúncio — o resultado concreto da campanha (mesmo número do Gerenciador)."
-                  : "O resultado que importa: contatos gerados (WhatsApp, formulário, ligação, rota no Maps)."
+                  : "Apenas contatos primários. Rotas, visitas à loja e visitas ao site ficam em uma leitura separada."
               }
-              trend={{ value: delta(k.conversions, kPrev.conversions) }}
+              trend={{ value: delta(resultCount, resultCountPrev) }}
             />
             <KpiCard
-              label={platform === "meta" ? "Custo por conversa" : "Custo por conversão"}
-              value={fmtCurrencyCents(k.cpl)}
+              label={platform === "meta" ? "Custo por conversa" : "Custo por contato"}
+              value={fmtCurrencyCents(resultCost)}
               icon={MousePointerClick}
-              help="Investimento ÷ resultados. Quanto MENOR, melhor — é o preço de cada contato gerado."
-              trend={{ value: delta(k.cpl, kPrev.cpl), positiveIsGood: false }}
+              tone="amber"
+              help="Investimento ÷ resultados primários. Quanto menor, melhor."
+              trend={{ value: delta(resultCost, resultCostPrev), positiveIsGood: false }}
             />
             <KpiCard
               label="CTR"
@@ -307,11 +351,18 @@ export async function ChannelPage({
               tip="Investimento ÷ cliques."
             />
             {platform === "google" && (
-              <MiniStat
-                label="Parcela de impressões"
-                value={k.impressionShare != null ? fmtPercent(k.impressionShare) : "—"}
-                tip="% das buscas em que o anúncio apareceu, de todas em que PODERIA aparecer. Baixo = perdendo espaço por orçamento/lance."
-              />
+              <>
+                <MiniStat
+                  label="Intenções locais"
+                  value={fmtInt(googleResults.localIntent)}
+                  tip="Pedidos de rota e visitas à loja. São sinais fortes, mas não entram em Contatos."
+                />
+                <MiniStat
+                  label="Parcela de impressões"
+                  value={k.impressionShare != null ? fmtPercent(k.impressionShare) : "—"}
+                  tip="% das buscas em que o anúncio apareceu, de todas em que poderia aparecer."
+                />
+              </>
             )}
           </div>
 
@@ -343,7 +394,7 @@ export async function ChannelPage({
                 subtitle={
                   platform === "meta"
                     ? "Conversas no WhatsApp/Direct iniciadas pelo anúncio"
-                    : "Leads, WhatsApp e formulários gerados"
+                    : "WhatsApp, formulários e ligações — sem rotas/visitas"
                 }
               />
               <CardBody>
@@ -380,13 +431,22 @@ export async function ChannelPage({
                     <th className="px-3 py-3 text-right">CTR</th>
                     <th className="px-3 py-3 text-right">CPC</th>
                     <th className="px-3 py-3 text-right">{convLabel}</th>
-                    <th className="px-5 py-3 text-right">Custo/conv.</th>
+                    <th className="px-5 py-3 text-right">
+                      {platform === "google" ? "Custo/contato" : "Custo/conversa"}
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
                   {campaignsSorted.map((c) => {
                     const st = campaignStatus(c.campaign);
                     const active = st === "ENABLED";
+                    const campaignResults =
+                      platform === "google"
+                        ? (googleResults.byCampaign.get(c.campaign)?.primary ?? 0)
+                        : c.conversions;
+                    const campaignResultCost = campaignResults
+                      ? c.spend / campaignResults
+                      : 0;
                     return (
                     <tr
                       key={`${c.platform}-${c.campaign}`}
@@ -432,10 +492,10 @@ export async function ChannelPage({
                         {fmtCurrencyCents(c.cpc)}
                       </td>
                       <td className="px-3 py-3 text-right font-semibold text-ink">
-                        {fmtInt(c.conversions)}
+                        {fmtInt(campaignResults)}
                       </td>
                       <td className="px-5 py-3 text-right text-muted">
-                        {fmtCurrencyCents(c.cpl)}
+                        {fmtCurrencyCents(campaignResultCost)}
                       </td>
                     </tr>
                     );

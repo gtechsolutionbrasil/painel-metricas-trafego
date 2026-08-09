@@ -1,13 +1,16 @@
 import Link from "next/link";
 import {
   ArrowRight,
+  CircleAlert,
   DollarSign,
   Globe,
-  MousePointerClick,
+  MapPinned,
+  MessageCircleMore,
+  PhoneCall,
   PlugZap,
   Search,
-  Share2,
-  Target,
+  ShieldCheck,
+  UsersRound,
 } from "lucide-react";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { KpiCard } from "@/components/ui/KpiCard";
@@ -17,66 +20,108 @@ import { Badge } from "@/components/ui/Badge";
 import { TrendAreaChart } from "@/components/charts/TrendAreaChart";
 import { CHART_COLORS } from "@/components/charts/theme";
 import {
+  getAdConversionActions,
   getAdMetrics,
-  getWebMetrics,
   getClients,
+  getIntegrationAccounts,
+  getLeads,
+  getTrackingChecks,
+  getWebEvents,
+  getWebMetrics,
   resolveClient,
 } from "@/lib/metrics/queries";
 import { adByPlatform, adKpis, webKpis } from "@/lib/metrics/aggregate";
-import { previousRange, rangeFromSearch, delta } from "@/lib/range";
-import { fmtCurrency, fmtCurrencyCents, fmtInt } from "@/lib/format";
+import {
+  integrationHealth,
+  RESULT_LABELS,
+  summarizeAdActions,
+  summarizeWebEvents,
+} from "@/lib/metrics/results";
+import { delta, previousRange, rangeFromSearch } from "@/lib/range";
+import { fmtCurrency, fmtInt, fmtPercent } from "@/lib/format";
 
 type SP = Promise<Record<string, string | string[] | undefined>>;
 
-export default async function OverviewPage({
-  searchParams,
-}: {
-  searchParams: SP;
-}) {
+export default async function OverviewPage({ searchParams }: { searchParams: SP }) {
   const sp = await searchParams;
   const { range } = rangeFromSearch(sp);
   const prev = previousRange(range);
-
   const clients = await getClients();
   const client = resolveClient(clients, sp.client);
   const cid = client?.id;
-  const accountExternalId = Array.isArray(sp.account) ? sp.account[0] : sp.account;
+  const accountExternalId = first(sp.account);
 
-  const [ads, adsPrev, web, webPrev] = await Promise.all([
+  const [
+    ads,
+    adsPrev,
+    web,
+    googleActions,
+    googleActionsPrev,
+    webEvents,
+    webEventsPrev,
+    accounts,
+    checks,
+    leads,
+  ] = await Promise.all([
     getAdMetrics(range, cid, undefined, accountExternalId),
     getAdMetrics(prev, cid, undefined, accountExternalId),
     getWebMetrics(range, cid, accountExternalId),
-    getWebMetrics(prev, cid, accountExternalId),
+    getAdConversionActions(range, cid, accountExternalId),
+    getAdConversionActions(prev, cid, accountExternalId),
+    getWebEvents(range, cid, accountExternalId),
+    getWebEvents(prev, cid, accountExternalId),
+    getIntegrationAccounts(cid),
+    getTrackingChecks(cid),
+    getLeads(range, cid),
   ]);
 
-  const k = adKpis(ads);
-  const kPrev = adKpis(adsPrev);
-  const w = webKpis(web);
-  const wPrev = webKpis(webPrev);
-
+  const paid = adKpis(ads);
+  const paidPrev = adKpis(adsPrev);
+  const site = webKpis(web);
   const platforms = adByPlatform(ads);
-  const google = platforms.find((p) => p.platform === "google");
-  const meta = platforms.find((p) => p.platform === "meta");
+  const platformsPrev = adByPlatform(adsPrev);
+  const google = platforms.find((item) => item.platform === "google");
+  const meta = platforms.find((item) => item.platform === "meta");
+  const metaPrev = platformsPrev.find((item) => item.platform === "meta");
+  const googleResults = summarizeAdActions(googleActions);
+  const googleResultsPrev = summarizeAdActions(googleActionsPrev);
+  const siteEvents = summarizeWebEvents(webEvents);
+  const siteEventsPrev = summarizeWebEvents(webEventsPrev);
+  const health = accounts.map((account) => integrationHealth(account, checks));
+  const healthy = health.filter((item) => item.status === "healthy").length;
+  const alerts = health.filter((item) => item.status !== "healthy").length;
+  const unknownTraffic = unknownTrafficShare(web);
 
-  // Série diária POR CANAL (Google × Meta lado a lado). A Visão geral compara
-  // canais — o detalhe de cada um vive em /google e /meta, sem repetir gráfico.
-  const byDayPlatform = (() => {
+  const byDay = (() => {
     const map = new Map<
       string,
-      { date: string; google: number; meta: number; googleConv: number; metaConv: number }
+      { date: string; googleSpend: number; metaSpend: number; googleContacts: number; metaConversations: number }
     >();
-    for (const r of ads) {
-      const p =
-        map.get(r.date) ??
-        { date: r.date, google: 0, meta: 0, googleConv: 0, metaConv: 0 };
-      if (r.platform === "google") {
-        p.google += r.spend;
-        p.googleConv += r.conversions;
-      } else {
-        p.meta += r.spend;
-        p.metaConv += r.conversions;
+    for (const row of ads) {
+      const item = map.get(row.date) ?? {
+        date: row.date,
+        googleSpend: 0,
+        metaSpend: 0,
+        googleContacts: 0,
+        metaConversations: 0,
+      };
+      if (row.platform === "google") item.googleSpend += row.spend;
+      if (row.platform === "meta") {
+        item.metaSpend += row.spend;
+        item.metaConversations += row.conversions;
       }
-      map.set(r.date, p);
+      map.set(row.date, item);
+    }
+    for (const row of googleResults.byDay) {
+      const item = map.get(row.date) ?? {
+        date: row.date,
+        googleSpend: 0,
+        metaSpend: 0,
+        googleContacts: 0,
+        metaConversations: 0,
+      };
+      item.googleContacts += row.primary;
+      map.set(row.date, item);
     }
     return [...map.values()].sort((a, b) => a.date.localeCompare(b.date));
   })();
@@ -85,90 +130,151 @@ export default async function OverviewPage({
     <div className="space-y-6">
       <PageHeader
         title="Visão geral"
-        subtitle={`Resumo de todos os canais · ${client ? client.name : "Todos os clientes"}`}
+        subtitle={`Resultados comerciais, intenção local e tráfego · ${client ? client.name : "Todos os clientes"}`}
       />
 
-      {/* O essencial do período */}
-      <div className="grid grid-cols-2 gap-4 xl:grid-cols-4">
+      <div className="flex items-start gap-3 rounded-[12px] border border-sky-200 bg-sky-50 px-4 py-3 text-sm text-sky-950">
+        <CircleAlert size={18} className="mt-0.5 shrink-0 text-sky-700" aria-hidden="true" />
+        <p>
+          <strong>Google, Meta e GA4 não representam pessoas únicas.</strong>{" "}
+          Compare as fontes lado a lado e confirme os contatos reais no CRM;
+          não some os três números para calcular clientes.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-5">
         <KpiCard
-          label="Investimento"
-          value={fmtCurrency(k.spend)}
+          label="Investimento total"
+          value={fmtCurrency(paid.spend)}
           icon={DollarSign}
-          hint="total em anúncios"
-          trend={{ value: delta(k.spend, kPrev.spend) }}
+          tone="brand"
+          caption="Google Ads + Meta Ads"
+          help="Dinheiro investido nas duas plataformas no período."
+          trend={{ value: delta(paid.spend, paidPrev.spend) }}
         />
         <KpiCard
-          label="Conversões"
-          value={fmtInt(k.conversions)}
-          icon={Target}
-          hint="contatos: lead, WhatsApp, formulário"
-          trend={{ value: delta(k.conversions, kPrev.conversions) }}
+          label="Conversas Meta"
+          value={fmtInt(meta?.conversions ?? 0)}
+          icon={MessageCircleMore}
+          tone="indigo"
+          caption="Relatadas pela Meta Ads"
+          help="Conversas iniciadas no WhatsApp/Direct atribuídas pela Meta."
+          trend={{ value: delta(meta?.conversions ?? 0, metaPrev?.conversions ?? 0) }}
         />
         <KpiCard
-          label="Custo por conversão"
-          value={fmtCurrencyCents(k.cpl)}
-          icon={MousePointerClick}
-          hint="investimento ÷ conversões"
-          trend={{ value: delta(k.cpl, kPrev.cpl), positiveIsGood: false }}
+          label="Contatos Google"
+          value={fmtInt(googleResults.primary)}
+          icon={PhoneCall}
+          tone="sky"
+          caption="WhatsApp + formulário + ligação"
+          help="Ações primárias informadas pelo Google Ads. Rotas e visitas à loja ficam fora deste número."
+          trend={{ value: delta(googleResults.primary, googleResultsPrev.primary) }}
         />
         <KpiCard
-          label="Visitas no site"
-          value={fmtInt(w.sessions)}
+          label="Eventos de contato no site"
+          value={webEvents.length ? fmtInt(siteEvents.primary) : "Aguardando coleta"}
           icon={Globe}
-          trend={{ value: delta(w.sessions, wPrev.sessions) }}
+          tone="amber"
+          caption="Ações recebidas pelo GA4"
+          help="Cliques no WhatsApp/telefone e formulários confirmados no site. Não são pessoas únicas e podem se sobrepor ao Google."
+          trend={
+            webEvents.length
+              ? { value: delta(siteEvents.primary, siteEventsPrev.primary) }
+              : undefined
+          }
+        />
+        <KpiCard
+          label="Leads no CRM"
+          value={fmtInt(leads.length)}
+          icon={UsersRound}
+          tone="brand"
+          caption="Pessoas/negócios registrados"
+          help="É a confirmação operacional. Compare com as plataformas para identificar perdas e duplicidades; não é preenchido automaticamente nesta versão."
         />
       </div>
 
-      {/* Um card por canal, clicável */}
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+        <SignalCard
+          title="O que conta como contato"
+          subtitle="Somente ações comerciais primárias"
+          icon={<PhoneCall size={18} />}
+          tone="sky"
+          rows={[
+            ["Google · WhatsApp", googleResults.byKind.whatsapp],
+            ["Google · Formulários", googleResults.byKind.form],
+            ["Google · Ligações", googleResults.byKind.phone],
+            ["Meta · Conversas", meta?.conversions ?? 0],
+          ]}
+        />
+        <SignalCard
+          title="Intenção local"
+          subtitle="Interesse forte, mas ainda não é contato"
+          icon={<MapPinned size={18} />}
+          tone="amber"
+          rows={[
+            ["Google · Pedidos de rota", googleResults.byKind.directions],
+            ["Site/GA4 · Cliques em rota", siteEvents.byKind.directions],
+            [RESULT_LABELS.store_visit, googleResults.byKind.store_visit],
+            [RESULT_LABELS.website_visit, googleResults.byKind.website_visit],
+          ]}
+        />
+        <SignalCard
+          title="Site e qualidade do dado"
+          subtitle="Comportamento e confiança da medição"
+          icon={<ShieldCheck size={18} />}
+          tone={alerts ? "rose" : "brand"}
+          rows={[
+            ["Sessões", site.sessions],
+            ["Páginas vistas", site.pageviews],
+            ["Tráfego sem origem", `${fmtPercent(unknownTraffic)}`],
+            ["Integrações saudáveis", `${healthy}/${health.length || 0}`],
+          ]}
+          footer={alerts ? `${alerts} integração(ões) pedem atenção.` : "Coletas recentes e sem alertas."}
+          href="/clientes"
+        />
+      </div>
+
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
         <ChannelSummary
           href="/google"
           sp={sp}
           icon={<Search size={17} />}
           name="Google Ads"
-          description="Anúncios na pesquisa"
+          description="Pesquisa, Maps e rede Google"
           headline={google ? fmtCurrency(google.spend) : "—"}
-          detail={google ? platformDetail(google) : "Sem dados no período"}
+          detail={`${fmtInt(googleResults.primary)} contatos · ${fmtInt(googleResults.localIntent)} intenções locais`}
         />
         <ChannelSummary
           href="/meta"
           sp={sp}
-          icon={<Share2 size={17} />}
+          icon={<MessageCircleMore size={17} />}
           name="Meta Ads"
           description="Facebook e Instagram"
           headline={meta ? fmtCurrency(meta.spend) : "—"}
-          detail={meta ? platformDetail(meta) : "Sem dados no período"}
+          detail={`${fmtInt(meta?.conversions ?? 0)} conversas atribuídas`}
         />
         <ChannelSummary
           href="/site"
           sp={sp}
           icon={<Globe size={17} />}
-          name="Sites"
-          description="Visitas e comportamento"
-          headline={fmtInt(w.sessions)}
-          detail={
-            w.sessions
-              ? `${fmtInt(w.users)} visitantes no período`
-              : "Sem dados no período"
-          }
+          name="Site / GA4"
+          description="Sessões, páginas e eventos"
+          headline={fmtInt(site.sessions)}
+          detail={`${fmtInt(site.pageviews)} páginas vistas · ${fmtPercent(unknownTraffic)} sem origem`}
         />
       </div>
 
-      {/* Evolução do período */}
-      {ads.length === 0 && web.length === 0 ? (
+      {ads.length === 0 && web.length === 0 && webEvents.length === 0 ? (
         <EmptyState
           icon={PlugZap}
           title="Ainda não há dados neste período"
           description={
             <>
-              Confira se as contas estão conectadas em{" "}
-              <Link
-                href="/clientes"
-                className="font-semibold text-brand-ink underline"
-              >
+              Confira a saúde das fontes em{" "}
+              <Link href="/clientes" className="font-semibold text-brand-ink underline">
                 Integrações
               </Link>{" "}
-              ou selecione outro período/cliente acima.
+              ou selecione outro período/cliente.
             </>
           }
         />
@@ -177,52 +283,31 @@ export default async function OverviewPage({
           <Card>
             <CardHeader
               title="Investimento por canal"
-              subtitle="Google × Meta, dia a dia — onde o dinheiro está indo"
+              subtitle="Quanto foi investido em Google e Meta a cada dia"
             />
             <CardBody>
               <TrendAreaChart
-                data={byDayPlatform}
+                data={byDay}
                 yFormat="compact"
                 series={[
-                  {
-                    key: "google",
-                    label: "Google Ads",
-                    color: CHART_COLORS.sky,
-                    format: "currency",
-                  },
-                  {
-                    key: "meta",
-                    label: "Meta Ads",
-                    color: CHART_COLORS.indigo,
-                    format: "currency",
-                  },
+                  { key: "googleSpend", label: "Google Ads", color: CHART_COLORS.sky, format: "currency" },
+                  { key: "metaSpend", label: "Meta Ads", color: CHART_COLORS.indigo, format: "currency" },
                 ]}
               />
             </CardBody>
           </Card>
-
           <Card>
             <CardHeader
-              title="Conversões por canal"
-              subtitle="Google × Meta, dia a dia — qual canal gera mais contato"
+              title="Resultados atribuídos por plataforma"
+              subtitle="Contatos Google × conversas Meta — compare, não some"
             />
             <CardBody>
               <TrendAreaChart
-                data={byDayPlatform}
+                data={byDay}
                 yFormat="compact"
                 series={[
-                  {
-                    key: "googleConv",
-                    label: "Google Ads",
-                    color: CHART_COLORS.sky,
-                    format: "int",
-                  },
-                  {
-                    key: "metaConv",
-                    label: "Meta Ads",
-                    color: CHART_COLORS.indigo,
-                    format: "int",
-                  },
+                  { key: "googleContacts", label: "Contatos Google", color: CHART_COLORS.sky, format: "int" },
+                  { key: "metaConversations", label: "Conversas Meta", color: CHART_COLORS.indigo, format: "int" },
                 ]}
               />
             </CardBody>
@@ -233,14 +318,58 @@ export default async function OverviewPage({
   );
 }
 
-// Resumo do canal: conversões e custo por conversão (sem ROAS, a pedido).
-function platformDetail(p: { conversions: number; spend: number }) {
-  const conv = `${fmtInt(p.conversions)} conversões`;
-  if (!p.conversions) return conv;
-  return `${conv} · ${fmtCurrencyCents(p.spend / p.conversions)} por conversão`;
+function SignalCard({
+  title,
+  subtitle,
+  icon,
+  tone,
+  rows,
+  footer,
+  href,
+}: {
+  title: string;
+  subtitle: string;
+  icon: React.ReactNode;
+  tone: "brand" | "sky" | "amber" | "rose";
+  rows: Array<[string, number | string]>;
+  footer?: string;
+  href?: string;
+}) {
+  const tones = {
+    brand: "border-emerald-200 bg-emerald-50 text-emerald-700",
+    sky: "border-sky-200 bg-sky-50 text-sky-700",
+    amber: "border-amber-200 bg-amber-50 text-amber-700",
+    rose: "border-rose-200 bg-rose-50 text-rose-700",
+  };
+  return (
+    <Card>
+      <CardHeader
+        title={title}
+        subtitle={subtitle}
+        action={<span aria-hidden="true" className={`grid h-9 w-9 place-items-center rounded-[10px] border ${tones[tone]}`}>{icon}</span>}
+      />
+      <div className="divide-y divide-line px-5">
+        {rows.map(([label, value]) => (
+          <div key={label} className="flex items-center justify-between gap-3 py-3 text-sm">
+            <span className="text-muted">{label}</span>
+            <strong className="text-ink">{typeof value === "number" ? fmtInt(value) : value}</strong>
+          </div>
+        ))}
+      </div>
+      {(footer || href) && (
+        <div className="flex items-center justify-between gap-3 border-t border-line px-5 py-3 text-xs text-muted">
+          <span>{footer}</span>
+          {href && (
+            <Link href={href} className="shrink-0 font-bold text-brand-ink hover:underline">
+              Ver tracking
+            </Link>
+          )}
+        </div>
+      )}
+    </Card>
+  );
 }
 
-// Card-resumo de um canal, leva pra página dedicada mantendo os filtros.
 function ChannelSummary({
   href,
   sp,
@@ -260,21 +389,19 @@ function ChannelSummary({
 }) {
   const qs = new URLSearchParams();
   for (const [key, value] of Object.entries(sp)) {
-    // "deleted" é feedback efêmero da exclusão de cliente — não propagar.
-    if (typeof value === "string" && key !== "deleted") qs.set(key, value);
+    if (typeof value === "string" && !["deleted", "created", "updated", "error"].includes(key)) {
+      qs.set(key, value);
+    }
   }
   const suffix = qs.size ? `?${qs}` : "";
-
   return (
     <Link
       href={`${href}${suffix}`}
-      className="group rounded-2xl border border-line bg-surface p-5 shadow-[var(--shadow-card,0_1px_2px_rgba(16,24,40,0.06))] transition-all hover:-translate-y-0.5 hover:border-brand-border hover:shadow-md"
+      className="group rounded-2xl border border-line bg-surface p-5 shadow-[var(--shadow-soft)] transition-[border-color,box-shadow,transform] hover:-translate-y-0.5 hover:border-line-strong hover:shadow-md"
     >
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2.5">
-          <span className="grid h-9 w-9 place-items-center rounded-xl bg-brand-soft text-brand">
-            {icon}
-          </span>
+          <span aria-hidden="true" className="grid h-9 w-9 place-items-center rounded-xl bg-surface-2 text-ink">{icon}</span>
           <div>
             <p className="text-sm font-bold text-ink">{name}</p>
             <p className="text-xs text-faint">{description}</p>
@@ -282,18 +409,28 @@ function ChannelSummary({
         </div>
         <Badge variant="neutral">
           <span className="inline-flex items-center gap-1">
-            Ver detalhes
-            <ArrowRight
-              size={12}
-              className="transition-transform group-hover:translate-x-0.5"
-            />
+            Detalhes <ArrowRight size={12} aria-hidden="true" />
           </span>
         </Badge>
       </div>
-      <p className="mt-4 text-2xl font-extrabold tracking-tight text-ink">
-        {headline}
-      </p>
-      <p className="mt-0.5 text-xs text-muted">{detail}</p>
+      <p className="mt-4 text-2xl font-extrabold tabular-nums tracking-tight text-ink">{headline}</p>
+      <p className="mt-1 text-xs text-muted">{detail}</p>
     </Link>
   );
+}
+
+function unknownTrafficShare(rows: Awaited<ReturnType<typeof getWebMetrics>>) {
+  const total = rows.reduce((sum, row) => sum + row.sessions, 0);
+  const unknown = rows
+    .filter((row) => {
+      const source = row.source.toLowerCase();
+      const medium = row.medium.toLowerCase();
+      return source.includes("not set") || source.includes("data not available") || medium.includes("not set");
+    })
+    .reduce((sum, row) => sum + row.sessions, 0);
+  return total ? unknown / total : 0;
+}
+
+function first(value: string | string[] | undefined) {
+  return Array.isArray(value) ? value[0] : value;
 }

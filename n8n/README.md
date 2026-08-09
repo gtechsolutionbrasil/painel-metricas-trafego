@@ -1,42 +1,67 @@
 # Workflows n8n do painel
 
+Estes arquivos são versões locais preparadas. Importar, testar com dados reais
+ou ativar um workflow é uma publicação externa e depende de aprovação.
+
 ## Meta Ads -> Supabase
 
-Arquivo importavel: `n8n/meta-ads-supabase.workflow.json`.
+Arquivo importável: `n8n/meta-ads-supabase.workflow.json`.
 
-Depois de importar o workflow, abra o node **Configurar segredos** e substitua
-os placeholders pelos valores reais:
+Depois de importar, abra **Configurar segredos** e substitua os placeholders:
 
-- `SUPABASE_URL`: URL do projeto Supabase.
-- `SUPABASE_SERVICE_ROLE_KEY`: service role do Supabase.
-- `META_ACCESS_TOKEN`: token de System User da Meta com `ads_read`.
-- `META_GRAPH_API_VERSION`: opcional; padrao `v21.0`.
-- `META_DATE_PRESET`: opcional; padrao `last_30d`.
+- `SUPABASE_URL`;
+- `SUPABASE_SERVICE_ROLE_KEY`;
+- `META_ACCESS_TOKEN` com `ads_read`;
+- `META_GRAPH_API_VERSION` (opcional, padrão do workflow);
+- `META_DATE_PRESET` (opcional, padrão `last_30d`).
 
-O Code node tambem aceita as mesmas chaves em `$vars` se o plano do n8n tiver
-Variables liberado. No n8n atual do projeto, o caminho pratico e preencher o
-node **Configurar segredos**.
+O workflow lê `integration_accounts`, consulta Insights/Campaigns, faz upsert
+em `ad_metrics`, `ad_campaigns` e `ad_conversion_actions`, atualiza o status da
+integração e grava `sync_runs`.
 
-O workflow:
+O KPI `ad_metrics.conversions` usa somente conversa iniciada em até sete dias
+(`onsite_conversion.messaging_conversation_started_7d`). Leads de Pixel,
+compras e outros eventos permanecem no detalhamento, sem serem somados.
 
-1. Le `integration_accounts` com `provider=meta_ads` e status `pending`,
-   `connected` ou `error`.
-2. Consulta `/act_<id>/insights` em nivel de campanha, diario, nos ultimos 30
-   dias.
-3. Consulta `/act_<id>/campaigns` para status atual das campanhas.
-4. Faz upsert em `ad_metrics`, `ad_campaigns` e `ad_conversion_actions`.
-5. Atualiza `integration_accounts.status` para `connected` ou `error` e grava
-   uma linha em `sync_runs`.
-
-Para regenerar o JSON depois de editar o Code node:
+Para regenerar o JSON Meta depois de editar o Code node:
 
 ```bash
 npm run build:n8n:meta
 ```
 
-Notas:
+Para backfill/teste local controlado, `scripts/meta-sync.mjs` aceita
+`META_DAYS` (padrão 30; no gate inicial usar 90). As chaves devem vir somente
+do ambiente seguro, nunca da linha de comando salva no histórico.
 
-- Nenhum token deve ser commitado. No plano atual do n8n, os valores ficam no
-  node **Configurar segredos** do workflow importado.
-- O filtro de campanhas do painel considera campanha Meta `ACTIVE` como
-  `ENABLED`, para reaproveitar a UI de ativas/pausadas.
+## Google Ads -> Supabase
+
+Arquivo importável: `n8n/google-ads-supabase.workflow.json`.
+
+Os endpoints locais estão em Google Ads API **v25**. A versão anterior do
+workflow usava v21, com desativação prevista para agosto de 2026.
+
+O ramo **Conversões por ação** consulta e grava:
+
+- `metrics.conversions`: ações incluídas em “Conversões”/otimização;
+- `metrics.all_conversions`: total reportado, inclusive ações secundárias.
+
+Isso permite separar contatos, intenção local e microconversões sem perder
+ações fora da meta principal da campanha.
+
+## GA4 -> Supabase
+
+Arquivo importável: `n8n/ga4-supabase.workflow.json`.
+
+Além de sessões e páginas, coleta `whatsapp_click`, `generate_lead`,
+`phone_click` e `route_click`, com origem/mídia/campanha. Grava `web_events`,
+atualiza um `tracking_check` por evento e registra a última sincronização.
+
+## Segurança
+
+- nunca commitar tokens ou substituir placeholders nos JSONs versionados;
+- guardar a service role somente na credencial protegida do n8n;
+- importar primeiro como inativo, executar manualmente e comparar com a fonte;
+- ativar apenas depois do teste de idempotência.
+
+Ordem e critérios completos:
+[`docs/plano-publicacao-tracking-madeireira.md`](../docs/plano-publicacao-tracking-madeireira.md).

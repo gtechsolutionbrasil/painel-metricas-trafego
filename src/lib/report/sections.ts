@@ -14,7 +14,7 @@ export const REPORT_SECTIONS = [
   {
     id: "destaques",
     label: "Números do topo",
-    hint: "Investido, contatos e rotas em destaque",
+    hint: "Investido, contatos Google, conversas Meta e rotas",
     motivo: "Precisa de veiculação no período",
   },
   {
@@ -56,7 +56,7 @@ export const REPORT_SECTIONS = [
   {
     id: "contatos",
     label: "Detalhamento dos contatos",
-    hint: "Tabela de WhatsApp e ligações",
+    hint: "Google e Meta lado a lado, sem soma entre fontes",
     motivo: "Nenhum contato registrado no período",
   },
   {

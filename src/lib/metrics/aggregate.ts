@@ -227,14 +227,25 @@ export function webKpis(rows: WebMetric[]): WebKpis {
   };
 }
 
-export type WebDayPoint = { date: string; sessions: number; users: number };
+export type WebDayPoint = {
+  date: string;
+  sessions: number;
+  users: number;
+  pageviews: number;
+};
 
 export function webByDay(rows: WebMetric[]): WebDayPoint[] {
   const map = new Map<string, WebDayPoint>();
   for (const r of rows) {
-    const p = map.get(r.date) ?? { date: r.date, sessions: 0, users: 0 };
+    const p = map.get(r.date) ?? {
+      date: r.date,
+      sessions: 0,
+      users: 0,
+      pageviews: 0,
+    };
     p.sessions += r.sessions;
     p.users += r.users;
+    p.pageviews += r.pageviews;
     map.set(r.date, p);
   }
   return [...map.values()].sort((a, b) => a.date.localeCompare(b.date));

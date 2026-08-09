@@ -37,12 +37,17 @@ Google Ads)** e **GA4/sites**, com login e recorte por cliente
 
 ## Estado atual
 
-**No ar em produção.** Projeto Supabase ref `oqsjdhrwpmpdrihgbgtx`,
-migrations 0001–0005 aplicadas. Auth + RLS validados. `.env.local` configurado.
-Telas: Login, **Visão geral · Google Ads · Meta Ads · Sites · Integrações**
-(nav por canal; métricas com nomes padrão de tráfego + hints; filtro de
-campanha por página de canal; período com datas livres De/Até + atalhos;
-exclusão de cliente na página Integrações). Build OK.
+**No ar em produção (versão anterior ao redesenho de 2026-08-09).** Projeto
+Supabase ref `oqsjdhrwpmpdrihgbgtx`, migrations 0001–0013 aplicadas. Auth + RLS
+validados. `.env.local` configurado. A migration 0014, o mini-CRM, a nova
+taxonomia e os workflows atualizados estão somente locais: opção 3B do usuário,
+com aprovação obrigatória antes de cada publicação externa.
+
+**Estado local preparado:** Login, **Visão geral · Google Ads · Meta Ads ·
+Sites · CRM · Integrações**; conversões separadas em contato principal,
+conversa Meta, intenção local e microconversão; relatório sem somar Google +
+Meta; saúde de tracking; eventos GA4 por origem/campanha; mini-CRM com RLS e
+histórico. Build OK.
 **Deploy:** Vercel — `painel-metricas-trafego.vercel.app` (Auth ativo em prod,
 só 2 env vars `NEXT_PUBLIC_*`; service_role NÃO vai pro front). Subdomínio
 `painelmetricas.gtechsolutionbrasil.com.br` aguardando propagação de DNS
@@ -51,10 +56,16 @@ só 2 env vars `NEXT_PUBLIC_*`; service_role NÃO vai pro front). Subdomínio
 sessão via Supabase Admin API; role admin preservada).
 
 **Workflows n8n (`n8n.gtechsolutionbrasil.com`, tag `painel-metricas-trafego`):**
-- **GA4 → Supabase** (id `oFVQoWFdstKOZcM4`): ✅ ATIVO e testado com dado real —
+- **GA4 → Supabase** (id `oFVQoWFdstKOZcM4`): produção ✅ ATIVA na versão
+  anterior. O JSON local foi ampliado de 12 para 17 nós para gravar
+  `web_events`, `tracking_checks` e `last_sync_at`; aguarda Gate 2.
+  Na versão ativa, já foi testado com dado real e
   gravou 25 linhas reais da Madeireira (property 541643814) em `web_metrics`.
   Roda todo dia 06:00.
-- **Google Ads → Supabase** (id `Ui5tKcvG1aRmWptS`): ✅ ATIVO, 20 nós, coleta
+- **Google Ads → Supabase** (id `Ui5tKcvG1aRmWptS`): produção ✅ ATIVA na versão
+  anterior. O JSON local tem 31 nós, foi atualizado de API v21 para v25 e passa
+  a preservar `metrics.conversions` e `metrics.all_conversions`; aguarda Gate 3.
+  A versão ativa coleta
   **5 relatórios por conta** (fan-out após "Buscar contas"): campanhas
   (`ad_metrics`, agora com `search_impression_share`), palavras-chave
   (`ad_keywords` via keyword_view), tipos de clique (`ad_click_types` via
@@ -64,14 +75,10 @@ sessão via Supabase Admin API; role admin preservada).
   (execução 3136: 165 keywords + 33 click types + 13 ações + 14 regiões da
   Madeireira). Contas sem vínculo MCC não derrubam o fluxo (onError continue).
   Roda 06:30.
-- **Meta Ads → Supabase**: workflow importável preparado no repo
-  (`n8n/meta-ads-supabase.workflow.json`, gerado de
-  `n8n/meta-ads-sync-code.js`). Conta Madeireira
-  `act_1176296527286706` cadastrada em `integration_accounts` com status
-  `pending`. Como o n8n atual não tem Variables no plano, o workflow traz o
-  node **Configurar segredos** para preencher `SUPABASE_URL`,
-  `SUPABASE_SERVICE_ROLE_KEY` e `META_ACCESS_TOKEN`. Falta importar/ativar o
-  workflow e testar E2E.
+- **Meta Ads → Supabase** (id `CHPOb8H46wVXjBDw`): produção ✅ ATIVA. O JSON
+  local é gerado por `scripts/build-n8n-meta-workflow.mjs` e foi corrigido para
+  gravar em `ad_metrics.conversions` somente conversa iniciada em 7 dias;
+  leads/pixel/compras continuam separados em `ad_conversion_actions`.
 - Credenciais n8n: `Supabase - Painel Métricas` (sfp0d2ZkWr7zz5wM),
   `Google Analytics account` (I8evqpJf7UDmKsGB),
   `Google Ads account` (tcBb8A3FKBjc2nOt). OAuth client reaproveitado
@@ -211,8 +218,8 @@ dashboard Vercel + Redeploy. O dev local (localhost:3000) reflete tudo.
       06:30 após o vínculo — workflow já resiliente.
 - [ ] (histórico) Vincular contas ao MCC e cadastrar os IDs
       na página /clientes.
-- [ ] Fase 6 sugerida: página **Conversões do site** por evento/canal
-      (ver `docs/integracoes-ads-analytics.md`).
+- [~] Fase 6: página **Sites** por evento/canal + mini-CRM + saúde de tracking
+      implementados localmente em 2026-08-09; aguardam Gates 1, 2 e 7.
 - [ ] Deploy na Vercel (configurar as 3 env vars; lembrar que `NEXT_PUBLIC_*`
       são embutidas no build).
 - [x] ~~Seletor de período custom (datas)~~ (feito 2026-07-06: De/Até na Topbar).
@@ -264,6 +271,21 @@ dashboard Vercel + Redeploy. O dev local (localhost:3000) reflete tudo.
   `n8n-mcp` — MCP essencial permanente deste projeto para a fase de ingestão).
 
 ## Histórico de iterações
+
+- **2026-08-09 — Redesenho de tracking + mini-CRM (LOCAL, NÃO PUBLICADO).**
+  Decisões do usuário: (1) contato principal = WhatsApp, formulário confirmado
+  e ligação; rota/visita ficam em intenção local; (2) mini-CRM dentro do painel;
+  (3) pedir aprovação antes de cada alteração externa. Criada migration 0014
+  (`web_events`, `tracking_checks`, `leads`, `lead_status_history`, RLS,
+  histórico e proteção de identidade). Visão geral, Sites, Google,
+  Integrações, relatório e navegação foram refeitos para não somar fontes como
+  pessoas únicas. Workflows locais: GA4 17 nós com eventos/checks; Google 31
+  nós em API v25 com `conversions` + `all_conversions`; Meta com conversa
+  iniciada como KPI canônico. Adicionados padrão UTM, plano de 7 gates e
+  validador n8n. `tsc`, ESLint, build Next e estrutura/sintaxe dos 3 workflows
+  verdes. Browser visual indisponível nesta sessão; smoke test autenticado
+  permanece obrigatório no Gate 7. Nenhuma migration, workflow, tag, campanha,
+  env de produção, deploy ou push foi publicada.
 
 - **2026-08-03** — **Escolher o que sai no relatório.** Botão "Seções (n de m)"
   na barra do `/relatorio` abre a lista de caixas; o que for desmarcado some da

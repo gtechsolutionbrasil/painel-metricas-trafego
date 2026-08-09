@@ -1,6 +1,6 @@
 // Coleta Meta Ads -> Supabase. Mesma logica do workflow n8n
 // (n8n/meta-ads-supabase.workflow.json), rodavel localmente para backfill/teste.
-// Uso: SUPABASE_URL=... SUPABASE_SERVICE_ROLE_KEY=... META_ACCESS_TOKEN=... node scripts/meta-sync.mjs
+// Uso: carregue as credenciais por ambiente seguro e rode node scripts/meta-sync.mjs.
 // Le as contas de integration_accounts (provider=meta_ads) e faz upsert em
 // ad_metrics, ad_campaigns e ad_conversion_actions (platform='meta').
 
@@ -8,20 +8,24 @@ const SUPABASE_URL = (process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABA
 const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const META_TOKEN = process.env.META_ACCESS_TOKEN;
 const API_VERSION = process.env.META_GRAPH_API_VERSION || "v21.0";
+const requestedDays = Number(process.env.META_DAYS || 30);
+const META_DAYS = Number.isFinite(requestedDays)
+  ? Math.min(1095, Math.max(1, Math.round(requestedDays)))
+  : 30;
 const STARTED_AT = new Date().toISOString();
 
 // Janela de coleta: últimos 30 dias INCLUINDO hoje (date_preset=last_30d exclui
 // o dia atual, então usamos time_range com until=hoje pra puxar até o momento).
 const DAY_MS = 86_400_000;
 const isoDay = (ms) => new Date(ms).toISOString().slice(0, 10);
-const TIME_RANGE = JSON.stringify({ since: isoDay(Date.now() - 30 * DAY_MS), until: isoDay(Date.now()) });
+const TIME_RANGE = JSON.stringify({ since: isoDay(Date.now() - META_DAYS * DAY_MS), until: isoDay(Date.now()) });
 
 if (!SUPABASE_URL || !SERVICE_KEY || !META_TOKEN) {
   console.error("Faltam env: SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, META_ACCESS_TOKEN");
   process.exit(1);
 }
 
-// Allowlist canonica de conversao (ver workflow para a justificativa).
+// Allowlist do detalhamento. O KPI principal usa somente conversa iniciada.
 const CONVERSION_ACTION_TYPES = new Set([
   "onsite_conversion.messaging_conversation_started_7d",
   "onsite_conversion.lead_grouped",
@@ -38,7 +42,10 @@ const CONVERSION_ACTION_TYPES = new Set([
 const num = (v) => (Number.isFinite(Number(v)) ? Number(v) : 0);
 const int = (v) => Math.round(num(v));
 const money = (v) => Math.round(num(v) * 100) / 100;
-const isConversion = (t) => CONVERSION_ACTION_TYPES.has(String(t || "").toLowerCase());
+const isDetailAction = (t) => CONVERSION_ACTION_TYPES.has(String(t || "").toLowerCase());
+const isConversation = (t) =>
+  String(t || "").toLowerCase() ===
+  "onsite_conversion.messaging_conversation_started_7d";
 const isRevenue = (t) => /purchase|omni_purchase|fb_pixel_purchase/.test(String(t || "").toLowerCase());
 
 function actionOrigin(t) {
@@ -120,6 +127,7 @@ function mergeConversions(rows) {
     const e = map.get(k);
     if (!e) { map.set(k, { ...r }); continue; }
     e.conversions += r.conversions;
+    e.all_conversions += r.all_conversions;
   }
   return [...map.values()];
 }
@@ -166,13 +174,13 @@ async function syncAccount(acc) {
     impressions: int(r.impressions),
     reach: int(r.reach),
     clicks: int(r.clicks),
-    conversions: int(sumActions(r.actions, isConversion)),
+    conversions: int(sumActions(r.actions, isConversation)),
     revenue: money(sumActions(r.action_values, isRevenue)),
     search_impression_share: null,
   }));
 
   const conversionRows = insights.filter((r) => r.date_start).flatMap((r) =>
-    (r.actions || []).filter((a) => isConversion(a.action_type) && num(a.value) > 0).map((a) => ({
+    (r.actions || []).filter((a) => isDetailAction(a.action_type) && num(a.value) > 0).map((a) => ({
       client_id: acc.client_id,
       account_external_id: acc.external_id,
       platform: "meta",
@@ -182,6 +190,7 @@ async function syncAccount(acc) {
       action_category: String(a.action_type),
       origin: actionOrigin(a.action_type),
       conversions: num(a.value),
+      all_conversions: num(a.value),
     })),
   );
 
@@ -214,7 +223,7 @@ async function syncAccount(acc) {
   console.log(`${acc.account_name}: ${m} metricas, ${cp} campanhas, ${cv} linhas de conversao`);
   const totalConv = metricRows.reduce((s, r) => s + r.conversions, 0);
   const totalSpend = metricRows.reduce((s, r) => s + r.spend, 0);
-  console.log(`  -> gasto R$${totalSpend.toFixed(2)} | conversoes (conversas) ${totalConv}`);
+  console.log(`  -> gasto R$${totalSpend.toFixed(2)} | conversas iniciadas ${totalConv}`);
 }
 
 const accounts = await sb("GET", "integration_accounts", {

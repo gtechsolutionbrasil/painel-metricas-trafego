@@ -25,7 +25,7 @@
         "sendQuery": true,
         "queryParameters": {
           "parameters": [
-            { "name": "select", "value": "client_id,external_id,account_name" },
+            { "name": "select", "value": "id,client_id,external_id,account_name" },
             { "name": "provider", "value": "eq.ga4" },
             { "name": "status", "value": "neq.paused" }
           ]
@@ -269,6 +269,137 @@
       "credentials": {
         "supabaseApi": { "id": "sfp0d2ZkWr7zz5wM", "name": "Supabase - Painel Métricas (service role)" }
       }
+    },
+    {
+      "id": "report-events",
+      "name": "GA4 Eventos de contato",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [440, 600],
+      "parameters": {
+        "method": "POST",
+        "url": "=https://analyticsdata.googleapis.com/v1beta/properties/{{ $json.external_id }}:runReport",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleAnalyticsOAuth2",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\"dateRanges\":[{\"startDate\":\"7daysAgo\",\"endDate\":\"today\"}],\"dimensions\":[{\"name\":\"date\"},{\"name\":\"eventName\"},{\"name\":\"sessionSource\"},{\"name\":\"sessionMedium\"},{\"name\":\"sessionCampaignName\"}],\"metrics\":[{\"name\":\"eventCount\"},{\"name\":\"keyEvents\"},{\"name\":\"totalUsers\"}],\"dimensionFilter\":{\"filter\":{\"fieldName\":\"eventName\",\"inListFilter\":{\"values\":[\"whatsapp_click\",\"generate_lead\",\"phone_click\",\"route_click\"]}}},\"limit\":\"100000\"}",
+        "options": {}
+      },
+      "notes": "Eventos separados por origem e campanha. route_click é intenção local, não contato principal.",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "googleAnalyticsOAuth2": { "id": "I8evqpJf7UDmKsGB", "name": "Google Analytics account" }
+      }
+    },
+    {
+      "id": "map-events",
+      "name": "Montar web_events e checks",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [660, 600],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const expected = ['whatsapp_click', 'generate_lead', 'phone_click', 'route_click'];\nconst output = [];\nfor (let i = 0; i < items.length; i++) {\n  const resp = items[i].json;\n  const conta = $('Buscar contas GA4').itemMatching(i).json;\n  const totals = Object.fromEntries(expected.map((name) => [name, 0]));\n  const rows = [];\n  for (const r of resp.rows ?? []) {\n    const d = (r.dimensionValues ?? []).map((v) => v.value);\n    const m = (r.metricValues ?? []).map((v) => Number(v.value) || 0);\n    const eventName = d[1] || '(not set)';\n    totals[eventName] = (totals[eventName] ?? 0) + m[0];\n    rows.push({\n      client_id: conta.client_id,\n      account_external_id: String(conta.external_id),\n      date: `${d[0].slice(0, 4)}-${d[0].slice(4, 6)}-${d[0].slice(6, 8)}`,\n      event_name: eventName,\n      source: d[2] || '(not set)',\n      medium: d[3] || '(not set)',\n      campaign: d[4] || '(not set)',\n      event_count: Math.round(m[0]),\n      key_events: m[1],\n      users: Math.round(m[2]),\n    });\n  }\n  const checkedAt = new Date().toISOString();\n  const checks = expected.map((eventName) => ({\n    client_id: conta.client_id,\n    provider: 'ga4',\n    check_key: `event:${eventName}`,\n    status: totals[eventName] > 0 ? 'healthy' : 'warning',\n    value: String(totals[eventName] || 0),\n    message: totals[eventName] > 0\n      ? `${totals[eventName]} evento(s) nos últimos 7 dias.`\n      : 'Nenhum evento nos últimos 7 dias; revisar no Tag Assistant se houver tráfego.',\n    metadata: { account_external_id: String(conta.external_id), window: '7daysAgo:today' },\n    checked_at: checkedAt,\n  }));\n  output.push({\n    json: { accountId: conta.id, rows, checks, total: rows.length },\n    pairedItem: { item: i },\n  });\n}\nreturn output;"
+      }
+    },
+    {
+      "id": "up-events",
+      "name": "Upsert web_events",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [880, 600],
+      "parameters": {
+        "method": "POST",
+        "url": "https://oqsjdhrwpmpdrihgbgtx.supabase.co/rest/v1/web_events",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            { "name": "on_conflict", "value": "client_id,account_external_id,date,event_name,source,medium,campaign" }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [{ "name": "Prefer", "value": "resolution=merge-duplicates,return=minimal" }]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.rows) }}",
+        "options": {}
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "supabaseApi": { "id": "sfp0d2ZkWr7zz5wM", "name": "Supabase - Painel Métricas (service role)" }
+      }
+    },
+    {
+      "id": "up-checks",
+      "name": "Upsert tracking_checks",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [880, 780],
+      "parameters": {
+        "method": "POST",
+        "url": "https://oqsjdhrwpmpdrihgbgtx.supabase.co/rest/v1/tracking_checks",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            { "name": "on_conflict", "value": "client_id,provider,check_key" }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [{ "name": "Prefer", "value": "resolution=merge-duplicates,return=minimal" }]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.checks) }}",
+        "options": {}
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "supabaseApi": { "id": "sfp0d2ZkWr7zz5wM", "name": "Supabase - Painel Métricas (service role)" }
+      }
+    },
+    {
+      "id": "mark-connected",
+      "name": "Marcar GA4 sincronizado",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1100, 600],
+      "parameters": {
+        "method": "PATCH",
+        "url": "https://oqsjdhrwpmpdrihgbgtx.supabase.co/rest/v1/integration_accounts",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            { "name": "id", "value": "=eq.{{ $('Montar web_events e checks').item.json.accountId }}" }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [{ "name": "Prefer", "value": "return=minimal" }]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ status: 'connected', last_sync_at: $now.toISO() }) }}",
+        "options": {}
+      },
+      "credentials": {
+        "supabaseApi": { "id": "sfp0d2ZkWr7zz5wM", "name": "Supabase - Painel Métricas (service role)" }
+      }
     }
   ],
   "connections": {
@@ -277,7 +408,8 @@
       "main": [[
         { "node": "GA4 runReport", "type": "main", "index": 0 },
         { "node": "GA4 Paginas de entrada", "type": "main", "index": 0 },
-        { "node": "GA4 Paginas vistas", "type": "main", "index": 0 }
+        { "node": "GA4 Paginas vistas", "type": "main", "index": 0 },
+        { "node": "GA4 Eventos de contato", "type": "main", "index": 0 }
       ]]
     },
     "GA4 runReport": { "main": [[{ "node": "Montar linhas web_metrics", "type": "main", "index": 0 }]] },
@@ -286,7 +418,15 @@
     "GA4 Paginas de entrada": { "main": [[{ "node": "Montar web_pages entrada", "type": "main", "index": 0 }]] },
     "Montar web_pages entrada": { "main": [[{ "node": "Upsert web_pages entrada", "type": "main", "index": 0 }]] },
     "GA4 Paginas vistas": { "main": [[{ "node": "Montar web_pages vistas", "type": "main", "index": 0 }]] },
-    "Montar web_pages vistas": { "main": [[{ "node": "Upsert web_pages vistas", "type": "main", "index": 0 }]] }
+    "Montar web_pages vistas": { "main": [[{ "node": "Upsert web_pages vistas", "type": "main", "index": 0 }]] },
+    "GA4 Eventos de contato": { "main": [[{ "node": "Montar web_events e checks", "type": "main", "index": 0 }]] },
+    "Montar web_events e checks": {
+      "main": [[
+        { "node": "Upsert web_events", "type": "main", "index": 0 },
+        { "node": "Upsert tracking_checks", "type": "main", "index": 0 }
+      ]]
+    },
+    "Upsert web_events": { "main": [[{ "node": "Marcar GA4 sincronizado", "type": "main", "index": 0 }]] }
   },
   "settings": { "executionOrder": "v1", "timezone": "America/Sao_Paulo" }
 }
