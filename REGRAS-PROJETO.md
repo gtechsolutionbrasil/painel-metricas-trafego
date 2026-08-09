@@ -41,7 +41,8 @@ Google Ads)** e **GA4/sites**, com login e recorte por cliente
 2026-08-09).** Projeto Supabase ref `oqsjdhrwpmpdrihgbgtx`, migrations
 0001–0014 aplicadas. A migration 0014 foi publicada no Gate 1 em 2026-08-09;
 as quatro tabelas novas, RLS, grants, índices, triggers e seeds foram validados.
-O mini-CRM na aplicação, a nova taxonomia e os workflows atualizados continuam
+O workflow GA4 de 17 nós foi publicado e ativado no Gate 2. O mini-CRM na
+aplicação, a nova taxonomia e os workflows Google/Meta atualizados continuam
 somente locais: opção 3B do usuário, com aprovação obrigatória antes de cada
 publicação externa.
 
@@ -59,11 +60,12 @@ sessão via Supabase Admin API; role admin preservada).
 
 **Workflows n8n (`n8n.gtechsolutionbrasil.com`, tag `painel-metricas-trafego`):**
 - **GA4 → Supabase** (id `oFVQoWFdstKOZcM4`): produção ✅ ATIVA na versão
-  anterior. O JSON local foi ampliado de 12 para 17 nós para gravar
-  `web_events`, `tracking_checks` e `last_sync_at`; aguarda Gate 2.
-  Na versão ativa, já foi testado com dado real e
-  gravou 25 linhas reais da Madeireira (property 541643814) em `web_metrics`.
-  Roda todo dia 06:00.
+  nova de 17 nós desde o Gate 2 (2026-08-09). Grava `web_metrics`,
+  `web_pages`, `web_events`, `tracking_checks`, `sync_runs` e `last_sync_at`.
+  Execuções manuais 12781 e 12783 passaram; a repetição manteve 18 linhas de
+  eventos e zero duplicatas. Janela de 7 dias da Madeireira (property
+  541643814): WhatsApp 49 e telefone 1 saudáveis; formulário 0 e rota 0 em
+  alerta. Roda todo dia 06:00.
 - **Google Ads → Supabase** (id `Ui5tKcvG1aRmWptS`): produção ✅ ATIVA na versão
   anterior. O JSON local tem 31 nós, foi atualizado de API v21 para v25 e passa
   a preservar `metrics.conversions` e `metrics.all_conversions`; aguarda Gate 3.
@@ -221,8 +223,8 @@ dashboard Vercel + Redeploy. O dev local (localhost:3000) reflete tudo.
 - [ ] (histórico) Vincular contas ao MCC e cadastrar os IDs
       na página /clientes.
 - [~] Fase 6: página **Sites** por evento/canal + mini-CRM + saúde de tracking
-      implementados localmente em 2026-08-09; Gate 1 concluído, aguardam Gates
-      2 e 7.
+      implementados localmente em 2026-08-09; Gates 1 e 2 concluídos, aguarda
+      Gate 7.
 - [ ] Deploy na Vercel (configurar as 3 env vars; lembrar que `NEXT_PUBLIC_*`
       são embutidas no build).
 - [x] ~~Seletor de período custom (datas)~~ (feito 2026-07-06: De/Até na Topbar).
@@ -274,6 +276,21 @@ dashboard Vercel + Redeploy. O dev local (localhost:3000) reflete tudo.
   `n8n-mcp` — MCP essencial permanente deste projeto para a fase de ingestão).
 
 ## Histórico de iterações
+
+- **2026-08-09 — Gate 2 concluído (n8n GA4, PRODUÇÃO).** Com aprovação
+  explícita, a versão ativa anterior de 12 nós foi salva em
+  `.agent/backups/n8n-ga4-before-gate2-2026-08-09T20-37-37-820Z.json` e o
+  estado GA4 do banco também recebeu snapshot local. O workflow
+  `oFVQoWFdstKOZcM4` foi desativado, atualizado para os 17 nós do JSON local e
+  testado por webhook temporário aleatório, removido ao final (endpoint
+  confirmado com HTTP 404). Execuções 12781 e 12783 terminaram `success`; a
+  saída efetiva do GA4 fechou exatamente com `web_events` e os 4 checks. Na
+  janela de 7 dias: `whatsapp_click` 49 (`healthy`), `phone_click` 1
+  (`healthy`), `generate_lead` 0 (`warning`) e `route_click` 0 (`warning`). A
+  segunda execução manteve 18 linhas de eventos, 0 chaves duplicadas, 190
+  `web_metrics` e 110 `web_pages`; adicionou apenas o novo log esperado. O
+  workflow final ficou ativo, 17 nós, cron `0 6 * * *`. Google Ads, Meta, GTM,
+  aplicação, push e deploy não foram alterados neste gate.
 
 - **2026-08-09 — Gate 1 concluído (Supabase, PRODUÇÃO).** Com aprovação
   explícita do usuário, foi criado backup lógico pré-migração em

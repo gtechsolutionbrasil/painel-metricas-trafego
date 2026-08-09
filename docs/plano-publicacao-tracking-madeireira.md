@@ -21,16 +21,28 @@ As 15 tabelas preexistentes foram comparadas com o backup; nenhum dado anterior
 foi removido ou alterado. Testes funcionais usaram rollback e não deixaram
 registros residuais.
 
-## Gate 2 — n8n GA4
+## Gate 2 — n8n GA4 ✅ concluído em 2026-08-09
 
-- atualizar/importar `n8n/ga4-supabase.workflow.json` inativo;
-- executar manualmente para a Madeireira;
-- conferir `web_events`, checks e `last_sync_at`;
-- comparar os quatro eventos com GA4;
-- só então ativar o agendamento.
+- [x] atualizar/importar `n8n/ga4-supabase.workflow.json` inativo;
+- [x] executar manualmente para a Madeireira;
+- [x] conferir `web_events`, checks e `last_sync_at`;
+- [x] comparar os quatro eventos com a saída efetiva da GA4 Data API;
+- [x] repetir a execução e só então ativar o agendamento.
 
 Critério: eventos por origem/campanha e checks coerentes, sem duplicação ao
 repetir a execução.
+
+Resultado: critério atendido. A versão anterior de 12 nós foi preservada em
+`.agent/backups/n8n-ga4-before-gate2-2026-08-09T20-37-37-820Z.json`. As
+execuções manuais 12781 e 12783 terminaram com sucesso e a segunda manteve 18
+linhas de `web_events`, zero chaves duplicadas, 190 linhas de `web_metrics` e
+110 de `web_pages`. O webhook temporário foi removido e o workflow final de 17
+nós ficou ativo no cron `0 6 * * *` (06:00, America/Sao_Paulo).
+
+Leitura dos últimos 7 dias: `whatsapp_click` 49 e `phone_click` 1 estão
+`healthy`; `generate_lead` 0 e `route_click` 0 estão `warning`. Esses dois
+alertas são ausência de evento no GA4, não falha da sincronização, e devem ser
+investigados no Gate 4 com Preview/Tag Assistant.
 
 ## Gate 3 — n8n Google Ads
 
