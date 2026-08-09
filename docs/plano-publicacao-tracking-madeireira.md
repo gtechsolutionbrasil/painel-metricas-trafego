@@ -3,15 +3,23 @@
 Decisão: preparar localmente e pedir aprovação antes de cada alteração externa.
 Um gate só começa depois do “ok” explícito do usuário.
 
-## Gate 1 — Supabase
+## Gate 1 — Supabase ✅ concluído em 2026-08-09
 
-- gerar backup/confirmar recuperação do banco;
-- aplicar somente `supabase/migrations/0014_tracking_events_crm.sql`;
-- validar tabelas, índices, triggers, RLS e grants;
-- confirmar que dados existentes continuam intactos.
+- [x] gerar backup lógico recuperável do schema `public`;
+- [x] aplicar somente `supabase/migrations/0014_tracking_events_crm.sql`;
+- [x] validar tabelas, índices, triggers, RLS e grants;
+- [x] confirmar que dados existentes continuam intactos.
 
 Critério: `web_events`, `tracking_checks`, `leads` e `lead_status_history`
 disponíveis e isolados por cliente.
+
+Resultado: critério atendido. Backup local em
+`.agent/backups/gate1-0014-before-2026-08-09T20-19-32-076Z.json`, SHA-256
+`a94c37c42ef7f16b8e43fd04c654b4b87d40aada5bacfcad05759d4c56a30444`.
+Validados 4 tabelas com RLS, 5 índices, 8 policies, 5 triggers, grants e seeds.
+As 15 tabelas preexistentes foram comparadas com o backup; nenhum dado anterior
+foi removido ou alterado. Testes funcionais usaram rollback e não deixaram
+registros residuais.
 
 ## Gate 2 — n8n GA4
 

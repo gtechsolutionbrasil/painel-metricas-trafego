@@ -37,11 +37,13 @@ Google Ads)** e **GA4/sites**, com login e recorte por cliente
 
 ## Estado atual
 
-**No ar em produção (versão anterior ao redesenho de 2026-08-09).** Projeto
-Supabase ref `oqsjdhrwpmpdrihgbgtx`, migrations 0001–0013 aplicadas. Auth + RLS
-validados. `.env.local` configurado. A migration 0014, o mini-CRM, a nova
-taxonomia e os workflows atualizados estão somente locais: opção 3B do usuário,
-com aprovação obrigatória antes de cada publicação externa.
+**No ar em produção (aplicação ainda na versão anterior ao redesenho de
+2026-08-09).** Projeto Supabase ref `oqsjdhrwpmpdrihgbgtx`, migrations
+0001–0014 aplicadas. A migration 0014 foi publicada no Gate 1 em 2026-08-09;
+as quatro tabelas novas, RLS, grants, índices, triggers e seeds foram validados.
+O mini-CRM na aplicação, a nova taxonomia e os workflows atualizados continuam
+somente locais: opção 3B do usuário, com aprovação obrigatória antes de cada
+publicação externa.
 
 **Estado local preparado:** Login, **Visão geral · Google Ads · Meta Ads ·
 Sites · CRM · Integrações**; conversões separadas em contato principal,
@@ -219,7 +221,8 @@ dashboard Vercel + Redeploy. O dev local (localhost:3000) reflete tudo.
 - [ ] (histórico) Vincular contas ao MCC e cadastrar os IDs
       na página /clientes.
 - [~] Fase 6: página **Sites** por evento/canal + mini-CRM + saúde de tracking
-      implementados localmente em 2026-08-09; aguardam Gates 1, 2 e 7.
+      implementados localmente em 2026-08-09; Gate 1 concluído, aguardam Gates
+      2 e 7.
 - [ ] Deploy na Vercel (configurar as 3 env vars; lembrar que `NEXT_PUBLIC_*`
       são embutidas no build).
 - [x] ~~Seletor de período custom (datas)~~ (feito 2026-07-06: De/Até na Topbar).
@@ -271,6 +274,19 @@ dashboard Vercel + Redeploy. O dev local (localhost:3000) reflete tudo.
   `n8n-mcp` — MCP essencial permanente deste projeto para a fase de ingestão).
 
 ## Histórico de iterações
+
+- **2026-08-09 — Gate 1 concluído (Supabase, PRODUÇÃO).** Com aprovação
+  explícita do usuário, foi criado backup lógico pré-migração em
+  `.agent/backups/gate1-0014-before-2026-08-09T20-19-32-076Z.json` (arquivo
+  local ignorado pelo Git; SHA-256
+  `a94c37c42ef7f16b8e43fd04c654b4b87d40aada5bacfcad05759d4c56a30444`) e
+  aplicada somente `0014_tracking_events_crm.sql`, dentro de transação. Foram
+  confirmados: 4 tabelas com RLS, 5 índices, 8 policies, 5 triggers, grants,
+  conta GTM e 4 checks GA4 iniciais. Os dados das 15 tabelas preexistentes
+  foram comparados com o backup e preservados; testes funcionais de RLS,
+  histórico de status, `updated_at` e proteção de identidade passaram dentro
+  de transações revertidas, sem registros residuais. Nenhum workflow n8n, GTM,
+  Ads, push ou deploy foi alterado neste gate.
 
 - **2026-08-09 — Redesenho de tracking + mini-CRM (LOCAL, NÃO PUBLICADO).**
   Decisões do usuário: (1) contato principal = WhatsApp, formulário confirmado
