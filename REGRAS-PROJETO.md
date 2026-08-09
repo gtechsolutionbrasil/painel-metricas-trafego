@@ -41,10 +41,11 @@ Google Ads)** e **GA4/sites**, com login e recorte por cliente
 2026-08-09).** Projeto Supabase ref `oqsjdhrwpmpdrihgbgtx`, migrations
 0001–0014 aplicadas. A migration 0014 foi publicada no Gate 1 em 2026-08-09;
 as quatro tabelas novas, RLS, grants, índices, triggers e seeds foram validados.
-O workflow GA4 de 17 nós foi publicado e ativado no Gate 2. O mini-CRM na
-aplicação, a nova taxonomia e os workflows Google/Meta atualizados continuam
-somente locais: opção 3B do usuário, com aprovação obrigatória antes de cada
-publicação externa.
+O workflow GA4 de 17 nós foi publicado e ativado no Gate 2 e o Google Ads de
+35 nós/API v25 foi publicado e ativado no Gate 3. O mini-CRM na aplicação, a
+nova taxonomia visual e o workflow Meta atualizado continuam somente locais:
+opção 3B do usuário, com aprovação obrigatória antes de cada publicação
+externa.
 
 **Estado local preparado:** Login, **Visão geral · Google Ads · Meta Ads ·
 Sites · CRM · Integrações**; conversões separadas em contato principal,
@@ -67,18 +68,18 @@ sessão via Supabase Admin API; role admin preservada).
   541643814): WhatsApp 49 e telefone 1 saudáveis; formulário 0 e rota 0 em
   alerta. Roda todo dia 06:00.
 - **Google Ads → Supabase** (id `Ui5tKcvG1aRmWptS`): produção ✅ ATIVA na versão
-  anterior. O JSON local tem 31 nós, foi atualizado de API v21 para v25 e passa
-  a preservar `metrics.conversions` e `metrics.all_conversions`; aguarda Gate 3.
-  A versão ativa coleta
-  **5 relatórios por conta** (fan-out após "Buscar contas"): campanhas
-  (`ad_metrics`, agora com `search_impression_share`), palavras-chave
-  (`ad_keywords` via keyword_view), tipos de clique (`ad_click_types` via
-  segments.click_type), conversões por ação (`ad_conversion_actions` via
-  segments.conversion_action_*) e regiões (`ad_geo` via geographic_view, com
-  tradução de geoTargetConstants → nome em 2 passos). Testado E2E 2026-07-06
-  (execução 3136: 165 keywords + 33 click types + 13 ações + 14 regiões da
-  Madeireira). Contas sem vínculo MCC não derrubam o fluxo (onError continue).
-  Roda 06:30.
+  nova de **35 nós/API v25** desde o Gate 3 (2026-08-09), cron `30 6 * * *`.
+  Coleta 11 consultas por conta: campanhas, palavras-chave, tipos de clique,
+  conversões por ação + origem, regiões + nomes, termos de pesquisa, grupos,
+  status de campanhas e saldo. A janela de `ad_conversion_actions` é
+  reconciliada por conta: após resposta válida, remove apenas os últimos 30
+  dias e faz upsert do retrato atual, evitando linhas obsoletas quando o Google
+  ajusta uma ação para zero. Execuções 12799 e 12800 passaram, com repetição
+  idempotente e zero duplicatas nas 8 tabelas Ads. Na Madeireira, API e banco
+  fecharam em 249 linhas: `conversions` 444 e `all_conversions` 1.483,5; no
+  painel isso representa 186 contatos principais, 466,5 intenções locais e 831
+  microconversões. O workflow ficou ativo na versão
+  `2e6a26a9-6f1a-4bac-b982-a5c5b1bc1415`.
 - **Meta Ads → Supabase** (id `CHPOb8H46wVXjBDw`): produção ✅ ATIVA. O JSON
   local é gerado por `scripts/build-n8n-meta-workflow.mjs` e foi corrigido para
   gravar em `ad_metrics.conversions` somente conversa iniciada em 7 dias;
@@ -223,8 +224,8 @@ dashboard Vercel + Redeploy. O dev local (localhost:3000) reflete tudo.
 - [ ] (histórico) Vincular contas ao MCC e cadastrar os IDs
       na página /clientes.
 - [~] Fase 6: página **Sites** por evento/canal + mini-CRM + saúde de tracking
-      implementados localmente em 2026-08-09; Gates 1 e 2 concluídos, aguarda
-      Gate 7.
+      implementados localmente em 2026-08-09; Gates 1, 2 e 3 concluídos,
+      aguarda Gates 4–7.
 - [ ] Deploy na Vercel (configurar as 3 env vars; lembrar que `NEXT_PUBLIC_*`
       são embutidas no build).
 - [x] ~~Seletor de período custom (datas)~~ (feito 2026-07-06: De/Até na Topbar).
@@ -276,6 +277,19 @@ dashboard Vercel + Redeploy. O dev local (localhost:3000) reflete tudo.
   `n8n-mcp` — MCP essencial permanente deste projeto para a fase de ingestão).
 
 ## Histórico de iterações
+
+- **2026-08-09 — Gate 3 concluído (n8n Google Ads, PRODUÇÃO).** Com aprovação
+  explícita, o workflow `Ui5tKcvG1aRmWptS` foi atualizado de API v21 para v25,
+  preservando credenciais e Developer Token somente no n8n. A primeira
+  comparação detectou 2 visitas à loja obsoletas: o upsert não removia linhas
+  que o Google deixava de retornar. Foi adicionada reconciliação segura por
+  conta/janela de 30 dias, executada somente após resposta válida. Execuções
+  12799 e 12800 terminaram `success`; as 11 consultas v25 passaram e API,
+  Supabase e a função real do painel fecharam em 249 ações, 444 conversões de
+  lance e 1.483,5 totais. Classificação: 186 principais, 466,5 intenções locais
+  e 831 microconversões. A repetição manteve iguais as contagens das 8 tabelas
+  Ads e zero duplicatas. Workflow final ativo com 35 nós, webhook autenticado e
+  cron 06:30. Meta, GA4, GTM, aplicação, deploy e push não foram alterados.
 
 - **2026-08-09 — Gate 2 concluído (n8n GA4, PRODUÇÃO).** Com aprovação
   explícita, a versão ativa anterior de 12 nós foi salva em

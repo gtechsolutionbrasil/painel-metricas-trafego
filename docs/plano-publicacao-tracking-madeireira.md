@@ -44,16 +44,35 @@ Leitura dos últimos 7 dias: `whatsapp_click` 49 e `phone_click` 1 estão
 alertas são ausência de evento no GA4, não falha da sincronização, e devem ser
 investigados no Gate 4 com Preview/Tag Assistant.
 
-## Gate 3 — n8n Google Ads
+## Gate 3 — n8n Google Ads ✅ concluído em 2026-08-09
 
-- atualizar/importar `n8n/google-ads-supabase.workflow.json` inativo;
-- executar manualmente para a Madeireira;
-- validar todas as consultas na API v25 (upgrade local de v21);
-- comparar `conversions` e `all_conversions` por ação com o Ads;
-- confirmar a classificação do painel e só então ativar.
+- [x] preservar o workflow e os dados anteriores em backups locais;
+- [x] atualizar/importar `n8n/google-ads-supabase.workflow.json` inativo;
+- [x] executar manualmente para a Madeireira;
+- [x] validar todas as 11 consultas na API v25 (upgrade de v21);
+- [x] comparar `conversions` e `all_conversions` por ação com o Ads;
+- [x] confirmar a classificação pela função real do painel;
+- [x] repetir a execução, validar idempotência e ativar o agendamento.
 
 Critério: contatos, intenções locais e microconversões fechando com o Google
 Ads, sem tratar rota/visita como lead.
+
+Resultado: critério atendido. A versão anterior e o snapshot do banco foram
+preservados em `.agent/backups/`. A validação inicial revelou duas linhas
+obsoletas de visita à loja, pois upsert não remove ações que o Google deixa de
+retornar. O workflow final reconcilia `ad_conversion_actions` por conta e
+janela de 30 dias somente depois de uma resposta válida. Nas execuções 12799 e
+12800, as 11 consultas v25 passaram; API e banco fecharam exatamente em 249
+linhas, 444 `conversions` e 1.483,5 `all_conversions`. A função do painel
+classificou 186 contatos principais, 466,5 intenções locais e 831
+microconversões. A repetição manteve iguais as contagens das oito tabelas Ads e
+zero duplicatas. Workflow ativo com 35 nós, webhook autenticado e cron
+`30 6 * * *` (06:30, America/Sao_Paulo).
+
+Achado para o Gate 4: 326 conversões de lance ainda pertencem a intenção local
+(228 rotas e 98 visitas à loja). A exibição do painel está correta, mas os
+objetivos do Google Ads precisam ser revisados para que rota/visita não orientem
+o lance como lead comercial.
 
 ## Gate 4 — GTM, GA4 e Google Ads
 

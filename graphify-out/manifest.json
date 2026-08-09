@@ -195,13 +195,13 @@
     "semantic_hash": ""
   },
   "REGRAS-PROJETO.md": {
-    "mtime": 1786308453.8570287,
-    "ast_hash": "a54e567ce989608206fd8f3348488a53",
+    "mtime": 1786311483.421896,
+    "ast_hash": "e6a9a438a2388816607e8626c8dada13",
     "semantic_hash": ""
   },
   "docs/ingestao-n8n.md": {
-    "mtime": 1786305149.0168378,
-    "ast_hash": "45ec8114cb34a42f0fa8a65197d83f46",
+    "mtime": 1786311483.4235654,
+    "ast_hash": "202003ba8eac18c346dd0cb610ead9bb",
     "semantic_hash": ""
   },
   "public/brand/favicon.png": {
@@ -410,8 +410,8 @@
     "semantic_hash": ""
   },
   "n8n/google-ads-supabase.workflow.json": {
-    "mtime": 1786305207.1851718,
-    "ast_hash": "c8e3e9e6b866c991f998f77090d0a7a2",
+    "mtime": 1786311008.471654,
+    "ast_hash": "b7b1c38e6313beb8621d1fce43f9af11",
     "semantic_hash": ""
   },
   ".githooks/pre-commit": {
@@ -505,8 +505,8 @@
     "semantic_hash": ""
   },
   "docs/plano-publicacao-tracking-madeireira.md": {
-    "mtime": 1786308453.8583574,
-    "ast_hash": "d9601e0f528726c6355eeccfde149b9f",
+    "mtime": 1786311483.422573,
+    "ast_hash": "760ce268efa92a8a855e8573351c762a",
     "semantic_hash": ""
   },
   "docs/utm-padrao.md": {

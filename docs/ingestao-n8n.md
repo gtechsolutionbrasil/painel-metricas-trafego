@@ -34,13 +34,16 @@ APIs com as credenciais dele -> n8n grava métricas normalizadas -> painel exibe
 - **Autenticação:** o n8n grava usando a **SERVICE ROLE KEY** do Supabase
   (`SUPABASE_SERVICE_ROLE_KEY`). Ela ignora RLS — por isso nunca pode ir para o
   front-end. Guarde-a só nas credenciais do n8n.
-- **Idempotência:** sempre usar **upsert** (não insert puro), para reprocessar
-  um dia sem duplicar. As tabelas têm chaves únicas para isso.
+- **Idempotência:** usar **upsert** (não insert puro), para reprocessar um dia
+  sem duplicar. Quando a API omite linhas que existiam antes, upsert sozinho
+  não basta: reconciliar a janela somente depois de uma resposta válida,
+  removendo o recorte exato de conta/plataforma antes de regravá-lo.
 - **Granularidade:** uma linha por **dia × cliente × (campanha | origem | evento)**.
   Métricas derivadas (CTR, CPC, CPL, ROAS) **não** são gravadas — o painel
   calcula a partir dos números brutos.
-- **Janela:** reprocessar sempre os **últimos 3–7 dias** (as plataformas
-  ajustam números retroativamente). Upsert resolve as atualizações.
+- **Janela:** reprocessar os **últimos 3–30 dias**, conforme a fonte (as
+  plataformas ajustam números retroativamente). A remoção de um retrato deve
+  ser limitada à mesma janela, conta e plataforma consultadas.
 
 ## Tabelas e chaves de upsert
 
@@ -78,6 +81,13 @@ O workflow Google consulta `metrics.conversions` e
 `metrics.all_conversions`. O painel separa contato principal (WhatsApp,
 formulário confirmado e ligação), conversa Meta, intenção local (rota/visita)
 e microconversão (visita ao site e ações intermediárias).
+
+Para `ad_conversion_actions`, o workflow Google não usa apenas upsert: após
+uma resposta v25 válida, emite `DELETE` restrito a `client_id`,
+`account_external_id`, `platform='google'` e aos últimos 30 dias; depois grava o
+lote atual. Se a consulta falhar, o ramo interrompe antes da limpeza. Isso
+remove ajustes retroativos que passaram a zero sem apagar histórico anterior
+ou dados de outra conta.
 
 ### `web_metrics` — GA4
 Chave de conflito: `(client_id, account_external_id, date, source, medium)`
@@ -166,9 +176,10 @@ Body: array de objetos com as colunas acima (envie em lote).
    - Em `ad_metrics.conversions`, grava exclusivamente
      `onsite_conversion.messaging_conversation_started_7d`. Leads de Pixel e
      compras ficam no detalhamento e não entram no KPI “Conversas Meta”.
-2. **Google Ads → Supabase** — idem, `platform='google'`,
-   `account_external_id='<customer_id>'`. O ramo de ações grava
-   `metrics.conversions` e `metrics.all_conversions` separadamente.
+2. **Google Ads → Supabase** — `platform='google'`,
+   `account_external_id='<customer_id>'`, API v25, 11 consultas por conta. O
+   ramo de ações grava `metrics.conversions` e `metrics.all_conversions`
+   separadamente e reconcilia a janela móvel conforme descrito acima.
 3. **GA4 → Supabase** — Data API (runReport) por dia/source/medium → upsert em
    `web_metrics`; outro relatório grava os quatro eventos esperados em
    `web_events` e atualiza `tracking_checks`.

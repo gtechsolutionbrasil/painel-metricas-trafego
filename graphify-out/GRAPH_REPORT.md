@@ -1,7 +1,7 @@
 # Graph Report - painel-metricas-trafego  (2026-08-09)
 
 ## Corpus Check
-- 91 files · ~70,762 words
+- 91 files · ~71,870 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `9fd89824`
+- Built from commit: `b56eb96b`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -156,7 +156,7 @@ Nodes (26): buildReturnTo(), CHANNEL_LABEL, CrmPage(), first(), LeadForm(), saoP
 
 ### Community 36 - "Plano de publicação — tracking da Madeireira Adrianna"
 Cohesion: 0.22
-Nodes (9): Gate 1 — Supabase ✅ concluído em 2026-08-09, Gate 2 — n8n GA4 ✅ concluído em 2026-08-09, Gate 3 — n8n Google Ads, Gate 4 — GTM, GA4 e Google Ads, Gate 5 — Meta Pixel/CAPI, Gate 6 — UTMs, Gate 7 — aplicação, Plano de publicação — tracking da Madeireira Adrianna (+1 more)
+Nodes (9): Gate 1 — Supabase ✅ concluído em 2026-08-09, Gate 2 — n8n GA4 ✅ concluído em 2026-08-09, Gate 3 — n8n Google Ads ✅ concluído em 2026-08-09, Gate 4 — GTM, GA4 e Google Ads, Gate 5 — Meta Pixel/CAPI, Gate 6 — UTMs, Gate 7 — aplicação, Plano de publicação — tracking da Madeireira Adrianna (+1 more)
 
 ### Community 37 - "Tabelas e chaves de upsert"
 Cohesion: 0.25
