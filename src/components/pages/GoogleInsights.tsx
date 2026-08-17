@@ -485,7 +485,7 @@ function SourceHeader({
           </p>
         </div>
       </div>
-      <span className="shrink-0 text-sm font-extrabold text-ink">
+      <span className="shrink-0 text-sm font-bold text-ink">
         {fmtInt(total)}
       </span>
     </div>

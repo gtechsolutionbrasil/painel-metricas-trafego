@@ -222,9 +222,9 @@ export default async function SitePage({ searchParams }: { searchParams: SP }) {
         />
         {eventSummary.rows.length ? (
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[680px] text-sm">
+            <table className="table min-w-[680px]">
               <thead>
-                <tr className="border-b border-line bg-surface-2 text-left text-xs font-semibold uppercase tracking-wide text-faint">
+                <tr className="bg-surface-2">
                   <th className="px-5 py-3">Ação</th>
                   <th className="px-3 py-3">Classificação</th>
                   <th className="px-3 py-3 text-right">Eventos</th>
@@ -233,7 +233,7 @@ export default async function SitePage({ searchParams }: { searchParams: SP }) {
               </thead>
               <tbody>
                 {eventSummary.rows.map((row) => (
-                  <tr key={row.eventName} className="border-b border-line last:border-0 hover:bg-surface-2">
+                  <tr key={row.eventName}>
                     <td className="px-5 py-3">
                       <p className="font-semibold text-ink">{row.label}</p>
                       <p className="font-mono text-xs text-faint">{row.eventName}</p>
@@ -309,9 +309,9 @@ export default async function SitePage({ searchParams }: { searchParams: SP }) {
           <Card>
             <CardHeader title="Origens das sessões" subtitle={`${sources.length} origens no período`} />
             <div className="overflow-x-auto">
-              <table className="w-full min-w-[560px] text-sm">
+              <table className="table min-w-[560px]">
                 <thead>
-                  <tr className="border-b border-line bg-surface-2 text-left text-xs font-semibold uppercase tracking-wide text-faint">
+                  <tr className="bg-surface-2">
                     <th className="px-5 py-3">Origem</th>
                     <th className="px-3 py-3 text-right">Sessões</th>
                     <th className="px-5 py-3 text-right">Participação</th>
@@ -319,7 +319,7 @@ export default async function SitePage({ searchParams }: { searchParams: SP }) {
                 </thead>
                 <tbody>
                   {sources.map((source) => (
-                    <tr key={`${source.source}-${source.medium}`} className="border-b border-line last:border-0 hover:bg-surface-2">
+                    <tr key={`${source.source}-${source.medium}`}>
                       <td className="px-5 py-3">
                         <p className="font-semibold text-ink">{friendlyOrigin(source.source, source.medium)}</p>
                         <p className="text-xs text-faint">{source.source} / {source.medium}</p>

@@ -452,7 +452,7 @@ function ChannelSummary({
           </span>
         </Badge>
       </div>
-      <p className="mt-4 text-2xl font-extrabold tabular-nums tracking-tight text-ink">{headline}</p>
+      <p className="mt-4 text-2xl font-bold tabular-nums tracking-tight text-ink">{headline}</p>
       <p className="mt-1 text-xs text-muted">{detail}</p>
     </Link>
   );

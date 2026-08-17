@@ -54,7 +54,7 @@ const STATUS: Array<{
     accent: "border-orange-200",
     dot: "bg-orange-500",
   },
-  { value: "won", label: "Ganho", accent: "border-emerald-200", dot: "bg-emerald-500" },
+  { value: "won", label: "Ganho", accent: "border-brand-border", dot: "bg-brand" },
   { value: "lost", label: "Perdido", accent: "border-rose-200", dot: "bg-rose-500" },
 ];
 
@@ -152,7 +152,7 @@ export default async function CrmPage({ searchParams }: { searchParams: SP }) {
         <div>
           <div className="mb-3 flex items-end justify-between gap-4">
             <div>
-              <h2 className="text-lg font-extrabold text-ink">Funil comercial</h2>
+              <h2 className="text-lg font-bold text-ink">Funil comercial</h2>
               <p className="mt-1 text-sm text-muted">
                 Mova o contato escolhendo a nova etapa em cada card.
               </p>
@@ -308,7 +308,7 @@ function LeadColumn({
   return (
     <section className={`min-h-[220px] snap-start rounded-[14px] border ${column.accent} bg-surface-2 p-3`}>
       <div className="mb-3 flex items-center justify-between px-1">
-        <h3 className="flex items-center gap-2 text-sm font-extrabold text-ink">
+        <h3 className="flex items-center gap-2 text-sm font-bold text-ink">
           <span className={`h-2.5 w-2.5 rounded-full ${column.dot}`} />
           {column.label}
         </h3>
@@ -349,7 +349,7 @@ function LeadCard({
     <article className="rounded-[12px] border border-line bg-surface p-3 shadow-sm">
       <div className="flex items-start justify-between gap-2">
         <div className="min-w-0">
-          <h4 className="truncate text-sm font-extrabold text-ink">{title}</h4>
+          <h4 className="truncate text-sm font-bold text-ink">{title}</h4>
           {client && <p className="mt-0.5 truncate text-[11px] text-faint">{client.name}</p>}
         </div>
         {lead.value != null && (
@@ -438,7 +438,7 @@ function Feedback({
     <div
       className={`flex items-center gap-2 rounded-[10px] border px-4 py-3 text-sm font-semibold ${
         tone === "success"
-          ? "border-emerald-200 bg-emerald-50 text-emerald-800"
+          ? "border-brand-border bg-brand-soft text-brand-ink"
           : "border-rose-200 bg-rose-50 text-rose-800"
       }`}
       role={tone === "error" ? "alert" : "status"}

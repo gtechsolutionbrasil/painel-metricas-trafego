@@ -643,7 +643,13 @@ dashboard Vercel + Redeploy. O dev local (localhost:3000) reflete tudo.
   (grid 4→3), MiniStat CPC, card Saldo, colunas CPC e Custo/resultado da
   tabela de campanhas, coluna CPC dos Grupos de anúncios (GoogleInsights).
   ComparePicker alinhado a h-14 com os demais controles do topo. Lint/build
-  verdes.
+  verdes. **T6 (#7) + T7 (#8)**: todas as tabelas do painel (campanhas, 4 do
+  GoogleInsights, eventos/origens do Site, integrações) adotaram a classe
+  `.table`; aviso metodológico da Visão geral movido pra baixo dos KPIs;
+  emerald hardcoded → tokens brand (SignalCard, status saudável/Ganho);
+  vermelho do saldo esgotado → `danger-ink`; `font-extrabold` → `font-bold`
+  em todo o painel (relatório intocado). Lint/build verdes. **Redesign
+  completo: tickets #2–#8 fechados.**
 ## Fluxo de features (skills do Matt Pocock) — roteamento
 
 Skills globais (`~/.agents/skills/`, valem pros 3 agentes): `/grill-me` (+`grilling`), `/to-spec`, `/to-tickets`, `/implement` (+`tdd`) e `/review-externo`.

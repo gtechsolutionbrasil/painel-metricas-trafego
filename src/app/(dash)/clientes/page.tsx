@@ -167,9 +167,9 @@ function TrackingStatusBoard({
         </div>
 
         <div className="overflow-x-auto rounded-[10px] border border-line">
-          <table className="w-full min-w-[780px] text-sm">
+          <table className="table min-w-[780px]">
             <thead>
-              <tr className="border-b border-line bg-surface-2 text-left text-xs font-semibold uppercase tracking-wide text-faint">
+              <tr className="bg-surface-2">
                 <th className="px-4 py-3">Cliente</th>
                 <th className="px-3 py-3">Plataforma</th>
                 <th className="px-3 py-3">Saúde</th>
@@ -190,7 +190,7 @@ function TrackingStatusBoard({
                   return (
                     <tr
                       key={`${client.id}-${provider}`}
-                      className="border-b border-line last:border-0 hover:bg-surface-2"
+                     
                     >
                       <td className="px-4 py-3 font-semibold text-ink">
                         {client.name}
@@ -242,14 +242,14 @@ function HealthCount({
   tone: "healthy" | "warning" | "pending" | "missing";
 }) {
   const tones = {
-    healthy: "border-emerald-200 bg-emerald-50 text-emerald-800",
+    healthy: "border-brand-border bg-brand-soft text-brand-ink",
     warning: "border-rose-200 bg-rose-50 text-rose-800",
     pending: "border-amber-200 bg-amber-50 text-amber-800",
     missing: "border-slate-200 bg-slate-50 text-slate-700",
   };
   return (
     <div className={`rounded-[10px] border px-4 py-3 ${tones[tone]}`}>
-      <p className="text-2xl font-extrabold tabular-nums">{value}</p>
+      <p className="text-2xl font-bold tabular-nums">{value}</p>
       <p className="text-xs font-semibold">{label}</p>
     </div>
   );
@@ -564,9 +564,9 @@ function ClientList({
         subtitle={`${clients.length} clientes · ${accounts.length} integrações`}
       />
       <div className="overflow-x-auto">
-        <table className="w-full min-w-[1020px] text-sm">
+        <table className="table min-w-[1020px]">
           <thead>
-            <tr className="border-b border-line bg-surface-2 text-left text-xs font-semibold uppercase tracking-wide text-faint">
+            <tr className="bg-surface-2">
               <th className="px-5 py-3">Cliente</th>
               <th className="px-3 py-3">Fonte</th>
               <th className="px-3 py-3">Origem</th>
@@ -583,7 +583,7 @@ function ClientList({
               );
               if (!clientAccounts.length) {
                 return (
-                  <tr key={client.id} className="border-b border-line last:border-0">
+                  <tr key={client.id}>
                     <td className="px-5 py-3 font-semibold text-ink">
                       {client.name}
                     </td>
@@ -609,7 +609,7 @@ function ClientList({
               return clientAccounts.map((account, index) => (
                 <tr
                   key={account.id}
-                  className="border-b border-line last:border-0 hover:bg-surface-2"
+                 
                 >
                   <td className="px-5 py-3">
                     {index === 0 && (

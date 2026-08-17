@@ -59,7 +59,7 @@ function LoginForm() {
         </div>
 
         <div className="card p-7">
-          <h1 className="text-xl font-extrabold text-ink">Acessar o painel</h1>
+          <h1 className="text-xl font-bold text-ink">Acessar o painel</h1>
           <p className="mt-1 text-sm text-muted">
             Entre com suas credenciais para ver as métricas dos seus clientes.
           </p>
