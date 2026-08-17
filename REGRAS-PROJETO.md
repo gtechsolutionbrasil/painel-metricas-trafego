@@ -614,6 +614,14 @@ dashboard Vercel + Redeploy. O dev local (localhost:3000) reflete tudo.
   hover, `.num` à direita) pra adoção no T6/T7; KpiCard 28px/bold, TrendPill e
   alerts de clientes/login/DeleteClientButton migrados pros tokens. Lint/build
   verdes. Vercel reconectada ao repo → push na `main` deploya sozinho.
+  **T2 (#4)**: paleta dos gráficos validada com o validador da skill dataviz —
+  teal→`#0d9488`, sky→`#0284c7`, amber→`#d97706` (chroma e contraste ≥3:1;
+  identidade por canal preservada: sky=Google, indigo=Meta); `SERIES_PALETTE`
+  reordenada intercalada (slate = balde neutro "outros" por último); wrappers
+  padronizados — área com stroke 2px, activeDot com anel de surface, cursor
+  compartilhado no `theme.ts`, legenda automática quando ≥2 séries, barras
+  `radius 4` + `maxBarSize 32`, `tabular-nums` em tooltip/donut. Lint/build
+  verdes.
 ## Fluxo de features (skills do Matt Pocock) — roteamento
 
 Skills globais (`~/.agents/skills/`, valem pros 3 agentes): `/grill-me` (+`grilling`), `/to-spec`, `/to-tickets`, `/implement` (+`tdd`) e `/review-externo`.

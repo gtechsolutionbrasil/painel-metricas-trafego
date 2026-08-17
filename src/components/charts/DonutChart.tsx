@@ -45,7 +45,7 @@ export function DonutChart({
           <span className="text-[11px] font-semibold uppercase tracking-wide text-faint">
             {centerLabel}
           </span>
-          <span className="text-lg font-extrabold text-ink">
+          <span className="text-lg font-bold tabular-nums text-ink">
             {fmt(total)}
           </span>
         </div>
@@ -63,7 +63,7 @@ export function DonutChart({
               />
               <span className="truncate text-ink">{d.label}</span>
             </span>
-            <span className="shrink-0 font-semibold text-muted">
+            <span className="shrink-0 font-semibold tabular-nums text-muted">
               {total ? ((d.value / total) * 100).toFixed(1).replace(".", ",") : "0"}%
             </span>
           </li>

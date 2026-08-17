@@ -1,7 +1,7 @@
 # Graph Report - painel-metricas-trafego  (2026-08-17)
 
 ## Corpus Check
-- 99 files · ~74,867 words
+- 99 files · ~75,001 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `71a919ad`
+- Built from commit: `5ac53d24`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -189,7 +189,7 @@ Nodes (5): Banco (Supabase), Estrutura, Painel de Métricas de Tráfego — GTec
 
 ### Community 44 - "page.tsx"
 Cohesion: 0.29
-Nodes (11): CAMPAigns, CLIENT_SCALE, dayFactor(), eachDate(), generateAdMetrics(), generateWebMetrics(), hashSeed(), MOCK_INTEGRATION_ACCOUNTS (+3 more)
+Nodes (11): CAMPAigns, CLIENT_SCALE, dayFactor(), eachDate(), generateAdMetrics(), generateWebMetrics(), hashSeed(), rng() (+3 more)
 
 ### Community 45 - "Sidebar.tsx"
 Cohesion: 0.09

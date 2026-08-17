@@ -4164,8 +4164,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "src_lib_mock_data_mock_integration_accounts",
-      "community": 44,
-      "community_name": "page.tsx",
+      "community": 45,
+      "community_name": "Sidebar.tsx",
       "norm_label": "mock_integration_accounts"
     },
     {
@@ -5011,8 +5011,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "src_lib_types_integrationaccount",
-      "community": 45,
-      "community_name": "Sidebar.tsx",
+      "community": 44,
+      "community_name": "page.tsx",
       "norm_label": "integrationaccount"
     },
     {
@@ -5811,7 +5811,7 @@
       "label": "Fluxo de features (skills do Matt Pocock) \u2014 roteamento",
       "file_type": "document",
       "source_file": "REGRAS-PROJETO.md",
-      "source_location": "L603",
+      "source_location": "L617",
       "_origin": "ast",
       "id": "regras_projeto_fluxo_de_features_skills_do_matt_pocock_roteamento",
       "community": 7,
@@ -5822,7 +5822,7 @@
       "label": "Mem\u00f3ria t\u00e9cnica (cerebro-painel-metricas-trafego/)",
       "file_type": "document",
       "source_file": "REGRAS-PROJETO.md",
-      "source_location": "L629",
+      "source_location": "L643",
       "_origin": "ast",
       "id": "regras_projeto_mem\u00f3ria_t\u00e9cnica_cerebro_painel_metricas_trafego",
       "community": 7,
@@ -19215,7 +19215,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "REGRAS-PROJETO.md",
-      "source_location": "L603",
+      "source_location": "L617",
       "weight": 1.0,
       "source": "regras_projeto_regras_projeto_painel_de_m\u00e9tricas_de_tr\u00e1fego_gtech_solution",
       "target": "regras_projeto_fluxo_de_features_skills_do_matt_pocock_roteamento",
@@ -19235,7 +19235,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "REGRAS-PROJETO.md",
-      "source_location": "L629",
+      "source_location": "L643",
       "weight": 1.0,
       "source": "regras_projeto_regras_projeto_painel_de_m\u00e9tricas_de_tr\u00e1fego_gtech_solution",
       "target": "regras_projeto_mem\u00f3ria_t\u00e9cnica_cerebro_painel_metricas_trafego",
@@ -20233,5 +20233,5 @@
       "source_file": "README.md"
     }
   ],
-  "built_at_commit": "71a919ad137618a39ce635698e364332a95393bd"
+  "built_at_commit": "5ac53d24d445dc6b48d4ecd8514113cb17f875d8"
 }

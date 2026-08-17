@@ -34,7 +34,7 @@ export function ChartTooltip({
               style={{ background: it.color }}
             />
             <span className="text-muted">{it.name}:</span>
-            <span className="font-semibold text-ink">
+            <span className="font-semibold tabular-nums text-ink">
               {formatter
                 ? formatter(Number(it.value), String(it.dataKey ?? it.name))
                 : it.value}

@@ -20,9 +20,9 @@
     "semantic_hash": "239f3ebf717465dc636818a1a619398d"
   },
   "src/app/(auth)/login/page.tsx": {
-    "mtime": 1782691833.8172767,
-    "ast_hash": "57b0cc4c99d448173da992f07c3c95c1",
-    "semantic_hash": "57b0cc4c99d448173da992f07c3c95c1"
+    "mtime": 1786980411.9639494,
+    "ast_hash": "d2326f294cb79f2ab8169d705f74bcb9",
+    "semantic_hash": ""
   },
   "src/app/(dash)/analytics/page.tsx": {
     "mtime": 1783288577.7531126,
@@ -100,13 +100,13 @@
     "semantic_hash": "bfe7baffe5b1dcfa3966813a3dd09a7c"
   },
   "src/components/ui/KpiCard.tsx": {
-    "mtime": 1786304770.9723544,
-    "ast_hash": "1ae9153b2daa98ed3b81c64dd5266cfc",
+    "mtime": 1786980400.660459,
+    "ast_hash": "8661c907beadfa0060122805323bf99f",
     "semantic_hash": ""
   },
   "src/components/ui/PageHeader.tsx": {
-    "mtime": 1786305022.085996,
-    "ast_hash": "54f1243392792df5f2bbd3654d070cdc",
+    "mtime": 1786980402.0256586,
+    "ast_hash": "1f942b455d83547837ae5095a2bee3a5",
     "semantic_hash": ""
   },
   "src/lib/format.ts": {
@@ -195,8 +195,8 @@
     "semantic_hash": ""
   },
   "REGRAS-PROJETO.md": {
-    "mtime": 1786974171.6503963,
-    "ast_hash": "e5c5ca515a23f755d5c5db8bfb0a8d0c",
+    "mtime": 1786980459.9265385,
+    "ast_hash": "1cea327bdfaa393c97d078fb7de121ec",
     "semantic_hash": ""
   },
   "docs/ingestao-n8n.md": {
@@ -275,8 +275,8 @@
     "semantic_hash": ""
   },
   "src/app/(dash)/clientes/page.tsx": {
-    "mtime": 1786304998.900612,
-    "ast_hash": "fcee469456424dde491682431e51c04d",
+    "mtime": 1786980411.9602222,
+    "ast_hash": "e531885988dc6971a2f42bc78c930d03",
     "semantic_hash": ""
   },
   "supabase/migrations/0004_client_integration_accounts.sql": {
@@ -320,8 +320,8 @@
     "semantic_hash": ""
   },
   "src/app/(dash)/clientes/DeleteClientButton.tsx": {
-    "mtime": 1783366497.402313,
-    "ast_hash": "0e6bb9956b41109096837c8b976f0699",
+    "mtime": 1786980411.9630215,
+    "ast_hash": "df293877ead9e9cc4ba0dfe54db3ead5",
     "semantic_hash": ""
   },
   "src/components/pages/CampaignFilter.tsx": {

@@ -10,7 +10,7 @@ import {
   YAxis,
 } from "recharts";
 import { fmtDayShort, formatValue, type FmtKey } from "@/lib/format";
-import { AXIS, GRID_STROKE } from "./theme";
+import { AXIS, CURSOR_LINE, GRID_STROKE } from "./theme";
 import { ChartTooltip } from "./ChartTooltip";
 
 export type Series = {
@@ -37,6 +37,7 @@ export function TrendAreaChart({
   };
 
   return (
+    <>
     <ResponsiveContainer width="100%" height={height}>
       <AreaChart data={data} margin={{ top: 8, right: 8, left: 4, bottom: 0 }}>
         <defs>
@@ -73,6 +74,7 @@ export function TrendAreaChart({
           tickFormatter={(v) => formatValue(yFormat, Number(v))}
         />
         <Tooltip
+          cursor={CURSOR_LINE}
           content={
             <ChartTooltip
               formatter={fmtByKey}
@@ -87,13 +89,28 @@ export function TrendAreaChart({
             dataKey={s.key}
             name={s.label}
             stroke={s.color}
-            strokeWidth={2.4}
+            strokeWidth={2}
             fill={`url(#grad-${s.key})`}
             dot={false}
-            activeDot={{ r: 4 }}
+            activeDot={{ r: 4, strokeWidth: 2, stroke: "var(--color-surface)" }}
           />
         ))}
       </AreaChart>
     </ResponsiveContainer>
+    {series.length > 1 && (
+      <ul className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 px-1">
+        {series.map((s) => (
+          <li key={s.key} className="flex items-center gap-1.5 text-xs font-medium text-muted">
+            <span
+              aria-hidden="true"
+              className="h-2.5 w-2.5 rounded-sm"
+              style={{ background: s.color }}
+            />
+            {s.label}
+          </li>
+        ))}
+      </ul>
+    )}
+    </>
   );
 }

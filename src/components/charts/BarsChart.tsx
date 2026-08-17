@@ -10,7 +10,7 @@ import {
   YAxis,
 } from "recharts";
 import { fmtDayShort, formatValue, type FmtKey } from "@/lib/format";
-import { AXIS, GRID_STROKE } from "./theme";
+import { AXIS, CURSOR_FILL, GRID_STROKE } from "./theme";
 import { ChartTooltip } from "./ChartTooltip";
 
 export function BarsChart({
@@ -54,7 +54,7 @@ export function BarsChart({
           tickFormatter={(v) => formatValue(yFormat, Number(v))}
         />
         <Tooltip
-          cursor={{ fill: "rgba(15,23,42,0.04)" }}
+          cursor={CURSOR_FILL}
           content={
             <ChartTooltip
               formatter={(v) => formatValue(format, v)}
@@ -62,7 +62,7 @@ export function BarsChart({
             />
           }
         />
-        <Bar dataKey={dataKey} name={name} fill={color} radius={[6, 6, 0, 0]} />
+        <Bar dataKey={dataKey} name={name} fill={color} radius={[4, 4, 0, 0]} maxBarSize={32} />
       </BarChart>
     </ResponsiveContainer>
   );
