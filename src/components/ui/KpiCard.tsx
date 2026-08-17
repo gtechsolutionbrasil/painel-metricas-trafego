@@ -1,5 +1,7 @@
 import type { LucideIcon } from "lucide-react";
 import { ArrowDownRight, ArrowUpRight, HelpCircle } from "lucide-react";
+import { Sparkline } from "@/components/charts/Sparkline";
+import { CHART_COLORS } from "@/components/charts/theme";
 
 type Trend = { value: number; positiveIsGood?: boolean };
 
@@ -12,6 +14,7 @@ export function KpiCard({
   trend,
   caption,
   tone = "brand",
+  spark,
 }: {
   label: string;
   value: string;
@@ -22,6 +25,8 @@ export function KpiCard({
   trend?: Trend;
   caption?: string;
   tone?: "brand" | "sky" | "indigo" | "amber" | "rose";
+  // Série diária do período (KPIs primários): vira sparkline na cor do tone.
+  spark?: number[];
 }) {
   // Uma explicação só, sob demanda: o "?" mostra help (ou o hint, se for o que
   // houver). O texto fixo embaixo do valor saiu — poluía e duplicava o tooltip.
@@ -42,6 +47,9 @@ export function KpiCard({
         {value}
       </p>
       {caption && <p className="mt-1 text-xs leading-5 text-muted">{caption}</p>}
+      {spark && spark.length > 0 && (
+        <Sparkline data={spark} color={SPARK_COLOR[tone]} />
+      )}
     </div>
   );
 }
@@ -52,6 +60,14 @@ const TONE = {
   indigo: "border-indigo-200 bg-indigo-50 text-indigo-700",
   amber: "border-amber-200 bg-amber-50 text-amber-700",
   rose: "border-rose-200 bg-rose-50 text-rose-700",
+} as const;
+
+const SPARK_COLOR = {
+  brand: CHART_COLORS.brand,
+  sky: CHART_COLORS.sky,
+  indigo: CHART_COLORS.indigo,
+  amber: CHART_COLORS.amber,
+  rose: "#e11d48",
 } as const;
 
 // Tooltip só-CSS (sem JS): balão aparece no hover/foco do ícone "?".

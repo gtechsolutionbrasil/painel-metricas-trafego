@@ -84,6 +84,7 @@ export type AdDayPoint = {
   conversions: number;
   revenue: number;
   clicks: number;
+  impressions: number;
 };
 
 export function adByDay(rows: AdMetric[]): AdDayPoint[] {
@@ -91,11 +92,12 @@ export function adByDay(rows: AdMetric[]): AdDayPoint[] {
   for (const r of rows) {
     const p =
       map.get(r.date) ??
-      { date: r.date, spend: 0, conversions: 0, revenue: 0, clicks: 0 };
+      { date: r.date, spend: 0, conversions: 0, revenue: 0, clicks: 0, impressions: 0 };
     p.spend += r.spend;
     p.conversions += r.conversions;
     p.revenue += r.revenue;
     p.clicks += r.clicks;
+    p.impressions += r.impressions;
     map.set(r.date, p);
   }
   return [...map.values()].sort((a, b) => a.date.localeCompare(b.date));

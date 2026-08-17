@@ -231,6 +231,16 @@ export async function ChannelPage({
         ? (googleByDay.get(row.date) ?? 0)
         : row.conversions,
   }));
+  // Séries diárias dos 4 números que decidem (sparklines) — derivadas do
+  // mesmo byDay dos gráficos; dias sem resultado contam custo/CTR como 0.
+  const sparkSpend = byDay.map((r) => r.spend);
+  const sparkResults = byDay.map((r) => r.conversions);
+  const sparkResultCost = byDay.map((r) =>
+    r.conversions ? r.spend / r.conversions : 0,
+  );
+  const sparkCtr = byDay.map((r) =>
+    r.impressions ? r.clicks / r.impressions : 0,
+  );
   const campaigns = adByCampaign(ads);
   // No Meta a conversão é "conversa iniciada" (termo do Gerenciador); no
   // Google, "conversão". Um nome só por canal, em card, gráfico e tabela.
@@ -287,6 +297,7 @@ export async function ChannelPage({
               label="Investimento"
               value={fmtCurrency(k.spend)}
               icon={DollarSign}
+              spark={sparkSpend}
               help="Quanto você gastou em anúncios nesse período. É o dinheiro que saiu — não o resultado."
               trend={{ value: delta(k.spend, kPrev.spend) }}
             />
@@ -295,6 +306,7 @@ export async function ChannelPage({
               value={fmtInt(resultCount)}
               icon={Target}
               tone={platform === "meta" ? "indigo" : "sky"}
+              spark={sparkResults}
               caption={
                 platform === "meta"
                   ? "Conversas atribuídas pela Meta"
@@ -312,6 +324,7 @@ export async function ChannelPage({
               value={fmtCurrencyCents(resultCost)}
               icon={MousePointerClick}
               tone="amber"
+              spark={sparkResultCost}
               help="Investimento ÷ resultados primários. Quanto menor, melhor."
               trend={{ value: delta(resultCost, resultCostPrev), positiveIsGood: false }}
             />
@@ -319,6 +332,7 @@ export async function ChannelPage({
               label="CTR"
               value={fmtPercent(k.ctr)}
               icon={Percent}
+              spark={sparkCtr}
               help="De cada 100 pessoas que viram o anúncio, quantas clicaram (cliques ÷ impressões). Mede o quanto ele chama atenção. Acima de ~2% costuma ser bom."
               trend={{ value: delta(k.ctr, kPrev.ctr) }}
             />

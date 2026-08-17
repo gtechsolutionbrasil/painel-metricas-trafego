@@ -621,7 +621,13 @@ dashboard Vercel + Redeploy. O dev local (localhost:3000) reflete tudo.
   padronizados — área com stroke 2px, activeDot com anel de surface, cursor
   compartilhado no `theme.ts`, legenda automática quando ≥2 séries, barras
   `radius 4` + `maxBarSize 32`, `tabular-nums` em tooltip/donut. Lint/build
-  verdes.
+  verdes. **T4 (#6)**: componente `Sparkline` (área mini sem eixo/tooltip,
+  `aria-hidden`, 1 dia vira linha reta) + prop `spark` no `KpiCard` (cor segue
+  o `tone`); ligado nos 5 KPIs da Visão geral (investimento, conversas Meta,
+  contatos Google, eventos do site via novo `byDay` do `summarizeWebEvents`,
+  leads por dia via `occurredAt`) e nos 4 números dos canais (investimento,
+  resultados, custo/resultado e CTR diários — `AdDayPoint` ganhou
+  `impressions`). MiniStats/secundários sem sparkline. Lint/build verdes.
 ## Fluxo de features (skills do Matt Pocock) — roteamento
 
 Skills globais (`~/.agents/skills/`, valem pros 3 agentes): `/grill-me` (+`grilling`), `/to-spec`, `/to-tickets`, `/implement` (+`tdd`) e `/review-externo`.

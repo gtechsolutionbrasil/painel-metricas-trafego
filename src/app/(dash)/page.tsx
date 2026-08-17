@@ -126,6 +126,22 @@ export default async function OverviewPage({ searchParams }: { searchParams: SP 
     return [...map.values()].sort((a, b) => a.date.localeCompare(b.date));
   })();
 
+  // Séries diárias dos KPIs primários (sparklines) — mesmos dados dos gráficos.
+  const sparkSpend = byDay.map((d) => d.googleSpend + d.metaSpend);
+  const sparkMetaConversations = byDay.map((d) => d.metaConversations);
+  const sparkGoogleContacts = byDay.map((d) => d.googleContacts);
+  const sparkSiteEvents = siteEvents.byDay.map((d) => d.primary);
+  const sparkLeads = (() => {
+    const map = new Map<string, number>();
+    for (const lead of leads) {
+      const day = lead.occurredAt.slice(0, 10);
+      map.set(day, (map.get(day) ?? 0) + 1);
+    }
+    return [...map.entries()]
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([, count]) => count);
+  })();
+
   return (
     <div className="space-y-6">
       <PageHeader
@@ -148,6 +164,7 @@ export default async function OverviewPage({ searchParams }: { searchParams: SP 
           value={fmtCurrency(paid.spend)}
           icon={DollarSign}
           tone="brand"
+          spark={sparkSpend}
           caption="Google Ads + Meta Ads"
           help="Dinheiro investido nas duas plataformas no período."
           trend={{ value: delta(paid.spend, paidPrev.spend) }}
@@ -157,6 +174,7 @@ export default async function OverviewPage({ searchParams }: { searchParams: SP 
           value={fmtInt(meta?.conversions ?? 0)}
           icon={MessageCircleMore}
           tone="indigo"
+          spark={sparkMetaConversations}
           caption="Relatadas pela Meta Ads"
           help="Conversas iniciadas no WhatsApp/Direct atribuídas pela Meta."
           trend={{ value: delta(meta?.conversions ?? 0, metaPrev?.conversions ?? 0) }}
@@ -166,6 +184,7 @@ export default async function OverviewPage({ searchParams }: { searchParams: SP 
           value={fmtInt(googleResults.primary)}
           icon={PhoneCall}
           tone="sky"
+          spark={sparkGoogleContacts}
           caption="WhatsApp + formulário + ligação"
           help="Ações primárias informadas pelo Google Ads. Rotas e visitas à loja ficam fora deste número."
           trend={{ value: delta(googleResults.primary, googleResultsPrev.primary) }}
@@ -175,6 +194,7 @@ export default async function OverviewPage({ searchParams }: { searchParams: SP 
           value={webEvents.length ? fmtInt(siteEvents.primary) : "Aguardando coleta"}
           icon={Globe}
           tone="amber"
+          spark={webEvents.length ? sparkSiteEvents : undefined}
           caption="Ações recebidas pelo GA4"
           help="Cliques no WhatsApp/telefone e formulários confirmados no site. Não são pessoas únicas e podem se sobrepor ao Google."
           trend={
@@ -188,6 +208,7 @@ export default async function OverviewPage({ searchParams }: { searchParams: SP 
           value={fmtInt(leads.length)}
           icon={UsersRound}
           tone="brand"
+          spark={sparkLeads}
           caption="Pessoas/negócios registrados"
           help="É a confirmação operacional. Compare com as plataformas para identificar perdas e duplicidades; não é preenchido automaticamente nesta versão."
         />

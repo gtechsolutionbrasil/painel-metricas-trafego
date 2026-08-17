@@ -220,6 +220,7 @@ export type WebEventSummary = {
     count: number;
     keyEvents: number;
   }>;
+  byDay: Array<{ date: string; primary: number }>;
 };
 
 export function summarizeWebEvents(rows: WebEventMetric[]): WebEventSummary {
@@ -233,13 +234,20 @@ export function summarizeWebEvents(rows: WebEventMetric[]): WebEventSummary {
     micro: 0,
     byKind: emptyKinds(),
     rows: [],
+    byDay: [],
   };
+  const days = new Map<string, { date: string; primary: number }>();
 
   for (const row of rows) {
     const classified = classifyWebEvent(row.eventName);
     const value = row.eventCount;
     out.byKind[classified.kind] += value;
-    if (classified.bucket === "primary") out.primary += value;
+    if (classified.bucket === "primary") {
+      out.primary += value;
+      const day = days.get(row.date) ?? { date: row.date, primary: 0 };
+      day.primary += value;
+      days.set(row.date, day);
+    }
     if (classified.bucket === "local_intent") out.localIntent += value;
     if (classified.bucket === "micro") out.micro += value;
 
@@ -256,6 +264,7 @@ export function summarizeWebEvents(rows: WebEventMetric[]): WebEventSummary {
   }
 
   out.rows = [...grouped.values()].sort((a, b) => b.count - a.count);
+  out.byDay = [...days.values()].sort((a, b) => a.date.localeCompare(b.date));
   return out;
 }
 

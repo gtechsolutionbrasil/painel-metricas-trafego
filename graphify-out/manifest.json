@@ -55,29 +55,29 @@
     "semantic_hash": "50982a4db70759b24f1942ebee63a3d4"
   },
   "src/components/charts/BarsChart.tsx": {
-    "mtime": 1782687234.8629642,
-    "ast_hash": "6e31112d1756d5105e73dcd2864f870a",
-    "semantic_hash": "6e31112d1756d5105e73dcd2864f870a"
+    "mtime": 1786980832.5694308,
+    "ast_hash": "96c0671264cdb41cdde0990a55637ed3",
+    "semantic_hash": ""
   },
   "src/components/charts/ChartTooltip.tsx": {
-    "mtime": 1782686885.3310015,
-    "ast_hash": "65a56521cac58a9d40adb6e9817005f6",
-    "semantic_hash": "65a56521cac58a9d40adb6e9817005f6"
+    "mtime": 1786980835.2311676,
+    "ast_hash": "c7e05053a30fc7375c72a8bdbdbc6b23",
+    "semantic_hash": ""
   },
   "src/components/charts/DonutChart.tsx": {
-    "mtime": 1782687261.0290515,
-    "ast_hash": "1b1c0102d86c3ca4d596f6d4648cdcec",
-    "semantic_hash": "1b1c0102d86c3ca4d596f6d4648cdcec"
+    "mtime": 1786980843.163115,
+    "ast_hash": "648b93e338453dc204cead6d050f11ee",
+    "semantic_hash": ""
   },
   "src/components/charts/TrendAreaChart.tsx": {
-    "mtime": 1782687222.9204931,
-    "ast_hash": "5d22df82a8b39edf5575bf584fafe585",
-    "semantic_hash": "5d22df82a8b39edf5575bf584fafe585"
+    "mtime": 1786980827.1350634,
+    "ast_hash": "3906f04ee01dc8ceb72ea4b1af652537",
+    "semantic_hash": ""
   },
   "src/components/charts/theme.ts": {
-    "mtime": 1782686875.9588518,
-    "ast_hash": "31a15f7a3f84c9a7cac2a48458505b3a",
-    "semantic_hash": "31a15f7a3f84c9a7cac2a48458505b3a"
+    "mtime": 1786980806.889769,
+    "ast_hash": "9b9a1ac02f1780f9d8da3a3a9d74e019",
+    "semantic_hash": ""
   },
   "src/components/layout/Sidebar.tsx": {
     "mtime": 1786304770.994465,
@@ -195,8 +195,8 @@
     "semantic_hash": ""
   },
   "REGRAS-PROJETO.md": {
-    "mtime": 1786980459.9265385,
-    "ast_hash": "1cea327bdfaa393c97d078fb7de121ec",
+    "mtime": 1786980879.1247444,
+    "ast_hash": "165e87bf7404b2a9535d0e32a34003bd",
     "semantic_hash": ""
   },
   "docs/ingestao-n8n.md": {
