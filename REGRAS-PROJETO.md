@@ -600,6 +600,20 @@ dashboard Vercel + Redeploy. O dev local (localhost:3000) reflete tudo.
   credencial; tokens ficam no n8n. Server action passou a normalizar Meta Ad
   Account ID numérico para `act_<id>`. Validações: `npm run lint` e
   `npm run build` verdes.
+- **2026-08-17 (redesign: spec + tickets + T1 fundação visual)** — Fluxo de
+  features instalado (`cerebro-painel-metricas-trafego/`, `docs/specs/`,
+  `docs/agents/issue-tracker.md`, label `ready-for-agent`). Spec do redesign
+  em `docs/specs/redesign-painel.md` (escopo: visual + hierarquia nas 6 telas
+  internas, tema claro "admin premium" mantido, 3 features novas — seletor de
+  base de comparação, sparklines, modo apresentação; sem testes automatizados,
+  decisão no cerebro). Tickets #2–#8 no GitHub Issues (#1 = pai). **T1 (#2)
+  implementado**: tokens de estado danger/warning (soft/border/ink), sombras
+  em camadas mais sutis, headings 700/-0.02em, `tabular-nums` em toda tabela,
+  `.btn-secondary`/`.btn-ghost` neutros (verde fica só no primary), badges via
+  tokens, `.input` 40px alinhado ao `.btn`, classe `.table` base (th uppercase,
+  hover, `.num` à direita) pra adoção no T6/T7; KpiCard 28px/bold, TrendPill e
+  alerts de clientes/login/DeleteClientButton migrados pros tokens. Lint/build
+  verdes. Vercel reconectada ao repo → push na `main` deploya sozinho.
 ## Fluxo de features (skills do Matt Pocock) — roteamento
 
 Skills globais (`~/.agents/skills/`, valem pros 3 agentes): `/grill-me` (+`grilling`), `/to-spec`, `/to-tickets`, `/implement` (+`tdd`) e `/review-externo`.

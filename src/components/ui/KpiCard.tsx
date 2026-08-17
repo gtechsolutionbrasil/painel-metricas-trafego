@@ -38,7 +38,7 @@ export function KpiCard({
         {label}
         {tip && <HelpTip text={tip} />}
       </p>
-      <p className="mt-1 break-words text-[26px] font-extrabold tabular-nums tracking-tight text-ink">
+      <p className="mt-1 break-words text-[28px] font-bold tabular-nums tracking-[-0.02em] text-ink">
         {value}
       </p>
       {caption && <p className="mt-1 text-xs leading-5 text-muted">{caption}</p>}
@@ -85,10 +85,10 @@ function TrendPill({ value, positiveIsGood = true }: Trend) {
   return (
     <span
       title="Variação em relação ao período anterior de mesmo tamanho"
-      className={`inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs font-semibold ${
+      className={`inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs font-semibold tabular-nums ${
         good
           ? "bg-brand-soft-2 text-brand-ink"
-          : "bg-[#fef2f2] text-[#991b1b]"
+          : "bg-danger-soft text-danger-ink"
       }`}
     >
       <Icon size={13} strokeWidth={2.5} aria-hidden="true" />

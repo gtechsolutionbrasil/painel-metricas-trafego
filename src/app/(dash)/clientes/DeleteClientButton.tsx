@@ -26,7 +26,7 @@ export function DeleteClientButton({
       <button
         type="submit"
         title={`Excluir ${clientName}`}
-        className="grid h-8 w-8 place-items-center rounded-lg border border-transparent text-faint transition-colors hover:border-[#fecaca] hover:bg-[#fef2f2] hover:text-[#991b1b]"
+        className="grid h-8 w-8 place-items-center rounded-lg border border-transparent text-faint transition-colors hover:border-danger-border hover:bg-danger-soft hover:text-danger-ink"
       >
         <Trash2 size={15} />
       </button>

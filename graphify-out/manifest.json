@@ -195,8 +195,8 @@
     "semantic_hash": ""
   },
   "REGRAS-PROJETO.md": {
-    "mtime": 1786311483.421896,
-    "ast_hash": "e6a9a438a2388816607e8626c8dada13",
+    "mtime": 1786974171.6503963,
+    "ast_hash": "e5c5ca515a23f755d5c5db8bfb0a8d0c",
     "semantic_hash": ""
   },
   "docs/ingestao-n8n.md": {
@@ -517,6 +517,46 @@
   "tracking-crm-redesign.md": {
     "mtime": 1786301495.436355,
     "ast_hash": "98759091cdbf993e563cee1687d39f0b",
+    "semantic_hash": ""
+  },
+  "cerebro-painel-metricas-trafego/COMO-USAR.md": {
+    "mtime": 1786974155.4884076,
+    "ast_hash": "6cb95cb005df11190cb188d8f304b7d4",
+    "semantic_hash": ""
+  },
+  "cerebro-painel-metricas-trafego/_templates/Template Bug.md": {
+    "mtime": 1786974155.4927924,
+    "ast_hash": "4ab2dbd403847940ada6acbd2f7f22a9",
+    "semantic_hash": ""
+  },
+  "cerebro-painel-metricas-trafego/_templates/Template Contexto.md": {
+    "mtime": 1786974155.4945183,
+    "ast_hash": "d118baa470b19fa21fd542f033f308ef",
+    "semantic_hash": ""
+  },
+  "cerebro-painel-metricas-trafego/_templates/Template Decisao.md": {
+    "mtime": 1786974155.49341,
+    "ast_hash": "d1d9ea920ae4cee60b7759604bc93f2f",
+    "semantic_hash": ""
+  },
+  "docs/agents/issue-tracker.md": {
+    "mtime": 1786974155.5016537,
+    "ast_hash": "d11e945492ba474cf7d804d99dd548b6",
+    "semantic_hash": ""
+  },
+  "docs/specs/README.md": {
+    "mtime": 1786974155.49821,
+    "ast_hash": "db5a7ed9dcf2b35eb881ed87bb6194d5",
+    "semantic_hash": ""
+  },
+  "cerebro-painel-metricas-trafego/Decis\u00e3o - Sem testes automatizados no painel.md": {
+    "mtime": 1786978580.3993888,
+    "ast_hash": "2aba00220dff2e0d229fc534e1ea44eb",
+    "semantic_hash": ""
+  },
+  "docs/specs/redesign-painel.md": {
+    "mtime": 1786978566.4092011,
+    "ast_hash": "d2e53d0e1739e537421055f27f2b2641",
     "semantic_hash": ""
   }
 }

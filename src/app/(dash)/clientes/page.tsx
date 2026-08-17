@@ -84,14 +84,14 @@ export default async function ClientesPage({
       )}
 
       {errorMsg && (
-        <div className="flex items-center gap-2 rounded-lg border border-[#fecaca] bg-[#fef2f2] px-4 py-3 text-sm font-semibold text-[#991b1b]" role="alert" aria-live="polite">
+        <div className="flex items-center gap-2 rounded-lg border border-danger-border bg-danger-soft px-4 py-3 text-sm font-semibold text-danger-ink" role="alert" aria-live="polite">
           <CircleAlert size={17} aria-hidden="true" />
           {errorMsg}
         </div>
       )}
 
       {!isSupabaseConfigured && (
-        <div className="flex items-center gap-2 rounded-lg border border-[#fde68a] bg-[#fffbeb] px-4 py-3 text-sm font-semibold text-[#92400e]">
+        <div className="flex items-center gap-2 rounded-lg border border-warning-border bg-warning-soft px-4 py-3 text-sm font-semibold text-warning-ink">
           <CircleAlert size={17} aria-hidden="true" />
           Modo demonstração ativo. Configure o Supabase para salvar novos
           clientes.

@@ -12,7 +12,7 @@ export function PageHeader({
   return (
     <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
       <div>
-        <h1 className="text-pretty text-2xl font-extrabold tracking-tight text-ink">
+        <h1 className="text-pretty text-2xl font-bold tracking-tight text-ink">
           {title}
         </h1>
         {subtitle && <p className="mt-1 max-w-3xl text-pretty text-[15px] text-muted">{subtitle}</p>}
