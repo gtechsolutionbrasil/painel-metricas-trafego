@@ -85,8 +85,8 @@
     "semantic_hash": ""
   },
   "src/components/layout/Topbar.tsx": {
-    "mtime": 1786981458.709356,
-    "ast_hash": "58cf0e9782fa63dd5975fb90e389ee42",
+    "mtime": 1786981975.5051348,
+    "ast_hash": "5e9f0fc3af2f3af3e02d85a3082a6d05",
     "semantic_hash": ""
   },
   "src/components/ui/Badge.tsx": {
@@ -195,8 +195,8 @@
     "semantic_hash": ""
   },
   "REGRAS-PROJETO.md": {
-    "mtime": 1786981582.7130635,
-    "ast_hash": "76784e6207061c0d72e81239f735bb1b",
+    "mtime": 1786982059.5872889,
+    "ast_hash": "e0f03547b594a57a459f368debf11241",
     "semantic_hash": ""
   },
   "docs/ingestao-n8n.md": {
@@ -315,8 +315,8 @@
     "semantic_hash": ""
   },
   "src/components/pages/ChannelPage.tsx": {
-    "mtime": 1786981517.518604,
-    "ast_hash": "6e624354eebd215e6c7dbe73521ac19f",
+    "mtime": 1786982016.0082247,
+    "ast_hash": "11b25df280ba73151428c8442e49d7b6",
     "semantic_hash": ""
   },
   "src/app/(dash)/clientes/DeleteClientButton.tsx": {
@@ -335,8 +335,8 @@
     "semantic_hash": ""
   },
   "src/components/pages/GoogleInsights.tsx": {
-    "mtime": 1786304659.6446035,
-    "ast_hash": "85565c4741e85d788061fd70567fe049",
+    "mtime": 1786982032.8585427,
+    "ast_hash": "6771fa522949a8779a0801e0b52fd55b",
     "semantic_hash": ""
   },
   "supabase/migrations/0006_google_ads_breakdowns.sql": {
@@ -565,8 +565,18 @@
     "semantic_hash": ""
   },
   "src/components/layout/ComparePicker.tsx": {
-    "mtime": 1786981455.2258558,
-    "ast_hash": "3079141a04598d0e2f9bef870156a0e2",
+    "mtime": 1786981972.4549606,
+    "ast_hash": "f2dc3bc5943090e8a256d346e9d1c9ea",
+    "semantic_hash": ""
+  },
+  "src/components/layout/PresentationToggle.tsx": {
+    "mtime": 1786981969.5740912,
+    "ast_hash": "54861da5e19d8322ed1ccf07f90c349d",
+    "semantic_hash": ""
+  },
+  "src/lib/presentation.ts": {
+    "mtime": 1786981954.5228152,
+    "ast_hash": "dd0b25204d1776c3419b39ef893f4cf3",
     "semantic_hash": ""
   }
 }

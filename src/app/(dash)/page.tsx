@@ -158,15 +158,6 @@ export default async function OverviewPage({ searchParams }: { searchParams: SP 
         subtitle={`Resultados comerciais, intenção local e tráfego · ${client ? client.name : "Todos os clientes"}`}
       />
 
-      <div className="flex items-start gap-3 rounded-[12px] border border-sky-200 bg-sky-50 px-4 py-3 text-sm text-sky-950">
-        <CircleAlert size={18} className="mt-0.5 shrink-0 text-sky-700" aria-hidden="true" />
-        <p>
-          <strong>Google, Meta e GA4 não representam pessoas únicas.</strong>{" "}
-          Compare as fontes lado a lado e confirme os contatos reais no CRM;
-          não some os três números para calcular clientes.
-        </p>
-      </div>
-
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-5">
         <KpiCard
           label="Investimento total"
@@ -229,6 +220,16 @@ export default async function OverviewPage({ searchParams }: { searchParams: SP 
           caption="Pessoas/negócios registrados"
           help="É a confirmação operacional. Compare com as plataformas para identificar perdas e duplicidades; não é preenchido automaticamente nesta versão."
         />
+      </div>
+
+      {/* Aviso metodológico depois dos números: primeiro a resposta, depois a ressalva. */}
+      <div className="flex items-start gap-3 rounded-[12px] border border-sky-200 bg-sky-50 px-4 py-3 text-sm text-sky-950">
+        <CircleAlert size={18} className="mt-0.5 shrink-0 text-sky-700" aria-hidden="true" />
+        <p>
+          <strong>Google, Meta e GA4 não representam pessoas únicas.</strong>{" "}
+          Compare as fontes lado a lado e confirme os contatos reais no CRM;
+          não some os três números para calcular clientes.
+        </p>
       </div>
 
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
@@ -374,7 +375,7 @@ function SignalCard({
   href?: string;
 }) {
   const tones = {
-    brand: "border-emerald-200 bg-emerald-50 text-emerald-700",
+    brand: "border-brand-border bg-brand-soft text-brand",
     sky: "border-sky-200 bg-sky-50 text-sky-700",
     amber: "border-amber-200 bg-amber-50 text-amber-700",
     rose: "border-rose-200 bg-rose-50 text-rose-700",

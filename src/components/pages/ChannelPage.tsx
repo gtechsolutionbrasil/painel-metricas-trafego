@@ -181,8 +181,8 @@ export async function ChannelPage({
               </div>
               <div className="text-right">
                 <p
-                  className={`text-2xl font-extrabold ${
-                    b.balance > 0 ? "text-ink" : "text-[#b91c1c]"
+                  className={`text-2xl font-bold tabular-nums ${
+                    b.balance > 0 ? "text-ink" : "text-danger-ink"
                   }`}
                 >
                   {fmtCurrencyCents(Math.max(0, b.balance))}
@@ -457,9 +457,9 @@ export async function ChannelPage({
               subtitle={`${campaigns.length} campanha${campaigns.length === 1 ? "" : "s"} no período`}
             />
             <div className="overflow-x-auto">
-              <table className="w-full min-w-[1000px] text-sm">
+              <table className="table min-w-[1000px]">
                 <thead>
-                  <tr className="border-b border-line bg-surface-2 text-left text-xs font-semibold uppercase tracking-wide text-faint">
+                  <tr className="bg-surface-2">
                     <th className="px-5 py-3">Veiculação</th>
                     <th className="px-3 py-3">Campanha</th>
                     <th className="px-3 py-3 text-right">Investido</th>
@@ -492,7 +492,6 @@ export async function ChannelPage({
                     return (
                     <tr
                       key={`${c.platform}-${c.campaign}`}
-                      className="border-b border-line last:border-0 transition-colors hover:bg-surface-2"
                     >
                       <td className="px-5 py-3">
                         <span className="inline-flex items-center gap-2 whitespace-nowrap">

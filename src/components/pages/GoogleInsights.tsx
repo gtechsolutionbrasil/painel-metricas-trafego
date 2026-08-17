@@ -249,9 +249,9 @@ export async function GoogleInsights({ searchParams }: { searchParams: SP }) {
             }
           />
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[720px] text-sm">
+            <table className="table min-w-[720px]">
               <thead>
-                <tr className="border-b border-line bg-surface-2 text-left text-xs font-semibold uppercase tracking-wide text-faint">
+                <tr className="bg-surface-2">
                   <th className="px-5 py-3">Grupo</th>
                   <th className="px-3 py-3 text-right">Impressões</th>
                   <th className="px-3 py-3 text-right">Cliques</th>
@@ -264,7 +264,6 @@ export async function GoogleInsights({ searchParams }: { searchParams: SP }) {
                 {adGroups.map((g) => (
                   <tr
                     key={g.adGroup}
-                    className="border-b border-line last:border-0 transition-colors hover:bg-surface-2"
                   >
                     <td className="px-5 py-3 font-semibold text-ink">
                       {g.adGroup}
@@ -307,9 +306,9 @@ export async function GoogleInsights({ searchParams }: { searchParams: SP }) {
             }
           />
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[820px] text-sm">
+            <table className="table min-w-[820px]">
               <thead>
-                <tr className="border-b border-line bg-surface-2 text-left text-xs font-semibold uppercase tracking-wide text-faint">
+                <tr className="bg-surface-2">
                   <th className="px-5 py-3">Palavra-chave</th>
                   <th className="px-3 py-3">Correspondência</th>
                   <th className="px-3 py-3 text-right">Impressões</th>
@@ -322,7 +321,6 @@ export async function GoogleInsights({ searchParams }: { searchParams: SP }) {
                 {keywords.map((k) => (
                   <tr
                     key={`${k.keyword}-${k.matchType}`}
-                    className="border-b border-line last:border-0 transition-colors hover:bg-surface-2"
                   >
                     <td className="px-5 py-3 font-semibold text-ink">
                       {k.keyword}
@@ -363,9 +361,9 @@ export async function GoogleInsights({ searchParams }: { searchParams: SP }) {
             }
           />
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[640px] text-sm">
+            <table className="table min-w-[640px]">
               <thead>
-                <tr className="border-b border-line bg-surface-2 text-left text-xs font-semibold uppercase tracking-wide text-faint">
+                <tr className="bg-surface-2">
                   <th className="px-5 py-3">O que pesquisaram</th>
                   <th className="px-3 py-3 text-right">Impressões</th>
                   <th className="px-3 py-3 text-right">Cliques</th>
@@ -377,7 +375,6 @@ export async function GoogleInsights({ searchParams }: { searchParams: SP }) {
                 {searchTerms.map((s) => (
                   <tr
                     key={s.searchTerm}
-                    className="border-b border-line last:border-0 transition-colors hover:bg-surface-2"
                   >
                     <td className="px-5 py-3 font-semibold text-ink">
                       {s.searchTerm}
@@ -415,9 +412,9 @@ export async function GoogleInsights({ searchParams }: { searchParams: SP }) {
             }
           />
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[640px] text-sm">
+            <table className="table min-w-[640px]">
               <thead>
-                <tr className="border-b border-line bg-surface-2 text-left text-xs font-semibold uppercase tracking-wide text-faint">
+                <tr className="bg-surface-2">
                   <th className="px-5 py-3">Cidade</th>
                   <th className="px-3 py-3 text-right">Impressões</th>
                   <th className="px-3 py-3 text-right">Cliques</th>
@@ -429,7 +426,6 @@ export async function GoogleInsights({ searchParams }: { searchParams: SP }) {
                 {regions.map((g) => (
                   <tr
                     key={g.region}
-                    className="border-b border-line last:border-0 transition-colors hover:bg-surface-2"
                   >
                     <td className="px-5 py-3 font-semibold text-ink">
                       {regionLabel(g.region)}
