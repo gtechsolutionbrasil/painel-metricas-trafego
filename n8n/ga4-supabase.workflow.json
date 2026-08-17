@@ -6,9 +6,19 @@
       "name": "Todo dia 06:00",
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
-      "position": [0, 0],
+      "position": [
+        0,
+        0
+      ],
       "parameters": {
-        "rule": { "interval": [{ "field": "cronExpression", "expression": "0 6 * * *" }] }
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 6 * * *"
+            }
+          ]
+        }
       }
     },
     {
@@ -16,7 +26,10 @@
       "name": "Buscar contas GA4",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
-      "position": [220, 0],
+      "position": [
+        220,
+        0
+      ],
       "parameters": {
         "method": "GET",
         "url": "https://oqsjdhrwpmpdrihgbgtx.supabase.co/rest/v1/integration_accounts",
@@ -25,9 +38,18 @@
         "sendQuery": true,
         "queryParameters": {
           "parameters": [
-            { "name": "select", "value": "id,client_id,external_id,account_name" },
-            { "name": "provider", "value": "eq.ga4" },
-            { "name": "status", "value": "neq.paused" }
+            {
+              "name": "select",
+              "value": "id,client_id,external_id,account_name"
+            },
+            {
+              "name": "provider",
+              "value": "eq.ga4"
+            },
+            {
+              "name": "status",
+              "value": "neq.paused"
+            }
           ]
         },
         "options": {}
@@ -37,7 +59,10 @@
       "maxTries": 3,
       "waitBetweenTries": 5000,
       "credentials": {
-        "supabaseApi": { "id": "sfp0d2ZkWr7zz5wM", "name": "Supabase - Painel Métricas (service role)" }
+        "supabaseApi": {
+          "id": "sfp0d2ZkWr7zz5wM",
+          "name": "Supabase - Painel Métricas (service role)"
+        }
       }
     },
     {
@@ -45,7 +70,10 @@
       "name": "GA4 runReport",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
-      "position": [440, 0],
+      "position": [
+        440,
+        0
+      ],
       "parameters": {
         "method": "POST",
         "url": "=https://analyticsdata.googleapis.com/v1beta/properties/{{ $json.external_id }}:runReport",
@@ -61,7 +89,10 @@
       "maxTries": 3,
       "waitBetweenTries": 5000,
       "credentials": {
-        "googleAnalyticsOAuth2": { "id": "I8evqpJf7UDmKsGB", "name": "Google Analytics account" }
+        "googleAnalyticsOAuth2": {
+          "id": "I8evqpJf7UDmKsGB",
+          "name": "Google Analytics account"
+        }
       }
     },
     {
@@ -69,7 +100,10 @@
       "name": "Montar linhas web_metrics",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [660, 0],
+      "position": [
+        660,
+        0
+      ],
       "parameters": {
         "mode": "runOnceForAllItems",
         "jsCode": "// 1 item de entrada = resposta do runReport de UMA property GA4.\n// Saída: 1 item com o array `rows` pronto pro upsert em web_metrics.\nconst rows = [];\nfor (let i = 0; i < items.length; i++) {\n  const resp = items[i].json;\n  const conta = $('Buscar contas GA4').itemMatching(i).json;\n  for (const r of resp.rows ?? []) {\n    const d = (r.dimensionValues ?? []).map((v) => v.value);\n    const m = (r.metricValues ?? []).map((v) => Number(v.value) || 0);\n    rows.push({\n      client_id: conta.client_id,\n      account_external_id: String(conta.external_id),\n      // GA4 devolve YYYYMMDD -> YYYY-MM-DD\n      date: `${d[0].slice(0, 4)}-${d[0].slice(4, 6)}-${d[0].slice(6, 8)}`,\n      source: d[1] || '(not set)',\n      medium: d[2] || '(not set)',\n      sessions: Math.round(m[0]),\n      users: Math.round(m[1]),\n      pageviews: Math.round(m[2]),\n      bounce_rate: m[3],\n      avg_duration: m[4],\n    });\n  }\n}\nif (rows.length === 0) {\n  return []; // nada a gravar -> encerra sem chamar o Supabase\n}\nreturn [{ json: { rows, total: rows.length } }];"
@@ -80,7 +114,10 @@
       "name": "Upsert web_metrics",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
-      "position": [880, 0],
+      "position": [
+        880,
+        0
+      ],
       "parameters": {
         "method": "POST",
         "url": "https://oqsjdhrwpmpdrihgbgtx.supabase.co/rest/v1/web_metrics",
@@ -89,12 +126,20 @@
         "sendQuery": true,
         "queryParameters": {
           "parameters": [
-            { "name": "on_conflict", "value": "client_id,account_external_id,date,source,medium" }
+            {
+              "name": "on_conflict",
+              "value": "client_id,account_external_id,date,source,medium"
+            }
           ]
         },
         "sendHeaders": true,
         "headerParameters": {
-          "parameters": [{ "name": "Prefer", "value": "resolution=merge-duplicates,return=minimal" }]
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "resolution=merge-duplicates,return=minimal"
+            }
+          ]
         },
         "sendBody": true,
         "specifyBody": "json",
@@ -105,7 +150,10 @@
       "maxTries": 3,
       "waitBetweenTries": 5000,
       "credentials": {
-        "supabaseApi": { "id": "sfp0d2ZkWr7zz5wM", "name": "Supabase - Painel Métricas (service role)" }
+        "supabaseApi": {
+          "id": "sfp0d2ZkWr7zz5wM",
+          "name": "Supabase - Painel Métricas (service role)"
+        }
       }
     },
     {
@@ -113,7 +161,10 @@
       "name": "Registrar sync_runs",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
-      "position": [1100, 0],
+      "position": [
+        1100,
+        0
+      ],
       "parameters": {
         "method": "POST",
         "url": "https://oqsjdhrwpmpdrihgbgtx.supabase.co/rest/v1/sync_runs",
@@ -121,7 +172,12 @@
         "nodeCredentialType": "supabaseApi",
         "sendHeaders": true,
         "headerParameters": {
-          "parameters": [{ "name": "Prefer", "value": "return=minimal" }]
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=minimal"
+            }
+          ]
         },
         "sendBody": true,
         "specifyBody": "json",
@@ -129,7 +185,10 @@
         "options": {}
       },
       "credentials": {
-        "supabaseApi": { "id": "sfp0d2ZkWr7zz5wM", "name": "Supabase - Painel Métricas (service role)" }
+        "supabaseApi": {
+          "id": "sfp0d2ZkWr7zz5wM",
+          "name": "Supabase - Painel Métricas (service role)"
+        }
       }
     },
     {
@@ -137,7 +196,10 @@
       "name": "GA4 Paginas de entrada",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
-      "position": [440, 200],
+      "position": [
+        440,
+        200
+      ],
       "parameters": {
         "method": "POST",
         "url": "=https://analyticsdata.googleapis.com/v1beta/properties/{{ $json.external_id }}:runReport",
@@ -153,7 +215,10 @@
       "maxTries": 3,
       "waitBetweenTries": 5000,
       "credentials": {
-        "googleAnalyticsOAuth2": { "id": "I8evqpJf7UDmKsGB", "name": "Google Analytics account" }
+        "googleAnalyticsOAuth2": {
+          "id": "I8evqpJf7UDmKsGB",
+          "name": "Google Analytics account"
+        }
       }
     },
     {
@@ -161,7 +226,10 @@
       "name": "Montar web_pages entrada",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [660, 200],
+      "position": [
+        660,
+        200
+      ],
       "parameters": {
         "mode": "runOnceForAllItems",
         "jsCode": "// 1 item = resposta runReport (landing pages) de UMA property GA4.\nconst rows = [];\nfor (let i = 0; i < items.length; i++) {\n  const resp = items[i].json;\n  const conta = $('Buscar contas GA4').itemMatching(i).json;\n  for (const r of resp.rows ?? []) {\n    const d = (r.dimensionValues ?? []).map((v) => v.value);\n    const m = (r.metricValues ?? []).map((v) => Number(v.value) || 0);\n    rows.push({\n      client_id: conta.client_id,\n      account_external_id: String(conta.external_id),\n      date: `${d[0].slice(0, 4)}-${d[0].slice(4, 6)}-${d[0].slice(6, 8)}`,\n      kind: 'landing',\n      page: d[1] || '(not set)',\n      sessions: Math.round(m[0]),\n      views: 0,\n    });\n  }\n}\nif (rows.length === 0) return [];\nreturn [{ json: { rows, total: rows.length } }];"
@@ -172,7 +240,10 @@
       "name": "Upsert web_pages entrada",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
-      "position": [880, 200],
+      "position": [
+        880,
+        200
+      ],
       "onError": "continueRegularOutput",
       "retryOnFail": true,
       "maxTries": 3,
@@ -185,12 +256,20 @@
         "sendQuery": true,
         "queryParameters": {
           "parameters": [
-            { "name": "on_conflict", "value": "client_id,account_external_id,date,kind,page" }
+            {
+              "name": "on_conflict",
+              "value": "client_id,account_external_id,date,kind,page"
+            }
           ]
         },
         "sendHeaders": true,
         "headerParameters": {
-          "parameters": [{ "name": "Prefer", "value": "resolution=merge-duplicates,return=minimal" }]
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "resolution=merge-duplicates,return=minimal"
+            }
+          ]
         },
         "sendBody": true,
         "specifyBody": "json",
@@ -198,7 +277,10 @@
         "options": {}
       },
       "credentials": {
-        "supabaseApi": { "id": "sfp0d2ZkWr7zz5wM", "name": "Supabase - Painel Métricas (service role)" }
+        "supabaseApi": {
+          "id": "sfp0d2ZkWr7zz5wM",
+          "name": "Supabase - Painel Métricas (service role)"
+        }
       }
     },
     {
@@ -206,7 +288,10 @@
       "name": "GA4 Paginas vistas",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
-      "position": [440, 400],
+      "position": [
+        440,
+        400
+      ],
       "parameters": {
         "method": "POST",
         "url": "=https://analyticsdata.googleapis.com/v1beta/properties/{{ $json.external_id }}:runReport",
@@ -222,7 +307,10 @@
       "maxTries": 3,
       "waitBetweenTries": 5000,
       "credentials": {
-        "googleAnalyticsOAuth2": { "id": "I8evqpJf7UDmKsGB", "name": "Google Analytics account" }
+        "googleAnalyticsOAuth2": {
+          "id": "I8evqpJf7UDmKsGB",
+          "name": "Google Analytics account"
+        }
       }
     },
     {
@@ -230,7 +318,10 @@
       "name": "Montar web_pages vistas",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [660, 400],
+      "position": [
+        660,
+        400
+      ],
       "parameters": {
         "mode": "runOnceForAllItems",
         "jsCode": "// 1 item = resposta runReport (pagePath) de UMA property GA4.\nconst rows = [];\nfor (let i = 0; i < items.length; i++) {\n  const resp = items[i].json;\n  const conta = $('Buscar contas GA4').itemMatching(i).json;\n  for (const r of resp.rows ?? []) {\n    const d = (r.dimensionValues ?? []).map((v) => v.value);\n    const m = (r.metricValues ?? []).map((v) => Number(v.value) || 0);\n    rows.push({\n      client_id: conta.client_id,\n      account_external_id: String(conta.external_id),\n      date: `${d[0].slice(0, 4)}-${d[0].slice(4, 6)}-${d[0].slice(6, 8)}`,\n      kind: 'view',\n      page: d[1] || '(not set)',\n      sessions: 0,\n      views: Math.round(m[0]),\n    });\n  }\n}\nif (rows.length === 0) return [];\nreturn [{ json: { rows, total: rows.length } }];"
@@ -241,7 +332,10 @@
       "name": "Upsert web_pages vistas",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
-      "position": [880, 400],
+      "position": [
+        880,
+        400
+      ],
       "onError": "continueRegularOutput",
       "retryOnFail": true,
       "maxTries": 3,
@@ -254,12 +348,20 @@
         "sendQuery": true,
         "queryParameters": {
           "parameters": [
-            { "name": "on_conflict", "value": "client_id,account_external_id,date,kind,page" }
+            {
+              "name": "on_conflict",
+              "value": "client_id,account_external_id,date,kind,page"
+            }
           ]
         },
         "sendHeaders": true,
         "headerParameters": {
-          "parameters": [{ "name": "Prefer", "value": "resolution=merge-duplicates,return=minimal" }]
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "resolution=merge-duplicates,return=minimal"
+            }
+          ]
         },
         "sendBody": true,
         "specifyBody": "json",
@@ -267,7 +369,10 @@
         "options": {}
       },
       "credentials": {
-        "supabaseApi": { "id": "sfp0d2ZkWr7zz5wM", "name": "Supabase - Painel Métricas (service role)" }
+        "supabaseApi": {
+          "id": "sfp0d2ZkWr7zz5wM",
+          "name": "Supabase - Painel Métricas (service role)"
+        }
       }
     },
     {
@@ -275,7 +380,10 @@
       "name": "GA4 Eventos de contato",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
-      "position": [440, 600],
+      "position": [
+        440,
+        600
+      ],
       "parameters": {
         "method": "POST",
         "url": "=https://analyticsdata.googleapis.com/v1beta/properties/{{ $json.external_id }}:runReport",
@@ -291,7 +399,10 @@
       "maxTries": 3,
       "waitBetweenTries": 5000,
       "credentials": {
-        "googleAnalyticsOAuth2": { "id": "I8evqpJf7UDmKsGB", "name": "Google Analytics account" }
+        "googleAnalyticsOAuth2": {
+          "id": "I8evqpJf7UDmKsGB",
+          "name": "Google Analytics account"
+        }
       }
     },
     {
@@ -299,7 +410,10 @@
       "name": "Montar web_events e checks",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [660, 600],
+      "position": [
+        660,
+        600
+      ],
       "parameters": {
         "mode": "runOnceForAllItems",
         "jsCode": "const expected = ['whatsapp_click', 'generate_lead', 'phone_click', 'route_click'];\nconst output = [];\nfor (let i = 0; i < items.length; i++) {\n  const resp = items[i].json;\n  const conta = $('Buscar contas GA4').itemMatching(i).json;\n  const totals = Object.fromEntries(expected.map((name) => [name, 0]));\n  const rows = [];\n  for (const r of resp.rows ?? []) {\n    const d = (r.dimensionValues ?? []).map((v) => v.value);\n    const m = (r.metricValues ?? []).map((v) => Number(v.value) || 0);\n    const eventName = d[1] || '(not set)';\n    totals[eventName] = (totals[eventName] ?? 0) + m[0];\n    rows.push({\n      client_id: conta.client_id,\n      account_external_id: String(conta.external_id),\n      date: `${d[0].slice(0, 4)}-${d[0].slice(4, 6)}-${d[0].slice(6, 8)}`,\n      event_name: eventName,\n      source: d[2] || '(not set)',\n      medium: d[3] || '(not set)',\n      campaign: d[4] || '(not set)',\n      event_count: Math.round(m[0]),\n      key_events: m[1],\n      users: Math.round(m[2]),\n    });\n  }\n  const checkedAt = new Date().toISOString();\n  const checks = expected.map((eventName) => ({\n    client_id: conta.client_id,\n    provider: 'ga4',\n    check_key: `event:${eventName}`,\n    status: totals[eventName] > 0 ? 'healthy' : 'warning',\n    value: String(totals[eventName] || 0),\n    message: totals[eventName] > 0\n      ? `${totals[eventName]} evento(s) nos últimos 7 dias.`\n      : 'Nenhum evento nos últimos 7 dias; revisar no Tag Assistant se houver tráfego.',\n    metadata: { account_external_id: String(conta.external_id), window: '7daysAgo:today' },\n    checked_at: checkedAt,\n  }));\n  output.push({\n    json: { accountId: conta.id, rows, checks, total: rows.length },\n    pairedItem: { item: i },\n  });\n}\nreturn output;"
@@ -310,7 +424,10 @@
       "name": "Upsert web_events",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
-      "position": [880, 600],
+      "position": [
+        880,
+        600
+      ],
       "parameters": {
         "method": "POST",
         "url": "https://oqsjdhrwpmpdrihgbgtx.supabase.co/rest/v1/web_events",
@@ -319,12 +436,20 @@
         "sendQuery": true,
         "queryParameters": {
           "parameters": [
-            { "name": "on_conflict", "value": "client_id,account_external_id,date,event_name,source,medium,campaign" }
+            {
+              "name": "on_conflict",
+              "value": "client_id,account_external_id,date,event_name,source,medium,campaign"
+            }
           ]
         },
         "sendHeaders": true,
         "headerParameters": {
-          "parameters": [{ "name": "Prefer", "value": "resolution=merge-duplicates,return=minimal" }]
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "resolution=merge-duplicates,return=minimal"
+            }
+          ]
         },
         "sendBody": true,
         "specifyBody": "json",
@@ -335,7 +460,10 @@
       "maxTries": 3,
       "waitBetweenTries": 5000,
       "credentials": {
-        "supabaseApi": { "id": "sfp0d2ZkWr7zz5wM", "name": "Supabase - Painel Métricas (service role)" }
+        "supabaseApi": {
+          "id": "sfp0d2ZkWr7zz5wM",
+          "name": "Supabase - Painel Métricas (service role)"
+        }
       }
     },
     {
@@ -343,7 +471,10 @@
       "name": "Upsert tracking_checks",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
-      "position": [880, 780],
+      "position": [
+        880,
+        780
+      ],
       "parameters": {
         "method": "POST",
         "url": "https://oqsjdhrwpmpdrihgbgtx.supabase.co/rest/v1/tracking_checks",
@@ -352,12 +483,20 @@
         "sendQuery": true,
         "queryParameters": {
           "parameters": [
-            { "name": "on_conflict", "value": "client_id,provider,check_key" }
+            {
+              "name": "on_conflict",
+              "value": "client_id,provider,check_key"
+            }
           ]
         },
         "sendHeaders": true,
         "headerParameters": {
-          "parameters": [{ "name": "Prefer", "value": "resolution=merge-duplicates,return=minimal" }]
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "resolution=merge-duplicates,return=minimal"
+            }
+          ]
         },
         "sendBody": true,
         "specifyBody": "json",
@@ -368,7 +507,10 @@
       "maxTries": 3,
       "waitBetweenTries": 5000,
       "credentials": {
-        "supabaseApi": { "id": "sfp0d2ZkWr7zz5wM", "name": "Supabase - Painel Métricas (service role)" }
+        "supabaseApi": {
+          "id": "sfp0d2ZkWr7zz5wM",
+          "name": "Supabase - Painel Métricas (service role)"
+        }
       }
     },
     {
@@ -376,7 +518,10 @@
       "name": "Marcar GA4 sincronizado",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
-      "position": [1100, 600],
+      "position": [
+        1100,
+        600
+      ],
       "parameters": {
         "method": "PATCH",
         "url": "https://oqsjdhrwpmpdrihgbgtx.supabase.co/rest/v1/integration_accounts",
@@ -385,12 +530,20 @@
         "sendQuery": true,
         "queryParameters": {
           "parameters": [
-            { "name": "id", "value": "=eq.{{ $('Montar web_events e checks').item.json.accountId }}" }
+            {
+              "name": "id",
+              "value": "=eq.{{ $('Montar web_events e checks').item.json.accountId }}"
+            }
           ]
         },
         "sendHeaders": true,
         "headerParameters": {
-          "parameters": [{ "name": "Prefer", "value": "return=minimal" }]
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=minimal"
+            }
+          ]
         },
         "sendBody": true,
         "specifyBody": "json",
@@ -398,35 +551,203 @@
         "options": {}
       },
       "credentials": {
-        "supabaseApi": { "id": "sfp0d2ZkWr7zz5wM", "name": "Supabase - Painel Métricas (service role)" }
+        "supabaseApi": {
+          "id": "sfp0d2ZkWr7zz5wM",
+          "name": "Supabase - Painel Métricas (service role)"
+        }
+      }
+    },
+    {
+      "id": "webhook-refresh-ga4",
+      "name": "Webhook atualizar (painel)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        -200
+      ],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "painel-refresh-ga4-k7m2p9w4",
+        "responseMode": "lastNode",
+        "authentication": "headerAuth"
+      },
+      "webhookId": "cd5dd92f-3a32-46bf-9c8d-a33a926779f2",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "BQ1PxEgLDkwh0qPM",
+          "name": "Painel Refresh - Header Auth"
+        }
       }
     }
   ],
   "connections": {
-    "Todo dia 06:00": { "main": [[{ "node": "Buscar contas GA4", "type": "main", "index": 0 }]] },
+    "Todo dia 06:00": {
+      "main": [
+        [
+          {
+            "node": "Buscar contas GA4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
     "Buscar contas GA4": {
-      "main": [[
-        { "node": "GA4 runReport", "type": "main", "index": 0 },
-        { "node": "GA4 Paginas de entrada", "type": "main", "index": 0 },
-        { "node": "GA4 Paginas vistas", "type": "main", "index": 0 },
-        { "node": "GA4 Eventos de contato", "type": "main", "index": 0 }
-      ]]
+      "main": [
+        [
+          {
+            "node": "GA4 runReport",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "GA4 Paginas de entrada",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "GA4 Paginas vistas",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "GA4 Eventos de contato",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
-    "GA4 runReport": { "main": [[{ "node": "Montar linhas web_metrics", "type": "main", "index": 0 }]] },
-    "Montar linhas web_metrics": { "main": [[{ "node": "Upsert web_metrics", "type": "main", "index": 0 }]] },
-    "Upsert web_metrics": { "main": [[{ "node": "Registrar sync_runs", "type": "main", "index": 0 }]] },
-    "GA4 Paginas de entrada": { "main": [[{ "node": "Montar web_pages entrada", "type": "main", "index": 0 }]] },
-    "Montar web_pages entrada": { "main": [[{ "node": "Upsert web_pages entrada", "type": "main", "index": 0 }]] },
-    "GA4 Paginas vistas": { "main": [[{ "node": "Montar web_pages vistas", "type": "main", "index": 0 }]] },
-    "Montar web_pages vistas": { "main": [[{ "node": "Upsert web_pages vistas", "type": "main", "index": 0 }]] },
-    "GA4 Eventos de contato": { "main": [[{ "node": "Montar web_events e checks", "type": "main", "index": 0 }]] },
+    "GA4 runReport": {
+      "main": [
+        [
+          {
+            "node": "Montar linhas web_metrics",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Montar linhas web_metrics": {
+      "main": [
+        [
+          {
+            "node": "Upsert web_metrics",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upsert web_metrics": {
+      "main": [
+        [
+          {
+            "node": "Registrar sync_runs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GA4 Paginas de entrada": {
+      "main": [
+        [
+          {
+            "node": "Montar web_pages entrada",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Montar web_pages entrada": {
+      "main": [
+        [
+          {
+            "node": "Upsert web_pages entrada",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GA4 Paginas vistas": {
+      "main": [
+        [
+          {
+            "node": "Montar web_pages vistas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Montar web_pages vistas": {
+      "main": [
+        [
+          {
+            "node": "Upsert web_pages vistas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GA4 Eventos de contato": {
+      "main": [
+        [
+          {
+            "node": "Montar web_events e checks",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
     "Montar web_events e checks": {
-      "main": [[
-        { "node": "Upsert web_events", "type": "main", "index": 0 },
-        { "node": "Upsert tracking_checks", "type": "main", "index": 0 }
-      ]]
+      "main": [
+        [
+          {
+            "node": "Upsert web_events",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Upsert tracking_checks",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
-    "Upsert web_events": { "main": [[{ "node": "Marcar GA4 sincronizado", "type": "main", "index": 0 }]] }
+    "Upsert web_events": {
+      "main": [
+        [
+          {
+            "node": "Marcar GA4 sincronizado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook atualizar (painel)": {
+      "main": [
+        [
+          {
+            "node": "Buscar contas GA4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
   },
-  "settings": { "executionOrder": "v1", "timezone": "America/Sao_Paulo" }
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "America/Sao_Paulo"
+  }
 }

@@ -667,6 +667,18 @@ dashboard Vercel + Redeploy. O dev local (localhost:3000) reflete tudo.
   "Visitou a loja" é ESTIMATIVA de presença física do Google, por isso >
   "Pediu rota"); (3) dúvida do usuário sobre 218 visitas × 25 rotas resolvida
   por esses tooltips.
+- **2026-08-17 (fix "Atualizado parcialmente — GA4 não configurado")** — O
+  botão Atualizar avisava GA4 pulado porque o workflow GA4 do n8n nunca teve
+  o webhook de refresh (só o gatilho diário 06:00) e `N8N_REFRESH_GA4_URL`
+  não existia. Corrigido: nó "Webhook atualizar (painel)" adicionado ao
+  workflow `oFVQoWFdstKOZcM4` via n8n-mcp (path
+  `painel-refresh-ga4-k7m2p9w4`, mesma credencial header-auth "Painel
+  Refresh"), espelhado em `n8n/ga4-supabase.workflow.json`, env adicionada ao
+  `.env.local` e webhook testado (HTTP 200, coleta rodou). **PENDENTE (só o
+  usuário pode): adicionar `N8N_REFRESH_GA4_URL=https://n8n.
+  gtechsolutionbrasil.com/webhook/painel-refresh-ga4-k7m2p9w4` na Vercel
+  (Settings → Environment Variables → Production) e redeployar** — até lá o
+  aviso continua em produção.
 ## Fluxo de features (skills do Matt Pocock) — roteamento
 
 Skills globais (`~/.agents/skills/`, valem pros 3 agentes): `/grill-me` (+`grilling`), `/to-spec`, `/to-tickets`, `/implement` (+`tdd`) e `/review-externo`.
