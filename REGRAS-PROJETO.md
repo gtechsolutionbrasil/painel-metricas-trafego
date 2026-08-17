@@ -600,3 +600,44 @@ dashboard Vercel + Redeploy. O dev local (localhost:3000) reflete tudo.
   credencial; tokens ficam no n8n. Server action passou a normalizar Meta Ad
   Account ID numérico para `act_<id>`. Validações: `npm run lint` e
   `npm run build` verdes.
+## Fluxo de features (skills do Matt Pocock) — roteamento
+
+Skills globais (`~/.agents/skills/`, valem pros 3 agentes): `/grill-me` (+`grilling`), `/to-spec`, `/to-tickets`, `/implement` (+`tdd`) e `/review-externo`.
+
+**Roteamento (neste projeto, usar SEMPRE estas; as antigas equivalentes ficam mudas aqui):**
+
+| Tarefa | Usar | NÃO usar |
+|---|---|---|
+| Especificar feature nova / levantar requisitos | `/grill-me` | `brainstorming` |
+| Congelar decisões da conversa em documento | `/to-spec` | — |
+| Quebrar spec em tarefas | `/to-tickets` | `plan-writing` |
+| Implementar um ticket | `/implement` | — |
+| TDD (quando houver infra de teste) | `tdd` | `tdd-workflow` |
+| Revisão de conformidade com a spec (sessão limpa) | `/review-externo` | — |
+| Caça a bug no diff | `/code-review` nativo | — |
+
+**Fluxo de uma feature:** `/grill-me` → `/to-spec` → `/to-tickets` → `/implement` (1 ticket por vez) → `/review-externo` em sessão/subagent limpo.
+
+**Circuito cerebro⇄specs (obrigatório):**
+1. **Antes** de `/grill-me` ou `/to-spec`: grep no `cerebro-painel-metricas-trafego/` pelas palavras-chave do tema e carregar as notas relevantes como contexto — a entrevista NÃO re-pergunta o que já foi decidido nem repropõe o que já foi descartado.
+2. **Depois** de `/to-spec`: se alguma decisão da spec tem trade-off de arquitetura (vale além da feature), criar/atualizar `Decisão - *.md` no cerebro com o caminho da spec como referência.
+
+**Separação de escopo (nunca duplicar conteúdo):** decisão transversal do projeto → este REGRAS (com link de 1 linha pra spec); decisão interna da feature → `docs/specs/<feature>.md`; lição/trade-off durável → `cerebro-painel-metricas-trafego/`. Objetivo: este REGRAS **para de crescer** — detalhe fino de feature não entra mais aqui.
+
+**Tracker:** GitHub Issues do repo (config em `docs/agents/issue-tracker.md`; label `ready-for-agent`). Specs em `docs/specs/`.
+
+## Memória técnica (cerebro-painel-metricas-trafego/)
+
+A pasta `cerebro-painel-metricas-trafego/` na raiz é o vault Obsidian de memória técnica do projeto (convenções completas em `cerebro-painel-metricas-trafego/COMO-USAR.md`; templates em `cerebro-painel-metricas-trafego/_templates/`). Guarda SÓ conhecimento que não está no código.
+
+**CONSULTAR antes de agir:**
+- Ao investigar bug não-trivial → antes, buscar por palavras-chave em `cerebro-painel-metricas-trafego/` (grep/glob, ler só as notas relevantes — economia de tokens).
+- Antes de decisão de arquitetura → conferir se já existe nota `Decisão - *` sobre o tema — **não repropor o que já foi descartado**.
+
+**ALIMENTAR depois de agir:**
+- Resolveu bug cuja causa raiz não era óbvia (race condition, dependência, ambiente) → criar `Bug - <descrição>.md`.
+- Tomou decisão técnica com trade-off real → criar `Decisão - <tema>.md`.
+- Descobriu quirk de dependência/ambiente/deploy → criar `Contexto - <tema>.md`.
+- Sempre criar a partir dos templates em `cerebro-painel-metricas-trafego/_templates/`.
+
+**Qualidade:** nada genérico (que o modelo já sabe ou que código/git já mostram), frontmatter sempre preenchido, notas relacionadas linkadas com `[[wikilinks]]` (é o que forma o grafo), notas curtas e diretas.
