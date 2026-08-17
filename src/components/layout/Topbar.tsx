@@ -7,6 +7,7 @@ import { Check, ChevronDown, Plus, Users } from "lucide-react";
 import type { Client } from "@/lib/types";
 import { PeriodPicker } from "@/components/layout/PeriodPicker";
 import { ComparePicker } from "@/components/layout/ComparePicker";
+import { PresentationToggle } from "@/components/layout/PresentationToggle";
 import { RefreshButton } from "@/components/layout/RefreshButton";
 import { ExportReportButton } from "@/components/layout/ExportReportButton";
 
@@ -101,6 +102,7 @@ export function Topbar({ clients }: { clients: Client[] }) {
         <div className="flex flex-wrap items-center gap-2">
           <PeriodPicker />
           <ComparePicker />
+          <PresentationToggle />
           <ExportReportButton />
           <RefreshButton />
         </div>

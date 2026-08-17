@@ -35,8 +35,8 @@
     "semantic_hash": ""
   },
   "src/app/(dash)/page.tsx": {
-    "mtime": 1786981224.1459756,
-    "ast_hash": "37e6e2a2931398e1bb4e5d7b0580ab4b",
+    "mtime": 1786981493.6203632,
+    "ast_hash": "a23192d82c9fd49c6b3a5e86a1b656f8",
     "semantic_hash": ""
   },
   "src/app/(dash)/trafego-pago/page.tsx": {
@@ -85,8 +85,8 @@
     "semantic_hash": ""
   },
   "src/components/layout/Topbar.tsx": {
-    "mtime": 1785773350.2006068,
-    "ast_hash": "447ea369f4a903693f46800292dd2eb9",
+    "mtime": 1786981458.709356,
+    "ast_hash": "58cf0e9782fa63dd5975fb90e389ee42",
     "semantic_hash": ""
   },
   "src/components/ui/Badge.tsx": {
@@ -100,8 +100,8 @@
     "semantic_hash": "bfe7baffe5b1dcfa3966813a3dd09a7c"
   },
   "src/components/ui/KpiCard.tsx": {
-    "mtime": 1786981174.1197388,
-    "ast_hash": "d6be60b5dfe0b4e405c6e4469bce18c5",
+    "mtime": 1786981467.4801745,
+    "ast_hash": "2936dba04f0d71db39c74cab3e07fa25",
     "semantic_hash": ""
   },
   "src/components/ui/PageHeader.tsx": {
@@ -130,8 +130,8 @@
     "semantic_hash": ""
   },
   "src/lib/range.ts": {
-    "mtime": 1785771069.9021401,
-    "ast_hash": "7fdd7efd29557991f7b4100a44e8a010",
+    "mtime": 1786981448.1835825,
+    "ast_hash": "3ec2076d4e29dfd7f207e72afc256dad",
     "semantic_hash": ""
   },
   "src/lib/supabase/client.ts": {
@@ -195,8 +195,8 @@
     "semantic_hash": ""
   },
   "REGRAS-PROJETO.md": {
-    "mtime": 1786981273.164342,
-    "ast_hash": "15ef48520e636fc691f7e23467b7cbab",
+    "mtime": 1786981582.7130635,
+    "ast_hash": "76784e6207061c0d72e81239f735bb1b",
     "semantic_hash": ""
   },
   "docs/ingestao-n8n.md": {
@@ -310,13 +310,13 @@
     "semantic_hash": ""
   },
   "src/app/(dash)/site/page.tsx": {
-    "mtime": 1786305075.4791176,
-    "ast_hash": "4dc3294e37f4a80faf5d2ab5278ac380",
+    "mtime": 1786981550.992851,
+    "ast_hash": "2d0265d9885e807ae9f2f4385b078b58",
     "semantic_hash": ""
   },
   "src/components/pages/ChannelPage.tsx": {
-    "mtime": 1786981240.5292,
-    "ast_hash": "709206f411a300d806dd3cb7eef85b17",
+    "mtime": 1786981517.518604,
+    "ast_hash": "6e624354eebd215e6c7dbe73521ac19f",
     "semantic_hash": ""
   },
   "src/app/(dash)/clientes/DeleteClientButton.tsx": {
@@ -562,6 +562,11 @@
   "src/components/charts/Sparkline.tsx": {
     "mtime": 1786981162.7425895,
     "ast_hash": "89f49251d809da29301d89bf93908ffb",
+    "semantic_hash": ""
+  },
+  "src/components/layout/ComparePicker.tsx": {
+    "mtime": 1786981455.2258558,
+    "ast_hash": "3079141a04598d0e2f9bef870156a0e2",
     "semantic_hash": ""
   }
 }

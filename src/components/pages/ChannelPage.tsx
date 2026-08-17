@@ -26,6 +26,7 @@ import {
 import { adByCampaign, adByDay, adKpis } from "@/lib/metrics/aggregate";
 import { summarizeAdActions } from "@/lib/metrics/results";
 import { selectedCampaigns } from "@/lib/campaigns";
+import { hideMetric, presentationFromSearch } from "@/lib/presentation";
 import {
   COMPARE_TITLES,
   compareFromSearch,
@@ -69,6 +70,11 @@ export async function ChannelPage({
   extra?: React.ReactNode;
 }) {
   const { range } = rangeFromSearch(searchParams);
+  // Modo apresentação: consulta o registro central do que é sensível.
+  const presentation = presentationFromSearch(searchParams);
+  const hideUnitCost = hideMetric("cost_per_result", presentation);
+  const hideCpc = hideMetric("cpc", presentation);
+  const hideBalance = hideMetric("account_balance", presentation);
   const cmp = compareFromSearch(searchParams);
   // null = "sem comparação": pula as buscas do período anterior e as pílulas.
   const prev = comparisonRange(range, cmp);
@@ -146,7 +152,7 @@ export async function ChannelPage({
   );
 
   const balanceCard =
-    balances.length > 0 ? (
+    !hideBalance && balances.length > 0 ? (
       <Card>
         <CardHeader
           title="Saldo disponível na conta"
@@ -298,8 +304,13 @@ export async function ChannelPage({
       ) : (
         <>
           {/* Os 4 números que decidem: quanto gastou, o que gerou, a que custo,
-              e se o anúncio chama atenção. O resto vai na faixa compacta. */}
-          <div className="grid grid-cols-2 gap-4 xl:grid-cols-4">
+              e se o anúncio chama atenção. O resto vai na faixa compacta.
+              No modo apresentação o custo unitário sai e o grid vira 3. */}
+          <div
+            className={`grid grid-cols-2 gap-4 ${
+              hideUnitCost ? "xl:grid-cols-3" : "xl:grid-cols-4"
+            }`}
+          >
             <KpiCard
               label="Investimento"
               value={fmtCurrency(k.spend)}
@@ -326,19 +337,21 @@ export async function ChannelPage({
               }
               trend={prev ? { value: delta(resultCount, resultCountPrev), title: trendTitle } : undefined}
             />
-            <KpiCard
-              label={platform === "meta" ? "Custo por conversa" : "Custo por contato"}
-              value={fmtCurrencyCents(resultCost)}
-              icon={MousePointerClick}
-              tone="amber"
-              spark={sparkResultCost}
-              help="Investimento ÷ resultados primários. Quanto menor, melhor."
-              trend={
-                prev
-                  ? { value: delta(resultCost, resultCostPrev), positiveIsGood: false, title: trendTitle }
-                  : undefined
-              }
-            />
+            {!hideUnitCost && (
+              <KpiCard
+                label={platform === "meta" ? "Custo por conversa" : "Custo por contato"}
+                value={fmtCurrencyCents(resultCost)}
+                icon={MousePointerClick}
+                tone="amber"
+                spark={sparkResultCost}
+                help="Investimento ÷ resultados primários. Quanto menor, melhor."
+                trend={
+                  prev
+                    ? { value: delta(resultCost, resultCostPrev), positiveIsGood: false, title: trendTitle }
+                    : undefined
+                }
+              />
+            )}
             <KpiCard
               label="CTR"
               value={fmtPercent(k.ctr)}
@@ -370,11 +383,13 @@ export async function ChannelPage({
               value={fmtInt(k.clicks)}
               tip="Quantas vezes clicaram no anúncio. Interesse — ainda não é contato."
             />
-            <MiniStat
-              label="Custo por clique"
-              value={fmtCurrencyCents(k.cpc)}
-              tip="Investimento ÷ cliques."
-            />
+            {!hideCpc && (
+              <MiniStat
+                label="Custo por clique"
+                value={fmtCurrencyCents(k.cpc)}
+                tip="Investimento ÷ cliques."
+              />
+            )}
             {platform === "google" && (
               <>
                 <MiniStat
@@ -454,11 +469,13 @@ export async function ChannelPage({
                     <th className="px-3 py-3 text-right">Impressões</th>
                     <th className="px-3 py-3 text-right">Cliques</th>
                     <th className="px-3 py-3 text-right">CTR</th>
-                    <th className="px-3 py-3 text-right">CPC</th>
+                    {!hideCpc && <th className="px-3 py-3 text-right">CPC</th>}
                     <th className="px-3 py-3 text-right">{convLabel}</th>
-                    <th className="px-5 py-3 text-right">
-                      {platform === "google" ? "Custo/contato" : "Custo/conversa"}
-                    </th>
+                    {!hideUnitCost && (
+                      <th className="px-5 py-3 text-right">
+                        {platform === "google" ? "Custo/contato" : "Custo/conversa"}
+                      </th>
+                    )}
                   </tr>
                 </thead>
                 <tbody>
@@ -513,15 +530,19 @@ export async function ChannelPage({
                       <td className="px-3 py-3 text-right text-muted">
                         {fmtPercent(c.ctr)}
                       </td>
-                      <td className="px-3 py-3 text-right text-muted">
-                        {fmtCurrencyCents(c.cpc)}
-                      </td>
+                      {!hideCpc && (
+                        <td className="px-3 py-3 text-right text-muted">
+                          {fmtCurrencyCents(c.cpc)}
+                        </td>
+                      )}
                       <td className="px-3 py-3 text-right font-semibold text-ink">
                         {fmtInt(campaignResults)}
                       </td>
-                      <td className="px-5 py-3 text-right text-muted">
-                        {fmtCurrencyCents(campaignResultCost)}
-                      </td>
+                      {!hideUnitCost && (
+                        <td className="px-5 py-3 text-right text-muted">
+                          {fmtCurrencyCents(campaignResultCost)}
+                        </td>
+                      )}
                     </tr>
                     );
                   })}

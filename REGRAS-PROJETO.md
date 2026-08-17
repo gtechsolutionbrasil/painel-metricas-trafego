@@ -636,6 +636,14 @@ dashboard Vercel + Redeploy. O dev local (localhost:3000) reflete tudo.
   ganhou pílulas nos 6 KPIs de GA4 (busca de `webPrev`/`eventsPrev`; rejeição
   com `positiveIsGood: false`; pílula omitida se o período comparado não tem
   dados). Lint/build verdes.
+  **T5 (#5)**: modo apresentação — registro central `lib/presentation.ts`
+  (sensível = custo por resultado, CPC, saldo; investimento SEMPRE visível),
+  estado `?apresentacao=1` na URL, `PresentationToggle` no Topbar (botão
+  preenchido = indicador de ativo). Esconde: card Custo por contato/conversa
+  (grid 4→3), MiniStat CPC, card Saldo, colunas CPC e Custo/resultado da
+  tabela de campanhas, coluna CPC dos Grupos de anúncios (GoogleInsights).
+  ComparePicker alinhado a h-14 com os demais controles do topo. Lint/build
+  verdes.
 ## Fluxo de features (skills do Matt Pocock) — roteamento
 
 Skills globais (`~/.agents/skills/`, valem pros 3 agentes): `/grill-me` (+`grilling`), `/to-spec`, `/to-tickets`, `/implement` (+`tdd`) e `/review-externo`.

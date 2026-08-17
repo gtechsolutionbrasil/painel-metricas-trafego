@@ -29,6 +29,7 @@ import {
 } from "@/lib/metrics/aggregate";
 import { rangeFromSearch } from "@/lib/range";
 import { selectedCampaigns } from "@/lib/campaigns";
+import { hideMetric, presentationFromSearch } from "@/lib/presentation";
 import {
   fmtCompact,
   fmtCurrency,
@@ -109,6 +110,8 @@ const regionLabel = (r: string) => r.replace(/^State of /, "");
 // ---------------------------------------------------------------------------
 export async function GoogleInsights({ searchParams }: { searchParams: SP }) {
   const { range } = rangeFromSearch(searchParams);
+  // Modo apresentação: consulta o registro central do que é sensível.
+  const hideCpc = hideMetric("cpc", presentationFromSearch(searchParams));
   const clients = await getClients();
   const client = resolveClient(clients, searchParams.client);
   const accountExternalId = Array.isArray(searchParams.account)
@@ -253,7 +256,7 @@ export async function GoogleInsights({ searchParams }: { searchParams: SP }) {
                   <th className="px-3 py-3 text-right">Impressões</th>
                   <th className="px-3 py-3 text-right">Cliques</th>
                   <th className="px-3 py-3 text-right">CTR</th>
-                  <th className="px-3 py-3 text-right">CPC</th>
+                  {!hideCpc && <th className="px-3 py-3 text-right">CPC</th>}
                   <th className="px-5 py-3 text-right">Investido</th>
                 </tr>
               </thead>
@@ -275,9 +278,11 @@ export async function GoogleInsights({ searchParams }: { searchParams: SP }) {
                     <td className="px-3 py-3 text-right text-muted">
                       {fmtPercent(g.ctr)}
                     </td>
-                    <td className="px-3 py-3 text-right text-muted">
-                      {fmtCurrencyCents(g.cpc)}
-                    </td>
+                    {!hideCpc && (
+                      <td className="px-3 py-3 text-right text-muted">
+                        {fmtCurrencyCents(g.cpc)}
+                      </td>
+                    )}
                     <td className="px-5 py-3 text-right text-muted">
                       {fmtCurrency(g.spend)}
                     </td>

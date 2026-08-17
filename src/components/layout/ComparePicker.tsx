@@ -27,7 +27,7 @@ export function ComparePicker() {
   }
 
   return (
-    <label className="inline-flex h-10 cursor-pointer items-center gap-2 rounded-[10px] border border-line bg-surface pl-3 pr-2 transition-colors hover:bg-surface-2">
+    <label className="inline-flex h-14 cursor-pointer items-center gap-2 rounded-[10px] border border-line bg-surface pl-3 pr-2 transition-colors hover:bg-surface-2">
       <GitCompareArrows size={15} className="shrink-0 text-faint" aria-hidden="true" />
       <span className="sr-only">Base de comparação</span>
       <select
