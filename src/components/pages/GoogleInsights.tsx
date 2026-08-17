@@ -8,6 +8,7 @@ import {
   SearchCheck,
 } from "lucide-react";
 import { Card, CardHeader } from "@/components/ui/Card";
+import { HelpTip } from "@/components/ui/HelpTip";
 import type { ConversionSource } from "@/lib/types";
 import {
   getAdClickTypes,
@@ -91,6 +92,71 @@ const ACTION_NAME_LABEL: Record<string, string> = {
 const actionNameLabel = (n: string) => ACTION_NAME_LABEL[n] ?? n;
 
 const HIDDEN_CLICK_TYPES = new Set(["GET_DIRECTIONS"]);
+
+// Tooltips "?" explicando o CAMINHO de cada conversão: onde a pessoa estava
+// e o que ela fez. Chave = nome cru da ação vindo do Google.
+const ACTION_TIP: Record<string, string> = {
+  "Local actions - Directions":
+    "A pessoa abriu o perfil da empresa no Google/Maps (vindo do anúncio ou da busca) e tocou em \"Rotas\" pra traçar o caminho até a loja.",
+  "Local actions - Other engagements":
+    "Interações com o perfil da empresa no Google/Maps sem contato direto: viu fotos, leu ou deixou avaliação, salvou ou compartilhou o local.",
+  "Local actions - Website visits":
+    "A pessoa abriu o site tocando no link dentro do perfil da empresa no Google/Maps.",
+  "Local actions - Calls":
+    "A pessoa tocou em \"Ligar\" no perfil da empresa no Google/Maps e fez a chamada.",
+  "Calls from ads":
+    "Ligação feita a partir do número exibido no próprio anúncio — chamada completada, não só o toque no botão.",
+  "Chamadas a partir de anúncios":
+    "Ligação feita a partir do número exibido no próprio anúncio — chamada completada, não só o toque no botão.",
+  "Clicks to call":
+    "A pessoa tocou no botão/número de ligar. Conta o toque, não a chamada completada — por isso pode ser maior que as ligações feitas.",
+  "Store visits":
+    "ESTIMATIVA do Google: pessoas que interagiram com o anúncio/perfil e depois estiveram fisicamente na loja, medida pela localização de celulares (amostra + modelagem estatística). Não exige pedir rota — quem já sabe o caminho também conta. Por isso costuma ser bem maior que \"Pediu rota\".",
+};
+
+// Complemento por categoria, quando o nome da ação não tem tip específico.
+const CATEGORY_TIP: Record<string, string> = {
+  GET_DIRECTIONS: "pediu o trajeto até a loja no Maps.",
+  PHONE_CALL_LEAD: "ligou pra empresa.",
+  CONTACT: "entrou em contato (WhatsApp, telefone ou formulário).",
+  SUBMIT_LEAD_FORM: "enviou o formulário de contato.",
+  LEAD: "fez uma ação classificada como lead.",
+  SIGNUP: "fez um cadastro.",
+  PURCHASE: "concluiu uma compra.",
+  PAGE_VIEW: "visitou uma página importante.",
+  DEFAULT: "fez uma conversão.",
+};
+
+function actionTip(
+  source: ConversionSource,
+  actionName: string,
+  category: string,
+): string {
+  const specific = ACTION_TIP[actionName];
+  if (specific) return specific;
+  const what = CATEGORY_TIP[category] ?? "fez uma ação de conversão.";
+  return source === "site"
+    ? `Caminho: clicou no anúncio → entrou no site do cliente → ${what} O GTM disparou o evento e enviou pro Google Ads.`
+    : `Ação registrada pelo Google (perfil da empresa, Maps ou anúncio): a pessoa ${what}`;
+}
+
+// Tooltips dos tipos de clique no anúncio (de onde saiu o clique e pra onde foi).
+const CLICK_TIP: Record<string, string> = {
+  HEADLINE: "A pessoa clicou no título do anúncio na busca e foi pro site.",
+  URL_CLICKS: "A pessoa clicou no link do anúncio e foi pro site.",
+  SITELINKS:
+    "Clicou num dos links extras que aparecem abaixo do anúncio (ex.: página específica do site).",
+  CALLS: "Tocou no botão/número de telefone exibido junto do anúncio.",
+  MOBILE_CALL_TRACKING: "Tocou pra ligar a partir do anúncio no celular.",
+  GET_DIRECTIONS: "Tocou em \"Rotas\" no anúncio e abriu o trajeto no Maps.",
+  LOCATION_EXPANSION:
+    "Tocou no endereço/nome da empresa no anúncio e abriu o local no Google Maps.",
+  CROSS_NETWORK:
+    "Clique em anúncio Performance Max exibido nas redes do Google (Busca, Maps, YouTube, sites parceiros) — o Google não detalha o destino exato.",
+  PRODUCT_LISTING_AD_CLICKS: "Clicou num anúncio de produto (vitrine/Shopping).",
+};
+const clickTip = (t: string) =>
+  CLICK_TIP[t] ?? "Tipo de clique reportado pelo Google Ads.";
 
 // Fallback legível pra enums não mapeados: "SOME_ENUM" -> "Some enum".
 function prettyEnum(value: string) {
@@ -201,6 +267,7 @@ export async function GoogleInsights({ searchParams }: { searchParams: SP }) {
                           sublabel: cat && !label.toLowerCase().includes(cat.toLowerCase()) ? cat : null,
                           value: a.conversions,
                           share: a.share,
+                          tip: actionTip(source, a.actionName, a.actionCategory),
                         };
                       })}
                       valueLabel="ações"
@@ -230,6 +297,7 @@ export async function GoogleInsights({ searchParams }: { searchParams: SP }) {
               sublabel: null,
               value: c.clicks,
               share: c.share,
+              tip: clickTip(c.clickType),
             }))}
             valueLabel="cliques"
           />
@@ -504,6 +572,8 @@ function ShareList({
     sublabel: string | null;
     value: number;
     share: number;
+    // Explicação do caminho da ação, mostrada no "?" ao lado do label.
+    tip?: string;
   }[];
   valueLabel: string;
 }) {
@@ -519,14 +589,18 @@ function ShareList({
           </span>
           <div className="min-w-0 flex-1">
             <div className="flex items-baseline justify-between gap-2">
-              <p className="truncate text-sm font-semibold text-ink">
-                {row.label}
-                {row.sublabel && (
-                  <span className="ml-2 text-xs font-medium text-faint">
-                    {row.sublabel}
-                  </span>
-                )}
-              </p>
+              {/* HelpTip fora do <p truncate>: overflow-hidden cortaria o balão */}
+              <span className="flex min-w-0 items-center gap-1.5">
+                <p className="truncate text-sm font-semibold text-ink">
+                  {row.label}
+                  {row.sublabel && (
+                    <span className="ml-2 text-xs font-medium text-faint">
+                      {row.sublabel}
+                    </span>
+                  )}
+                </p>
+                {row.tip && <HelpTip text={row.tip} />}
+              </span>
               <p className="shrink-0 text-sm font-bold text-ink">
                 {fmtInt(row.value)}{" "}
                 <span className="text-xs font-medium text-faint">

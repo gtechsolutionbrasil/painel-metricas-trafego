@@ -656,7 +656,17 @@ dashboard Vercel + Redeploy. O dev local (localhost:3000) reflete tudo.
   em `range.ts`, dia sem dado vale 0 (Visão geral e canais); (3) hex do rose
   movido do KpiCard pra `CHART_COLORS.rose`. Julgamentos registrados sem
   ação: trio compare duplicado em 3 telas, paleta Tailwind crua remanescente
-  em CRM/Integrações (candidatos a refactor futuro).
+  em CRM/Integrações (candidatos a refactor futuro). **Conferência visual do
+  usuário (3 ajustes pós-spec):** (1) card "Custo por contato/conversa" saiu
+  do topo dos canais — campanhas com objetivos ≠ contato inflavam o custo
+  agregado; custo por resultado fica SÓ na tabela de campanhas (espinha agora
+  é 3 números: Investimento, Contatos/Conversas, CTR); (2) `HelpTip` extraído
+  pra `ui/HelpTip.tsx` e adicionado por linha nas listas "Ações atribuídas
+  pelo Google" e "Pra onde foram os cliques" (`ACTION_TIP`/`CLICK_TIP` em
+  GoogleInsights explicam o caminho da pessoa em cada ação — incl. que
+  "Visitou a loja" é ESTIMATIVA de presença física do Google, por isso >
+  "Pediu rota"); (3) dúvida do usuário sobre 218 visitas × 25 rotas resolvida
+  por esses tooltips.
 ## Fluxo de features (skills do Matt Pocock) — roteamento
 
 Skills globais (`~/.agents/skills/`, valem pros 3 agentes): `/grill-me` (+`grilling`), `/to-spec`, `/to-tickets`, `/implement` (+`tdd`) e `/review-externo`.

@@ -1,7 +1,6 @@
 import {
   DollarSign,
   HelpCircle,
-  MousePointerClick,
   Percent,
   PlugZap,
   Target,
@@ -233,8 +232,6 @@ export async function ChannelPage({
   const resultCount = platform === "google" ? googleResults.primary : k.conversions;
   const resultCountPrev =
     platform === "google" ? googleResultsPrev.primary : kPrev.conversions;
-  const resultCost = resultCount ? k.spend / resultCount : 0;
-  const resultCostPrev = resultCountPrev ? kPrev.spend / resultCountPrev : 0;
   const googleByDay = new Map(
     googleResults.byDay.map((row) => [row.date, row.primary]),
   );
@@ -253,10 +250,6 @@ export async function ChannelPage({
   const sparkResults = sparkDays.map(
     (d) => sparkDayMap.get(d)?.conversions ?? 0,
   );
-  const sparkResultCost = sparkDays.map((d) => {
-    const r = sparkDayMap.get(d);
-    return r?.conversions ? r.spend / r.conversions : 0;
-  });
   const sparkCtr = sparkDays.map((d) => {
     const r = sparkDayMap.get(d);
     return r?.impressions ? r.clicks / r.impressions : 0;
@@ -310,14 +303,11 @@ export async function ChannelPage({
         </>
       ) : (
         <>
-          {/* Os 4 números que decidem: quanto gastou, o que gerou, a que custo,
-              e se o anúncio chama atenção. O resto vai na faixa compacta.
-              No modo apresentação o custo unitário sai e o grid vira 3. */}
-          <div
-            className={`grid grid-cols-2 gap-4 ${
-              hideUnitCost ? "xl:grid-cols-3" : "xl:grid-cols-4"
-            }`}
-          >
+          {/* Os 3 números que decidem: quanto gastou, o que gerou e se o
+              anúncio chama atenção. Custo por resultado fica só na tabela de
+              campanhas (pedido do usuário: campanhas com outros objetivos
+              inflavam o custo agregado). O resto vai na faixa compacta. */}
+          <div className="grid grid-cols-2 gap-4 xl:grid-cols-3">
             <KpiCard
               label="Investimento"
               value={fmtCurrency(k.spend)}
@@ -344,21 +334,6 @@ export async function ChannelPage({
               }
               trend={prev ? { value: delta(resultCount, resultCountPrev), title: trendTitle } : undefined}
             />
-            {!hideUnitCost && (
-              <KpiCard
-                label={platform === "meta" ? "Custo por conversa" : "Custo por contato"}
-                value={fmtCurrencyCents(resultCost)}
-                icon={MousePointerClick}
-                tone="amber"
-                spark={sparkResultCost}
-                help="Investimento ÷ resultados primários. Quanto menor, melhor."
-                trend={
-                  prev
-                    ? { value: delta(resultCost, resultCostPrev), positiveIsGood: false, title: trendTitle }
-                    : undefined
-                }
-              />
-            )}
             <KpiCard
               label="CTR"
               value={fmtPercent(k.ctr)}
