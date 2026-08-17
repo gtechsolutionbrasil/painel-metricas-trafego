@@ -136,3 +136,39 @@ export function delta(current: number, previous: number): number {
   if (!previous) return 0;
   return ((current - previous) / previous) * 100;
 }
+
+// ---------------------------------------------------------------------------
+// Base de comparação dos TrendPills (?compare= na URL). Vale pra todas as
+// telas de uma vez: "prev" (default, período anterior de mesmo tamanho),
+// "yoy" (mesmas datas do ano passado) ou "none" (desliga as pílulas).
+export type CompareMode = "prev" | "yoy" | "none";
+
+export function compareFromSearch(
+  sp: Record<string, string | string[] | undefined>,
+): CompareMode {
+  const raw = Array.isArray(sp.compare) ? sp.compare[0] : sp.compare;
+  return raw === "yoy" || raw === "none" ? raw : "prev";
+}
+
+// Período de comparação conforme a base; null = sem comparação.
+export function comparisonRange(
+  r: DateRange,
+  mode: CompareMode,
+): DateRange | null {
+  if (mode === "none") return null;
+  if (mode === "yoy") {
+    const shiftYear = (value: string) => {
+      const d = fromIso(value);
+      d.setFullYear(d.getFullYear() - 1);
+      return iso(d);
+    };
+    return { from: shiftYear(r.from), to: shiftYear(r.to) };
+  }
+  return previousRange(r);
+}
+
+// Texto do tooltip da pílula de variação, por base.
+export const COMPARE_TITLES: Record<Exclude<CompareMode, "none">, string> = {
+  prev: "Variação em relação ao período anterior de mesmo tamanho",
+  yoy: "Variação em relação ao mesmo período do ano passado",
+};

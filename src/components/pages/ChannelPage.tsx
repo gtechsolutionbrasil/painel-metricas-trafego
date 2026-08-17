@@ -27,9 +27,11 @@ import { adByCampaign, adByDay, adKpis } from "@/lib/metrics/aggregate";
 import { summarizeAdActions } from "@/lib/metrics/results";
 import { selectedCampaigns } from "@/lib/campaigns";
 import {
+  COMPARE_TITLES,
+  compareFromSearch,
+  comparisonRange,
   daysAgoIso,
   delta,
-  previousRange,
   rangeDays,
   rangeFromSearch,
   rangeSince,
@@ -67,7 +69,10 @@ export async function ChannelPage({
   extra?: React.ReactNode;
 }) {
   const { range } = rangeFromSearch(searchParams);
-  const prev = previousRange(range);
+  const cmp = compareFromSearch(searchParams);
+  // null = "sem comparação": pula as buscas do período anterior e as pílulas.
+  const prev = comparisonRange(range, cmp);
+  const trendTitle = cmp === "none" ? undefined : COMPARE_TITLES[cmp];
   const clients = await getClients();
   const client = resolveClient(clients, searchParams.client);
   const accountExternalId = Array.isArray(searchParams.account)
@@ -84,13 +89,15 @@ export async function ChannelPage({
   ] =
     await Promise.all([
       getAdMetrics(range, client?.id, [platform], accountExternalId),
-      getAdMetrics(prev, client?.id, [platform], accountExternalId),
+      prev
+        ? getAdMetrics(prev, client?.id, [platform], accountExternalId)
+        : Promise.resolve([]),
       getAdCampaigns(client?.id, platform),
       getIntegrationAccounts(client?.id),
       platform === "google"
         ? getAdConversionActions(range, client?.id, accountExternalId)
         : Promise.resolve([]),
-      platform === "google"
+      platform === "google" && prev
         ? getAdConversionActions(prev, client?.id, accountExternalId)
         : Promise.resolve([]),
     ]);
@@ -299,7 +306,7 @@ export async function ChannelPage({
               icon={DollarSign}
               spark={sparkSpend}
               help="Quanto você gastou em anúncios nesse período. É o dinheiro que saiu — não o resultado."
-              trend={{ value: delta(k.spend, kPrev.spend) }}
+              trend={prev ? { value: delta(k.spend, kPrev.spend), title: trendTitle } : undefined}
             />
             <KpiCard
               label={convLabel}
@@ -317,7 +324,7 @@ export async function ChannelPage({
                   ? "Conversas iniciadas no WhatsApp/Direct a partir do anúncio — o resultado concreto da campanha (mesmo número do Gerenciador)."
                   : "Apenas contatos primários. Rotas, visitas à loja e visitas ao site ficam em uma leitura separada."
               }
-              trend={{ value: delta(resultCount, resultCountPrev) }}
+              trend={prev ? { value: delta(resultCount, resultCountPrev), title: trendTitle } : undefined}
             />
             <KpiCard
               label={platform === "meta" ? "Custo por conversa" : "Custo por contato"}
@@ -326,7 +333,11 @@ export async function ChannelPage({
               tone="amber"
               spark={sparkResultCost}
               help="Investimento ÷ resultados primários. Quanto menor, melhor."
-              trend={{ value: delta(resultCost, resultCostPrev), positiveIsGood: false }}
+              trend={
+                prev
+                  ? { value: delta(resultCost, resultCostPrev), positiveIsGood: false, title: trendTitle }
+                  : undefined
+              }
             />
             <KpiCard
               label="CTR"
@@ -334,7 +345,7 @@ export async function ChannelPage({
               icon={Percent}
               spark={sparkCtr}
               help="De cada 100 pessoas que viram o anúncio, quantas clicaram (cliques ÷ impressões). Mede o quanto ele chama atenção. Acima de ~2% costuma ser bom."
-              trend={{ value: delta(k.ctr, kPrev.ctr) }}
+              trend={prev ? { value: delta(k.ctr, kPrev.ctr), title: trendTitle } : undefined}
             />
           </div>
 

@@ -3,7 +3,7 @@ import { ArrowDownRight, ArrowUpRight, HelpCircle } from "lucide-react";
 import { Sparkline } from "@/components/charts/Sparkline";
 import { CHART_COLORS } from "@/components/charts/theme";
 
-type Trend = { value: number; positiveIsGood?: boolean };
+type Trend = { value: number; positiveIsGood?: boolean; title?: string };
 
 export function KpiCard({
   label,
@@ -94,13 +94,13 @@ function HelpTip({ text }: { text: string }) {
   );
 }
 
-function TrendPill({ value, positiveIsGood = true }: Trend) {
+function TrendPill({ value, positiveIsGood = true, title }: Trend) {
   const up = value >= 0;
   const good = up === positiveIsGood;
   const Icon = up ? ArrowUpRight : ArrowDownRight;
   return (
     <span
-      title="Variação em relação ao período anterior de mesmo tamanho"
+      title={title ?? "Variação em relação ao período anterior de mesmo tamanho"}
       className={`inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs font-semibold tabular-nums ${
         good
           ? "bg-brand-soft-2 text-brand-ink"

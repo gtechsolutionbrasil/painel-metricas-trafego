@@ -24,7 +24,13 @@ import {
 } from "@/lib/metrics/queries";
 import { webByDay, webBySource, webKpis } from "@/lib/metrics/aggregate";
 import { summarizeWebEvents } from "@/lib/metrics/results";
-import { rangeFromSearch } from "@/lib/range";
+import {
+  COMPARE_TITLES,
+  compareFromSearch,
+  comparisonRange,
+  delta,
+  rangeFromSearch,
+} from "@/lib/range";
 import {
   fmtCompact,
   fmtDecimal,
@@ -57,20 +63,37 @@ const cap = (value: string) =>
 export default async function SitePage({ searchParams }: { searchParams: SP }) {
   const sp = await searchParams;
   const { range } = rangeFromSearch(sp);
+  const cmp = compareFromSearch(sp);
+  // null = "sem comparação": pula as buscas do período anterior e as pílulas.
+  const prev = comparisonRange(range, cmp);
+  const trendTitle = cmp === "none" ? undefined : COMPARE_TITLES[cmp];
   const clients = await getClients();
   const client = resolveClient(clients, sp.client);
   const accountExternalId = first(sp.account);
 
-  const [web, pages, events] = await Promise.all([
+  const [web, pages, events, webPrev, eventsPrev] = await Promise.all([
     getWebMetrics(range, client?.id, accountExternalId),
     getWebPages(range, client?.id, accountExternalId),
     getWebEvents(range, client?.id, accountExternalId),
+    prev ? getWebMetrics(prev, client?.id, accountExternalId) : Promise.resolve([]),
+    prev ? getWebEvents(prev, client?.id, accountExternalId) : Promise.resolve([]),
   ]);
   const kpis = webKpis(web);
+  const kpisPrev = webKpis(webPrev);
   const byDay = webByDay(web);
   const sources = webBySource(web);
   const eventSummary = summarizeWebEvents(events);
+  const eventSummaryPrev = summarizeWebEvents(eventsPrev);
   const unknownShare = unknownTrafficShare(web);
+  // Pílula só quando há base de comparação E dados no período comparado.
+  const siteTrend = (
+    current: number,
+    previous: number,
+    positiveIsGood = true,
+  ) =>
+    prev && webPrev.length
+      ? { value: delta(current, previous), positiveIsGood, title: trendTitle }
+      : undefined;
 
   const topPages = (kind: "landing" | "view") => {
     const map = new Map<string, number>();
@@ -141,6 +164,7 @@ export default async function SitePage({ searchParams }: { searchParams: SP }) {
           value={fmtInt(kpis.sessions)}
           icon={MousePointer2}
           tone="sky"
+          trend={siteTrend(kpis.sessions, kpisPrev.sessions)}
           caption="Visitas registradas"
           help="Uma mesma pessoa pode gerar mais de uma sessão."
         />
@@ -149,6 +173,7 @@ export default async function SitePage({ searchParams }: { searchParams: SP }) {
           value={fmtCompact(kpis.pageviews)}
           icon={FileText}
           tone="indigo"
+          trend={siteTrend(kpis.pageviews, kpisPrev.pageviews)}
           caption="Visualizações de página"
         />
         <KpiCard
@@ -156,6 +181,7 @@ export default async function SitePage({ searchParams }: { searchParams: SP }) {
           value={fmtDecimal(kpis.pagesPerSession)}
           icon={FileText}
           tone="brand"
+          trend={siteTrend(kpis.pagesPerSession, kpisPrev.pagesPerSession)}
           help="Páginas vistas ÷ sessões. Valor abaixo de 1 indica inconsistência na coleta agregada."
         />
         <KpiCard
@@ -163,6 +189,7 @@ export default async function SitePage({ searchParams }: { searchParams: SP }) {
           value={fmtPercent(kpis.bounceRate)}
           icon={MousePointer2}
           tone="rose"
+          trend={siteTrend(kpis.bounceRate, kpisPrev.bounceRate, false)}
           help="Percentual de sessões não engajadas conforme a definição do GA4."
         />
         <KpiCard
@@ -170,6 +197,7 @@ export default async function SitePage({ searchParams }: { searchParams: SP }) {
           value={fmtDuration(kpis.avgDuration)}
           icon={Clock}
           tone="amber"
+          trend={siteTrend(kpis.avgDuration, kpisPrev.avgDuration)}
           caption="Por sessão"
         />
         <KpiCard
@@ -177,6 +205,11 @@ export default async function SitePage({ searchParams }: { searchParams: SP }) {
           value={events.length ? fmtInt(eventSummary.primary) : "Aguardando"}
           icon={MessageCircleMore}
           tone="brand"
+          trend={
+            prev && events.length && eventsPrev.length
+              ? { value: delta(eventSummary.primary, eventSummaryPrev.primary), title: trendTitle }
+              : undefined
+          }
           caption="WhatsApp + formulário + ligação"
           help="Eventos recebidos no GA4. Não significam pessoas únicas e devem ser confirmados no CRM."
         />

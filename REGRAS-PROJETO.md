@@ -628,6 +628,14 @@ dashboard Vercel + Redeploy. O dev local (localhost:3000) reflete tudo.
   leads por dia via `occurredAt`) e nos 4 números dos canais (investimento,
   resultados, custo/resultado e CTR diários — `AdDayPoint` ganhou
   `impressions`). MiniStats/secundários sem sparkline. Lint/build verdes.
+  **T3 (#3)**: base de comparação global — `?compare=` na URL (`prev` default
+  · `yoy` mesmas datas −1 ano · `none`), `compareFromSearch`/`comparisonRange`
+  irmãs de `previousRange` em `range.ts`, `ComparePicker` (select no Topbar ao
+  lado do período); `none` pula as buscas do período anterior e remove todas
+  as pílulas; tooltip da pílula reflete a base (`COMPARE_TITLES`). Tela Site
+  ganhou pílulas nos 6 KPIs de GA4 (busca de `webPrev`/`eventsPrev`; rejeição
+  com `positiveIsGood: false`; pílula omitida se o período comparado não tem
+  dados). Lint/build verdes.
 ## Fluxo de features (skills do Matt Pocock) — roteamento
 
 Skills globais (`~/.agents/skills/`, valem pros 3 agentes): `/grill-me` (+`grilling`), `/to-spec`, `/to-tickets`, `/implement` (+`tdd`) e `/review-externo`.

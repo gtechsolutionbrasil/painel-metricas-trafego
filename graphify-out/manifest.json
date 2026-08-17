@@ -35,8 +35,8 @@
     "semantic_hash": ""
   },
   "src/app/(dash)/page.tsx": {
-    "mtime": 1786305075.4786158,
-    "ast_hash": "f16bd002a8da01354f698748bc2477be",
+    "mtime": 1786981224.1459756,
+    "ast_hash": "37e6e2a2931398e1bb4e5d7b0580ab4b",
     "semantic_hash": ""
   },
   "src/app/(dash)/trafego-pago/page.tsx": {
@@ -100,8 +100,8 @@
     "semantic_hash": "bfe7baffe5b1dcfa3966813a3dd09a7c"
   },
   "src/components/ui/KpiCard.tsx": {
-    "mtime": 1786980400.660459,
-    "ast_hash": "8661c907beadfa0060122805323bf99f",
+    "mtime": 1786981174.1197388,
+    "ast_hash": "d6be60b5dfe0b4e405c6e4469bce18c5",
     "semantic_hash": ""
   },
   "src/components/ui/PageHeader.tsx": {
@@ -115,8 +115,8 @@
     "semantic_hash": "0ddecd5c41ff1345bc502f253ae3e39e"
   },
   "src/lib/metrics/aggregate.ts": {
-    "mtime": 1786302081.9412494,
-    "ast_hash": "515512b84dc9035ce351db3e8f9c5df9",
+    "mtime": 1786981183.3731518,
+    "ast_hash": "d33c2450acdbef4a984a93965ebf7bc1",
     "semantic_hash": ""
   },
   "src/lib/metrics/queries.ts": {
@@ -195,8 +195,8 @@
     "semantic_hash": ""
   },
   "REGRAS-PROJETO.md": {
-    "mtime": 1786980879.1247444,
-    "ast_hash": "165e87bf7404b2a9535d0e32a34003bd",
+    "mtime": 1786981273.164342,
+    "ast_hash": "15ef48520e636fc691f7e23467b7cbab",
     "semantic_hash": ""
   },
   "docs/ingestao-n8n.md": {
@@ -315,8 +315,8 @@
     "semantic_hash": ""
   },
   "src/components/pages/ChannelPage.tsx": {
-    "mtime": 1786304659.6440723,
-    "ast_hash": "ca9917316e90bd15000bd652ee930006",
+    "mtime": 1786981240.5292,
+    "ast_hash": "709206f411a300d806dd3cb7eef85b17",
     "semantic_hash": ""
   },
   "src/app/(dash)/clientes/DeleteClientButton.tsx": {
@@ -495,8 +495,8 @@
     "semantic_hash": ""
   },
   "src/lib/metrics/results.ts": {
-    "mtime": 1786301690.77197,
-    "ast_hash": "1dd0fdd3f11f584542c03b294054f01d",
+    "mtime": 1786981200.0964127,
+    "ast_hash": "b70b024a826c8f06391d9f0913c519fe",
     "semantic_hash": ""
   },
   "supabase/migrations/0014_tracking_events_crm.sql": {
@@ -557,6 +557,11 @@
   "docs/specs/redesign-painel.md": {
     "mtime": 1786978566.4092011,
     "ast_hash": "d2e53d0e1739e537421055f27f2b2641",
+    "semantic_hash": ""
+  },
+  "src/components/charts/Sparkline.tsx": {
+    "mtime": 1786981162.7425895,
+    "ast_hash": "89f49251d809da29301d89bf93908ffb",
     "semantic_hash": ""
   }
 }

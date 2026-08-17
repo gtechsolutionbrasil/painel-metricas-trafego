@@ -37,7 +37,13 @@ import {
   summarizeAdActions,
   summarizeWebEvents,
 } from "@/lib/metrics/results";
-import { delta, previousRange, rangeFromSearch } from "@/lib/range";
+import {
+  COMPARE_TITLES,
+  compareFromSearch,
+  comparisonRange,
+  delta,
+  rangeFromSearch,
+} from "@/lib/range";
 import { fmtCurrency, fmtInt, fmtPercent } from "@/lib/format";
 
 type SP = Promise<Record<string, string | string[] | undefined>>;
@@ -45,7 +51,10 @@ type SP = Promise<Record<string, string | string[] | undefined>>;
 export default async function OverviewPage({ searchParams }: { searchParams: SP }) {
   const sp = await searchParams;
   const { range } = rangeFromSearch(sp);
-  const prev = previousRange(range);
+  const cmp = compareFromSearch(sp);
+  // null = "sem comparação": pula as buscas do período anterior e as pílulas.
+  const prev = comparisonRange(range, cmp);
+  const trendTitle = cmp === "none" ? undefined : COMPARE_TITLES[cmp];
   const clients = await getClients();
   const client = resolveClient(clients, sp.client);
   const cid = client?.id;
@@ -64,12 +73,12 @@ export default async function OverviewPage({ searchParams }: { searchParams: SP 
     leads,
   ] = await Promise.all([
     getAdMetrics(range, cid, undefined, accountExternalId),
-    getAdMetrics(prev, cid, undefined, accountExternalId),
+    prev ? getAdMetrics(prev, cid, undefined, accountExternalId) : Promise.resolve([]),
     getWebMetrics(range, cid, accountExternalId),
     getAdConversionActions(range, cid, accountExternalId),
-    getAdConversionActions(prev, cid, accountExternalId),
+    prev ? getAdConversionActions(prev, cid, accountExternalId) : Promise.resolve([]),
     getWebEvents(range, cid, accountExternalId),
-    getWebEvents(prev, cid, accountExternalId),
+    prev ? getWebEvents(prev, cid, accountExternalId) : Promise.resolve([]),
     getIntegrationAccounts(cid),
     getTrackingChecks(cid),
     getLeads(range, cid),
@@ -167,7 +176,7 @@ export default async function OverviewPage({ searchParams }: { searchParams: SP 
           spark={sparkSpend}
           caption="Google Ads + Meta Ads"
           help="Dinheiro investido nas duas plataformas no período."
-          trend={{ value: delta(paid.spend, paidPrev.spend) }}
+          trend={prev ? { value: delta(paid.spend, paidPrev.spend), title: trendTitle } : undefined}
         />
         <KpiCard
           label="Conversas Meta"
@@ -177,7 +186,11 @@ export default async function OverviewPage({ searchParams }: { searchParams: SP 
           spark={sparkMetaConversations}
           caption="Relatadas pela Meta Ads"
           help="Conversas iniciadas no WhatsApp/Direct atribuídas pela Meta."
-          trend={{ value: delta(meta?.conversions ?? 0, metaPrev?.conversions ?? 0) }}
+          trend={
+            prev
+              ? { value: delta(meta?.conversions ?? 0, metaPrev?.conversions ?? 0), title: trendTitle }
+              : undefined
+          }
         />
         <KpiCard
           label="Contatos Google"
@@ -187,7 +200,11 @@ export default async function OverviewPage({ searchParams }: { searchParams: SP 
           spark={sparkGoogleContacts}
           caption="WhatsApp + formulário + ligação"
           help="Ações primárias informadas pelo Google Ads. Rotas e visitas à loja ficam fora deste número."
-          trend={{ value: delta(googleResults.primary, googleResultsPrev.primary) }}
+          trend={
+            prev
+              ? { value: delta(googleResults.primary, googleResultsPrev.primary), title: trendTitle }
+              : undefined
+          }
         />
         <KpiCard
           label="Eventos de contato no site"
@@ -198,8 +215,8 @@ export default async function OverviewPage({ searchParams }: { searchParams: SP 
           caption="Ações recebidas pelo GA4"
           help="Cliques no WhatsApp/telefone e formulários confirmados no site. Não são pessoas únicas e podem se sobrepor ao Google."
           trend={
-            webEvents.length
-              ? { value: delta(siteEvents.primary, siteEventsPrev.primary) }
+            prev && webEvents.length
+              ? { value: delta(siteEvents.primary, siteEventsPrev.primary), title: trendTitle }
               : undefined
           }
         />
