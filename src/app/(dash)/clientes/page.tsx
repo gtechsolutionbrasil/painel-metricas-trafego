@@ -26,6 +26,7 @@ import type {
   TrackingCheck,
 } from "@/lib/types";
 import { createClientWithAccounts, setAccountRecharge } from "./actions";
+import { hideMetric, presentationFromSearch } from "@/lib/presentation";
 import { DeleteClientButton } from "./DeleteClientButton";
 
 type SP = Promise<Record<string, string | string[] | undefined>>;
@@ -105,7 +106,11 @@ export default async function ClientesPage({
         <div className="space-y-6">
           <NewClientGuide />
           <CollectionFlow />
-          <ClientList clients={clients} accounts={accounts} />
+          <ClientList
+            clients={clients}
+            accounts={accounts}
+            hideBalance={hideMetric("account_balance", presentationFromSearch(sp))}
+          />
         </div>
       </div>
     </div>
@@ -553,9 +558,12 @@ function CollectionFlow() {
 function ClientList({
   clients,
   accounts,
+  hideBalance,
 }: {
   clients: Client[];
   accounts: IntegrationAccount[];
+  // Modo apresentação: a recarga é a base do saldo — some junto com ele.
+  hideBalance: boolean;
 }) {
   return (
     <Card>
@@ -572,7 +580,7 @@ function ClientList({
               <th className="px-3 py-3">Origem</th>
               <th className="px-3 py-3">ID externo</th>
               <th className="px-3 py-3">Status</th>
-              <th className="px-3 py-3">Recarga (saldo)</th>
+              {!hideBalance && <th className="px-3 py-3">Recarga (saldo)</th>}
               <th className="px-5 py-3 text-right">Ações</th>
             </tr>
           </thead>
@@ -587,7 +595,7 @@ function ClientList({
                     <td className="px-5 py-3 font-semibold text-ink">
                       {client.name}
                     </td>
-                    <td className="px-3 py-3 text-muted" colSpan={4}>
+                    <td className="px-3 py-3 text-muted" colSpan={hideBalance ? 3 : 4}>
                       Nenhuma integração cadastrada
                     </td>
                     <td className="px-3 py-3">
@@ -638,9 +646,11 @@ function ClientList({
                       {statusLabel(account.status)}
                     </Badge>
                   </td>
-                  <td className="px-3 py-3">
-                    <RechargeCell account={account} />
-                  </td>
+                  {!hideBalance && (
+                    <td className="px-3 py-3">
+                      <RechargeCell account={account} />
+                    </td>
+                  )}
                   <td className="px-5 py-3">
                     {index === 0 && (
                       <div className="flex justify-end">

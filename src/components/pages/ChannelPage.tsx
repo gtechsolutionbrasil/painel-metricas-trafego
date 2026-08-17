@@ -33,6 +33,7 @@ import {
   comparisonRange,
   daysAgoIso,
   delta,
+  eachDayIso,
   rangeDays,
   rangeFromSearch,
   rangeSince,
@@ -244,16 +245,22 @@ export async function ChannelPage({
         ? (googleByDay.get(row.date) ?? 0)
         : row.conversions,
   }));
-  // Séries diárias dos 4 números que decidem (sparklines) — derivadas do
-  // mesmo byDay dos gráficos; dias sem resultado contam custo/CTR como 0.
-  const sparkSpend = byDay.map((r) => r.spend);
-  const sparkResults = byDay.map((r) => r.conversions);
-  const sparkResultCost = byDay.map((r) =>
-    r.conversions ? r.spend / r.conversions : 0,
+  // Séries diárias dos 4 números que decidem (sparklines) — mesmo byDay dos
+  // gráficos, com zero-fill: dia sem registro vale 0, senão o eixo comprime.
+  const sparkDays = eachDayIso(range);
+  const sparkDayMap = new Map(byDay.map((r) => [r.date, r]));
+  const sparkSpend = sparkDays.map((d) => sparkDayMap.get(d)?.spend ?? 0);
+  const sparkResults = sparkDays.map(
+    (d) => sparkDayMap.get(d)?.conversions ?? 0,
   );
-  const sparkCtr = byDay.map((r) =>
-    r.impressions ? r.clicks / r.impressions : 0,
-  );
+  const sparkResultCost = sparkDays.map((d) => {
+    const r = sparkDayMap.get(d);
+    return r?.conversions ? r.spend / r.conversions : 0;
+  });
+  const sparkCtr = sparkDays.map((d) => {
+    const r = sparkDayMap.get(d);
+    return r?.impressions ? r.clicks / r.impressions : 0;
+  });
   const campaigns = adByCampaign(ads);
   // No Meta a conversão é "conversa iniciada" (termo do Gerenciador); no
   // Google, "conversão". Um nome só por canal, em card, gráfico e tabela.

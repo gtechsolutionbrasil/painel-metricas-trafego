@@ -10,6 +10,8 @@ export const CHART_COLORS = {
   indigo: "#6366f1",
   amber: "#d97706",
   slate: "#94a3b8",
+  // Fora da SERIES_PALETTE: usado só pelo tone "rose" do KpiCard (sparkline).
+  rose: "#e11d48",
 };
 
 // Ordem fixa de atribuição para séries sem identidade própria (donut de

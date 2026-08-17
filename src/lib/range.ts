@@ -114,6 +114,19 @@ export function rangeSince(from: string): DateRange {
   return { from, to: iso(todayBR()) };
 }
 
+// Todos os dias do período em YYYY-MM-DD — pra zero-fill de séries diárias
+// (dia sem dado vale 0; sem isso o eixo temporal de um sparkline comprime).
+export function eachDayIso(r: DateRange): string[] {
+  const out: string[] = [];
+  const d = fromIso(r.from);
+  const end = fromIso(r.to).getTime();
+  while (d.getTime() <= end) {
+    out.push(iso(d));
+    d.setDate(d.getDate() + 1);
+  }
+  return out;
+}
+
 // Número de dias entre from e to (inclusive).
 export function rangeDays(r: DateRange): number {
   const a = fromIso(r.from).getTime();

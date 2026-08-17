@@ -42,6 +42,7 @@ import {
   compareFromSearch,
   comparisonRange,
   delta,
+  eachDayIso,
   rangeFromSearch,
 } from "@/lib/range";
 import { fmtCurrency, fmtInt, fmtPercent } from "@/lib/format";
@@ -135,21 +136,30 @@ export default async function OverviewPage({ searchParams }: { searchParams: SP 
     return [...map.values()].sort((a, b) => a.date.localeCompare(b.date));
   })();
 
-  // Séries diárias dos KPIs primários (sparklines) — mesmos dados dos gráficos.
-  const sparkSpend = byDay.map((d) => d.googleSpend + d.metaSpend);
-  const sparkMetaConversations = byDay.map((d) => d.metaConversations);
-  const sparkGoogleContacts = byDay.map((d) => d.googleContacts);
-  const sparkSiteEvents = siteEvents.byDay.map((d) => d.primary);
-  const sparkLeads = (() => {
-    const map = new Map<string, number>();
-    for (const lead of leads) {
-      const day = lead.occurredAt.slice(0, 10);
-      map.set(day, (map.get(day) ?? 0) + 1);
-    }
-    return [...map.entries()]
-      .sort(([a], [b]) => a.localeCompare(b))
-      .map(([, count]) => count);
-  })();
+  // Séries diárias dos KPIs primários (sparklines) — mesmos dados dos
+  // gráficos, com zero-fill: dia sem registro vale 0, senão o eixo comprime.
+  const days = eachDayIso(range);
+  const byDayMap = new Map(byDay.map((d) => [d.date, d]));
+  const sparkSpend = days.map((d) => {
+    const row = byDayMap.get(d);
+    return row ? row.googleSpend + row.metaSpend : 0;
+  });
+  const sparkMetaConversations = days.map(
+    (d) => byDayMap.get(d)?.metaConversations ?? 0,
+  );
+  const sparkGoogleContacts = days.map(
+    (d) => byDayMap.get(d)?.googleContacts ?? 0,
+  );
+  const siteEventsByDay = new Map(
+    siteEvents.byDay.map((d) => [d.date, d.primary]),
+  );
+  const sparkSiteEvents = days.map((d) => siteEventsByDay.get(d) ?? 0);
+  const leadsByDay = new Map<string, number>();
+  for (const lead of leads) {
+    const day = lead.occurredAt.slice(0, 10);
+    leadsByDay.set(day, (leadsByDay.get(day) ?? 0) + 1);
+  }
+  const sparkLeads = days.map((d) => leadsByDay.get(d) ?? 0);
 
   return (
     <div className="space-y-6">

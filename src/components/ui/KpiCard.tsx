@@ -67,7 +67,7 @@ const SPARK_COLOR = {
   sky: CHART_COLORS.sky,
   indigo: CHART_COLORS.indigo,
   amber: CHART_COLORS.amber,
-  rose: "#e11d48",
+  rose: CHART_COLORS.rose,
 } as const;
 
 // Tooltip só-CSS (sem JS): balão aparece no hover/foco do ícone "?".

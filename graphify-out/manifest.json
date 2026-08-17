@@ -20,8 +20,8 @@
     "semantic_hash": "239f3ebf717465dc636818a1a619398d"
   },
   "src/app/(auth)/login/page.tsx": {
-    "mtime": 1786980411.9639494,
-    "ast_hash": "d2326f294cb79f2ab8169d705f74bcb9",
+    "mtime": 1786982251.9719207,
+    "ast_hash": "e697188868d3da1b9a716437abffe3b4",
     "semantic_hash": ""
   },
   "src/app/(dash)/analytics/page.tsx": {
@@ -35,8 +35,8 @@
     "semantic_hash": ""
   },
   "src/app/(dash)/page.tsx": {
-    "mtime": 1786981493.6203632,
-    "ast_hash": "a23192d82c9fd49c6b3a5e86a1b656f8",
+    "mtime": 1786982251.9712088,
+    "ast_hash": "0102289d6c9aacb50f314b89c13e1e60",
     "semantic_hash": ""
   },
   "src/app/(dash)/trafego-pago/page.tsx": {
@@ -195,8 +195,8 @@
     "semantic_hash": ""
   },
   "REGRAS-PROJETO.md": {
-    "mtime": 1786982059.5872889,
-    "ast_hash": "e0f03547b594a57a459f368debf11241",
+    "mtime": 1786982287.375359,
+    "ast_hash": "0967010effbda0e451674d526559475a",
     "semantic_hash": ""
   },
   "docs/ingestao-n8n.md": {
@@ -275,8 +275,8 @@
     "semantic_hash": ""
   },
   "src/app/(dash)/clientes/page.tsx": {
-    "mtime": 1786980411.9602222,
-    "ast_hash": "e531885988dc6971a2f42bc78c930d03",
+    "mtime": 1786982245.6654215,
+    "ast_hash": "0f8bd6a850491c3b88000342f869574d",
     "semantic_hash": ""
   },
   "supabase/migrations/0004_client_integration_accounts.sql": {
@@ -310,13 +310,13 @@
     "semantic_hash": ""
   },
   "src/app/(dash)/site/page.tsx": {
-    "mtime": 1786981550.992851,
-    "ast_hash": "2d0265d9885e807ae9f2f4385b078b58",
+    "mtime": 1786982227.3466501,
+    "ast_hash": "4218fc18fff018ee82f3c8d98d47a61b",
     "semantic_hash": ""
   },
   "src/components/pages/ChannelPage.tsx": {
-    "mtime": 1786982016.0082247,
-    "ast_hash": "11b25df280ba73151428c8442e49d7b6",
+    "mtime": 1786982148.5268478,
+    "ast_hash": "7781df3fc55c753ba54aa839149d9cd4",
     "semantic_hash": ""
   },
   "src/app/(dash)/clientes/DeleteClientButton.tsx": {
@@ -335,8 +335,8 @@
     "semantic_hash": ""
   },
   "src/components/pages/GoogleInsights.tsx": {
-    "mtime": 1786982032.8585427,
-    "ast_hash": "6771fa522949a8779a0801e0b52fd55b",
+    "mtime": 1786982251.9724255,
+    "ast_hash": "ed78ed79f26e22c862e711c348c02efe",
     "semantic_hash": ""
   },
   "supabase/migrations/0006_google_ads_breakdowns.sql": {
@@ -485,8 +485,8 @@
     "semantic_hash": ""
   },
   "src/app/(dash)/crm/page.tsx": {
-    "mtime": 1786304971.7435226,
-    "ast_hash": "ff7a339b472fc13a1a96a15200c9ed7f",
+    "mtime": 1786982245.6646245,
+    "ast_hash": "35a2d6ca44106c4ab6bb119743b30996",
     "semantic_hash": ""
   },
   "src/components/ui/SubmitButton.tsx": {

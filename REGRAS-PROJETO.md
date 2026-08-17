@@ -649,7 +649,14 @@ dashboard Vercel + Redeploy. O dev local (localhost:3000) reflete tudo.
   emerald hardcoded → tokens brand (SignalCard, status saudável/Ganho);
   vermelho do saldo esgotado → `danger-ink`; `font-extrabold` → `font-bold`
   em todo o painel (relatório intocado). Lint/build verdes. **Redesign
-  completo: tickets #2–#8 fechados.**
+  completo: tickets #2–#8 fechados.** `/review-externo` (2 eixos, desde
+  71a919a) achou e o fix aplicou: (1) modo apresentação não escondia a coluna
+  "Recarga (saldo)" em Integrações — agora esconde via `hideMetric`; (2)
+  sparklines sem zero-fill comprimiam o eixo temporal — novo `eachDayIso()`
+  em `range.ts`, dia sem dado vale 0 (Visão geral e canais); (3) hex do rose
+  movido do KpiCard pra `CHART_COLORS.rose`. Julgamentos registrados sem
+  ação: trio compare duplicado em 3 telas, paleta Tailwind crua remanescente
+  em CRM/Integrações (candidatos a refactor futuro).
 ## Fluxo de features (skills do Matt Pocock) — roteamento
 
 Skills globais (`~/.agents/skills/`, valem pros 3 agentes): `/grill-me` (+`grilling`), `/to-spec`, `/to-tickets`, `/implement` (+`tdd`) e `/review-externo`.
