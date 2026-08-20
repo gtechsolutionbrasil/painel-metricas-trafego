@@ -226,8 +226,9 @@ export async function getReportData(
     } else if (kind === "directions") {
       actionTotals.directions += a.conversions;
     } else if (kind === "storeVisit") {
-      // Vem fracionado da API (é um modelo, não uma contagem); arredonda só no
-      // total, senão o erro de cada linha se acumula.
+      // Estimativa modelada, não contagem: soma cru e arredonda uma vez só no
+      // total. Hoje o Google entrega inteiro nesta conta, mas o campo é
+      // numérico e arredondar linha a linha acumularia erro se deixar de ser.
       actionTotals.storeVisits += a.conversions;
     } else if (kind === "profileView") {
       actionTotals.profileViews += a.conversions;
