@@ -278,6 +278,24 @@ dashboard Vercel + Redeploy. O dev local (localhost:3000) reflete tudo.
 
 ## Histórico de iterações
 
+- **2026-08-19 — Relatório redesenhado + métrica Visitas à loja incluída.** A
+  página `/relatorio` passou do formato editorial impresso (serifado, cinza)
+  para painel claro em cartões: fundo cinza-azul, cartão branco por bloco,
+  sombra suave, ícone por métrica, Google azul `#2563eb` e Meta rosa `#db2777`.
+  Todo número passou a carregar o par **O que é / De onde vem** (e uma ressalva
+  quando a leitura ingênua erra), centralizado em `src/lib/report/glossario.ts`
+  — o cliente lê o relatório sozinho, sem o gestor do lado.
+
+  Decisão de dado: `Store visits` deixou de ser `ignore` em
+  `src/lib/report/labels.ts` e virou o kind `storeVisit`, somando em
+  `totals.storeVisits`. Ganhou seção própria (`visitas`, ligável/desligável no
+  seletor) explicando o método do Google — amostra de aparelhos com histórico
+  de localização, perímetro da loja por satélite/Street View, projeção
+  estatística — e um comparativo lado a lado "rotas (observado) × visitas
+  (estimado)". Todo número modelado carrega a etiqueta roxa `.tag-estimativa`,
+  e nunca é somado aos contatos. Coleta, n8n, Supabase e as telas do painel não
+  foram alterados.
+
 - **2026-08-09 — Gate 3 concluído (n8n Google Ads, PRODUÇÃO).** Com aprovação
   explícita, o workflow `Ui5tKcvG1aRmWptS` foi atualizado de API v21 para v25,
   preservando credenciais e Developer Token somente no n8n. A primeira

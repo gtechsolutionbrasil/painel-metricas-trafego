@@ -195,8 +195,8 @@
     "semantic_hash": ""
   },
   "REGRAS-PROJETO.md": {
-    "mtime": 1786995708.4695067,
-    "ast_hash": "cd24f4299874e9a6089ba4b0bb88abc7",
+    "mtime": 1787190062.6403117,
+    "ast_hash": "722a8f963e3f3086b13bc9ed728fce4e",
     "semantic_hash": ""
   },
   "docs/ingestao-n8n.md": {
@@ -445,8 +445,8 @@
     "semantic_hash": ""
   },
   "src/app/relatorio/page.tsx": {
-    "mtime": 1786304615.7780082,
-    "ast_hash": "4849d031f07435d7f727297b5e48f2bf",
+    "mtime": 1787190007.5365007,
+    "ast_hash": "cbc3eccf603c40431545311470a881b3",
     "semantic_hash": ""
   },
   "src/components/layout/ExportReportButton.tsx": {
@@ -455,13 +455,13 @@
     "semantic_hash": ""
   },
   "src/lib/report/data.ts": {
-    "mtime": 1786303852.446892,
-    "ast_hash": "97487fccd593db8d246bd96af89b2adf",
+    "mtime": 1787189450.6646247,
+    "ast_hash": "fc13b919ca9fd0fbd39379d685645641",
     "semantic_hash": ""
   },
   "src/lib/report/labels.ts": {
-    "mtime": 1785773395.5101726,
-    "ast_hash": "7a8f5b9c673819511d23ace0cdab554f",
+    "mtime": 1787189441.8000124,
+    "ast_hash": "0072ec4a0627c556edd57b93503a973e",
     "semantic_hash": ""
   },
   "src/app/relatorio/RelatorioControles.tsx": {
@@ -470,8 +470,8 @@
     "semantic_hash": ""
   },
   "src/lib/report/sections.ts": {
-    "mtime": 1786304771.007704,
-    "ast_hash": "97b2d0e039510a3f3cdcc74e0cb20803",
+    "mtime": 1787189457.3223777,
+    "ast_hash": "12a8d7fa46eeaf67d4318279cc9ec4d5",
     "semantic_hash": ""
   },
   "scripts/validate-n8n-workflows.mjs": {
@@ -582,6 +582,11 @@
   "src/components/ui/HelpTip.tsx": {
     "mtime": 1786985209.8341665,
     "ast_hash": "ad17b3d511a973d182c8c240cc7faa08",
+    "semantic_hash": ""
+  },
+  "src/lib/report/glossario.ts": {
+    "mtime": 1787189428.6826668,
+    "ast_hash": "74fc7b5a9fb5308fded47da96dcd0403",
     "semantic_hash": ""
   }
 }

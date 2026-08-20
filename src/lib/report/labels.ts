@@ -10,6 +10,7 @@
 export type ActionKind =
   | "contact"
   | "directions"
+  | "storeVisit"
   | "profileView"
   | "engagement"
   | "ignore";
@@ -27,8 +28,10 @@ const ACTION_KIND: Record<string, ActionKind> = {
   "Local actions - Website visits": "profileView",
   "Local actions - Other engagements": "engagement",
   "Local actions - Menu views": "engagement",
-  // Estimativa do Google, fora da contagem do relatório.
-  "Store visits": "ignore",
+  // Estimativa modelada do Google. Entra no relatório em bloco próprio, com o
+  // método explicado — nunca somada aos contatos.
+  "Store visits": "storeVisit",
+  "Visitas à loja": "storeVisit",
 };
 
 const CATEGORY_KIND: Record<string, ActionKind> = {
@@ -39,13 +42,17 @@ const CATEGORY_KIND: Record<string, ActionKind> = {
   GET_DIRECTIONS: "directions",
   PAGE_VIEW: "profileView",
   ENGAGEMENT: "engagement",
-  STORE_VISIT: "ignore",
+  STORE_VISIT: "storeVisit",
 };
 
 export function actionKind(name: string, category: string): ActionKind {
   // Meta manda o nome da métrica crua; toda conversa iniciada é contato.
   if (name.startsWith("onsite_conversion")) return "contact";
-  return ACTION_KIND[name] ?? CATEGORY_KIND[category] ?? "ignore";
+  const direto = ACTION_KIND[name] ?? CATEGORY_KIND[category];
+  if (direto) return direto;
+  // O Google alterna entre o nome em inglês e o traduzido conforme a conta.
+  if (/store visit|visita.*loja/i.test(name)) return "storeVisit";
+  return "ignore";
 }
 
 const ACTION_LABEL: Record<string, string> = {

@@ -48,6 +48,12 @@ export const REPORT_SECTIONS = [
     motivo: "Precisa de veiculação no período",
   },
   {
+    id: "visitas",
+    label: "Visitas à loja",
+    hint: "A estimativa do Google e como ela é calculada",
+    motivo: "O Google não divulgou estimativa neste período",
+  },
+  {
     id: "placar",
     label: "O que esse investimento gerou",
     hint: "Os números lado a lado",
@@ -88,6 +94,7 @@ export function availableSections(data: ReportData): Set<SectionId> {
     out.add("google");
   if (data.platforms.some((p) => p.platform === "meta") && data.metaCampaigns.length > 0)
     out.add("meta");
+  if (data.totals.storeVisits > 0) out.add("visitas");
   if (data.contactRows.length > 0) out.add("contatos");
   if (data.balances.length > 0) out.add("fundos");
   return out;

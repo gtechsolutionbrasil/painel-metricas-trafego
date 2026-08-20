@@ -79,6 +79,7 @@ export type ReportData = {
     googleContacts: number;
     metaConversations: number;
     directions: number;
+    storeVisits: number;
     profileViews: number;
     profileEngagements: number;
   };
@@ -203,7 +204,13 @@ export async function getReportData(
     .filter((p) => p.spend > 0);
 
   // Ações: cada linha entra em um dos baldes (contato, rota, site, perfil).
-  const actionTotals = { googleContact: 0, directions: 0, profileViews: 0, engagements: 0 };
+  const actionTotals = {
+    googleContact: 0,
+    directions: 0,
+    storeVisits: 0,
+    profileViews: 0,
+    engagements: 0,
+  };
   const contactMap = new Map<string, { google: number; meta: number }>();
   for (const a of actions) {
     const kind = actionKind(a.actionName, a.actionCategory);
@@ -218,6 +225,10 @@ export async function getReportData(
       contactMap.set(label, e);
     } else if (kind === "directions") {
       actionTotals.directions += a.conversions;
+    } else if (kind === "storeVisit") {
+      // Vem fracionado da API (é um modelo, não uma contagem); arredonda só no
+      // total, senão o erro de cada linha se acumula.
+      actionTotals.storeVisits += a.conversions;
     } else if (kind === "profileView") {
       actionTotals.profileViews += a.conversions;
     } else if (kind === "engagement") {
@@ -268,6 +279,7 @@ export async function getReportData(
       googleContacts: Math.round(actionTotals.googleContact),
       metaConversations: Math.round(metaConversations),
       directions: Math.round(actionTotals.directions),
+      storeVisits: Math.round(actionTotals.storeVisits),
       profileViews: Math.round(actionTotals.profileViews),
       profileEngagements: Math.round(actionTotals.engagements),
     },

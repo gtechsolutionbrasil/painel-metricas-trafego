@@ -4,6 +4,13 @@ import { RelatorioControles } from "./RelatorioControles";
 import { getClients, resolveClient } from "@/lib/metrics/queries";
 import { getReportData, type ReportBar } from "@/lib/report/data";
 import {
+  GLOSSARIO,
+  VISITAS_LOJA_LEITURA,
+  VISITAS_LOJA_PASSOS,
+  type Verbete,
+  type VerbeteId,
+} from "@/lib/report/glossario";
+import {
   availableSections,
   parseHidden,
   STORAGE_PREFIX,
@@ -37,6 +44,10 @@ const fmtMoneyPlain = (v: number) => moneyPlain.format(v || 0);
 // Fora do layout do painel de propósito: sem sidebar, sem topbar, sem jargão —
 // é o documento que o cliente recebe. Lê o mesmo cliente e período do painel,
 // pelos parâmetros da URL.
+//
+// Formato: cartões de painel, um por métrica, cada um carregando O QUE É e DE
+// ONDE VEM logo abaixo do número. O cliente lê o relatório sozinho, sem o
+// gestor do lado para explicar de onde saiu cada coisa.
 // ---------------------------------------------------------------------------
 export default async function RelatorioPage({
   searchParams,
@@ -64,6 +75,7 @@ export default async function RelatorioPage({
   const google = data.platforms.find((p) => p.platform === "google");
   const meta = data.platforms.find((p) => p.platform === "meta");
   const maxWeek = Math.max(1, ...data.weeks.map((w) => w.total));
+  const t = data.totals;
 
   // O servidor renderiza tudo que TEM DADO; o que o gestor desligou some por
   // CSS (data-off), sem recarregar a página a cada clique.
@@ -72,6 +84,120 @@ export default async function RelatorioPage({
     disponiveis.has(id);
   const ocultasIniciais = parseHidden(sp.ocultar);
   const clienteKey = client?.id ?? "todos";
+
+  // Passos da jornada montados em lista: o número de cada etapa depende de
+  // quais existem no período, e calcular isso no meio do JSX já tinha virado
+  // um encadeado de ternários.
+  const etapas: {
+    titulo: string;
+    cifra: string;
+    icone: IconeId;
+    estimativa?: boolean;
+    corpo: React.ReactNode;
+  }[] = [
+    {
+      titulo: "O anúncio aparece",
+      cifra: `${fmtInt(t.impressions)} exibições`,
+      icone: "olho",
+      corpo: (
+        <p>
+          A pessoa está pesquisando no Google, olhando o mapa, ou rolando o
+          Instagram e o Facebook.
+          {data.platforms.length > 1 && google && meta
+            ? ` Foram ${fmtInt(google.impressions)} exibições no Google e ${fmtInt(meta.impressions)} no Meta.`
+            : ""}
+          {t.reach > 0
+            ? ` No Instagram e Facebook, o anúncio alcançou cerca de ${fmtInt(t.reach)} pessoas da região.`
+            : ""}
+        </p>
+      ),
+    },
+    {
+      titulo: "Ela clica no anúncio",
+      cifra: `${fmtInt(t.clicks)} cliques`,
+      icone: "clique",
+      corpo: (
+        <>
+          {data.platforms.length > 1 && google && meta && (
+            <p>
+              {fmtInt(google.clicks)} cliques vieram do Google e{" "}
+              {fmtInt(meta.clicks)} do Instagram e Facebook. No Google dá para
+              saber exatamente em que parte do anúncio a pessoa tocou:
+            </p>
+          )}
+          {data.googleClickTypes.length > 0 && (
+            <div className="rel-linhas">
+              {data.googleClickTypes.map((c) => (
+                <div className="rel-linha" key={c.label}>
+                  <span className="rot">
+                    {c.label}
+                    {c.note && <em>{c.note}</em>}
+                  </span>
+                  <span className="num">{fmtInt(c.value)}</span>
+                  <span className="mini">
+                    <div style={{ width: `${(c.share * 100).toFixed(1)}%` }} />
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
+        </>
+      ),
+    },
+  ];
+
+  if (t.googleContacts > 0 || t.metaConversations > 0) {
+    etapas.push({
+      titulo: "Ela entra em contato com a loja",
+      cifra: `${fmtInt(t.googleContacts)} Google · ${fmtInt(t.metaConversations)} Meta`,
+      icone: "conversa",
+      corpo: (
+        <p>
+          As plataformas atribuem por métodos diferentes. Os números aparecem
+          lado a lado e não são somados como se representassem pessoas únicas.
+        </p>
+      ),
+    });
+  }
+
+  if (t.directions > 0) {
+    etapas.push({
+      titulo: "Ela procura o caminho até a loja",
+      cifra: `${fmtInt(t.directions)} rotas traçadas`,
+      icone: "rota",
+      corpo: (
+        <p>
+          {fmtInt(t.directions)} pessoas pediram a rota do lugar onde estavam
+          até o endereço da loja, que é o sinal mais forte de intenção de ir
+          comprar pessoalmente.
+          {t.profileViews > 0
+            ? ` Além disso, ${fmtInt(t.profileViews)} abriram o site pelo perfil`
+            : ""}
+          {t.profileEngagements > 0
+            ? ` e ${fmtInt(t.profileEngagements)} fizeram outras interações no perfil da loja, como ver fotos, horário de funcionamento e produtos`
+            : ""}
+          .
+        </p>
+      ),
+    });
+  }
+
+  if (t.storeVisits > 0) {
+    etapas.push({
+      titulo: "Ela vai até a loja",
+      cifra: `${fmtInt(t.storeVisits)} visitas estimadas`,
+      icone: "loja",
+      estimativa: true,
+      corpo: (
+        <p>
+          Estimativa do Google para quantas vezes alguém que viu ou clicou no
+          anúncio esteve fisicamente na loja depois. É um modelo estatístico, e
+          não uma contagem na porta — o método está explicado na seção Visitas à
+          loja.
+        </p>
+      ),
+    });
+  }
 
   return (
     <div
@@ -112,28 +238,41 @@ export default async function RelatorioPage({
 
       <div className="rel-folha">
         <header className="rel-capa">
-          <div className="rel-selo">
-            Relatório de investimento ·{" "}
-            {data.platforms
-              .map((p) => (p.platform === "google" ? "Google Ads" : "Meta Ads"))
-              .join(" · ") || "sem veiculação"}
+          <div className="rel-capa-topo">
+            <span className="rel-selo">Relatório de investimento</span>
+            <span className="rel-chips">
+              {data.platforms.length === 0 && (
+                <span className="rel-chip">Sem veiculação</span>
+              )}
+              {data.platforms.map((p) => (
+                <span className={`rel-chip ${p.platform}`} key={p.platform}>
+                  {p.platform === "google" ? "Google Ads" : "Meta Ads"}
+                </span>
+              ))}
+            </span>
           </div>
           <h1>Para onde foi o investimento em anúncios</h1>
           <p className="sub">
             {client
               ? `Prestação de contas das campanhas de ${data.clientName} no período, com o que cada real investido gerou.`
-              : "Prestação de contas das campanhas no período, com o que cada real investido gerou."}
+              : "Prestação de contas das campanhas no período, com o que cada real investido gerou."}{" "}
+            Cada número traz, logo abaixo, o que ele significa e de onde foi
+            extraído.
           </p>
           <div className="rel-periodo">
             <span>
-              <b>Período:</b> {fmtDateLong(range.from)} a{" "}
-              {fmtDateLong(range.to)}
+              <em>Período</em>
+              <b>
+                {fmtDateLong(range.from)} a {fmtDateLong(range.to)}
+              </b>
             </span>
             <span>
+              <em>Duração</em>
               <b>{fmtInt(data.days)} dias</b>
             </span>
             <span>
-              <b>Cliente:</b> {data.clientName}
+              <em>Cliente</em>
+              <b>{data.clientName}</b>
             </span>
           </div>
         </header>
@@ -146,63 +285,51 @@ export default async function RelatorioPage({
         ) : (
           <>
             <div className="rel-titular" data-secao="destaques">
-              <div className="rel-cifra">
-                <span className="rotulo">Total investido</span>
-                <span className="valor">
-                  {fmtCurrencyCents(data.totals.spend)}
-                </span>
-                <span className="nota">
-                  Valor pago às plataformas pelos anúncios no período.
-                </span>
-              </div>
-              {data.totals.googleContacts > 0 && (
-                <div className="rel-cifra">
-                  <span className="rotulo">Contatos Google</span>
-                  <span className="valor verde">
-                    {fmtInt(data.totals.googleContacts)}
-                  </span>
-                  <span className="nota">
-                    WhatsApp, formulário e ligações informados pelo Google.
-                  </span>
-                </div>
+              <Cifra
+                verbete="investimento"
+                icone="carteira"
+                valor={fmtCurrencyCents(t.spend)}
+                moeda
+              />
+              {t.googleContacts > 0 && (
+                <Cifra
+                  verbete="contatosGoogle"
+                  icone="conversa"
+                  valor={fmtInt(t.googleContacts)}
+                  tom="bom"
+                />
               )}
-              {data.totals.metaConversations > 0 && (
-                <div className="rel-cifra">
-                  <span className="rotulo">Conversas Meta</span>
-                  <span className="valor verde">
-                    {fmtInt(data.totals.metaConversations)}
-                  </span>
-                  <span className="nota">
-                    Conversas iniciadas atribuídas ao Instagram e Facebook.
-                  </span>
-                </div>
+              {t.metaConversations > 0 && (
+                <Cifra
+                  verbete="conversasMeta"
+                  icone="balao"
+                  valor={fmtInt(t.metaConversations)}
+                  tom="bom"
+                />
               )}
-              {data.totals.directions > 0 && (
-                <div className="rel-cifra">
-                  <span className="rotulo">Quiseram ir até a loja</span>
-                  <span className="valor">
-                    {fmtInt(data.totals.directions)}
-                  </span>
-                  <span className="nota">
-                    Pessoas que pediram a rota até o endereço.
-                  </span>
-                </div>
+              {t.directions > 0 && (
+                <Cifra
+                  verbete="rotas"
+                  icone="rota"
+                  valor={fmtInt(t.directions)}
+                />
+              )}
+              {t.storeVisits > 0 && (
+                <Cifra
+                  verbete="visitasLoja"
+                  icone="loja"
+                  valor={fmtInt(t.storeVisits)}
+                  tom="estimado"
+                />
               )}
             </div>
 
             {mostrar("divisao") && (
               <section className="rel-secao" data-secao="divisao">
-                <div className="rel-cabeca">
-                  <h2>
-                    Como o dinheiro foi dividido entre as duas plataformas
-                  </h2>
-                  <p>
-                    O Google alcança quem <em>já está procurando</em> agora. O
-                    Instagram e o Facebook alcançam quem{" "}
-                    <em>ainda não estava procurando</em>, mas mora na região.
-                    São dois momentos diferentes do mesmo cliente.
-                  </p>
-                </div>
+                <Cabeca
+                  titulo="Como o dinheiro foi dividido entre as duas plataformas"
+                  texto="O Google alcança quem já está procurando agora. O Instagram e o Facebook alcançam quem ainda não estava procurando, mas mora na região. São dois momentos diferentes do mesmo cliente."
+                />
 
                 <div className="rel-trilho">
                   {data.platforms.map((p) => (
@@ -236,6 +363,8 @@ export default async function RelatorioPage({
                     </div>
                   ))}
                 </div>
+
+                <Explica verbete="divisao" />
               </section>
             )}
 
@@ -244,13 +373,10 @@ export default async function RelatorioPage({
                 className="rel-secao rel-quebra-antes"
                 data-secao="semanas"
               >
-                <div className="rel-cabeca">
-                  <h2>Semana a semana</h2>
-                  <p>
-                    Quanto foi investido em cada semana do período, separado por
-                    plataforma.
-                  </p>
-                </div>
+                <Cabeca
+                  titulo="Semana a semana"
+                  texto="Quanto foi investido em cada semana do período, separado por plataforma."
+                />
                 <div>
                   <div
                     className="rel-grafico"
@@ -266,19 +392,19 @@ export default async function RelatorioPage({
                           className="rel-pilha"
                           style={{ height: `${(w.total / maxWeek) * 100}%` }}
                         >
-                          {w.google > 0 && (
-                            <div
-                              className="seg-google"
-                              style={{
-                                height: `${(w.google / (w.total || 1)) * 100}%`,
-                              }}
-                            />
-                          )}
                           {w.meta > 0 && (
                             <div
                               className="seg-meta"
                               style={{
                                 height: `${(w.meta / (w.total || 1)) * 100}%`,
+                              }}
+                            />
+                          )}
+                          {w.google > 0 && (
+                            <div
+                              className="seg-google"
+                              style={{
+                                height: `${(w.google / (w.total || 1)) * 100}%`,
                               }}
                             />
                           )}
@@ -296,28 +422,28 @@ export default async function RelatorioPage({
                     ))}
                   </div>
                 </div>
+                <Explica verbete="semanas" />
               </section>
             )}
 
             {mostrar("google") && (
               <section className="rel-secao" data-secao="google">
-                <div className="rel-cabeca">
-                  <h2>Dentro do Google</h2>
-                  <p>
-                    Em que frentes o investimento do Google foi aplicado e o que
-                    as pessoas procuravam.
-                  </p>
-                </div>
+                <Cabeca
+                  titulo="Dentro do Google"
+                  texto="Em que frentes o investimento do Google foi aplicado e o que as pessoas procuravam."
+                />
                 <h3 className="rel-subtitulo">
                   Divisão do investimento no Google
                 </h3>
                 <Barras itens={data.googleCampaigns} moeda />
+                <Explica verbete="campanhas" />
                 {data.googleAdGroups.length > 1 && (
                   <>
                     <h3 className="rel-subtitulo">
                       Dentro da busca: o que as pessoas procuravam
                     </h3>
                     <Barras itens={data.googleAdGroups} moeda />
+                    <Explica verbete="temasBusca" />
                   </>
                 )}
               </section>
@@ -325,193 +451,208 @@ export default async function RelatorioPage({
 
             {mostrar("meta") && (
               <section className="rel-secao" data-secao="meta">
-                <div className="rel-cabeca">
-                  <h2>Dentro do Instagram e Facebook</h2>
-                  <p>Em que frentes o investimento do Meta foi aplicado.</p>
-                </div>
+                <Cabeca
+                  titulo="Dentro do Instagram e Facebook"
+                  texto="Em que frentes o investimento do Meta foi aplicado."
+                />
                 <h3 className="rel-subtitulo meta">
                   Divisão do investimento no Meta
                 </h3>
                 <Barras itens={data.metaCampaigns} moeda meta />
+                <Explica verbete="campanhas" />
               </section>
             )}
 
             <section className="rel-secao rel-quebra-antes" data-secao="caminho">
-              <div className="rel-cabeca">
-                <h2>O caminho que a pessoa percorre</h2>
-                <p>
-                  Do momento em que o anúncio aparece até a pessoa procurar o
-                  caminho da loja, cada passo é medido. Este é o caminho
-                  completo no período.
-                </p>
-              </div>
+              <Cabeca
+                titulo="O caminho que a pessoa percorre"
+                texto="Do momento em que o anúncio aparece até a pessoa chegar na loja, cada passo é medido separadamente. Este é o caminho completo no período."
+              />
 
               <div className="rel-jornada">
-                <Etapa
-                  numero={1}
-                  titulo="O anúncio aparece"
-                  cifra={`${fmtInt(data.totals.impressions)} exibições`}
-                >
-                  <p>
-                    A pessoa está pesquisando no Google, olhando o mapa, ou
-                    rolando o Instagram e o Facebook.
-                    {data.platforms.length > 1 && google && meta
-                      ? ` Foram ${fmtInt(google.impressions)} exibições no Google e ${fmtInt(meta.impressions)} no Meta.`
-                      : ""}
-                    {data.totals.reach > 0
-                      ? ` No Instagram e Facebook, o anúncio alcançou cerca de ${fmtInt(data.totals.reach)} pessoas da região.`
-                      : ""}
-                  </p>
-                </Etapa>
-
-                <Etapa
-                  numero={2}
-                  titulo="Ela clica no anúncio"
-                  cifra={`${fmtInt(data.totals.clicks)} cliques`}
-                >
-                  {data.platforms.length > 1 && google && meta && (
-                    <p>
-                      {fmtInt(google.clicks)} cliques vieram do Google e{" "}
-                      {fmtInt(meta.clicks)} do Instagram e Facebook. No Google
-                      dá para saber exatamente em que parte do anúncio a pessoa
-                      tocou:
-                    </p>
-                  )}
-                  {data.googleClickTypes.length > 0 && (
-                    <div className="rel-linhas">
-                      {data.googleClickTypes.map((c) => (
-                        <div className="rel-linha" key={c.label}>
-                          <span className="rot">
-                            {c.label}
-                            {c.note && <em>{c.note}</em>}
-                          </span>
-                          <span className="num">{fmtInt(c.value)}</span>
-                          <span className="mini">
-                            <div
-                              style={{
-                                width: `${(c.share * 100).toFixed(1)}%`,
-                              }}
-                            />
-                          </span>
-                        </div>
-                      ))}
+                {etapas.map((e, i) => (
+                  <div className="rel-etapa" key={e.titulo}>
+                    <div className="marcador">
+                      <span className="bolha">
+                        <Icone id={e.icone} />
+                      </span>
+                      <span className="fio" />
                     </div>
-                  )}
-                </Etapa>
-
-                {(data.totals.googleContacts > 0 ||
-                  data.totals.metaConversations > 0) && (
-                  <Etapa
-                    numero={3}
-                    titulo="Ela entra em contato com a loja"
-                    cifra={`${fmtInt(data.totals.googleContacts)} Google · ${fmtInt(data.totals.metaConversations)} Meta`}
-                  >
-                    <p>
-                      As plataformas atribuem por métodos diferentes. Os
-                      números aparecem lado a lado e não são somados como se
-                      representassem pessoas únicas.
-                    </p>
-                  </Etapa>
-                )}
-
-                {data.totals.directions > 0 && (
-                  <Etapa
-                    numero={
-                      data.totals.googleContacts > 0 ||
-                      data.totals.metaConversations > 0
-                        ? 4
-                        : 3
-                    }
-                    titulo="Ela procura o caminho até a loja"
-                    cifra={`${fmtInt(data.totals.directions)} rotas traçadas`}
-                  >
-                    <p>
-                      {fmtInt(data.totals.directions)} pessoas pediram a rota do
-                      lugar onde estavam até o endereço da loja, que é o sinal
-                      mais forte de intenção de ir comprar pessoalmente.
-                      {data.totals.profileViews > 0
-                        ? ` Além disso, ${fmtInt(data.totals.profileViews)} abriram o site pelo perfil`
-                        : ""}
-                      {data.totals.profileEngagements > 0
-                        ? ` e ${fmtInt(data.totals.profileEngagements)} fizeram outras interações no perfil da loja, como ver fotos, horário de funcionamento e produtos`
-                        : ""}
-                      .
-                    </p>
-                  </Etapa>
-                )}
+                    <div className="conteudo">
+                      <div className="titulo-etapa">
+                        <span className="passo">Passo {i + 1}</span>
+                        <strong>{e.titulo}</strong>
+                        {e.estimativa && (
+                          <span className="tag-estimativa">estimativa</span>
+                        )}
+                      </div>
+                      <span className="cifra-etapa">{e.cifra}</span>
+                      {e.corpo}
+                    </div>
+                  </div>
+                ))}
               </div>
             </section>
 
-            <section className="rel-secao" data-grupo="placar contatos">
-              <div className="rel-cabeca">
-                <h2>O que esse investimento gerou</h2>
-                {/* Texto sem referência a outra seção: o gestor pode desligar
-                    o caminho, e a frase não pode passar a mentir. */}
-                <p>Os números do período, lado a lado.</p>
-              </div>
+            {mostrar("visitas") && (
+              <section
+                className="rel-secao rel-quebra-antes"
+                data-secao="visitas"
+              >
+                <Cabeca
+                  titulo="Visitas à loja: o que esse número é de verdade"
+                  texto="Esta é a única métrica do relatório que não conta acontecimentos — ela estima. Vale a pena entender como o Google chega nela antes de comparar com as outras."
+                />
+
+                <div className="rel-visitas-topo">
+                  <div className="rel-visitas-num">
+                    <span className="tag-estimativa">estimativa modelada</span>
+                    <span className="num">{fmtInt(t.storeVisits)}</span>
+                    <span className="desc">
+                      visitas à loja estimadas no período
+                    </span>
+                  </div>
+                  <div className="rel-visitas-frase">
+                    <p>
+                      O Google não conta pessoas na porta da loja. Ele observa
+                      uma <b>amostra pequena</b> de aparelhos que autorizaram o
+                      histórico de localização, verifica quais deles viram ou
+                      clicaram no anúncio e depois estiveram dentro do perímetro
+                      da loja, e{" "}
+                      <b>projeta esse resultado para o público inteiro</b>.
+                    </p>
+                    <p>
+                      Por isso o número serve para acompanhar tendência —{" "}
+                      subiu ou caiu em relação ao mês anterior — e não como
+                      contagem exata de quem entrou.
+                    </p>
+                  </div>
+                </div>
+
+                <h3 className="rel-subtitulo neutro">
+                  Como o Google chega nesse número
+                </h3>
+                <ol className="rel-passos">
+                  {VISITAS_LOJA_PASSOS.map((p, i) => (
+                    <li key={p.titulo}>
+                      <span className="n">{i + 1}</span>
+                      <span className="txt">
+                        <strong>{p.titulo}</strong>
+                        <span>{p.texto}</span>
+                      </span>
+                    </li>
+                  ))}
+                </ol>
+
+                {t.directions > 0 && (
+                  <div className="rel-comparativo">
+                    <div className="lado">
+                      <span className="rot">Dado observado</span>
+                      <span className="num">{fmtInt(t.directions)}</span>
+                      <span className="desc">
+                        rotas traçadas — alguém realmente tocou em “Rotas” no
+                        perfil da loja
+                      </span>
+                    </div>
+                    <div className="versus">contra</div>
+                    <div className="lado estimado">
+                      <span className="rot">Estimativa modelada</span>
+                      <span className="num">{fmtInt(t.storeVisits)}</span>
+                      <span className="desc">
+                        visitas à loja — inclui quem já sabia o caminho e foi
+                        direto, sem pedir rota
+                      </span>
+                    </div>
+                  </div>
+                )}
+
+                <h3 className="rel-subtitulo neutro">
+                  Como ler esse número sem se enganar
+                </h3>
+                <div className="rel-notas">
+                  {VISITAS_LOJA_LEITURA.map((n) => (
+                    <div className="rel-nota" key={n.titulo}>
+                      <strong>{n.titulo}</strong>
+                      <span>{n.texto}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <Explica verbete="visitasLoja" />
+              </section>
+            )}
+
+            <section
+              className="rel-secao rel-quebra-antes"
+              data-grupo="placar contatos"
+            >
+              <Cabeca
+                titulo="O que esse investimento gerou"
+                texto="Os números do período, cada um com o que ele significa e de onde foi extraído."
+              />
 
               <div className="rel-placar" data-secao="placar">
-                <div className="celula">
-                  <span className="num">{fmtInt(data.totals.impressions)}</span>
-                  <span className="desc">
-                    Visualizações
-                    <br />
-                    dos anúncios
-                  </span>
-                </div>
-                {data.totals.reach > 0 && (
-                  <div className="celula">
-                    <span className="num">{fmtInt(data.totals.reach)}</span>
-                    <span className="desc">
-                      Pessoas alcançadas
-                      <br />
-                      no Instagram e Facebook
-                    </span>
-                  </div>
+                <Metrica
+                  verbete="visualizacoes"
+                  icone="olho"
+                  valor={fmtInt(t.impressions)}
+                />
+                {t.reach > 0 && (
+                  <Metrica
+                    verbete="alcance"
+                    icone="pessoas"
+                    valor={fmtInt(t.reach)}
+                  />
                 )}
-                <div className="celula">
-                  <span className="num">{fmtInt(data.totals.clicks)}</span>
-                  <span className="desc">
-                    Cliques
-                    <br />
-                    nos anúncios
-                  </span>
-                </div>
-                {data.totals.googleContacts > 0 && (
-                  <div className="celula">
-                    <span className="num destaque">
-                      {fmtInt(data.totals.googleContacts)}
-                    </span>
-                    <span className="desc">
-                      Contatos Google
-                      <br />
-                      (WhatsApp, formulário e ligações)
-                    </span>
-                  </div>
+                <Metrica
+                  verbete="cliques"
+                  icone="clique"
+                  valor={fmtInt(t.clicks)}
+                />
+                {t.googleContacts > 0 && (
+                  <Metrica
+                    verbete="contatosGoogle"
+                    icone="conversa"
+                    valor={fmtInt(t.googleContacts)}
+                    tom="bom"
+                  />
                 )}
-                {data.totals.metaConversations > 0 && (
-                  <div className="celula">
-                    <span className="num destaque">
-                      {fmtInt(data.totals.metaConversations)}
-                    </span>
-                    <span className="desc">
-                      Conversas Meta
-                      <br />
-                      (Instagram e Facebook)
-                    </span>
-                  </div>
+                {t.metaConversations > 0 && (
+                  <Metrica
+                    verbete="conversasMeta"
+                    icone="balao"
+                    valor={fmtInt(t.metaConversations)}
+                    tom="bom"
+                  />
                 )}
-                {data.totals.directions > 0 && (
-                  <div className="celula">
-                    <span className="num">
-                      {fmtInt(data.totals.directions)}
-                    </span>
-                    <span className="desc">
-                      Rotas traçadas
-                      <br />
-                      até o endereço da loja
-                    </span>
-                  </div>
+                {t.directions > 0 && (
+                  <Metrica
+                    verbete="rotas"
+                    icone="rota"
+                    valor={fmtInt(t.directions)}
+                  />
+                )}
+                {t.storeVisits > 0 && (
+                  <Metrica
+                    verbete="visitasLoja"
+                    icone="loja"
+                    valor={fmtInt(t.storeVisits)}
+                    tom="estimado"
+                  />
+                )}
+                {t.profileViews > 0 && (
+                  <Metrica
+                    verbete="visitasSite"
+                    icone="link"
+                    valor={fmtInt(t.profileViews)}
+                  />
+                )}
+                {t.profileEngagements > 0 && (
+                  <Metrica
+                    verbete="interacoesPerfil"
+                    icone="estrela"
+                    valor={fmtInt(t.profileEngagements)}
+                  />
                 )}
               </div>
 
@@ -562,13 +703,10 @@ export default async function RelatorioPage({
 
             {mostrar("fundos") && (
               <section className="rel-secao" data-secao="fundos">
-                <div className="rel-cabeca">
-                  <h2>Fundos disponíveis nas contas</h2>
-                  <p>
-                    Quanto ainda resta de saldo em cada plataforma para os
-                    anúncios continuarem no ar, na posição de {emitido}.
-                  </p>
-                </div>
+                <Cabeca
+                  titulo="Fundos disponíveis nas contas"
+                  texto={`Quanto ainda resta de saldo em cada plataforma para os anúncios continuarem no ar, na posição de ${emitido}.`}
+                />
                 <div className="rel-barras">
                   {data.balances.map((b) => {
                     const usado =
@@ -605,6 +743,7 @@ export default async function RelatorioPage({
                     );
                   })}
                 </div>
+                <Explica verbete="saldo" />
               </section>
             )}
           </>
@@ -616,6 +755,108 @@ export default async function RelatorioPage({
           <span>Emitido em {emitido}</span>
         </footer>
       </div>
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Peças do documento
+// ---------------------------------------------------------------------------
+
+function Cabeca({ titulo, texto }: { titulo: string; texto: string }) {
+  return (
+    <div className="rel-cabeca">
+      <h2>{titulo}</h2>
+      <p>{texto}</p>
+    </div>
+  );
+}
+
+// O explicativo padrão de toda métrica: o que é, de onde vem e — quando a
+// leitura ingênua erra — a ressalva em destaque.
+function Explica({
+  verbete,
+  compacto,
+}: {
+  verbete: VerbeteId;
+  compacto?: boolean;
+}) {
+  const v: Verbete = GLOSSARIO[verbete];
+  return (
+    <dl className={`rel-explica${compacto ? " compacto" : ""}`}>
+      <div>
+        <dt>O que é</dt>
+        <dd>{v.oQue}</dd>
+      </div>
+      <div>
+        <dt>De onde vem</dt>
+        <dd>{v.origem}</dd>
+      </div>
+      {v.ressalva && (
+        <div className="atencao">
+          <dt>Atenção</dt>
+          <dd>{v.ressalva}</dd>
+        </div>
+      )}
+    </dl>
+  );
+}
+
+// Cartão grande do topo: número em evidência, explicativo curto embaixo.
+function Cifra({
+  verbete,
+  icone,
+  valor,
+  tom,
+  moeda,
+}: {
+  verbete: VerbeteId;
+  icone: IconeId;
+  valor: string;
+  tom?: "bom" | "estimado";
+  moeda?: boolean;
+}) {
+  const v: Verbete = GLOSSARIO[verbete];
+  return (
+    <div className={`rel-cifra${tom ? ` ${tom}` : ""}${moeda ? " moeda" : ""}`}>
+      <span className="rotulo">
+        <Icone id={icone} />
+        {v.titulo}
+        {tom === "estimado" && (
+          <span className="tag-estimativa">estimativa</span>
+        )}
+      </span>
+      <span className="valor">{valor}</span>
+      <span className="nota">{v.oQue}</span>
+    </div>
+  );
+}
+
+// Cartão do placar: mesmo número, mas com o explicativo completo. É onde o
+// cliente vai quando não entendeu de onde saiu algo.
+function Metrica({
+  verbete,
+  icone,
+  valor,
+  tom,
+}: {
+  verbete: VerbeteId;
+  icone: IconeId;
+  valor: string;
+  tom?: "bom" | "estimado";
+}) {
+  const v: Verbete = GLOSSARIO[verbete];
+  return (
+    <div className={`celula${tom ? ` ${tom}` : ""}`}>
+      <span className="topo">
+        <Icone id={icone} />
+        <span className="titulo">{v.titulo}</span>
+        {tom === "estimado" && (
+          <span className="tag-estimativa">estimativa</span>
+        )}
+      </span>
+      <span className="num">{valor}</span>
+      <Explica verbete={verbete} compacto />
     </div>
   );
 }
@@ -655,30 +896,41 @@ function Barras({
   );
 }
 
-function Etapa({
-  numero,
-  titulo,
-  cifra,
-  children,
-}: {
-  numero: number;
-  titulo: string;
-  cifra: string;
-  children: React.ReactNode;
-}) {
+// ---------------------------------------------------------------------------
+// Ícones. Traçado de 1.6px, 24x24, herdando a cor do texto — o mesmo desenho
+// serve no cartão claro e no cartão colorido, e some bem na impressão P&B.
+// ---------------------------------------------------------------------------
+const ICONES = {
+  carteira:
+    "M3.5 8h15a1.5 1.5 0 0 1 1.5 1.5v8.5a1.5 1.5 0 0 1-1.5 1.5h-14A1.5 1.5 0 0 1 3 18V6.5A1.5 1.5 0 0 1 4.5 5h11.6M20.5 12h-3.3a1.75 1.75 0 0 0 0 3.5h3.3",
+  olho: "M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Zm9.5 2.6a2.6 2.6 0 1 0 0-5.2 2.6 2.6 0 0 0 0 5.2Z",
+  pessoas:
+    "M15.5 19.5v-1.2a4 4 0 0 0-4-4h-4a4 4 0 0 0-4 4v1.2M9.5 11a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4Zm11 8.5v-1.2a4 4 0 0 0-3-3.87M15.5 4.8a4 4 0 0 1 0 7.75",
+  clique: "M8 3.5 19.5 12l-5.2 1.3 2.6 5.2-2.6 1.3-2.6-5.2-3.7 3.7V3.5Z",
+  conversa:
+    "M20.5 11.6a7.9 7.9 0 0 1-11.5 7.05L4 20l1.35-4.4A7.9 7.9 0 1 1 20.5 11.6Z",
+  balao: "M20.5 14.5a2 2 0 0 1-2 2H8l-4.5 4V5.5a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2v9Z",
+  rota: "M3.5 11 20.5 3.5 13 20.5l-1.9-7.6L3.5 11Z",
+  loja: "M4.5 9.5h15v9a1 1 0 0 1-1 1h-13a1 1 0 0 1-1-1v-9Zm-1.2 0 1.6-5h14.2l1.6 5a2.4 2.4 0 0 1-4.3 1.35 2.4 2.4 0 0 1-4.4 0 2.4 2.4 0 0 1-4.4 0A2.4 2.4 0 0 1 3.3 9.5Z",
+  link: "M10.2 13.3a4.6 4.6 0 0 0 6.5 0l2.7-2.7a4.6 4.6 0 0 0-6.5-6.5l-1 1M13.8 10.7a4.6 4.6 0 0 0-6.5 0l-2.7 2.7a4.6 4.6 0 0 0 6.5 6.5l1-1",
+  estrela: "m12 3.5 2.7 5.5 6 .9-4.35 4.25 1.03 6-5.38-2.83-5.38 2.83 1.03-6L3.3 9.9l6-.9L12 3.5Z",
+} as const;
+
+type IconeId = keyof typeof ICONES;
+
+function Icone({ id }: { id: IconeId }) {
   return (
-    <div className="rel-etapa">
-      <div className="marcador">
-        <span className="bolha">{numero}</span>
-        <span className="fio" />
-      </div>
-      <div className="conteudo">
-        <div className="titulo-etapa">
-          <strong>{titulo}</strong>
-          <span className="cifra-etapa">{cifra}</span>
-        </div>
-        {children}
-      </div>
-    </div>
+    <svg
+      className="rel-icone"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d={ICONES[id]} />
+    </svg>
   );
 }
