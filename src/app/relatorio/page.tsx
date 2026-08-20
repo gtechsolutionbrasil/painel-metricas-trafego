@@ -32,7 +32,7 @@ export const metadata = {
 type SP = Record<string, string | string[] | undefined>;
 
 // Valor do topo das barras do gráfico: sem "R$" (o eixo já é de dinheiro),
-// mas com separador de milhar — "42.734,00", não "42734,00".
+// mas com separador de milhar: "42.734,00", não "42734,00".
 const moneyPlain = new Intl.NumberFormat("pt-BR", {
   minimumFractionDigits: 2,
   maximumFractionDigits: 2,
@@ -41,14 +41,15 @@ const fmtMoneyPlain = (v: number) => moneyPlain.format(v || 0);
 
 // ---------------------------------------------------------------------------
 // Relatório de prestação de contas, pronto para virar PDF (Cmd+P → Salvar).
-// Fora do layout do painel de propósito: sem sidebar, sem topbar, sem jargão —
-// é o documento que o cliente recebe.
+// Fora do layout do painel de propósito: sem sidebar, sem topbar, sem jargão.
+// É o documento que o cliente recebe.
 //
-// Formato: uma coluna, sem moldura, sem cor decorativa. Cada número aparece
-// UMA vez, numa linha com o nome à esquerda e o valor à direita, seguido de
-// uma frase do que é e de onde veio. A primeira versão empilhava cartões
-// coloridos com três blocos rotulados por métrica e ficou ilegível — o cliente
-// não é da área e lê isso sozinho, sem ninguém do lado para traduzir.
+// Formato: uma coluna, sem moldura, sem cor decorativa. Cada número aparece UMA
+// vez, numa linha com o nome à esquerda e o valor à direita, seguido de uma
+// frase do que é e de onde veio. Quando a métrica precisa de mais explicação
+// (visitas à loja), a explicação fica colada nela, não numa seção separada.
+//
+// Convenção de texto: nada de travessão no que o cliente lê.
 // ---------------------------------------------------------------------------
 export default async function RelatorioPage({
   searchParams,
@@ -85,77 +86,6 @@ export default async function RelatorioPage({
     disponiveis.has(id);
   const ocultasIniciais = parseHidden(sp.ocultar);
   const clienteKey = client?.id ?? "todos";
-
-  // Passos da jornada montados em lista: quais existem depende do período, e
-  // calcular a numeração no meio do JSX já tinha virado ternário encadeado.
-  const etapas: { titulo: string; cifra: string; texto: React.ReactNode }[] = [
-    {
-      titulo: "O anúncio aparece",
-      cifra: `${fmtInt(t.impressions)} visualizações`,
-      texto: (
-        <>
-          A pessoa está pesquisando no Google, olhando o mapa ou rolando o
-          Instagram e o Facebook.
-          {data.platforms.length > 1 && google && meta
-            ? ` Foram ${fmtInt(google.impressions)} no Google e ${fmtInt(meta.impressions)} no Meta.`
-            : ""}
-        </>
-      ),
-    },
-    {
-      titulo: "Ela clica no anúncio",
-      cifra: `${fmtInt(t.clicks)} cliques`,
-      texto:
-        data.platforms.length > 1 && google && meta ? (
-          <>
-            {fmtInt(google.clicks)} cliques vieram do Google e{" "}
-            {fmtInt(meta.clicks)} do Instagram e Facebook.
-          </>
-        ) : (
-          <>Tocou no título, na imagem, no botão de ligar ou no atalho de rota.</>
-        ),
-    },
-  ];
-
-  if (t.googleContacts > 0 || t.metaConversations > 0) {
-    etapas.push({
-      titulo: "Ela procura a loja",
-      cifra: `${fmtInt(t.googleContacts + t.metaConversations)} contatos`,
-      texto: (
-        <>
-          {fmtInt(t.googleContacts)} pelo Google e{" "}
-          {fmtInt(t.metaConversations)} pelo Meta. São contagens separadas, uma
-          por plataforma.
-        </>
-      ),
-    });
-  }
-
-  if (t.directions > 0) {
-    etapas.push({
-      titulo: "Ela pede o caminho",
-      cifra: `${fmtInt(t.directions)} rotas`,
-      texto: (
-        <>
-          Pessoas que traçaram a rota do lugar onde estavam até o endereço da
-          loja.
-        </>
-      ),
-    });
-  }
-
-  if (t.storeVisits > 0) {
-    etapas.push({
-      titulo: "Ela vai até a loja",
-      cifra: `${fmtInt(t.storeVisits)} visitas`,
-      texto: (
-        <>
-          Estimativa do Google, explicada na seção Visitas à loja. Não é uma
-          contagem.
-        </>
-      ),
-    });
-  }
 
   return (
     <div
@@ -274,7 +204,6 @@ export default async function RelatorioPage({
                 {t.reach > 0 && (
                   <Metrica verbete="alcance" valor={fmtInt(t.reach)} />
                 )}
-                <Metrica verbete="cliques" valor={fmtInt(t.clicks)} />
                 {t.googleContacts > 0 && (
                   <Metrica
                     verbete="contatosGoogle"
@@ -293,11 +222,61 @@ export default async function RelatorioPage({
                   <Metrica verbete="rotas" valor={fmtInt(t.directions)} />
                 )}
                 {t.storeVisits > 0 && (
-                  <Metrica
-                    verbete="visitasLoja"
-                    valor={fmtInt(t.storeVisits)}
-                    estimativa
-                  />
+                  <Metrica verbete="visitasLoja" valor={fmtInt(t.storeVisits)}>
+                    {/* A explicação do método fica dentro da própria métrica.
+                        Repetir o número numa seção à parte confundia. */}
+                    {mostrar("visitas") && (
+                      <div className="rel-detalhe" data-secao="visitas">
+                        <p className="rel-paragrafo">
+                          O Google não conta pessoas na porta da loja. Ele
+                          acompanha um grupo pequeno de celulares que
+                          autorizaram o histórico de localização, vê quantos
+                          deles foram até a loja depois de verem o anúncio, e
+                          multiplica esse resultado para calcular o público
+                          inteiro.
+                        </p>
+
+                        <h4>Como o Google calcula</h4>
+                        <ol className="rel-passos">
+                          {VISITAS_LOJA_PASSOS.map((p) => (
+                            <li key={p.titulo}>
+                              <b>{p.titulo}.</b> {p.texto}
+                            </li>
+                          ))}
+                        </ol>
+
+                        {t.directions > 0 && (
+                          <div className="rel-versus">
+                            <p>
+                              <span className="n">{fmtInt(t.directions)}</span>
+                              <b>rotas até a loja</b>
+                              <span>
+                                contado: alguém realmente tocou em “Rotas” no
+                                perfil
+                              </span>
+                            </p>
+                            <p className="calculado">
+                              <span className="n">{fmtInt(t.storeVisits)}</span>
+                              <b>visitas à loja</b>
+                              <span>
+                                calculado: inclui quem já sabia o caminho e foi
+                                sem pedir rota
+                              </span>
+                            </p>
+                          </div>
+                        )}
+
+                        <h4>Como ler esse número</h4>
+                        <ul className="rel-notas">
+                          {VISITAS_LOJA_LEITURA.map((n) => (
+                            <li key={n.titulo}>
+                              <b>{n.titulo}.</b> {n.texto}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </Metrica>
                 )}
                 {t.profileViews > 0 && (
                   <Metrica
@@ -328,8 +307,8 @@ export default async function RelatorioPage({
                       {data.contactRows.map((r) => (
                         <tr key={r.label}>
                           <td>{r.label}</td>
-                          {google && <td className="n">{r.google || "—"}</td>}
-                          {meta && <td className="n">{r.meta || "—"}</td>}
+                          {google && <td className="n">{r.google || ""}</td>}
+                          {meta && <td className="n">{r.meta || ""}</td>}
                         </tr>
                       ))}
                       <tr className="somatorio">
@@ -354,74 +333,6 @@ export default async function RelatorioPage({
                 </div>
               )}
             </section>
-
-            {mostrar("visitas") && (
-              <section
-                className="rel-secao rel-quebra-antes"
-                data-secao="visitas"
-              >
-                <h2>Visitas à loja</h2>
-                <p className="rel-intro">
-                  É a única métrica deste relatório que não conta o que
-                  aconteceu — ela estima. Vale entender como o Google chega
-                  nela.
-                </p>
-
-                <p className="rel-destaque">
-                  <span className="val">{fmtInt(t.storeVisits)}</span>
-                  <span className="txt">
-                    visitas estimadas no período
-                    <em>estimativa, não contagem</em>
-                  </span>
-                </p>
-
-                <p className="rel-paragrafo">
-                  O Google não conta pessoas na porta da loja. Ele acompanha um
-                  grupo pequeno de celulares que autorizaram o histórico de
-                  localização, vê quantos deles foram até a loja depois de
-                  verem o anúncio, e multiplica esse resultado para estimar o
-                  público inteiro.
-                </p>
-
-                <h3>Como o Google calcula</h3>
-                <ol className="rel-passos">
-                  {VISITAS_LOJA_PASSOS.map((p) => (
-                    <li key={p.titulo}>
-                      <b>{p.titulo}.</b> {p.texto}
-                    </li>
-                  ))}
-                </ol>
-
-                {t.directions > 0 && (
-                  <div className="rel-versus">
-                    <p>
-                      <span className="n">{fmtInt(t.directions)}</span>
-                      <b>rotas até a loja</b>
-                      <span>
-                        contado: alguém realmente tocou em “Rotas” no perfil
-                      </span>
-                    </p>
-                    <p className="estimado">
-                      <span className="n">{fmtInt(t.storeVisits)}</span>
-                      <b>visitas à loja</b>
-                      <span>
-                        estimado: inclui quem já sabia o caminho e foi sem pedir
-                        rota
-                      </span>
-                    </p>
-                  </div>
-                )}
-
-                <h3>Como ler esse número</h3>
-                <ul className="rel-notas">
-                  {VISITAS_LOJA_LEITURA.map((n) => (
-                    <li key={n.titulo}>
-                      <b>{n.titulo}.</b> {n.texto}
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            )}
 
             {mostrar("semanas") && (
               <section className="rel-secao" data-secao="semanas">
@@ -490,38 +401,6 @@ export default async function RelatorioPage({
               </section>
             )}
 
-            <section className="rel-secao" data-secao="caminho">
-              <h2>O caminho que a pessoa percorre</h2>
-              <p className="rel-intro">
-                Do anúncio aparecendo na tela até a pessoa chegar na loja, cada
-                passo é medido separadamente.
-              </p>
-              <ol className="rel-jornada">
-                {etapas.map((e) => (
-                  <li key={e.titulo}>
-                    <p className="topo">
-                      <b>{e.titulo}</b>
-                      <span className="cifra">{e.cifra}</span>
-                    </p>
-                    <p className="txt">{e.texto}</p>
-                  </li>
-                ))}
-              </ol>
-              {data.googleClickTypes.length > 0 && (
-                <>
-                  <h3>Em que parte do anúncio a pessoa tocou</h3>
-                  <p className="rel-intro">
-                    Só no Google. De onde vem: {GLOSSARIO.tiposClique.origem}.
-                  </p>
-                  <Barras
-                    itens={data.googleClickTypes}
-                    inteiro
-                    rotulo="cliques"
-                  />
-                </>
-              )}
-            </section>
-
             {mostrar("fundos") && (
               <section className="rel-secao" data-secao="fundos">
                 <h2>Fundos disponíveis nas contas</h2>
@@ -580,18 +459,19 @@ export default async function RelatorioPage({
 
 // ---------------------------------------------------------------------------
 // Uma métrica: nome à esquerda, valor à direita, explicação embaixo. Sem
-// moldura e sem ícone — a linha inteira é lida de uma vez.
+// moldura e sem ícone, a linha inteira é lida de uma vez. `children` é o
+// detalhamento longo, para a métrica que precisa dele.
 // ---------------------------------------------------------------------------
 function Metrica({
   verbete,
   valor,
   forte,
-  estimativa,
+  children,
 }: {
   verbete: VerbeteId;
   valor: string;
   forte?: boolean;
-  estimativa?: boolean;
+  children?: React.ReactNode;
 }) {
   const v: Verbete = GLOSSARIO[verbete];
   return (
@@ -599,7 +479,7 @@ function Metrica({
       <p className="topo">
         <span className="nome">
           {v.titulo}
-          {estimativa && <em className="est">estimativa</em>}
+          {v.etiqueta && <em className="etiqueta">{v.etiqueta}</em>}
         </span>
         <span className={`val${forte ? " forte" : ""}`}>{valor}</span>
       </p>
@@ -607,21 +487,12 @@ function Metrica({
         {v.oQue} <span className="fonte">De onde vem: {v.origem}.</span>
       </p>
       {v.ressalva && <p className="aviso">{v.ressalva}</p>}
+      {children}
     </div>
   );
 }
 
-function Barras({
-  itens,
-  meta,
-  inteiro,
-  rotulo,
-}: {
-  itens: ReportBar[];
-  meta?: boolean;
-  inteiro?: boolean;
-  rotulo?: string;
-}) {
+function Barras({ itens, meta }: { itens: ReportBar[]; meta?: boolean }) {
   return (
     <div className="rel-barras">
       {itens.map((b) => (
@@ -632,8 +503,7 @@ function Barras({
               {b.note && <em>{b.note}</em>}
             </span>
             <span className="valor">
-              {inteiro ? fmtInt(b.value) : fmtCurrencyCents(b.value)}
-              {rotulo ? ` ${rotulo}` : ""}
+              {fmtCurrencyCents(b.value)}
               <span className="pct">{fmtPercent(b.share)}</span>
             </span>
           </p>

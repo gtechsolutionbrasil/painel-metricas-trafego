@@ -278,6 +278,28 @@ dashboard Vercel + Redeploy. O dev local (localhost:3000) reflete tudo.
 
 ## Histórico de iterações
 
+- **2026-08-19 (3) — Enxugada do relatório, a pedido do usuário.** Saíram: a
+  métrica Cliques (número baixo demais para mostrar ao cliente), a seção
+  inteira "O caminho que a pessoa percorre" e, junto com ela, o detalhamento
+  de tipos de clique (`googleClickTypes` + a query `getAdClickTypes` foram
+  removidos de `data.ts`; o bloco `CLICK_TYPE` saiu de `labels.ts`). A seção
+  separada de Visitas à loja também saiu: a explicação do método agora fica
+  colada na própria linha da métrica (`.rel-detalhe`), porque repetir o número
+  em dois lugares confundia.
+
+  Mudanças de texto: a etiqueta da métrica Visitas à loja passou de
+  "estimativa" para **"margem de erro de 10%"**; "Rotas até a loja" passou a
+  explicar a diferença para Visitas à loja e perdeu a frase "pedir a rota não
+  garante que a pessoa foi"; a tabela de contatos foi agrupada (conversas do
+  Meta entram na MESMA linha do WhatsApp do Google, em coluna própria; as
+  três linhas de ligação viraram "Ligou para a loja").
+
+  **Convenção de texto nova, vale para todo o projeto:** nada de travessão em
+  texto que o cliente lê. O usuário identifica o "—" como assinatura de texto
+  gerado por IA. Onde caberia um, usar ponto, vírgula, dois-pontos ou
+  parênteses; intervalo de data virou "05 a 11"; célula vazia de tabela ficou
+  em branco em vez de "—".
+
 - **2026-08-19 (2) — Relatório refeito em formato limpo.** A primeira versão do
   redesenho (cartões coloridos, ícone por métrica, três blocos rotulados
   "O que é / De onde vem / Atenção" dentro de cada cartão) foi rejeitada pelo

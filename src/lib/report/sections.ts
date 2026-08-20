@@ -6,7 +6,7 @@
 // tem dado (contatos zerados em julho, por exemplo) volta sozinha quando o dado
 // aparecer. Se guardássemos a lista de ligadas, ela nasceria desmarcada sem
 // ninguém ter desmarcado. Ausência de escolha significa sempre relatório
-// completo — o padrão seguro para um link já enviado ou para quem abrir sem JS.
+// completo: o padrão seguro para um link já enviado ou para quem abrir sem JS.
 // ---------------------------------------------------------------------------
 import type { ReportData } from "@/lib/report/data";
 
@@ -42,16 +42,10 @@ export const REPORT_SECTIONS = [
     motivo: "Nenhuma campanha do Meta no período",
   },
   {
-    id: "caminho",
-    label: "O caminho que a pessoa percorre",
-    hint: "Do anúncio até a rota da loja, passo a passo",
-    motivo: "Precisa de veiculação no período",
-  },
-  {
     id: "visitas",
     label: "Visitas à loja",
-    hint: "A estimativa do Google e como ela é calculada",
-    motivo: "O Google não divulgou estimativa neste período",
+    hint: "Como o Google calcula, colado na própria métrica",
+    motivo: "O Google não divulgou o número neste período",
   },
   {
     id: "placar",
@@ -86,7 +80,6 @@ export function availableSections(data: ReportData): Set<SectionId> {
   if (!data.hasData) return out;
 
   out.add("destaques");
-  out.add("caminho");
   out.add("placar");
   if (data.platforms.length > 1) out.add("divisao");
   if (data.weeks.length > 1) out.add("semanas");
@@ -100,7 +93,7 @@ export function availableSections(data: ReportData): Set<SectionId> {
   return out;
 }
 
-// ?ocultar=meta,fundos — ausente ou vazio significa relatório completo.
+// ?ocultar=meta,fundos. Ausente ou vazio significa relatório completo.
 export function parseHidden(
   raw: string | string[] | undefined,
 ): Set<SectionId> {

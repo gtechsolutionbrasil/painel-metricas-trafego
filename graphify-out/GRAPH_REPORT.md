@@ -1,21 +1,22 @@
 # Graph Report - painel-metricas-trafego  (2026-08-19)
 
 ## Corpus Check
-- 106 files · ~79,985 words
+- 106 files · ~79,748 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 676 nodes · 1341 edges · 52 communities (30 shown, 22 thin omitted)
-- Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 12 edges (avg confidence: 0.73)
+- 673 nodes · 1331 edges · 53 communities (31 shown, 22 thin omitted)
+- Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 10 edges (avg confidence: 0.71)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `7f30b8fa`
+- Built from commit: `185682c5`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
 - Dependências (package.json)
+- page.tsx
 - Topbar & Camada de dados
 - Gráficos (Recharts)
 - TypeScript config
@@ -72,10 +73,10 @@
 3. `OverviewPage()` - 26 edges
 4. `SitePage()` - 22 edges
 5. `createSupabaseServerClient()` - 21 edges
-6. `fmtInt()` - 19 edges
-7. `getClients()` - 19 edges
-8. `getReportData()` - 19 edges
-9. `rangeFromSearch()` - 18 edges
+6. `getClients()` - 19 edges
+7. `fmtInt()` - 18 edges
+8. `rangeFromSearch()` - 18 edges
+9. `getReportData()` - 16 edges
 10. `compilerOptions` - 16 edges
 
 ## Surprising Connections (you probably didn't know these)
@@ -87,8 +88,8 @@
   src/app/(dash)/page.tsx → src/lib/report/labels.ts
 - `ExportReportButton()` --indirect_call--> `key()`  [INFERRED]
   src/components/layout/ExportReportButton.tsx → src/lib/report/labels.ts
-- `ClientesPage()` --calls--> `hideMetric()`  [EXTRACTED]
-  src/app/(dash)/clientes/page.tsx → src/lib/presentation.ts
+- `SourceHeader()` --calls--> `fmtInt()`  [EXTRACTED]
+  src/components/pages/GoogleInsights.tsx → src/lib/format.ts
 
 ## Import Cycles
 - None detected.
@@ -97,15 +98,19 @@
 - **Data Ingestion Flow** — n8n_workflow, google_ads_api, meta_marketing_api, ga4_data_api, supabase_migrations_0001_init [EXTRACTED 1.00]
 - **Dashboard Pages** — src_app_dash_page, src_app_dash_trafego_pago, src_app_dash_analytics, src_app_dash_clientes [EXTRACTED 1.00]
 
-## Communities (52 total, 22 thin omitted)
+## Communities (53 total, 22 thin omitted)
 
 ### Community 0 - "Dependências (package.json)"
-Cohesion: 0.09
-Nodes (35): SP, ACTION_NAME_LABEL, ACTION_TIP, actionNameLabel(), actionTip(), CATEGORY_LABEL, CATEGORY_TIP, categoryLabel() (+27 more)
+Cohesion: 0.07
+Nodes (46): SP, ACTION_NAME_LABEL, ACTION_TIP, actionNameLabel(), actionTip(), CATEGORY_LABEL, CATEGORY_TIP, categoryLabel() (+38 more)
+
+### Community 1 - "page.tsx"
+Cohesion: 0.12
+Nodes (24): LeadCard(), Barras(), fmtMoneyPlain(), metadata, moneyPlain, RelatorioPage(), SP, PrintButton() (+16 more)
 
 ### Community 2 - "Topbar & Camada de dados"
 Cohesion: 0.08
-Nodes (24): ClientList(), EXPECTED_PROVIDERS, formatSync(), PROVIDER_LABEL, SP, statusLabel(), statusVariant(), TrackingStatusBoard() (+16 more)
+Nodes (27): AccountInput, buildAccounts(), clientSchema, createClientWithAccounts(), deleteClient(), FIELD_LABELS, normalizeMetaAdAccountId(), normalizeSlug() (+19 more)
 
 ### Community 3 - "Gráficos (Recharts)"
 Cohesion: 0.06
@@ -116,8 +121,8 @@ Cohesion: 0.04
 Nodes (46): date-fns, eslint, eslint-config-next, lucide-react, next, dependencies, date-fns, lucide-react (+38 more)
 
 ### Community 5 - "Community 5"
-Cohesion: 0.07
-Nodes (46): ChannelSummary(), fmtMoneyPlain(), metadata, moneyPlain, SP, PrintButton(), RelatorioControles(), subscribeStorage() (+38 more)
+Cohesion: 0.12
+Nodes (25): ChannelSummary(), getReportData(), PLATFORM_LABEL, ranked(), ReportBalance, ReportBar, ReportContactRow, ReportPlatform (+17 more)
 
 ### Community 7 - "Agregação de métricas"
 Cohesion: 0.15
@@ -129,11 +134,11 @@ Nodes (8): Camada operacional preparada, Como conectar cada fonte, Estado implem
 
 ### Community 28 - "Community 28"
 Cohesion: 0.06
-Nodes (54): CampaignFilter(), AdDayPoint, AdGroupRow, byConversionActionGrouped(), CampaignRow, ClickTypeRow, ConversionActionGroup, ConversionActionRow (+46 more)
+Nodes (58): CampaignFilter(), AdMetricRow, BreakdownRow, filterAdMetrics(), filterWebMetrics(), getAdCampaigns(), getAdMetrics(), getIntegrationAccounts() (+50 more)
 
 ### Community 29 - "Community 29"
-Cohesion: 0.14
-Nodes (15): ComparePicker(), OPTIONS, ExportReportButton(), buildMonth(), fmtBR(), iso(), MONTHS, parse() (+7 more)
+Cohesion: 0.15
+Nodes (14): ComparePicker(), OPTIONS, ExportReportButton(), buildMonth(), fmtBR(), iso(), MONTHS, parse() (+6 more)
 
 ### Community 30 - "Community 30"
 Cohesion: 0.22
@@ -148,8 +153,8 @@ Cohesion: 0.16
 Nodes (22): actionOrigin(), CONVERSION_ACTION_TYPES, dedupeCampaigns(), int(), isConversation(), isDetailAction(), isRevenue(), mergeConversions() (+14 more)
 
 ### Community 35 - "page.tsx"
-Cohesion: 0.06
-Nodes (85): ClientesPage(), buildReturnTo(), CHANNEL_LABEL, CrmPage(), first(), LeadCard(), LeadForm(), saoPauloDateTimeLocal() (+77 more)
+Cohesion: 0.07
+Nodes (73): buildReturnTo(), CHANNEL_LABEL, CrmPage(), first(), LeadForm(), saoPauloDateTimeLocal(), SOURCE_LABEL, SP (+65 more)
 
 ### Community 36 - "Plano de publicação — tracking da Madeireira Adrianna"
 Cohesion: 0.22
@@ -176,12 +181,12 @@ Cohesion: 0.40
 Nodes (5): Banco (Supabase), Estrutura, Painel de Métricas de Tráfego — GTech Solution, Rodando localmente, Scripts
 
 ### Community 45 - "KpiCard.tsx"
-Cohesion: 0.11
-Nodes (25): BarsChart(), ChartTooltip(), Item, DonutChart(), DonutSlice, Sparkline(), AXIS, CHART_COLORS (+17 more)
+Cohesion: 0.10
+Nodes (27): BarsChart(), ChartTooltip(), Item, DonutChart(), DonutSlice, Sparkline(), AXIS, CHART_COLORS (+19 more)
 
 ### Community 47 - "queries.ts"
-Cohesion: 0.06
-Nodes (41): LoginForm(), safeNextPath(), refreshData(), WEBHOOKS, AccountInput, buildAccounts(), clientSchema, createClientWithAccounts() (+33 more)
+Cohesion: 0.08
+Nodes (28): LoginForm(), safeNextPath(), refreshData(), WEBHOOKS, createLead(), createLeadSchema, parseCurrencyBR(), parseSaoPauloDateTime() (+20 more)
 
 ### Community 48 - "Bug - <descrição>"
 Cohesion: 0.25
@@ -212,24 +217,24 @@ Cohesion: 0.14
 Nodes (12): Alternativas descartadas, Consequências, Contexto, Decisão, Decisão - Sem testes automatizados no painel, Relacionado, Alternativas descartadas, Consequências (+4 more)
 
 ## Knowledge Gaps
-- **263 isolated node(s):** `eslintConfig`, `nextConfig`, `name`, `version`, `private` (+258 more)
+- **262 isolated node(s):** `eslintConfig`, `nextConfig`, `name`, `version`, `private` (+257 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **22 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `getClients()` connect `page.tsx` to `Dependências (package.json)`, `Topbar & Camada de dados`, `Community 5`, `queries.ts`, `Community 28`?**
+- **Why does `getClients()` connect `page.tsx` to `Dependências (package.json)`, `page.tsx`, `Topbar & Camada de dados`, `queries.ts`, `Community 28`?**
   _High betweenness centrality (0.017) - this node is a cross-community bridge._
 - **Why does `isSupabaseConfigured` connect `queries.ts` to `Topbar & Camada de dados`, `Community 28`?**
   _High betweenness centrality (0.012) - this node is a cross-community bridge._
-- **Why does `rangeFromSearch()` connect `page.tsx` to `Dependências (package.json)`, `Community 29`, `Community 5`?**
+- **Why does `rangeFromSearch()` connect `page.tsx` to `Dependências (package.json)`, `page.tsx`, `Community 29`?**
   _High betweenness centrality (0.011) - this node is a cross-community bridge._
 - **What connects `eslintConfig`, `nextConfig`, `name` to the rest of the system?**
-  _263 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _262 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Dependências (package.json)` be split into smaller, more focused modules?**
-  _Cohesion score 0.09102564102564102 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.06857142857142857 - nodes in this community are weakly interconnected._
+- **Should `page.tsx` be split into smaller, more focused modules?**
+  _Cohesion score 0.11954022988505747 - nodes in this community are weakly interconnected._
 - **Should `Topbar & Camada de dados` be split into smaller, more focused modules?**
-  _Cohesion score 0.07954545454545454 - nodes in this community are weakly interconnected._
-- **Should `Gráficos (Recharts)` be split into smaller, more focused modules?**
-  _Cohesion score 0.06451612903225806 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.08392603129445235 - nodes in this community are weakly interconnected._

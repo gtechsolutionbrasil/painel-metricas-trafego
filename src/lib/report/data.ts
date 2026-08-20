@@ -1,10 +1,9 @@
 // ---------------------------------------------------------------------------
 // Dados do relatório de prestação de contas (o que a página /relatorio imprime).
 // Tudo em linguagem de cliente: nada de jargão de plataforma, nada de custo
-// unitário (decisão do usuário — o cliente vê o investido e o que ele gerou).
+// unitário: decisão do usuário, o cliente vê o investido e o que ele gerou.
 // ---------------------------------------------------------------------------
 import {
-  getAdClickTypes,
   getAdConversionActions,
   getAdGroups,
   getAdMetrics,
@@ -15,10 +14,9 @@ import type { DateRange, Platform } from "@/lib/types";
 import {
   actionKind,
   actionLabel,
+  LABEL_CONVERSA,
   campaignLabel,
   campaignNote,
-  clickTypeLabel,
-  clickTypeNote,
   adGroupLabel,
   adGroupNote,
 } from "@/lib/report/labels";
@@ -86,7 +84,6 @@ export type ReportData = {
   weeks: ReportWeek[];
   googleCampaigns: ReportBar[];
   googleAdGroups: ReportBar[];
-  googleClickTypes: ReportBar[];
   metaCampaigns: ReportBar[];
   contactRows: ReportContactRow[];
   balances: ReportBalance[];
@@ -153,11 +150,11 @@ function weeksOf(range: DateRange, rows: { date: string; platform: Platform; spe
     const rawTo = new Date(from.getTime() + 6 * 86400000);
     const to = rawTo > end ? end : rawTo;
     const b = buckets.get(i) ?? { google: 0, meta: 0 };
-    // Mesma mês: "05–11 / jul". Meses diferentes: "05/07 / 11/08".
+    // Mesmo mês: "05 a 11 / jul". Meses diferentes: "05/07 / 11/08".
     const sameMonth = from.getMonth() === to.getMonth();
     weeks.push({
       topLabel: sameMonth
-        ? `${String(from.getDate()).padStart(2, "0")}–${String(to.getDate()).padStart(2, "0")}`
+        ? `${String(from.getDate()).padStart(2, "0")} a ${String(to.getDate()).padStart(2, "0")}`
         : dm(from),
       bottomLabel: sameMonth ? MES[from.getMonth()] : dm(to),
       total: b.google + b.meta,
@@ -173,10 +170,9 @@ export async function getReportData(
   clientId: string | undefined,
   clientName: string,
 ): Promise<ReportData> {
-  const [ads, actions, clickTypes, adGroups, accounts] = await Promise.all([
+  const [ads, actions, adGroups, accounts] = await Promise.all([
     getAdMetrics(range, clientId),
     getAdConversionActions(range, clientId),
-    getAdClickTypes(range, clientId),
     getAdGroups(range, clientId),
     getIntegrationAccounts(clientId),
   ]);
@@ -239,12 +235,15 @@ export async function getReportData(
 
   // Meta usa a conversa iniciada da linha de campanha como leitura canônica.
   // Não somamos com Google nem recontamos os vários action_types do Meta.
+  //
+  // Entra na MESMA linha do WhatsApp do Google, em coluna própria: é a mesma
+  // ação da pessoa, e a tabela tem uma coluna por plataforma justamente para
+  // mostrar as duas leituras lado a lado sem somar.
   const metaConversations = sum(byPlatform("meta"), (r) => r.conversions);
   if (metaConversations > 0) {
-    contactMap.set("Conversas iniciadas no Instagram/Facebook", {
-      google: 0,
-      meta: metaConversations,
-    });
+    const e = contactMap.get(LABEL_CONVERSA) ?? { google: 0, meta: 0 };
+    e.meta += metaConversations;
+    contactMap.set(LABEL_CONVERSA, e);
   }
 
   const contactRows: ReportContactRow[] = [...contactMap.entries()]
@@ -298,13 +297,6 @@ export async function getReportData(
       (r) => r.spend,
       adGroupLabel,
       adGroupNote,
-    ),
-    googleClickTypes: ranked(
-      clickTypes,
-      (r) => r.clickType,
-      (r) => r.clicks,
-      clickTypeLabel,
-      clickTypeNote,
     ),
     metaCampaigns: ranked(
       byPlatform("meta"),

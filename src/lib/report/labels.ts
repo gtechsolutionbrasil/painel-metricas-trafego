@@ -29,7 +29,7 @@ const ACTION_KIND: Record<string, ActionKind> = {
   "Local actions - Other engagements": "engagement",
   "Local actions - Menu views": "engagement",
   // Estimativa modelada do Google. Entra no relatório em bloco próprio, com o
-  // método explicado — nunca somada aos contatos.
+  // método explicado, nunca somada aos contatos.
   "Store visits": "storeVisit",
   "Visitas à loja": "storeVisit",
 };
@@ -55,18 +55,25 @@ export function actionKind(name: string, category: string): ActionKind {
   return "ignore";
 }
 
+// Rótulos da tabela de contatos. AGRUPADOS de propósito: o cliente não decide
+// nada sabendo que 3 ligações vieram do botão do anúncio e 38 do perfil, mas se
+// perde numa tabela de 5 linhas quase iguais. Ligação é ligação; conversa
+// iniciada é conversa, venha do WhatsApp pelo Google ou do Direct pelo Meta.
+export const LABEL_CONVERSA = "Chamou no WhatsApp ou Direct";
+const LABEL_LIGACAO = "Ligou para a loja";
+
 const ACTION_LABEL: Record<string, string> = {
-  "WhatsApp - Clique": "Chamou no WhatsApp",
-  "Clicks to call": "Ligou pelo perfil da loja no Google",
-  "Local actions - Calls": "Ligou pelo perfil da loja no Google",
-  "Calls from ads": "Ligou pelo botão do anúncio",
-  "Chamadas a partir de anúncios": "Ligou pelo botão do anúncio",
-  "Ligação - Telefone": "Ligou pelo telefone do site",
+  "WhatsApp - Clique": LABEL_CONVERSA,
+  "Clicks to call": LABEL_LIGACAO,
+  "Local actions - Calls": LABEL_LIGACAO,
+  "Calls from ads": LABEL_LIGACAO,
+  "Chamadas a partir de anúncios": LABEL_LIGACAO,
+  "Ligação - Telefone": LABEL_LIGACAO,
   "Formulário - Orçamento": "Pediu orçamento pelo formulário",
 };
 
 export function actionLabel(name: string): string {
-  if (name.startsWith("onsite_conversion")) return "Chamou no WhatsApp";
+  if (name.startsWith("onsite_conversion")) return LABEL_CONVERSA;
   return ACTION_LABEL[name] ?? name;
 }
 
@@ -139,29 +146,3 @@ const AD_GROUP: Record<string, { label: string; note: string }> = {
 const key = (s: string) => s.trim().toLowerCase();
 export const adGroupLabel = (raw: string) => AD_GROUP[key(raw)]?.label ?? raw;
 export const adGroupNote = (raw: string) => AD_GROUP[key(raw)]?.note ?? null;
-
-// ---- Tipos de clique (só Google) ------------------------------------------
-const CLICK_TYPE: Record<string, { label: string; note: string | null }> = {
-  CROSS_NETWORK: {
-    label: "Anúncio no Maps e na rede do Google",
-    note: "Campanha de Maps e Perfil da Empresa",
-  },
-  LOCATION_EXPANSION: {
-    label: "Abriu a ficha com o endereço da loja",
-    note: "Clicou para ver onde a loja fica, no anúncio da busca",
-  },
-  CALLS: {
-    label: "Tocou no botão de ligar",
-    note: "Nem todo toque vira chamada completada",
-  },
-  URL_CLICKS: { label: "Foi para o site da loja", note: null },
-  GET_DIRECTIONS: { label: "Pediu a rota direto pelo anúncio", note: null },
-  SITELINKS: { label: "Clicou num atalho do anúncio", note: null },
-  PRODUCT_LISTING: { label: "Clicou num produto anunciado", note: null },
-  UNKNOWN: { label: "Outros cliques", note: null },
-  UNSPECIFIED: { label: "Outros cliques", note: null },
-};
-
-export const clickTypeLabel = (raw: string) =>
-  CLICK_TYPE[raw]?.label ?? raw.replace(/_/g, " ").toLowerCase();
-export const clickTypeNote = (raw: string) => CLICK_TYPE[raw]?.note ?? null;

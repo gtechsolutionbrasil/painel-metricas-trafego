@@ -109,7 +109,6 @@
 .rel[data-off~="semanas"] [data-secao="semanas"],
 .rel[data-off~="google"] [data-secao="google"],
 .rel[data-off~="meta"] [data-secao="meta"],
-.rel[data-off~="caminho"] [data-secao="caminho"],
 .rel[data-off~="visitas"] [data-secao="visitas"],
 .rel[data-off~="placar"] [data-secao="placar"],
 .rel[data-off~="contatos"] [data-secao="contatos"],
@@ -336,8 +335,8 @@
   font-weight: 600;
   letter-spacing: -0.01em;
 }
-.rel-metrica .est {
-  margin-left: 8px;
+.rel-metrica .etiqueta {
+  margin-left: 9px;
   font-style: normal;
   font-size: 11px;
   font-weight: 700;
@@ -376,6 +375,31 @@
   font-size: 13.5px;
   color: var(--aviso);
   max-width: 60ch;
+}
+
+/* ---------------------------------------------------------------------------
+   Detalhamento de uma métrica, dentro da própria linha dela. Recuado e com
+   fundo levemente âmbar para o cliente ver de imediato que tudo ali dentro
+   pertence ao número de cima, e não é uma seção nova do relatório.
+--------------------------------------------------------------------------- */
+.rel-detalhe {
+  margin: 16px 0 4px;
+  padding: 18px 20px;
+  background: #fdfaf4;
+  border: 1px solid #f0e5d0;
+  border-radius: 10px;
+}
+.rel-detalhe > :first-child {
+  margin-top: 0;
+}
+.rel-detalhe h4 {
+  margin: 22px 0 8px;
+  font-size: 14.5px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.rel-detalhe .rel-paragrafo {
+  font-size: 14.5px;
 }
 
 /* ---- divisão entre plataformas ---- */
@@ -424,35 +448,6 @@
 }
 .rel-marca.meta {
   background: var(--meta);
-}
-
-/* ---- destaque de visitas à loja ---- */
-.rel-destaque {
-  margin: 0 0 18px;
-  display: flex;
-  align-items: baseline;
-  gap: 14px;
-}
-.rel-destaque .val {
-  font-size: 44px;
-  line-height: 1;
-  font-weight: 700;
-  letter-spacing: -0.035em;
-  font-variant-numeric: tabular-nums;
-  color: var(--aviso);
-}
-.rel-destaque .txt {
-  font-size: 15px;
-  color: var(--ink-soft);
-}
-.rel-destaque em {
-  display: block;
-  font-style: normal;
-  font-size: 12.5px;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--aviso);
 }
 
 .rel-passos,
@@ -505,7 +500,7 @@
   font-size: 13px;
   color: var(--ink-soft);
 }
-.rel-versus .estimado .n {
+.rel-versus .calculado .n {
   color: var(--aviso);
 }
 
@@ -615,58 +610,6 @@
   background: var(--meta);
 }
 
-/* ---- jornada ---- */
-.rel-jornada {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  counter-reset: passo;
-  border-top: 1px solid var(--rule);
-}
-.rel-jornada li {
-  counter-increment: passo;
-  padding: 14px 0 14px 38px;
-  border-bottom: 1px solid var(--rule);
-  position: relative;
-}
-.rel-jornada li::before {
-  content: counter(passo);
-  position: absolute;
-  left: 0;
-  top: 15px;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  border: 1px solid var(--rule-forte);
-  color: var(--ink-soft);
-  font-size: 12.5px;
-  font-weight: 700;
-  display: grid;
-  place-items: center;
-}
-.rel-jornada .topo {
-  margin: 0;
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 16px;
-}
-.rel-jornada .topo b {
-  font-size: 16px;
-}
-.rel-jornada .cifra {
-  font-size: 15px;
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-}
-.rel-jornada .txt {
-  margin: 2px 0 0;
-  font-size: 14.5px;
-  color: var(--ink-soft);
-  max-width: 60ch;
-}
-
 /* ---- tabela ---- */
 .rel-tabela-wrap {
   overflow-x: auto;
@@ -764,11 +707,9 @@
   }
   .rel-metrica,
   .rel-barra,
-  .rel-jornada li,
   .rel-versus,
   .rel-grafico,
   .rel-total,
-  .rel-destaque,
   .rel-passos li,
   .rel-notas li,
   tr {
