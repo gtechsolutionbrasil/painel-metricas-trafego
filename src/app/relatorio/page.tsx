@@ -5,7 +5,6 @@ import { getClients, resolveClient } from "@/lib/metrics/queries";
 import { getReportData, type ReportBar } from "@/lib/report/data";
 import {
   GLOSSARIO,
-  VISITAS_LOJA_LEITURA,
   VISITAS_LOJA_PASSOS,
   type Verbete,
   type VerbeteId,
@@ -266,23 +265,9 @@ export default async function RelatorioPage({
                           </div>
                         )}
 
-                        <h4>Como ler esse número</h4>
-                        <ul className="rel-notas">
-                          {VISITAS_LOJA_LEITURA.map((n) => (
-                            <li key={n.titulo}>
-                              <b>{n.titulo}.</b> {n.texto}
-                            </li>
-                          ))}
-                        </ul>
                       </div>
                     )}
                   </Metrica>
-                )}
-                {t.profileViews > 0 && (
-                  <Metrica
-                    verbete="visitasSite"
-                    valor={fmtInt(t.profileViews)}
-                  />
                 )}
                 {t.profileEngagements > 0 && (
                   <Metrica

@@ -67,11 +67,6 @@ export const GLOSSARIO = {
     ressalva:
       "O número tem margem de erro de cerca de 10%. Serve para acompanhar se subiu ou caiu de um período para o outro, e não entra na soma dos contatos.",
   },
-  visitasSite: {
-    titulo: "Visitas ao site pelo perfil",
-    oQue: "Quantas pessoas abriram o site pelo perfil da loja no Google.",
-    origem: "Google Ads",
-  },
   interacoesPerfil: {
     titulo: "Interações no perfil",
     oQue: "Quantas pessoas viram fotos, horário ou avaliações no perfil da loja.",
@@ -139,24 +134,3 @@ export const VISITAS_LOJA_PASSOS = [
   },
 ] as const;
 
-export const VISITAS_LOJA_LEITURA = [
-  {
-    titulo: "É sempre bem maior que “pediu rota”",
-    texto:
-      "Quem já sabe o caminho vai direto, sem pedir rota, e mesmo assim entra nesta conta.",
-  },
-  {
-    titulo: "Conta visitas, não pessoas",
-    texto: "A mesma pessoa indo três vezes no período conta três.",
-  },
-  {
-    titulo: "Pode aparecer zerado",
-    texto:
-      "O Google só mostra o número quando tem movimento suficiente para a conta fechar.",
-  },
-  {
-    titulo: "Não é venda e não é contato",
-    texto:
-      "Mede a ida até a loja, não o que aconteceu lá dentro. Por isso fica separada.",
-  },
-] as const;

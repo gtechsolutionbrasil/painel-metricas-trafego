@@ -392,6 +392,9 @@
 .rel-detalhe > :first-child {
   margin-top: 0;
 }
+.rel-detalhe > :last-child {
+  margin-bottom: 0;
+}
 .rel-detalhe h4 {
   margin: 22px 0 8px;
   font-size: 14.5px;
@@ -450,20 +453,17 @@
   background: var(--meta);
 }
 
-.rel-passos,
-.rel-notas {
+.rel-passos {
   margin: 0;
   padding-left: 22px;
   font-size: 14.5px;
   color: var(--ink-soft);
   max-width: 64ch;
 }
-.rel-passos li,
-.rel-notas li {
+.rel-passos li {
   margin-bottom: 9px;
 }
-.rel-passos b,
-.rel-notas b {
+.rel-passos b {
   color: var(--ink);
 }
 
@@ -711,7 +711,6 @@
   .rel-grafico,
   .rel-total,
   .rel-passos li,
-  .rel-notas li,
   tr {
     break-inside: avoid;
   }

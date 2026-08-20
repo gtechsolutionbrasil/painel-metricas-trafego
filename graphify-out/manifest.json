@@ -195,8 +195,8 @@
     "semantic_hash": ""
   },
   "REGRAS-PROJETO.md": {
-    "mtime": 1787192603.3802981,
-    "ast_hash": "4be556233f5ef321017f480cbc4c266a",
+    "mtime": 1787193557.2394755,
+    "ast_hash": "d5bebc462c542666539d0fd1eb6a0273",
     "semantic_hash": ""
   },
   "docs/ingestao-n8n.md": {
@@ -445,8 +445,8 @@
     "semantic_hash": ""
   },
   "src/app/relatorio/page.tsx": {
-    "mtime": 1787192445.436234,
-    "ast_hash": "360ea2cf8a0587712babfc44712388be",
+    "mtime": 1787193527.2011406,
+    "ast_hash": "6e3e9b67526ec671e6e66c24434120a3",
     "semantic_hash": ""
   },
   "src/components/layout/ExportReportButton.tsx": {
@@ -585,8 +585,8 @@
     "semantic_hash": ""
   },
   "src/lib/report/glossario.ts": {
-    "mtime": 1787192469.2378855,
-    "ast_hash": "89ab81b7408562d770444409dc7fe39d",
+    "mtime": 1787193527.2001932,
+    "ast_hash": "7542e79a3d54287a46ee800ee09c0235",
     "semantic_hash": ""
   },
   "cerebro-painel-metricas-trafego/Decis\u00e3o - Visitas \u00e0 loja no relat\u00f3rio do cliente.md": {

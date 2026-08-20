@@ -278,8 +278,9 @@ dashboard Vercel + Redeploy. O dev local (localhost:3000) reflete tudo.
 
 ## Histórico de iterações
 
-- **2026-08-19 (3) — Enxugada do relatório, a pedido do usuário.** Saíram: a
-  métrica Cliques (número baixo demais para mostrar ao cliente), a seção
+- **2026-08-19 (3) — Enxugada do relatório, a pedido do usuário.** Saíram: as
+  métricas Cliques e Visitas ao site pelo perfil (números baixos demais para
+  mostrar ao cliente), o bloco "Como ler esse número" de Visitas à loja, a seção
   inteira "O caminho que a pessoa percorre" e, junto com ela, o detalhamento
   de tipos de clique (`googleClickTypes` + a query `getAdClickTypes` foram
   removidos de `data.ts`; o bloco `CLICK_TYPE` saiu de `labels.ts`). A seção
