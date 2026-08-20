@@ -13,8 +13,8 @@ import type { ReportData } from "@/lib/report/data";
 export const REPORT_SECTIONS = [
   {
     id: "destaques",
-    label: "Números do topo",
-    hint: "Investido, contatos Google, conversas Meta e rotas",
+    label: "Total investido",
+    hint: "O valor em destaque logo abaixo do título",
     motivo: "Precisa de veiculação no período",
   },
   {
@@ -56,7 +56,7 @@ export const REPORT_SECTIONS = [
   {
     id: "placar",
     label: "O que esse investimento gerou",
-    hint: "Os números lado a lado",
+    hint: "Lista de métricas, cada uma com explicação",
     motivo: "Precisa de veiculação no período",
   },
   {

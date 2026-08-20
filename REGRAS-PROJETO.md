@@ -278,6 +278,23 @@ dashboard Vercel + Redeploy. O dev local (localhost:3000) reflete tudo.
 
 ## Histórico de iterações
 
+- **2026-08-19 (2) — Relatório refeito em formato limpo.** A primeira versão do
+  redesenho (cartões coloridos, ícone por métrica, três blocos rotulados
+  "O que é / De onde vem / Atenção" dentro de cada cartão) foi rejeitada pelo
+  usuário: ilegível. Refeito como documento de uma coluna — fundo branco, sem
+  moldura, sem sombra, sem ícone; hierarquia por tamanho de texto e espaço.
+  As 9 métricas viraram uma LISTA (nome à esquerda, número à direita, uma frase
+  do que é + de onde vem embaixo) no lugar da grade de cartões. Cor só onde
+  carrega significado: azul Google, rosa Meta, verde nos contatos, âmbar em
+  estimativa e no que não se pode somar. A ressalva em âmbar ficou só em 3 das
+  9 métricas — em 5 delas virava ruído e deixava de ser lida. Textos do
+  glossário encurtados para uma frase.
+
+  **Atenção ao conferir:** `painel-metricas-trafego.vercel.app` NÃO recebe
+  push (projeto sem git integration, pendência #7 já registrada abaixo). O
+  relatório novo só aparece em `localhost:3000` até alguém fazer Redeploy no
+  dashboard da Vercel.
+
 - **2026-08-19 — Relatório redesenhado + métrica Visitas à loja incluída.** A
   página `/relatorio` passou do formato editorial impresso (serifado, cinza)
   para painel claro em cartões: fundo cinza-azul, cartão branco por bloco,

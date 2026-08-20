@@ -1051,8 +1051,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_auth_login_page",
-      "community": 58,
-      "community_name": "config.ts",
+      "community": 47,
+      "community_name": "queries.ts",
       "norm_label": "page.tsx"
     },
     {
@@ -1062,8 +1062,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "src_app_auth_login_page_safenextpath",
-      "community": 58,
-      "community_name": "config.ts",
+      "community": 47,
+      "community_name": "queries.ts",
       "norm_label": "safenextpath()"
     },
     {
@@ -1073,8 +1073,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "src_app_auth_login_page_loginform",
-      "community": 58,
-      "community_name": "config.ts",
+      "community": 47,
+      "community_name": "queries.ts",
       "norm_label": "loginform()"
     },
     {
@@ -1084,8 +1084,8 @@
       "source_location": "L138",
       "_origin": "ast",
       "id": "src_app_auth_login_page_loginpage",
-      "community": 58,
-      "community_name": "config.ts",
+      "community": 47,
+      "community_name": "queries.ts",
       "norm_label": "loginpage()"
     },
     {
@@ -1095,8 +1095,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_dash_actions",
-      "community": 58,
-      "community_name": "config.ts",
+      "community": 47,
+      "community_name": "queries.ts",
       "norm_label": "actions.ts"
     },
     {
@@ -1106,8 +1106,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "src_app_dash_actions_webhooks",
-      "community": 58,
-      "community_name": "config.ts",
+      "community": 47,
+      "community_name": "queries.ts",
       "norm_label": "webhooks"
     },
     {
@@ -1117,8 +1117,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "src_app_dash_actions_refreshdata",
-      "community": 29,
-      "community_name": "Community 29",
+      "community": 47,
+      "community_name": "queries.ts",
       "norm_label": "refreshdata()"
     },
     {
@@ -1348,8 +1348,8 @@
       "source_location": "L41",
       "_origin": "ast",
       "id": "src_app_dash_clientes_page_clientespage",
-      "community": 0,
-      "community_name": "Depend\u00eancias (package.json)",
+      "community": 35,
+      "community_name": "page.tsx",
       "norm_label": "clientespage()"
     },
     {
@@ -1502,8 +1502,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_dash_crm_actions",
-      "community": 34,
-      "community_name": "page.tsx",
+      "community": 47,
+      "community_name": "queries.ts",
       "norm_label": "actions.ts"
     },
     {
@@ -1513,8 +1513,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_app_dash_crm_actions_createleadschema",
-      "community": 34,
-      "community_name": "page.tsx",
+      "community": 47,
+      "community_name": "queries.ts",
       "norm_label": "createleadschema"
     },
     {
@@ -1524,8 +1524,8 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "src_app_dash_crm_actions_updatestatusschema",
-      "community": 34,
-      "community_name": "page.tsx",
+      "community": 47,
+      "community_name": "queries.ts",
       "norm_label": "updatestatusschema"
     },
     {
@@ -1535,8 +1535,8 @@
       "source_location": "L42",
       "_origin": "ast",
       "id": "src_app_dash_crm_actions_redirectwithfeedback",
-      "community": 34,
-      "community_name": "page.tsx",
+      "community": 47,
+      "community_name": "queries.ts",
       "norm_label": "redirectwithfeedback()"
     },
     {
@@ -1546,8 +1546,8 @@
       "source_location": "L54",
       "_origin": "ast",
       "id": "src_app_dash_crm_actions_requireaccessibleclient",
-      "community": 34,
-      "community_name": "page.tsx",
+      "community": 47,
+      "community_name": "queries.ts",
       "norm_label": "requireaccessibleclient()"
     },
     {
@@ -1557,8 +1557,8 @@
       "source_location": "L89",
       "_origin": "ast",
       "id": "src_app_dash_crm_actions_createlead",
-      "community": 34,
-      "community_name": "page.tsx",
+      "community": 47,
+      "community_name": "queries.ts",
       "norm_label": "createlead()"
     },
     {
@@ -1568,8 +1568,8 @@
       "source_location": "L160",
       "_origin": "ast",
       "id": "src_app_dash_crm_actions_updateleadstatus",
-      "community": 34,
-      "community_name": "page.tsx",
+      "community": 47,
+      "community_name": "queries.ts",
       "norm_label": "updateleadstatus()"
     },
     {
@@ -1579,8 +1579,8 @@
       "source_location": "L199",
       "_origin": "ast",
       "id": "src_app_dash_crm_actions_parsecurrencybr",
-      "community": 34,
-      "community_name": "page.tsx",
+      "community": 47,
+      "community_name": "queries.ts",
       "norm_label": "parsecurrencybr()"
     },
     {
@@ -1590,8 +1590,8 @@
       "source_location": "L207",
       "_origin": "ast",
       "id": "src_app_dash_crm_actions_parsesaopaulodatetime",
-      "community": 34,
-      "community_name": "page.tsx",
+      "community": 47,
+      "community_name": "queries.ts",
       "norm_label": "parsesaopaulodatetime()"
     },
     {
@@ -1601,7 +1601,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_dash_crm_page",
-      "community": 34,
+      "community": 35,
       "community_name": "page.tsx",
       "norm_label": "page.tsx"
     },
@@ -1612,7 +1612,7 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "src_app_dash_crm_page_sp",
-      "community": 34,
+      "community": 35,
       "community_name": "page.tsx",
       "norm_label": "sp"
     },
@@ -1623,7 +1623,7 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "src_app_dash_crm_page_status",
-      "community": 34,
+      "community": 35,
       "community_name": "page.tsx",
       "norm_label": "status"
     },
@@ -1634,7 +1634,7 @@
       "source_location": "L61",
       "_origin": "ast",
       "id": "src_app_dash_crm_page_channel_label",
-      "community": 34,
+      "community": 35,
       "community_name": "page.tsx",
       "norm_label": "channel_label"
     },
@@ -1645,7 +1645,7 @@
       "source_location": "L69",
       "_origin": "ast",
       "id": "src_app_dash_crm_page_source_label",
-      "community": 34,
+      "community": 35,
       "community_name": "page.tsx",
       "norm_label": "source_label"
     },
@@ -1667,7 +1667,7 @@
       "source_location": "L179",
       "_origin": "ast",
       "id": "src_app_dash_crm_page_leadform",
-      "community": 34,
+      "community": 35,
       "community_name": "page.tsx",
       "norm_label": "leadform()"
     },
@@ -1678,7 +1678,7 @@
       "source_location": "L297",
       "_origin": "ast",
       "id": "src_app_dash_crm_page_leadcolumn",
-      "community": 34,
+      "community": 35,
       "community_name": "page.tsx",
       "norm_label": "leadcolumn()"
     },
@@ -1689,7 +1689,7 @@
       "source_location": "L338",
       "_origin": "ast",
       "id": "src_app_dash_crm_page_leadcard",
-      "community": 34,
+      "community": 35,
       "community_name": "page.tsx",
       "norm_label": "leadcard()"
     },
@@ -1700,7 +1700,7 @@
       "source_location": "L429",
       "_origin": "ast",
       "id": "src_app_dash_crm_page_feedback",
-      "community": 34,
+      "community": 35,
       "community_name": "page.tsx",
       "norm_label": "feedback()"
     },
@@ -1711,7 +1711,7 @@
       "source_location": "L453",
       "_origin": "ast",
       "id": "src_app_dash_crm_page_first",
-      "community": 34,
+      "community": 35,
       "community_name": "page.tsx",
       "norm_label": "first()"
     },
@@ -1722,7 +1722,7 @@
       "source_location": "L457",
       "_origin": "ast",
       "id": "src_app_dash_crm_page_buildreturnto",
-      "community": 34,
+      "community": 35,
       "community_name": "page.tsx",
       "norm_label": "buildreturnto()"
     },
@@ -1733,7 +1733,7 @@
       "source_location": "L467",
       "_origin": "ast",
       "id": "src_app_dash_crm_page_saopaulodatetimelocal",
-      "community": 34,
+      "community": 35,
       "community_name": "page.tsx",
       "norm_label": "saopaulodatetimelocal()"
     },
@@ -1777,8 +1777,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_dash_layout",
-      "community": 56,
-      "community_name": "layout.tsx",
+      "community": 47,
+      "community_name": "queries.ts",
       "norm_label": "layout.tsx"
     },
     {
@@ -1788,8 +1788,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_app_dash_layout_dashlayout",
-      "community": 56,
-      "community_name": "layout.tsx",
+      "community": 47,
+      "community_name": "queries.ts",
       "norm_label": "dashlayout()"
     },
     {
@@ -1799,8 +1799,8 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "src_app_dash_layout_demobanner",
-      "community": 56,
-      "community_name": "layout.tsx",
+      "community": 47,
+      "community_name": "queries.ts",
       "norm_label": "demobanner()"
     },
     {
@@ -2085,8 +2085,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_relatorio_printbutton",
-      "community": 44,
-      "community_name": "Topbar.tsx",
+      "community": 5,
+      "community_name": "Community 5",
       "norm_label": "printbutton.tsx"
     },
     {
@@ -2096,8 +2096,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "src_app_relatorio_printbutton_printbutton",
-      "community": 44,
-      "community_name": "Topbar.tsx",
+      "community": 5,
+      "community_name": "Community 5",
       "norm_label": "printbutton()"
     },
     {
@@ -2107,8 +2107,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_relatorio_relatoriocontroles",
-      "community": 44,
-      "community_name": "Topbar.tsx",
+      "community": 5,
+      "community_name": "Community 5",
       "norm_label": "relatoriocontroles.tsx"
     },
     {
@@ -2118,8 +2118,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "src_app_relatorio_relatoriocontroles_subscribestorage",
-      "community": 44,
-      "community_name": "Topbar.tsx",
+      "community": 5,
+      "community_name": "Community 5",
       "norm_label": "subscribestorage()"
     },
     {
@@ -2129,8 +2129,8 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "src_app_relatorio_relatoriocontroles_relatoriocontroles",
-      "community": 44,
-      "community_name": "Topbar.tsx",
+      "community": 5,
+      "community_name": "Community 5",
       "norm_label": "relatoriocontroles()"
     },
     {
@@ -2140,8 +2140,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_relatorio_page",
-      "community": 44,
-      "community_name": "Topbar.tsx",
+      "community": 5,
+      "community_name": "Community 5",
       "norm_label": "page.tsx"
     },
     {
@@ -2151,8 +2151,8 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "src_app_relatorio_page_metadata",
-      "community": 44,
-      "community_name": "Topbar.tsx",
+      "community": 5,
+      "community_name": "Community 5",
       "norm_label": "metadata"
     },
     {
@@ -2162,8 +2162,8 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "src_app_relatorio_page_sp",
-      "community": 44,
-      "community_name": "Topbar.tsx",
+      "community": 5,
+      "community_name": "Community 5",
       "norm_label": "sp"
     },
     {
@@ -2173,8 +2173,8 @@
       "source_location": "L36",
       "_origin": "ast",
       "id": "src_app_relatorio_page_moneyplain",
-      "community": 44,
-      "community_name": "Topbar.tsx",
+      "community": 5,
+      "community_name": "Community 5",
       "norm_label": "moneyplain"
     },
     {
@@ -2184,15 +2184,15 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "src_app_relatorio_page_fmtmoneyplain",
-      "community": 44,
-      "community_name": "Topbar.tsx",
+      "community": 5,
+      "community_name": "Community 5",
       "norm_label": "fmtmoneyplain()"
     },
     {
       "label": "RelatorioPage()",
       "file_type": "code",
       "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L52",
+      "source_location": "L53",
       "_origin": "ast",
       "id": "src_app_relatorio_page_relatoriopage",
       "community": 35,
@@ -2200,92 +2200,26 @@
       "norm_label": "relatoriopage()"
     },
     {
-      "label": "Cabeca()",
-      "file_type": "code",
-      "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L766",
-      "_origin": "ast",
-      "id": "src_app_relatorio_page_cabeca",
-      "community": 44,
-      "community_name": "Topbar.tsx",
-      "norm_label": "cabeca()"
-    },
-    {
-      "label": "Explica()",
-      "file_type": "code",
-      "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L777",
-      "_origin": "ast",
-      "id": "src_app_relatorio_page_explica",
-      "community": 44,
-      "community_name": "Topbar.tsx",
-      "norm_label": "explica()"
-    },
-    {
-      "label": "Cifra()",
-      "file_type": "code",
-      "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L806",
-      "_origin": "ast",
-      "id": "src_app_relatorio_page_cifra",
-      "community": 44,
-      "community_name": "Topbar.tsx",
-      "norm_label": "cifra()"
-    },
-    {
       "label": "Metrica()",
       "file_type": "code",
       "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L837",
+      "source_location": "L585",
       "_origin": "ast",
       "id": "src_app_relatorio_page_metrica",
-      "community": 44,
-      "community_name": "Topbar.tsx",
+      "community": 5,
+      "community_name": "Community 5",
       "norm_label": "metrica()"
     },
     {
       "label": "Barras()",
       "file_type": "code",
       "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L864",
+      "source_location": "L614",
       "_origin": "ast",
       "id": "src_app_relatorio_page_barras",
       "community": 35,
       "community_name": "page.tsx",
       "norm_label": "barras()"
-    },
-    {
-      "label": "ICONES",
-      "file_type": "code",
-      "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L903",
-      "_origin": "ast",
-      "id": "src_app_relatorio_page_icones",
-      "community": 44,
-      "community_name": "Topbar.tsx",
-      "norm_label": "icones"
-    },
-    {
-      "label": "IconeId",
-      "file_type": "code",
-      "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L919",
-      "_origin": "ast",
-      "id": "src_app_relatorio_page_iconeid",
-      "community": 44,
-      "community_name": "Topbar.tsx",
-      "norm_label": "iconeid"
-    },
-    {
-      "label": "Icone()",
-      "file_type": "code",
-      "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L921",
-      "_origin": "ast",
-      "id": "src_app_relatorio_page_icone",
-      "community": 44,
-      "community_name": "Topbar.tsx",
-      "norm_label": "icone()"
     },
     {
       "label": "ChannelIcons.tsx",
@@ -2294,8 +2228,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_brand_channelicons",
-      "community": 56,
-      "community_name": "layout.tsx",
+      "community": 47,
+      "community_name": "queries.ts",
       "norm_label": "channelicons.tsx"
     },
     {
@@ -2305,8 +2239,8 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "src_components_brand_channelicons_iconprops",
-      "community": 56,
-      "community_name": "layout.tsx",
+      "community": 47,
+      "community_name": "queries.ts",
       "norm_label": "iconprops"
     },
     {
@@ -2316,8 +2250,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "src_components_brand_channelicons_googleadsicon",
-      "community": 56,
-      "community_name": "layout.tsx",
+      "community": 47,
+      "community_name": "queries.ts",
       "norm_label": "googleadsicon()"
     },
     {
@@ -2327,8 +2261,8 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "src_components_brand_channelicons_metaadsicon",
-      "community": 56,
-      "community_name": "layout.tsx",
+      "community": 47,
+      "community_name": "queries.ts",
       "norm_label": "metaadsicon()"
     },
     {
@@ -2338,8 +2272,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_brand_logo",
-      "community": 56,
-      "community_name": "layout.tsx",
+      "community": 47,
+      "community_name": "queries.ts",
       "norm_label": "logo.tsx"
     },
     {
@@ -2349,8 +2283,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "src_components_brand_logo_logo",
-      "community": 56,
-      "community_name": "layout.tsx",
+      "community": 47,
+      "community_name": "queries.ts",
       "norm_label": "logo()"
     },
     {
@@ -2437,8 +2371,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "src_components_charts_donutchart_donutchart",
-      "community": 35,
-      "community_name": "page.tsx",
+      "community": 45,
+      "community_name": "KpiCard.tsx",
       "norm_label": "donutchart()"
     },
     {
@@ -2492,8 +2426,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "src_components_charts_trendareachart_trendareachart",
-      "community": 35,
-      "community_name": "page.tsx",
+      "community": 45,
+      "community_name": "KpiCard.tsx",
       "norm_label": "trendareachart()"
     },
     {
@@ -2514,8 +2448,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "src_components_charts_theme_chart_colors",
-      "community": 35,
-      "community_name": "page.tsx",
+      "community": 45,
+      "community_name": "KpiCard.tsx",
       "norm_label": "chart_colors"
     },
     {
@@ -2756,8 +2690,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_layout_sidebar",
-      "community": 56,
-      "community_name": "layout.tsx",
+      "community": 47,
+      "community_name": "queries.ts",
       "norm_label": "sidebar.tsx"
     },
     {
@@ -2767,8 +2701,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "src_components_layout_sidebar_navicon",
-      "community": 56,
-      "community_name": "layout.tsx",
+      "community": 47,
+      "community_name": "queries.ts",
       "norm_label": "navicon"
     },
     {
@@ -2778,8 +2712,8 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "src_components_layout_sidebar_navitem",
-      "community": 56,
-      "community_name": "layout.tsx",
+      "community": 47,
+      "community_name": "queries.ts",
       "norm_label": "navitem"
     },
     {
@@ -2789,8 +2723,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "src_components_layout_sidebar_nav",
-      "community": 56,
-      "community_name": "layout.tsx",
+      "community": 47,
+      "community_name": "queries.ts",
       "norm_label": "nav"
     },
     {
@@ -2800,8 +2734,8 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "src_components_layout_sidebar_sidebar",
-      "community": 56,
-      "community_name": "layout.tsx",
+      "community": 47,
+      "community_name": "queries.ts",
       "norm_label": "sidebar()"
     },
     {
@@ -2822,8 +2756,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "src_components_layout_topbar_topbar",
-      "community": 56,
-      "community_name": "layout.tsx",
+      "community": 47,
+      "community_name": "queries.ts",
       "norm_label": "topbar()"
     },
     {
@@ -2844,8 +2778,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_pages_campaignfilter",
-      "community": 57,
-      "community_name": "types.ts",
+      "community": 28,
+      "community_name": "Community 28",
       "norm_label": "campaignfilter.tsx"
     },
     {
@@ -2855,8 +2789,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "src_components_pages_campaignfilter_campaignfilter",
-      "community": 57,
-      "community_name": "types.ts",
+      "community": 28,
+      "community_name": "Community 28",
       "norm_label": "campaignfilter()"
     },
     {
@@ -2866,8 +2800,8 @@
       "source_location": "L161",
       "_origin": "ast",
       "id": "src_components_pages_campaignfilter_tabbutton",
-      "community": 57,
-      "community_name": "types.ts",
+      "community": 28,
+      "community_name": "Community 28",
       "norm_label": "tabbutton()"
     },
     {
@@ -3119,8 +3053,8 @@
       "source_location": "L525",
       "_origin": "ast",
       "id": "src_components_pages_googleinsights_sourceheader",
-      "community": 0,
-      "community_name": "Depend\u00eancias (package.json)",
+      "community": 35,
+      "community_name": "page.tsx",
       "norm_label": "sourceheader()"
     },
     {
@@ -3141,8 +3075,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_ui_badge",
-      "community": 2,
-      "community_name": "Topbar & Camada de dados",
+      "community": 35,
+      "community_name": "page.tsx",
       "norm_label": "badge.tsx"
     },
     {
@@ -3152,8 +3086,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "src_components_ui_badge_variant",
-      "community": 2,
-      "community_name": "Topbar & Camada de dados",
+      "community": 35,
+      "community_name": "page.tsx",
       "norm_label": "variant"
     },
     {
@@ -3163,8 +3097,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "src_components_ui_badge_class",
-      "community": 2,
-      "community_name": "Topbar & Camada de dados",
+      "community": 35,
+      "community_name": "page.tsx",
       "norm_label": "class"
     },
     {
@@ -3174,8 +3108,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "src_components_ui_badge_badge",
-      "community": 2,
-      "community_name": "Topbar & Camada de dados",
+      "community": 35,
+      "community_name": "page.tsx",
       "norm_label": "badge()"
     },
     {
@@ -3361,7 +3295,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_ui_submitbutton",
-      "community": 34,
+      "community": 35,
       "community_name": "page.tsx",
       "norm_label": "submitbutton.tsx"
     },
@@ -3372,7 +3306,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "src_components_ui_submitbutton_submitbutton",
-      "community": 34,
+      "community": 35,
       "community_name": "page.tsx",
       "norm_label": "submitbutton()"
     },
@@ -3416,8 +3350,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_format",
-      "community": 35,
-      "community_name": "page.tsx",
+      "community": 45,
+      "community_name": "KpiCard.tsx",
       "norm_label": "format.ts"
     },
     {
@@ -3427,8 +3361,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "src_lib_format_brl",
-      "community": 35,
-      "community_name": "page.tsx",
+      "community": 45,
+      "community_name": "KpiCard.tsx",
       "norm_label": "brl"
     },
     {
@@ -3438,8 +3372,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_lib_format_brlcents",
-      "community": 35,
-      "community_name": "page.tsx",
+      "community": 45,
+      "community_name": "KpiCard.tsx",
       "norm_label": "brlcents"
     },
     {
@@ -3449,8 +3383,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "src_lib_format_int",
-      "community": 35,
-      "community_name": "page.tsx",
+      "community": 45,
+      "community_name": "KpiCard.tsx",
       "norm_label": "int"
     },
     {
@@ -3460,8 +3394,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "src_lib_format_dec",
-      "community": 35,
-      "community_name": "page.tsx",
+      "community": 45,
+      "community_name": "KpiCard.tsx",
       "norm_label": "dec"
     },
     {
@@ -3526,8 +3460,8 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "src_lib_format_fmtmultiplier",
-      "community": 35,
-      "community_name": "page.tsx",
+      "community": 45,
+      "community_name": "KpiCard.tsx",
       "norm_label": "fmtmultiplier()"
     },
     {
@@ -3592,8 +3526,8 @@
       "source_location": "L77",
       "_origin": "ast",
       "id": "src_lib_format_formatvalue",
-      "community": 35,
-      "community_name": "page.tsx",
+      "community": 45,
+      "community_name": "KpiCard.tsx",
       "norm_label": "formatvalue()"
     },
     {
@@ -3911,8 +3845,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_metrics_queries",
-      "community": 59,
-      "community_name": "queries.ts",
+      "community": 28,
+      "community_name": "Community 28",
       "norm_label": "queries.ts"
     },
     {
@@ -3922,8 +3856,8 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_admetricrow",
-      "community": 59,
-      "community_name": "queries.ts",
+      "community": 28,
+      "community_name": "Community 28",
       "norm_label": "admetricrow"
     },
     {
@@ -3933,8 +3867,8 @@
       "source_location": "L43",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_webmetricrow",
-      "community": 59,
-      "community_name": "queries.ts",
+      "community": 28,
+      "community_name": "Community 28",
       "norm_label": "webmetricrow"
     },
     {
@@ -3944,8 +3878,8 @@
       "source_location": "L56",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_webeventrow",
-      "community": 59,
-      "community_name": "queries.ts",
+      "community": 28,
+      "community_name": "Community 28",
       "norm_label": "webeventrow"
     },
     {
@@ -3955,8 +3889,8 @@
       "source_location": "L69",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_leadrow",
-      "community": 59,
-      "community_name": "queries.ts",
+      "community": 28,
+      "community_name": "Community 28",
       "norm_label": "leadrow"
     },
     {
@@ -4010,8 +3944,8 @@
       "source_location": "L223",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_breakdownrow",
-      "community": 59,
-      "community_name": "queries.ts",
+      "community": 28,
+      "community_name": "Community 28",
       "norm_label": "breakdownrow"
     },
     {
@@ -4109,8 +4043,8 @@
       "source_location": "L434",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_getwebmetrics",
-      "community": 35,
-      "community_name": "page.tsx",
+      "community": 28,
+      "community_name": "Community 28",
       "norm_label": "getwebmetrics()"
     },
     {
@@ -4164,8 +4098,8 @@
       "source_location": "L600",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_resolveintegrationaccount",
-      "community": 59,
-      "community_name": "queries.ts",
+      "community": 28,
+      "community_name": "Community 28",
       "norm_label": "resolveintegrationaccount()"
     },
     {
@@ -4175,8 +4109,8 @@
       "source_location": "L609",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_filteradmetrics",
-      "community": 59,
-      "community_name": "queries.ts",
+      "community": 28,
+      "community_name": "Community 28",
       "norm_label": "filteradmetrics()"
     },
     {
@@ -4186,8 +4120,8 @@
       "source_location": "L624",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_filterwebmetrics",
-      "community": 59,
-      "community_name": "queries.ts",
+      "community": 28,
+      "community_name": "Community 28",
       "norm_label": "filterwebmetrics()"
     },
     {
@@ -4197,8 +4131,8 @@
       "source_location": "L633",
       "_origin": "ast",
       "id": "src_lib_metrics_queries_webpagemetric",
-      "community": 59,
-      "community_name": "queries.ts",
+      "community": 28,
+      "community_name": "Community 28",
       "norm_label": "webpagemetric"
     },
     {
@@ -4219,8 +4153,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_metrics_results",
-      "community": 1,
-      "community_name": "Login, Layout & ESLint",
+      "community": 2,
+      "community_name": "Topbar & Camada de dados",
       "norm_label": "results.ts"
     },
     {
@@ -4230,8 +4164,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "src_lib_metrics_results_resultbucket",
-      "community": 1,
-      "community_name": "Login, Layout & ESLint",
+      "community": 2,
+      "community_name": "Topbar & Camada de dados",
       "norm_label": "resultbucket"
     },
     {
@@ -4241,8 +4175,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_lib_metrics_results_resultkind",
-      "community": 1,
-      "community_name": "Login, Layout & ESLint",
+      "community": 2,
+      "community_name": "Topbar & Camada de dados",
       "norm_label": "resultkind"
     },
     {
@@ -4252,8 +4186,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "src_lib_metrics_results_classifiedresult",
-      "community": 1,
-      "community_name": "Login, Layout & ESLint",
+      "community": 2,
+      "community_name": "Topbar & Camada de dados",
       "norm_label": "classifiedresult"
     },
     {
@@ -4263,8 +4197,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "src_lib_metrics_results_result_labels",
-      "community": 1,
-      "community_name": "Login, Layout & ESLint",
+      "community": 2,
+      "community_name": "Topbar & Camada de dados",
       "norm_label": "result_labels"
     },
     {
@@ -4274,8 +4208,8 @@
       "source_location": "L36",
       "_origin": "ast",
       "id": "src_lib_metrics_results_normalized",
-      "community": 1,
-      "community_name": "Login, Layout & ESLint",
+      "community": 2,
+      "community_name": "Topbar & Camada de dados",
       "norm_label": "normalized()"
     },
     {
@@ -4285,8 +4219,8 @@
       "source_location": "L43",
       "_origin": "ast",
       "id": "src_lib_metrics_results_classifyadaction",
-      "community": 1,
-      "community_name": "Login, Layout & ESLint",
+      "community": 2,
+      "community_name": "Topbar & Camada de dados",
       "norm_label": "classifyadaction()"
     },
     {
@@ -4296,8 +4230,8 @@
       "source_location": "L111",
       "_origin": "ast",
       "id": "src_lib_metrics_results_classifywebevent",
-      "community": 1,
-      "community_name": "Login, Layout & ESLint",
+      "community": 2,
+      "community_name": "Topbar & Camada de dados",
       "norm_label": "classifywebevent()"
     },
     {
@@ -4307,8 +4241,8 @@
       "source_location": "L144",
       "_origin": "ast",
       "id": "src_lib_metrics_results_resultsummary",
-      "community": 1,
-      "community_name": "Login, Layout & ESLint",
+      "community": 2,
+      "community_name": "Topbar & Camada de dados",
       "norm_label": "resultsummary"
     },
     {
@@ -4318,8 +4252,8 @@
       "source_location": "L153",
       "_origin": "ast",
       "id": "src_lib_metrics_results_emptykinds",
-      "community": 35,
-      "community_name": "page.tsx",
+      "community": 2,
+      "community_name": "Topbar & Camada de dados",
       "norm_label": "emptykinds()"
     },
     {
@@ -4329,8 +4263,8 @@
       "source_location": "L166",
       "_origin": "ast",
       "id": "src_lib_metrics_results_summarizeadactions",
-      "community": 35,
-      "community_name": "page.tsx",
+      "community": 2,
+      "community_name": "Topbar & Camada de dados",
       "norm_label": "summarizeadactions()"
     },
     {
@@ -4340,8 +4274,8 @@
       "source_location": "L211",
       "_origin": "ast",
       "id": "src_lib_metrics_results_webeventsummary",
-      "community": 1,
-      "community_name": "Login, Layout & ESLint",
+      "community": 2,
+      "community_name": "Topbar & Camada de dados",
       "norm_label": "webeventsummary"
     },
     {
@@ -4351,8 +4285,8 @@
       "source_location": "L226",
       "_origin": "ast",
       "id": "src_lib_metrics_results_summarizewebevents",
-      "community": 35,
-      "community_name": "page.tsx",
+      "community": 2,
+      "community_name": "Topbar & Camada de dados",
       "norm_label": "summarizewebevents()"
     },
     {
@@ -4362,8 +4296,8 @@
       "source_location": "L271",
       "_origin": "ast",
       "id": "src_lib_metrics_results_healthstatus",
-      "community": 1,
-      "community_name": "Login, Layout & ESLint",
+      "community": 2,
+      "community_name": "Topbar & Camada de dados",
       "norm_label": "healthstatus"
     },
     {
@@ -4373,8 +4307,8 @@
       "source_location": "L280",
       "_origin": "ast",
       "id": "src_lib_metrics_results_integrationhealth",
-      "community": 2,
-      "community_name": "Topbar & Camada de dados",
+      "community": 35,
+      "community_name": "page.tsx",
       "norm_label": "integrationhealth"
     },
     {
@@ -4384,8 +4318,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_mock_data",
-      "community": 46,
-      "community_name": "data.ts",
+      "community": 28,
+      "community_name": "Community 28",
       "norm_label": "data.ts"
     },
     {
@@ -4395,8 +4329,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "src_lib_mock_data_mock_clients",
-      "community": 46,
-      "community_name": "data.ts",
+      "community": 28,
+      "community_name": "Community 28",
       "norm_label": "mock_clients"
     },
     {
@@ -4406,8 +4340,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "src_lib_mock_data_mock_integration_accounts",
-      "community": 46,
-      "community_name": "data.ts",
+      "community": 28,
+      "community_name": "Community 28",
       "norm_label": "mock_integration_accounts"
     },
     {
@@ -4417,8 +4351,8 @@
       "source_location": "L51",
       "_origin": "ast",
       "id": "src_lib_mock_data_campaigns",
-      "community": 46,
-      "community_name": "data.ts",
+      "community": 28,
+      "community_name": "Community 28",
       "norm_label": "campaigns"
     },
     {
@@ -4428,8 +4362,8 @@
       "source_location": "L66",
       "_origin": "ast",
       "id": "src_lib_mock_data_web_sources",
-      "community": 46,
-      "community_name": "data.ts",
+      "community": 28,
+      "community_name": "Community 28",
       "norm_label": "web_sources"
     },
     {
@@ -4439,8 +4373,8 @@
       "source_location": "L76",
       "_origin": "ast",
       "id": "src_lib_mock_data_hashseed",
-      "community": 46,
-      "community_name": "data.ts",
+      "community": 28,
+      "community_name": "Community 28",
       "norm_label": "hashseed()"
     },
     {
@@ -4450,8 +4384,8 @@
       "source_location": "L85",
       "_origin": "ast",
       "id": "src_lib_mock_data_rng",
-      "community": 46,
-      "community_name": "data.ts",
+      "community": 28,
+      "community_name": "Community 28",
       "norm_label": "rng()"
     },
     {
@@ -4461,8 +4395,8 @@
       "source_location": "L95",
       "_origin": "ast",
       "id": "src_lib_mock_data_eachdate",
-      "community": 46,
-      "community_name": "data.ts",
+      "community": 28,
+      "community_name": "Community 28",
       "norm_label": "eachdate()"
     },
     {
@@ -4472,8 +4406,8 @@
       "source_location": "L107",
       "_origin": "ast",
       "id": "src_lib_mock_data_client_scale",
-      "community": 46,
-      "community_name": "data.ts",
+      "community": 28,
+      "community_name": "Community 28",
       "norm_label": "client_scale"
     },
     {
@@ -4483,8 +4417,8 @@
       "source_location": "L114",
       "_origin": "ast",
       "id": "src_lib_mock_data_dayfactor",
-      "community": 46,
-      "community_name": "data.ts",
+      "community": 28,
+      "community_name": "Community 28",
       "norm_label": "dayfactor()"
     },
     {
@@ -4494,8 +4428,8 @@
       "source_location": "L121",
       "_origin": "ast",
       "id": "src_lib_mock_data_generateadmetrics",
-      "community": 46,
-      "community_name": "data.ts",
+      "community": 28,
+      "community_name": "Community 28",
       "norm_label": "generateadmetrics()"
     },
     {
@@ -4505,8 +4439,8 @@
       "source_location": "L163",
       "_origin": "ast",
       "id": "src_lib_mock_data_generatewebmetrics",
-      "community": 46,
-      "community_name": "data.ts",
+      "community": 28,
+      "community_name": "Community 28",
       "norm_label": "generatewebmetrics()"
     },
     {
@@ -4549,8 +4483,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "src_lib_presentation_presentationfromsearch",
-      "community": 0,
-      "community_name": "Depend\u00eancias (package.json)",
+      "community": 35,
+      "community_name": "page.tsx",
       "norm_label": "presentationfromsearch()"
     },
     {
@@ -4824,8 +4758,8 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "src_lib_report_data_reportbar",
-      "community": 44,
-      "community_name": "Topbar.tsx",
+      "community": 5,
+      "community_name": "Community 5",
       "norm_label": "reportbar"
     },
     {
@@ -4868,8 +4802,8 @@
       "source_location": "L68",
       "_origin": "ast",
       "id": "src_lib_report_data_reportdata",
-      "community": 44,
-      "community_name": "Topbar.tsx",
+      "community": 5,
+      "community_name": "Community 5",
       "norm_label": "reportdata"
     },
     {
@@ -4934,52 +4868,52 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_report_glossario",
-      "community": 44,
-      "community_name": "Topbar.tsx",
+      "community": 5,
+      "community_name": "Community 5",
       "norm_label": "glossario.ts"
     },
     {
       "label": "Verbete",
       "file_type": "code",
       "source_file": "src/lib/report/glossario.ts",
-      "source_location": "L15",
+      "source_location": "L11",
       "_origin": "ast",
       "id": "src_lib_report_glossario_verbete",
-      "community": 44,
-      "community_name": "Topbar.tsx",
+      "community": 5,
+      "community_name": "Community 5",
       "norm_label": "verbete"
     },
     {
       "label": "VerbeteId",
       "file_type": "code",
       "source_file": "src/lib/report/glossario.ts",
-      "source_location": "L170",
+      "source_location": "L112",
       "_origin": "ast",
       "id": "src_lib_report_glossario_verbeteid",
-      "community": 44,
-      "community_name": "Topbar.tsx",
+      "community": 5,
+      "community_name": "Community 5",
       "norm_label": "verbeteid"
     },
     {
       "label": "VISITAS_LOJA_PASSOS",
       "file_type": "code",
       "source_file": "src/lib/report/glossario.ts",
-      "source_location": "L178",
+      "source_location": "L122",
       "_origin": "ast",
       "id": "src_lib_report_glossario_visitas_loja_passos",
-      "community": 44,
-      "community_name": "Topbar.tsx",
+      "community": 5,
+      "community_name": "Community 5",
       "norm_label": "visitas_loja_passos"
     },
     {
       "label": "VISITAS_LOJA_LEITURA",
       "file_type": "code",
       "source_file": "src/lib/report/glossario.ts",
-      "source_location": "L201",
+      "source_location": "L145",
       "_origin": "ast",
       "id": "src_lib_report_glossario_visitas_loja_leitura",
-      "community": 44,
-      "community_name": "Topbar.tsx",
+      "community": 5,
+      "community_name": "Community 5",
       "norm_label": "visitas_loja_leitura"
     },
     {
@@ -5187,8 +5121,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_report_sections",
-      "community": 44,
-      "community_name": "Topbar.tsx",
+      "community": 5,
+      "community_name": "Community 5",
       "norm_label": "sections.ts"
     },
     {
@@ -5198,8 +5132,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "src_lib_report_sections_report_sections",
-      "community": 44,
-      "community_name": "Topbar.tsx",
+      "community": 5,
+      "community_name": "Community 5",
       "norm_label": "report_sections"
     },
     {
@@ -5209,8 +5143,8 @@
       "source_location": "L76",
       "_origin": "ast",
       "id": "src_lib_report_sections_sectionid",
-      "community": 44,
-      "community_name": "Topbar.tsx",
+      "community": 5,
+      "community_name": "Community 5",
       "norm_label": "sectionid"
     },
     {
@@ -5220,8 +5154,8 @@
       "source_location": "L78",
       "_origin": "ast",
       "id": "src_lib_report_sections_all_section_ids",
-      "community": 44,
-      "community_name": "Topbar.tsx",
+      "community": 5,
+      "community_name": "Community 5",
       "norm_label": "all_section_ids"
     },
     {
@@ -5231,8 +5165,8 @@
       "source_location": "L80",
       "_origin": "ast",
       "id": "src_lib_report_sections_valid",
-      "community": 44,
-      "community_name": "Topbar.tsx",
+      "community": 5,
+      "community_name": "Community 5",
       "norm_label": "valid"
     },
     {
@@ -5242,8 +5176,8 @@
       "source_location": "L84",
       "_origin": "ast",
       "id": "src_lib_report_sections_availablesections",
-      "community": 44,
-      "community_name": "Topbar.tsx",
+      "community": 5,
+      "community_name": "Community 5",
       "norm_label": "availablesections()"
     },
     {
@@ -5253,8 +5187,8 @@
       "source_location": "L104",
       "_origin": "ast",
       "id": "src_lib_report_sections_parsehidden",
-      "community": 44,
-      "community_name": "Topbar.tsx",
+      "community": 5,
+      "community_name": "Community 5",
       "norm_label": "parsehidden()"
     },
     {
@@ -5264,8 +5198,8 @@
       "source_location": "L119",
       "_origin": "ast",
       "id": "src_lib_report_sections_serializehidden",
-      "community": 44,
-      "community_name": "Topbar.tsx",
+      "community": 5,
+      "community_name": "Community 5",
       "norm_label": "serializehidden()"
     },
     {
@@ -5275,8 +5209,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_supabase_client",
-      "community": 58,
-      "community_name": "config.ts",
+      "community": 47,
+      "community_name": "queries.ts",
       "norm_label": "client.ts"
     },
     {
@@ -5286,8 +5220,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "src_lib_supabase_client_createsupabasebrowserclient",
-      "community": 58,
-      "community_name": "config.ts",
+      "community": 47,
+      "community_name": "queries.ts",
       "norm_label": "createsupabasebrowserclient()"
     },
     {
@@ -5297,8 +5231,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_supabase_config",
-      "community": 58,
-      "community_name": "config.ts",
+      "community": 47,
+      "community_name": "queries.ts",
       "norm_label": "config.ts"
     },
     {
@@ -5308,8 +5242,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "src_lib_supabase_config_issupabaseconfigured",
-      "community": 58,
-      "community_name": "config.ts",
+      "community": 47,
+      "community_name": "queries.ts",
       "norm_label": "issupabaseconfigured"
     },
     {
@@ -5319,8 +5253,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_supabase_server",
-      "community": 58,
-      "community_name": "config.ts",
+      "community": 47,
+      "community_name": "queries.ts",
       "norm_label": "server.ts"
     },
     {
@@ -5330,8 +5264,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "src_lib_supabase_server_createsupabaseserverclient",
-      "community": 35,
-      "community_name": "page.tsx",
+      "community": 47,
+      "community_name": "queries.ts",
       "norm_label": "createsupabaseserverclient()"
     },
     {
@@ -5341,8 +5275,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_supabase_updatesession",
-      "community": 60,
-      "community_name": "updateSession.ts",
+      "community": 47,
+      "community_name": "queries.ts",
       "norm_label": "updatesession.ts"
     },
     {
@@ -5352,8 +5286,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "src_lib_supabase_updatesession_updatesession",
-      "community": 60,
-      "community_name": "updateSession.ts",
+      "community": 47,
+      "community_name": "queries.ts",
       "norm_label": "updatesession()"
     },
     {
@@ -5363,8 +5297,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_types",
-      "community": 57,
-      "community_name": "types.ts",
+      "community": 28,
+      "community_name": "Community 28",
       "norm_label": "types.ts"
     },
     {
@@ -5374,8 +5308,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "src_lib_types_platform",
-      "community": 46,
-      "community_name": "data.ts",
+      "community": 28,
+      "community_name": "Community 28",
       "norm_label": "platform"
     },
     {
@@ -5396,8 +5330,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "src_lib_types_integrationstatus",
-      "community": 57,
-      "community_name": "types.ts",
+      "community": 28,
+      "community_name": "Community 28",
       "norm_label": "integrationstatus"
     },
     {
@@ -5418,8 +5352,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "src_lib_types_integrationaccount",
-      "community": 1,
-      "community_name": "Login, Layout & ESLint",
+      "community": 28,
+      "community_name": "Community 28",
       "norm_label": "integrationaccount"
     },
     {
@@ -5429,8 +5363,8 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "src_lib_types_admetric",
-      "community": 46,
-      "community_name": "data.ts",
+      "community": 28,
+      "community_name": "Community 28",
       "norm_label": "admetric"
     },
     {
@@ -5440,8 +5374,8 @@
       "source_location": "L57",
       "_origin": "ast",
       "id": "src_lib_types_adkeywordmetric",
-      "community": 57,
-      "community_name": "types.ts",
+      "community": 28,
+      "community_name": "Community 28",
       "norm_label": "adkeywordmetric"
     },
     {
@@ -5451,8 +5385,8 @@
       "source_location": "L69",
       "_origin": "ast",
       "id": "src_lib_types_adgeometric",
-      "community": 57,
-      "community_name": "types.ts",
+      "community": 28,
+      "community_name": "Community 28",
       "norm_label": "adgeometric"
     },
     {
@@ -5462,8 +5396,8 @@
       "source_location": "L80",
       "_origin": "ast",
       "id": "src_lib_types_adclicktypemetric",
-      "community": 59,
-      "community_name": "queries.ts",
+      "community": 28,
+      "community_name": "Community 28",
       "norm_label": "adclicktypemetric"
     },
     {
@@ -5473,8 +5407,8 @@
       "source_location": "L89",
       "_origin": "ast",
       "id": "src_lib_types_adcampaign",
-      "community": 57,
-      "community_name": "types.ts",
+      "community": 28,
+      "community_name": "Community 28",
       "norm_label": "adcampaign"
     },
     {
@@ -5495,8 +5429,8 @@
       "source_location": "L105",
       "_origin": "ast",
       "id": "src_lib_types_adgroupmetric",
-      "community": 57,
-      "community_name": "types.ts",
+      "community": 28,
+      "community_name": "Community 28",
       "norm_label": "adgroupmetric"
     },
     {
@@ -5506,8 +5440,8 @@
       "source_location": "L116",
       "_origin": "ast",
       "id": "src_lib_types_adconversionactionmetric",
-      "community": 1,
-      "community_name": "Login, Layout & ESLint",
+      "community": 2,
+      "community_name": "Topbar & Camada de dados",
       "norm_label": "adconversionactionmetric"
     },
     {
@@ -5517,8 +5451,8 @@
       "source_location": "L135",
       "_origin": "ast",
       "id": "src_lib_types_conversionsource",
-      "community": 57,
-      "community_name": "types.ts",
+      "community": 28,
+      "community_name": "Community 28",
       "norm_label": "conversionsource"
     },
     {
@@ -5528,8 +5462,8 @@
       "source_location": "L137",
       "_origin": "ast",
       "id": "src_lib_types_webmetric",
-      "community": 46,
-      "community_name": "data.ts",
+      "community": 28,
+      "community_name": "Community 28",
       "norm_label": "webmetric"
     },
     {
@@ -5539,8 +5473,8 @@
       "source_location": "L150",
       "_origin": "ast",
       "id": "src_lib_types_webeventmetric",
-      "community": 1,
-      "community_name": "Login, Layout & ESLint",
+      "community": 2,
+      "community_name": "Topbar & Camada de dados",
       "norm_label": "webeventmetric"
     },
     {
@@ -5550,8 +5484,8 @@
       "source_location": "L163",
       "_origin": "ast",
       "id": "src_lib_types_trackingcheckstatus",
-      "community": 57,
-      "community_name": "types.ts",
+      "community": 28,
+      "community_name": "Community 28",
       "norm_label": "trackingcheckstatus"
     },
     {
@@ -5561,8 +5495,8 @@
       "source_location": "L169",
       "_origin": "ast",
       "id": "src_lib_types_trackingcheck",
-      "community": 1,
-      "community_name": "Login, Layout & ESLint",
+      "community": 2,
+      "community_name": "Topbar & Camada de dados",
       "norm_label": "trackingcheck"
     },
     {
@@ -5572,8 +5506,8 @@
       "source_location": "L180",
       "_origin": "ast",
       "id": "src_lib_types_leadstatus",
-      "community": 57,
-      "community_name": "types.ts",
+      "community": 28,
+      "community_name": "Community 28",
       "norm_label": "leadstatus"
     },
     {
@@ -5583,8 +5517,8 @@
       "source_location": "L188",
       "_origin": "ast",
       "id": "src_lib_types_leadchannel",
-      "community": 57,
-      "community_name": "types.ts",
+      "community": 28,
+      "community_name": "Community 28",
       "norm_label": "leadchannel"
     },
     {
@@ -5594,8 +5528,8 @@
       "source_location": "L195",
       "_origin": "ast",
       "id": "src_lib_types_leadsource",
-      "community": 34,
-      "community_name": "page.tsx",
+      "community": 28,
+      "community_name": "Community 28",
       "norm_label": "leadsource"
     },
     {
@@ -5605,8 +5539,8 @@
       "source_location": "L205",
       "_origin": "ast",
       "id": "src_lib_types_lead",
-      "community": 34,
-      "community_name": "page.tsx",
+      "community": 28,
+      "community_name": "Community 28",
       "norm_label": "lead"
     },
     {
@@ -5616,8 +5550,8 @@
       "source_location": "L223",
       "_origin": "ast",
       "id": "src_lib_types_daterange",
-      "community": 46,
-      "community_name": "data.ts",
+      "community": 28,
+      "community_name": "Community 28",
       "norm_label": "daterange"
     },
     {
@@ -5627,8 +5561,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_proxy",
-      "community": 60,
-      "community_name": "updateSession.ts",
+      "community": 47,
+      "community_name": "queries.ts",
       "norm_label": "proxy.ts"
     },
     {
@@ -5638,8 +5572,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "src_proxy_proxy",
-      "community": 60,
-      "community_name": "updateSession.ts",
+      "community": 47,
+      "community_name": "queries.ts",
       "norm_label": "proxy()"
     },
     {
@@ -5649,8 +5583,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "src_proxy_config",
-      "community": 60,
-      "community_name": "updateSession.ts",
+      "community": 47,
+      "community_name": "queries.ts",
       "norm_label": "config"
     },
     {
@@ -6218,7 +6152,7 @@
       "label": "Fluxo de features (skills do Matt Pocock) \u2014 roteamento",
       "file_type": "document",
       "source_file": "REGRAS-PROJETO.md",
-      "source_location": "L700",
+      "source_location": "L717",
       "_origin": "ast",
       "id": "regras_projeto_fluxo_de_features_skills_do_matt_pocock_roteamento",
       "community": 7,
@@ -6229,7 +6163,7 @@
       "label": "Mem\u00f3ria t\u00e9cnica (cerebro-painel-metricas-trafego/)",
       "file_type": "document",
       "source_file": "REGRAS-PROJETO.md",
-      "source_location": "L726",
+      "source_location": "L743",
       "_origin": "ast",
       "id": "regras_projeto_mem\u00f3ria_t\u00e9cnica_cerebro_painel_metricas_trafego",
       "community": 7,
@@ -6364,6 +6298,83 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "cerebro_painel_metricas_trafego_decis\u00e3o_sem_testes_automatizados_no_painel_relacionado",
+      "community": 55,
+      "community_name": "Decis\u00e3o - Sem testes automatizados no painel",
+      "norm_label": "relacionado"
+    },
+    {
+      "label": "Decis\u00e3o - Visitas \u00e0 loja no relat\u00f3rio do cliente.md",
+      "file_type": "document",
+      "source_file": "cerebro-painel-metricas-trafego/Decis\u00e3o - Visitas \u00e0 loja no relat\u00f3rio do cliente.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "cerebro_painel_metricas_trafego_decis\u00e3o_visitas_\u00e0_loja_no_relat\u00f3rio_do_cliente",
+      "community": 55,
+      "community_name": "Decis\u00e3o - Sem testes automatizados no painel",
+      "norm_label": "decisao - visitas a loja no relatorio do cliente.md"
+    },
+    {
+      "label": "Decis\u00e3o - Visitas \u00e0 loja no relat\u00f3rio do cliente",
+      "file_type": "document",
+      "source_file": "cerebro-painel-metricas-trafego/Decis\u00e3o - Visitas \u00e0 loja no relat\u00f3rio do cliente.md",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "cerebro_painel_metricas_trafego_decis\u00e3o_visitas_\u00e0_loja_no_relat\u00f3rio_do_cliente_decis\u00e3o_visitas_\u00e0_loja_no_relat\u00f3rio_do_cliente",
+      "community": 55,
+      "community_name": "Decis\u00e3o - Sem testes automatizados no painel",
+      "norm_label": "decisao - visitas a loja no relatorio do cliente"
+    },
+    {
+      "label": "Contexto",
+      "file_type": "document",
+      "source_file": "cerebro-painel-metricas-trafego/Decis\u00e3o - Visitas \u00e0 loja no relat\u00f3rio do cliente.md",
+      "source_location": "L9",
+      "_origin": "ast",
+      "id": "cerebro_painel_metricas_trafego_decis\u00e3o_visitas_\u00e0_loja_no_relat\u00f3rio_do_cliente_contexto",
+      "community": 55,
+      "community_name": "Decis\u00e3o - Sem testes automatizados no painel",
+      "norm_label": "contexto"
+    },
+    {
+      "label": "Decis\u00e3o",
+      "file_type": "document",
+      "source_file": "cerebro-painel-metricas-trafego/Decis\u00e3o - Visitas \u00e0 loja no relat\u00f3rio do cliente.md",
+      "source_location": "L25",
+      "_origin": "ast",
+      "id": "cerebro_painel_metricas_trafego_decis\u00e3o_visitas_\u00e0_loja_no_relat\u00f3rio_do_cliente_decis\u00e3o",
+      "community": 55,
+      "community_name": "Decis\u00e3o - Sem testes automatizados no painel",
+      "norm_label": "decisao"
+    },
+    {
+      "label": "Alternativas descartadas",
+      "file_type": "document",
+      "source_file": "cerebro-painel-metricas-trafego/Decis\u00e3o - Visitas \u00e0 loja no relat\u00f3rio do cliente.md",
+      "source_location": "L38",
+      "_origin": "ast",
+      "id": "cerebro_painel_metricas_trafego_decis\u00e3o_visitas_\u00e0_loja_no_relat\u00f3rio_do_cliente_alternativas_descartadas",
+      "community": 55,
+      "community_name": "Decis\u00e3o - Sem testes automatizados no painel",
+      "norm_label": "alternativas descartadas"
+    },
+    {
+      "label": "Consequ\u00eancias",
+      "file_type": "document",
+      "source_file": "cerebro-painel-metricas-trafego/Decis\u00e3o - Visitas \u00e0 loja no relat\u00f3rio do cliente.md",
+      "source_location": "L48",
+      "_origin": "ast",
+      "id": "cerebro_painel_metricas_trafego_decis\u00e3o_visitas_\u00e0_loja_no_relat\u00f3rio_do_cliente_consequ\u00eancias",
+      "community": 55,
+      "community_name": "Decis\u00e3o - Sem testes automatizados no painel",
+      "norm_label": "consequencias"
+    },
+    {
+      "label": "Relacionado",
+      "file_type": "document",
+      "source_file": "cerebro-painel-metricas-trafego/Decis\u00e3o - Visitas \u00e0 loja no relat\u00f3rio do cliente.md",
+      "source_location": "L61",
+      "_origin": "ast",
+      "id": "cerebro_painel_metricas_trafego_decis\u00e3o_visitas_\u00e0_loja_no_relat\u00f3rio_do_cliente_relacionado",
       "community": 55,
       "community_name": "Decis\u00e3o - Sem testes automatizados no painel",
       "norm_label": "relacionado"
@@ -12571,40 +12582,10 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L864",
+      "source_location": "L614",
       "weight": 1.0,
       "source": "src_app_relatorio_page",
       "target": "src_app_relatorio_page_barras",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L766",
-      "weight": 1.0,
-      "source": "src_app_relatorio_page",
-      "target": "src_app_relatorio_page_cabeca",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L806",
-      "weight": 1.0,
-      "source": "src_app_relatorio_page",
-      "target": "src_app_relatorio_page_cifra",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L777",
-      "weight": 1.0,
-      "source": "src_app_relatorio_page",
-      "target": "src_app_relatorio_page_explica",
       "confidence_score": 1.0
     },
     {
@@ -12621,36 +12602,6 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L921",
-      "weight": 1.0,
-      "source": "src_app_relatorio_page",
-      "target": "src_app_relatorio_page_icone",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L919",
-      "weight": 1.0,
-      "source": "src_app_relatorio_page",
-      "target": "src_app_relatorio_page_iconeid",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L903",
-      "weight": 1.0,
-      "source": "src_app_relatorio_page",
-      "target": "src_app_relatorio_page_icones",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/relatorio/page.tsx",
       "source_location": "L28",
       "weight": 1.0,
       "source": "src_app_relatorio_page",
@@ -12661,7 +12612,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L837",
+      "source_location": "L585",
       "weight": 1.0,
       "source": "src_app_relatorio_page",
       "target": "src_app_relatorio_page_metrica",
@@ -12681,7 +12632,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L52",
+      "source_location": "L53",
       "weight": 1.0,
       "source": "src_app_relatorio_page",
       "target": "src_app_relatorio_page_relatoriopage",
@@ -12933,7 +12884,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L390",
+      "source_location": "L439",
       "weight": 1.0,
       "source": "src_app_relatorio_page_relatoriopage",
       "target": "src_app_relatorio_page_fmtmoneyplain",
@@ -12945,7 +12896,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L291",
+      "source_location": "L216",
       "weight": 1.0,
       "source": "src_app_relatorio_page_relatoriopage",
       "target": "src_lib_format_fmtcurrencycents"
@@ -12956,7 +12907,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L223",
+      "source_location": "L181",
       "weight": 1.0,
       "source": "src_app_relatorio_page_relatoriopage",
       "target": "src_lib_format_fmtdatelong"
@@ -12967,7 +12918,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L100",
+      "source_location": "L94",
       "weight": 1.0,
       "source": "src_app_relatorio_page_relatoriopage",
       "target": "src_lib_format_fmtint"
@@ -12978,7 +12929,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L341",
+      "source_location": "L241",
       "weight": 1.0,
       "source": "src_app_relatorio_page_relatoriopage",
       "target": "src_lib_format_fmtpercent"
@@ -12989,7 +12940,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L59",
+      "source_location": "L60",
       "weight": 1.0,
       "source": "src_app_relatorio_page_relatoriopage",
       "target": "src_lib_metrics_queries_getclients"
@@ -13000,7 +12951,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L60",
+      "source_location": "L61",
       "weight": 1.0,
       "source": "src_app_relatorio_page_relatoriopage",
       "target": "src_lib_metrics_queries_resolveclient"
@@ -13011,7 +12962,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L58",
+      "source_location": "L59",
       "weight": 1.0,
       "source": "src_app_relatorio_page_relatoriopage",
       "target": "src_lib_range_rangefromsearch"
@@ -13022,7 +12973,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L61",
+      "source_location": "L62",
       "weight": 1.0,
       "source": "src_app_relatorio_page_relatoriopage",
       "target": "src_lib_report_data_getreportdata"
@@ -13033,7 +12984,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L82",
+      "source_location": "L83",
       "weight": 1.0,
       "source": "src_app_relatorio_page_relatoriopage",
       "target": "src_lib_report_sections_availablesections"
@@ -13044,7 +12995,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L85",
+      "source_location": "L86",
       "weight": 1.0,
       "source": "src_app_relatorio_page_relatoriopage",
       "target": "src_lib_report_sections_parsehidden"
@@ -13055,7 +13006,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L883",
+      "source_location": "L635",
       "weight": 1.0,
       "source": "src_app_relatorio_page_barras",
       "target": "src_lib_format_fmtcurrencycents"
@@ -13066,7 +13017,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L883",
+      "source_location": "L635",
       "weight": 1.0,
       "source": "src_app_relatorio_page_barras",
       "target": "src_lib_format_fmtint"
@@ -13077,7 +13028,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/app/relatorio/page.tsx",
-      "source_location": "L884",
+      "source_location": "L637",
       "weight": 1.0,
       "source": "src_app_relatorio_page_barras",
       "target": "src_lib_format_fmtpercent"
@@ -19097,7 +19048,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/report/data.ts",
-      "source_location": "L271",
+      "source_location": "L272",
       "weight": 1.0,
       "source": "src_lib_report_data_getreportdata",
       "target": "src_lib_range_rangedays"
@@ -19393,7 +19344,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/report/data.ts",
-      "source_location": "L287",
+      "source_location": "L288",
       "weight": 1.0,
       "source": "src_lib_report_data_getreportdata",
       "target": "src_lib_report_data_ranked",
@@ -19415,7 +19366,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/report/data.ts",
-      "source_location": "L286",
+      "source_location": "L287",
       "weight": 1.0,
       "source": "src_lib_report_data_getreportdata",
       "target": "src_lib_report_data_weeksof",
@@ -19449,7 +19400,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "src/lib/report/data.ts",
-      "source_location": "L298",
+      "source_location": "L299",
       "weight": 1.0,
       "source": "src_lib_report_data_getreportdata",
       "target": "src_lib_report_labels_adgrouplabel"
@@ -19460,7 +19411,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "src/lib/report/data.ts",
-      "source_location": "L299",
+      "source_location": "L300",
       "weight": 1.0,
       "source": "src_lib_report_data_getreportdata",
       "target": "src_lib_report_labels_adgroupnote"
@@ -19471,7 +19422,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "src/lib/report/data.ts",
-      "source_location": "L291",
+      "source_location": "L292",
       "weight": 1.0,
       "source": "src_lib_report_data_getreportdata",
       "target": "src_lib_report_labels_campaignlabel"
@@ -19482,7 +19433,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "src/lib/report/data.ts",
-      "source_location": "L292",
+      "source_location": "L293",
       "weight": 1.0,
       "source": "src_lib_report_data_getreportdata",
       "target": "src_lib_report_labels_campaignnote"
@@ -19493,7 +19444,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "src/lib/report/data.ts",
-      "source_location": "L305",
+      "source_location": "L306",
       "weight": 1.0,
       "source": "src_lib_report_data_getreportdata",
       "target": "src_lib_report_labels_clicktypelabel"
@@ -19504,7 +19455,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "src/lib/report/data.ts",
-      "source_location": "L306",
+      "source_location": "L307",
       "weight": 1.0,
       "source": "src_lib_report_data_getreportdata",
       "target": "src_lib_report_labels_clicktypenote"
@@ -19513,7 +19464,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/report/glossario.ts",
-      "source_location": "L15",
+      "source_location": "L11",
       "weight": 1.0,
       "source": "src_lib_report_glossario",
       "target": "src_lib_report_glossario_verbete",
@@ -19523,7 +19474,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/report/glossario.ts",
-      "source_location": "L170",
+      "source_location": "L112",
       "weight": 1.0,
       "source": "src_lib_report_glossario",
       "target": "src_lib_report_glossario_verbeteid",
@@ -19533,7 +19484,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/report/glossario.ts",
-      "source_location": "L201",
+      "source_location": "L145",
       "weight": 1.0,
       "source": "src_lib_report_glossario",
       "target": "src_lib_report_glossario_visitas_loja_leitura",
@@ -19543,7 +19494,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/report/glossario.ts",
-      "source_location": "L178",
+      "source_location": "L122",
       "weight": 1.0,
       "source": "src_lib_report_glossario",
       "target": "src_lib_report_glossario_visitas_loja_passos",
@@ -20647,7 +20598,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "REGRAS-PROJETO.md",
-      "source_location": "L700",
+      "source_location": "L717",
       "weight": 1.0,
       "source": "regras_projeto_regras_projeto_painel_de_m\u00e9tricas_de_tr\u00e1fego_gtech_solution",
       "target": "regras_projeto_fluxo_de_features_skills_do_matt_pocock_roteamento",
@@ -20667,7 +20618,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "REGRAS-PROJETO.md",
-      "source_location": "L726",
+      "source_location": "L743",
       "weight": 1.0,
       "source": "regras_projeto_regras_projeto_painel_de_m\u00e9tricas_de_tr\u00e1fego_gtech_solution",
       "target": "regras_projeto_mem\u00f3ria_t\u00e9cnica_cerebro_painel_metricas_trafego",
@@ -20774,6 +20725,16 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "cerebro-painel-metricas-trafego/Decis\u00e3o - Visitas \u00e0 loja no relat\u00f3rio do cliente.md",
+      "source_location": "L63",
+      "weight": 1.0,
+      "source": "cerebro_painel_metricas_trafego_decis\u00e3o_visitas_\u00e0_loja_no_relat\u00f3rio_do_cliente",
+      "target": "cerebro_painel_metricas_trafego_decis\u00e3o_sem_testes_automatizados_no_painel",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "cerebro-painel-metricas-trafego/Decis\u00e3o - Sem testes automatizados no painel.md",
@@ -20821,6 +20782,66 @@
       "weight": 1.0,
       "source": "cerebro_painel_metricas_trafego_decis\u00e3o_sem_testes_automatizados_no_painel_decis\u00e3o_sem_testes_automatizados_no_painel",
       "target": "cerebro_painel_metricas_trafego_decis\u00e3o_sem_testes_automatizados_no_painel_relacionado",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "cerebro-painel-metricas-trafego/Decis\u00e3o - Visitas \u00e0 loja no relat\u00f3rio do cliente.md",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "cerebro_painel_metricas_trafego_decis\u00e3o_visitas_\u00e0_loja_no_relat\u00f3rio_do_cliente",
+      "target": "cerebro_painel_metricas_trafego_decis\u00e3o_visitas_\u00e0_loja_no_relat\u00f3rio_do_cliente_decis\u00e3o_visitas_\u00e0_loja_no_relat\u00f3rio_do_cliente",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "cerebro-painel-metricas-trafego/Decis\u00e3o - Visitas \u00e0 loja no relat\u00f3rio do cliente.md",
+      "source_location": "L38",
+      "weight": 1.0,
+      "source": "cerebro_painel_metricas_trafego_decis\u00e3o_visitas_\u00e0_loja_no_relat\u00f3rio_do_cliente_decis\u00e3o_visitas_\u00e0_loja_no_relat\u00f3rio_do_cliente",
+      "target": "cerebro_painel_metricas_trafego_decis\u00e3o_visitas_\u00e0_loja_no_relat\u00f3rio_do_cliente_alternativas_descartadas",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "cerebro-painel-metricas-trafego/Decis\u00e3o - Visitas \u00e0 loja no relat\u00f3rio do cliente.md",
+      "source_location": "L48",
+      "weight": 1.0,
+      "source": "cerebro_painel_metricas_trafego_decis\u00e3o_visitas_\u00e0_loja_no_relat\u00f3rio_do_cliente_decis\u00e3o_visitas_\u00e0_loja_no_relat\u00f3rio_do_cliente",
+      "target": "cerebro_painel_metricas_trafego_decis\u00e3o_visitas_\u00e0_loja_no_relat\u00f3rio_do_cliente_consequ\u00eancias",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "cerebro-painel-metricas-trafego/Decis\u00e3o - Visitas \u00e0 loja no relat\u00f3rio do cliente.md",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "cerebro_painel_metricas_trafego_decis\u00e3o_visitas_\u00e0_loja_no_relat\u00f3rio_do_cliente_decis\u00e3o_visitas_\u00e0_loja_no_relat\u00f3rio_do_cliente",
+      "target": "cerebro_painel_metricas_trafego_decis\u00e3o_visitas_\u00e0_loja_no_relat\u00f3rio_do_cliente_contexto",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "cerebro-painel-metricas-trafego/Decis\u00e3o - Visitas \u00e0 loja no relat\u00f3rio do cliente.md",
+      "source_location": "L25",
+      "weight": 1.0,
+      "source": "cerebro_painel_metricas_trafego_decis\u00e3o_visitas_\u00e0_loja_no_relat\u00f3rio_do_cliente_decis\u00e3o_visitas_\u00e0_loja_no_relat\u00f3rio_do_cliente",
+      "target": "cerebro_painel_metricas_trafego_decis\u00e3o_visitas_\u00e0_loja_no_relat\u00f3rio_do_cliente_decis\u00e3o",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "cerebro-painel-metricas-trafego/Decis\u00e3o - Visitas \u00e0 loja no relat\u00f3rio do cliente.md",
+      "source_location": "L61",
+      "weight": 1.0,
+      "source": "cerebro_painel_metricas_trafego_decis\u00e3o_visitas_\u00e0_loja_no_relat\u00f3rio_do_cliente_decis\u00e3o_visitas_\u00e0_loja_no_relat\u00f3rio_do_cliente",
+      "target": "cerebro_painel_metricas_trafego_decis\u00e3o_visitas_\u00e0_loja_no_relat\u00f3rio_do_cliente_relacionado",
       "confidence_score": 1.0
     },
     {
@@ -21665,5 +21686,5 @@
       "source_file": "README.md"
     }
   ],
-  "built_at_commit": "68c4a79c36f7f39ce7a2dcc118febba8e4862bca"
+  "built_at_commit": "7f30b8fa0bcf0ccd33d099d80a6acb606544ce70"
 }

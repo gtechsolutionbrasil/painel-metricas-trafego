@@ -195,8 +195,8 @@
     "semantic_hash": ""
   },
   "REGRAS-PROJETO.md": {
-    "mtime": 1787190062.6403117,
-    "ast_hash": "722a8f963e3f3086b13bc9ed728fce4e",
+    "mtime": 1787191050.7993004,
+    "ast_hash": "8d0b3efe31b847ef7332d2e4e445da8a",
     "semantic_hash": ""
   },
   "docs/ingestao-n8n.md": {
@@ -445,8 +445,8 @@
     "semantic_hash": ""
   },
   "src/app/relatorio/page.tsx": {
-    "mtime": 1787190007.5365007,
-    "ast_hash": "cbc3eccf603c40431545311470a881b3",
+    "mtime": 1787190807.7371492,
+    "ast_hash": "972f178869e5cc61c5dcdad6f95a5a31",
     "semantic_hash": ""
   },
   "src/components/layout/ExportReportButton.tsx": {
@@ -455,8 +455,8 @@
     "semantic_hash": ""
   },
   "src/lib/report/data.ts": {
-    "mtime": 1787189450.6646247,
-    "ast_hash": "fc13b919ca9fd0fbd39379d685645641",
+    "mtime": 1787190355.045782,
+    "ast_hash": "f4126122d9bcd74981ebb25da5a68ca7",
     "semantic_hash": ""
   },
   "src/lib/report/labels.ts": {
@@ -470,8 +470,8 @@
     "semantic_hash": ""
   },
   "src/lib/report/sections.ts": {
-    "mtime": 1787189457.3223777,
-    "ast_hash": "12a8d7fa46eeaf67d4318279cc9ec4d5",
+    "mtime": 1787190902.6214683,
+    "ast_hash": "5f15e14360b3abb7ba4ae4bb832da7bc",
     "semantic_hash": ""
   },
   "scripts/validate-n8n-workflows.mjs": {
@@ -585,8 +585,13 @@
     "semantic_hash": ""
   },
   "src/lib/report/glossario.ts": {
-    "mtime": 1787189428.6826668,
-    "ast_hash": "74fc7b5a9fb5308fded47da96dcd0403",
+    "mtime": 1787190995.980253,
+    "ast_hash": "2b9df399f58b5864303610b19b421bb9",
+    "semantic_hash": ""
+  },
+  "cerebro-painel-metricas-trafego/Decis\u00e3o - Visitas \u00e0 loja no relat\u00f3rio do cliente.md": {
+    "mtime": 1787190121.1825824,
+    "ast_hash": "0ab853881b54405bfaf33aeae76d664c",
     "semantic_hash": ""
   }
 }
